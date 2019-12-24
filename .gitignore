@@ -1,0 +1,6 @@
+build/*
+test/*
+resources/*
+.vscode/*
+*.pro.user
+QNAGE.pro.user
