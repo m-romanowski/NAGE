@@ -29,7 +29,7 @@ namespace NAGE
         void draw(Camera* _camera) override;
         void use(Camera* _camera, Shader* _shader) override;
 
-    private:
+    protected:
         int mId;
         Shader* mShader;
         Transform* mTransform;

@@ -27,12 +27,38 @@ namespace NAGE
     public:
         struct OctaveSettings
         {
-            T frequency = 1;
-            T amplitude = 1;
-            T persistence = 0.5;
-            T lacunarity = 2;
-            int octaves = 1;
-        } settings;
+            OctaveSettings(T _frequency = 1, T _amplitude = 1, T _persistence = 0.5, T _lacunarity = 2,
+                T _octaves = 1)
+            {
+                frequency = _frequency;
+                amplitude = _amplitude;
+                persistence = _persistence;
+                lacunarity = _lacunarity;
+                octaves = _octaves;
+            }
+
+            bool operator==(const OctaveSettings& _rhs)
+            {
+                return (this->frequency == _rhs.frequency &&
+                    this->amplitude == _rhs.amplitude &&
+                    this->persistence == _rhs.persistence &&
+                    this->lacunarity == _rhs.lacunarity &&
+                    this->octaves == _rhs.octaves);
+            }
+
+            bool operator!=(const OctaveSettings& _rhs)
+            {
+                return !(*this == _rhs);
+            }
+
+            T frequency;
+            T amplitude;
+            T persistence;
+            T lacunarity;
+            int octaves;
+        };
+
+        OctaveSettings settings;
 
         explicit PerlinNoise(unsigned long _seed = 0)
         {

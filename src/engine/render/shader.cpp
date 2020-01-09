@@ -178,7 +178,7 @@ namespace NAGE
 
     void Shader::setVec2(const std::string& _name, const Vector2f& _value) const
     {
-        setVec2(_name, _value.x(), _value.y());
+        glUniform2fv(glGetUniformLocation(mId, _name.c_str()), 1, reinterpret_cast<const GLfloat*>(&_value));
     }
 
     void Shader::setVec3(const std::string& _name, GLfloat _x, GLfloat _y, GLfloat _z) const
@@ -188,7 +188,7 @@ namespace NAGE
 
     void Shader::setVec3(const std::string& _name, const Vector3f& _value) const
     {
-        setVec3(_name, _value.x(), _value.y(), _value.z());
+        glUniform3fv(glGetUniformLocation(mId, _name.c_str()), 1, reinterpret_cast<const GLfloat*>(&_value));
     }
 
     void Shader::setVec4(const std::string& _name, GLfloat _x, GLfloat _y, GLfloat _z, GLfloat _w) const
@@ -198,7 +198,7 @@ namespace NAGE
 
     void Shader::setVec4(const std::string& _name, const Quaternion& _value) const
     {
-        setVec4(_name, _value.x(), _value.y(), _value.z(), _value.w());
+        glUniform4fv(glGetUniformLocation(mId, _name.c_str()), 1, reinterpret_cast<const GLfloat*>(&_value));
     }
 
     void Shader::setMat2(const std::string& _name, const Matrix2f& _value) const

@@ -1,65 +1,48 @@
 #ifndef NAGE_ENGINE_UTIL_OBJ_LOADER_H_
 #define NAGE_ENGINE_UTIL_OBJ_LOADER_H_
 
+#include "glad/glad.h"
 #include "engine/math/NAGEMath/nagemathvector.h"
+#include "common/log.h"
+
 #include <vector>
+#include <map>
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <exception>
 
 namespace NAGE
 {
-    struct OBJIndex
-    {
-        unsigned int vertexIndex;
-        unsigned int uvIndex;
-        unsigned int normalIndex;
-
-        bool operator<(const OBJIndex& r) const { return vertexIndex < r.vertexIndex; }
-    };
-
-    class IndexedModel
+    class ModelData
     {
     public:
-        /*
-        std::vector<glm::vec3> positions;
-        std::vector<glm::vec2> texCoords;
-        std::vector<glm::vec3> normals;
-        */
-        std::vector<Vector3f> positions;
-        std::vector<Vector2f> texCoords;
-        std::vector<Vector3f> normals;
-        std::vector<unsigned int> indices;
-
-        void CalcNormals();
+        std::vector<Vector3f> position;
+        std::vector<Vector2f> uv;
+        std::vector<Vector3f> normal;
+        std::vector<GLuint> indices;
     };
 
-    class OBJModel
+    class ObjectLoader
     {
     public:
-        std::vector<OBJIndex> OBJIndices;
-        /*
-        std::vector<glm::vec3> vertices;
-        std::vector<glm::vec2> uvs;
-        std::vector<glm::vec3> normals;
-        */
-        std::vector<Vector3f> vertices;
-        std::vector<Vector2f> uvs;
-        std::vector<Vector3f> normals;
-        bool hasUVs;
-        bool hasNormals;
+        ObjectLoader(const std::string& _path);
 
-        OBJModel(const std::string& fileName);
+        // Getters
+        std::vector<std::string> supportedExt() const;
+        ModelData data() const;
 
-        IndexedModel ToIndexedModel();
     private:
-        unsigned int FindLastVertexIndex(const std::vector<OBJIndex*>& indexLookup, const OBJIndex* currentIndex, const IndexedModel& result);
-        void CreateOBJFace(const std::string& line);
-        /*
-        glm::vec2 ParseOBJVec2(const std::string& line);
-        glm::vec3 ParseOBJVec3(const std::string& line);
-        */
-        Vector2f ParseOBJVec2(const std::string& line);
-        Vector3f ParseOBJVec3(const std::string& line);
-        OBJIndex ParseOBJIndex(const std::string& token, bool* hasUVs, bool* hasNormals);
+        void processFile(const std::string& _path);
+        void processOBJFile(const std::string& _path);
+
+        // Utils
+        std::string fileExt(const std::string& _path);
+        int supportedExt(const std::string& _path);
+
+        std::vector<std::string> mSupportedExt;
+        ModelData mModelData;
+        std::string mPath;
     };
 }
 

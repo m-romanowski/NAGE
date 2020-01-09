@@ -2,7 +2,10 @@
 #define NAGE_GAME_GAME_H_
 
 #include "engine/core/igame.h"
+#include "engine/world/light/sun.h"
 #include "engine/world/terrain/terrain.h"
+#include "engine/world/primitives/cube.h"
+#include "engine/world/primitives/sphere.h"
 
 namespace NAGE
 {
@@ -21,9 +24,9 @@ namespace NAGE
         Transform *transform, *cubeTransform;
 
         PointLight* lamp;
-        DirectionalLight* sun;
+        Sun* sun;
         Skybox* skybox;
-        Texture* diff, *spec;
+        Texture* diff, *spec, *diffCube, *specCube;
 
         // Terrain
         Terrain* terrain;

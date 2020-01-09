@@ -4,58 +4,62 @@
 
 namespace NAGE
 {
-    TerrainChunk::TerrainChunk(Terrain* _terrain, float _x, float _y, int _width, int _height)
-        : mPosition(Vector2f(_x, _y)),
+    TerrainChunk::TerrainChunk(Terrain* _terrain, float _x, float _z, int _width, int _height)
+        : mPosition(Vector2f(_x, _z)),
           mWidth(_width),
           mHeight(_height)
     {
         terrain = _terrain;
+        setupChunk(_x, _z, _width, _height);
+    }
 
-        float fWidth = static_cast<float>(_width);
-        float fHeight = static_cast<float>(_height);
+    TerrainChunk::TerrainChunk(Terrain* _terrain, const Vector2f& _position, int _width, int _height)
+        : mPosition(_position),
+          mWidth(_width),
+          mHeight(_height)
+    {
+        terrain = _terrain;
+        setupChunk(_position.x(), _position.y(), _width, _height);
+    }
 
+    void TerrainChunk::setupChunk(int _x, int _z, int _width, int _height)
+    {
         mIndices.resize(_width * _height * 6);
 
-        for(int x = _x; x < _x + _height; x++)
+        // Generate vertices.
+        for (int x = _x; x < _x + _height; x++)
         {
-            for(int z = _y; z < _y + _width; z++)
+            for (int z = _z; z < _z + _width; z++)
             {
-                /*mVertices.push_back(Vertex(
-                    Vector3f(static_cast<float>(x), _terrain->heightsv[x][z], static_cast<float>(z)),
-                    Vector3f(0.0f, 0.0f, 0.0f),
-                    Vector2f(static_cast<float>(z - _y) / fWidth, static_cast<float>(_x - x) / fHeight)
-                ));*/
+                mVertices.push_back(Vertex(
+                    Vector3f(static_cast<float>(x), 0.0f, static_cast<float>(z)),
+                    Vector2f(static_cast<float>(z) / _width, static_cast<float>(x) / _height)
+                ));
             }
         }
 
+        // Generate indices.
         unsigned int index = 0;
-        for (unsigned int x = 0; x < _height - 1; x++)
+        for (int x = 0; x < _height - 1; x++)
         {
-            for (unsigned int z = 0; z < _width - 1; z++)
+            for (int z = 0; z < _height - 1; z++)
             {
-                unsigned int offset = x * _width + z;
+                unsigned int offset = x * _height + z;
 
                 mIndices[index] = offset;
                 mIndices[index + 1] = offset + 1;
-                mIndices[index + 2] = offset + _width;
+                mIndices[index + 2] = offset + _height;
                 mIndices[index + 3] = offset + 1;
-                mIndices[index + 4] = offset + _width + 1;
-                mIndices[index + 5] = offset + _width;
+                mIndices[index + 4] = offset + _height + 1;
+                mIndices[index + 5] = offset + _height;
 
                 index += 6;
             }
         }
 
+        // Calculate normals and setup (VAO, ...) buffers.
         Primitive::calculateNormals(mVertices, mIndices);
         setupBuffer();
-    }
-
-    TerrainChunk::TerrainChunk(const Vector2f& _position, int _width, int _height)
-        : mPosition(_position),
-          mWidth(_width),
-          mHeight(_height)
-    {
-
     }
 
     float TerrainChunk::x() const
@@ -63,7 +67,7 @@ namespace NAGE
         return mPosition.x();
     }
 
-    float TerrainChunk::y() const
+    float TerrainChunk::z() const
     {
         return mPosition.y();
     }
@@ -107,7 +111,7 @@ namespace NAGE
         _shader->use();
         _shader->setMat4("projection", GLRenderEngine::projection().perspective().transpose());
         _shader->setMat4("view", _camera->view().transpose());
-        _shader->setMat4("model", terrain->transform()->model().transpose());
+        _shader->setMat4("model", terrain->transform()->model().transpose()); // I took transform matrix from the terrain class (transformation is for each chunk).
 
         // Draw mesh.
         glBindVertexArray(mVAO);

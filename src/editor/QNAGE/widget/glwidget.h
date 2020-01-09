@@ -14,12 +14,16 @@
 #include <QFont>
 #include <QColor>
 #include <QSurfaceFormat>
+#include <QMouseEvent>
+#include <QWheelEvent>
 
 #include <chrono>
 #include <iostream>
 
 #define QNAGE_YELLOW Qt::yellow
 #define QNAGEL_RED Qt::red
+
+//#define QNAGE_WHEEL_STEP 0.01
 
 namespace QNAGE
 {
@@ -47,6 +51,7 @@ namespace QNAGE
         void keyReleaseEvent(QKeyEvent* _event) override;
         void mousePressEvent(QMouseEvent* _event) override;
         void mouseReleaseEvent(QMouseEvent* _event) override;
+        void wheelEvent(QWheelEvent* _event) override;
 
     protected slots:
         void update();

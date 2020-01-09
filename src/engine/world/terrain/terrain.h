@@ -6,7 +6,7 @@
 #include "engine/util/random.h"
 #include "engine/render/model/mesh.h"
 
-#define PAGES_PER_DIMENSION 5
+#define DEFAULT_CHUNK_DIMENSION 5
 
 namespace NAGE
 {
@@ -19,28 +19,33 @@ namespace NAGE
         // Getters
         int width() const;
         int height() const;
+        int chunkDimension() const;
         Shader* shader();
         Transform* transform();
+        float positionHeight(int _x, int _z);
+        HeightMap* heightMap();
 
         // Setters
         void setWidth(int _width);
         void setHeight(int _height);
+        void setChunkDimension(int _size);
         void setShader(Shader* _shader);
         void setMaterial(Material* _material);
         void addTexture(Texture* _texture);
+        void addHeightMap(HeightMap* _heightmap);
+        void addFlatTerrain(int _width, int _height);
 
-        void loadFromFile(const std::string& _path);
-        void generateFlatTerrain(int _width, int _height);
-        void generateNoise(int _width, int _height, HeightMap::NoiseType _type);
         void useMaterial();
         void bindTextures();
-        void useHeightMap(int _width, int _height, float** _heightMap);
         void drawChunks(Camera* _camera);
+        void loadFromFile(const std::string& _path);
 
     private:
         void splitIntoChunks(int _x, int _y, int _width, int _height, int _dimension);
 
         int mWidth, mHeight;
+        int mChunkDimension;
+        HeightMap* mHeightMap;
         Material* mMaterial;
         Transform* mTransform;
         Shader* mShader;

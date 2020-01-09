@@ -4,7 +4,7 @@ namespace NAGE
 {
     Plane::Plane(int _width, int _height)
     {
-        generateFlatPlane(_width, _height);
+        generateFlatPlane(_width, _height, mVertices, mIndices);
     }
 
     void Plane::setupPrimitive()
@@ -12,14 +12,15 @@ namespace NAGE
         setupBuffer();
     }
 
-    void Plane::generateFlatPlane(int _width, int _height)
+    void Plane::generateFlatPlane(int _width, int _height, std::vector<Vertex>& _vertices,
+        std::vector<unsigned int>& _indices)
     {
         unsigned int width = static_cast<unsigned int>(_width);
         unsigned int height = static_cast<unsigned int>(_height);
         float fWidth = static_cast<float>(width);
         float fHeight = static_cast<float>(height);
 
-        mIndices.resize(width * height * 6);
+        _indices.resize(width * height * 6);
 
         // Generate vertices.
         for (unsigned int x = 0; x < height; x++)
@@ -32,9 +33,8 @@ namespace NAGE
                  */
 
                 // Push new Vertex(objectPosition, normals, textureCoords).
-                mVertices.push_back(Vertex(
+                _vertices.push_back(Vertex(
                     Vector3f(static_cast<float>(x), 0.0f, static_cast<float>(z)),
-                    Vector3f(0.0f, 0.0f, 0.0f),
                     Vector2f(static_cast<float>(z + 0.5f) / fWidth, static_cast<float>(x + 0.5f) / fHeight)
                 ));
             }
@@ -48,18 +48,18 @@ namespace NAGE
             {
                 unsigned int offset = x * width + z;
 
-                mIndices[index] = offset;
-                mIndices[index + 1] = offset + 1;
-                mIndices[index + 2] = offset + width;
-                mIndices[index + 3] = offset + 1;
-                mIndices[index + 4] = offset + width + 1;
-                mIndices[index + 5] = offset + width;
+                _indices[index] = offset;
+                _indices[index + 1] = offset + 1;
+                _indices[index + 2] = offset + width;
+                _indices[index + 3] = offset + 1;
+                _indices[index + 4] = offset + width + 1;
+                _indices[index + 5] = offset + width;
 
                 index += 6;
             }
         }
 
         // Calculate normal vectors.
-        Primitive::calculateNormals(mVertices, mIndices);
+        Primitive::calculateNormals(_vertices, _indices);
     }
 }

@@ -29,7 +29,7 @@ namespace NAGE
         return mVertices;
     }
 
-    std::vector<unsigned int> IObject::indices()
+    std::vector<GLuint> IObject::indices()
     {
         return mIndices;
     }
@@ -39,7 +39,7 @@ namespace NAGE
         mVertices = _vertices;
     }
 
-    void IObject::setIndices(const std::vector<unsigned int>& _indices)
+    void IObject::setIndices(const std::vector<GLuint>& _indices)
     {
         mIndices = _indices;
     }

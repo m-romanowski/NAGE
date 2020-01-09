@@ -12,8 +12,8 @@ namespace NAGE
     public:
         Mesh();
         explicit Mesh(const std::string& _path);
-        Mesh(const std::vector<Vertex>& _vertices, const std::vector<unsigned int>& _indices);
-        virtual ~Mesh() override;
+        Mesh(const std::vector<Vertex>& _vertices, const std::vector<GLuint>& _indices);
+        ~Mesh() override;
 
         // Getters
         Material* material();
@@ -27,7 +27,7 @@ namespace NAGE
         void setTransformation(Transform* _transform);
 
         void loadMesh(const std::string& _path);
-        void loadMesh(const std::vector<Vertex>& _vertices, const std::vector<unsigned int>& _indices);
+        void loadMesh(const std::vector<Vertex>& _vertices, const std::vector<GLuint>& _indices);
         void bindTextures();
         void draw(Camera* _camera, Shader* _shader) override;
 

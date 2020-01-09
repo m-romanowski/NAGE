@@ -1,5 +1,5 @@
-#ifndef CUBE_H
-#define CUBE_H
+#ifndef NAGE_ENGINE_WORLD_PRIMITIVES_CUBE_H_
+#define NAGE_ENGINE_WORLD_PRIMITIVES_CUBE_H_
 
 #include "primitive.h"
 
@@ -14,4 +14,4 @@ namespace NAGE
     };
 }
 
-#endif // CUBE_H
+#endif // NAGE_ENGINE_WORLD_PRIMITIVES_CUBE_H_

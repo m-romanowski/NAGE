@@ -46,6 +46,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     $${LIB_DIRECTORY}/glad/glad.c \
+    ../../engine/render/collision/aabb.cpp \
+    ../../engine/render/collision/bs.cpp \
+    ../../engine/render/collision/plane.cpp \
+    ../../engine/render/lod/cdlod/cdlod.cpp \
+    ../../engine/render/lod/cdlod/cdlodquadtree.cpp \
+    ../../engine/render/lod/geoclipmaps/geometryclipmap.cpp \
+    ../../engine/world/light/sun.cpp \
+    ../../engine/world/primitives/sphere.cpp \
+    ../../engine/world/terrain/terrainlod.cpp \
     dialog/dialog.cpp \
     dialog/projectdialog.cpp \
     log/logwidget.cpp \
@@ -116,6 +125,18 @@ HEADERS += \
     $${LIB_DIRECTORY}/glad/glad.h \
     $${LIB_DIRECTORY}/STB/stb_image.h \
     $${LIB_DIRECTORY}/KHR/khrplatform.h \
+    ../../engine/render/collision/aabb.h \
+    ../../engine/render/collision/bs.h \
+    ../../engine/render/collision/plane.h \
+    ../../engine/render/lod/cdlod/cdlod.h \
+    ../../engine/render/lod/cdlod/cdlodquadtree.h \
+    ../../engine/render/lod/geoclipmaps/geometryclipmap.h \
+    ../../engine/util/size.h \
+    ../../engine/world/light/sun.h \
+    ../../engine/world/primitives/sphere.h \
+    ../../engine/world/procedural/diamondsquare.h \
+    ../../engine/world/procedural/lsystem.h \
+    ../../engine/world/terrain/terrainlod.h \
     dialog/dialog.h \
     dialog/projectdialog.h \
     log/logwidget.h \

@@ -68,7 +68,10 @@ namespace NAGE
         mTransform = _transform;
 
         for(auto& mesh : mMeshes)
-            mesh->setTransformation(_transform);
+        {
+            if(mesh)
+                mesh->setTransformation(_transform);
+        }
     }
 
     void Model::setShader(Shader* _shader)
@@ -109,7 +112,7 @@ namespace NAGE
 
     void Model::draw(Camera* _camera)
     {
-        if(mShader == nullptr)
+        if(!mShader)
         {
             std::error_code code = ERROR::SHADER_FAILED_TO_FIND_PROGRAM;
             Log::error(code.message());

@@ -159,9 +159,17 @@ namespace NAGE
         inline T x() const { return this->mX; }
         inline T y() const { return this->mY; }
 
+        // Static members
+        static Vector2<T> zero;
+        static Vector2<T> one;
+
     private:
         T mX, mY;
     };
+
+    // Static members initialization.
+    template <typename T> Vector2<T> Vector2<T>::zero = Vector2<T>(0, 0);
+    template <typename T> Vector2<T> Vector2<T>::one = Vector2<T>(1, 1);
 
     template <typename T>
     const Vector2<T> operator*(const T& _lhs, const Vector2<T>& _rhs)
@@ -356,6 +364,8 @@ namespace NAGE
         inline T z() const { return this->mZ; }
 
         // Static members
+        static Vector3<T> zero;
+        static Vector3<T> one;
         static Vector3<T> forward;
         static Vector3<T> up;
         static Vector3<T> right;
@@ -365,9 +375,11 @@ namespace NAGE
     };
 
     // Static member initialization.
-    template <typename T> Vector3<T> Vector3<T>::forward = Vector3<T>(0.0f, 0.0f, 1.0f);
-    template <typename T> Vector3<T> Vector3<T>::up = Vector3<T>(0.0f, 1.0f, 0.0f);
-    template <typename T> Vector3<T> Vector3<T>::right = Vector3<T>(1.0f, 0.0f, 0.0f);
+    template <typename T> Vector3<T> Vector3<T>::zero = Vector3<T>(0, 0, 0);
+    template <typename T> Vector3<T> Vector3<T>::one = Vector3<T>(1, 1, 1);
+    template <typename T> Vector3<T> Vector3<T>::forward = Vector3<T>(0, 0, 1);
+    template <typename T> Vector3<T> Vector3<T>::up = Vector3<T>(0, 1, 0);
+    template <typename T> Vector3<T> Vector3<T>::right = Vector3<T>(1, 0, 0);
 
     // Friend functions.
     template <typename T>
@@ -493,9 +505,17 @@ namespace NAGE
         inline T z() const { return this->mZ; }
         inline T w() const { return this->mW; }
 
+        // Static members
+        static Vector4<T> zero;
+        static Vector4<T> one;
+
     private:
         T mX, mY, mZ, mW;
     };
+
+    // Static members initialization.
+    template <typename T> Vector4<T> Vector4<T>::zero = Vector4<T>(0, 0, 0, 0);
+    template <typename T> Vector4<T> Vector4<T>::one = Vector4<T>(1, 1, 1, 1);
 
     // Friend functions.
     template <typename T>

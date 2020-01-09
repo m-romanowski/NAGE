@@ -1,4 +1,4 @@
-#include "engine/render/glrenderengine.h"
+    #include "engine/render/glrenderengine.h"
 #include "terrain.h"
 
 namespace NAGE
@@ -6,6 +6,8 @@ namespace NAGE
     Terrain::Terrain()
         : mWidth(0),
           mHeight(0),
+          mChunkDimension(DEFAULT_CHUNK_DIMENSION),
+          mHeightMap(nullptr),
           mTransform(new Transform)
     {
 
@@ -18,6 +20,10 @@ namespace NAGE
         // Clear all chunks.
         for(auto& chunk : mChunks)
             delete chunk;
+
+        // Clear height map data
+        if(mHeight)
+            delete mHeightMap;
     }
 
     int Terrain::width() const
@@ -30,6 +36,11 @@ namespace NAGE
         return mHeight;
     }
 
+    int Terrain::chunkDimension() const
+    {
+        return mChunkDimension;
+    }
+
     Shader* Terrain::shader()
     {
         return mShader;
@@ -40,6 +51,19 @@ namespace NAGE
         return mTransform;
     }
 
+    float Terrain::positionHeight(int _x, int _z)
+    {
+        if(!mHeightMap || _x < 0 || _x >= mWidth || _z < 0 || _z >= mHeight)
+            return 0;
+
+        return mHeightMap->noise(_x, _z);
+    }
+
+    HeightMap* Terrain::heightMap()
+    {
+        return mHeightMap;
+    }
+
     void Terrain::setWidth(int _width)
     {
         mWidth = _width;
@@ -48,6 +72,11 @@ namespace NAGE
     void Terrain::setHeight(int _height)
     {
         mHeight = _height;
+    }
+
+    void Terrain::setChunkDimension(int _size)
+    {
+        mChunkDimension = _size;
     }
 
     void Terrain::setShader(Shader* _shader)
@@ -65,31 +94,38 @@ namespace NAGE
         mTextures.push_back(_texture);
     }
 
-    void Terrain::generateFlatTerrain(int _width, int _height)
+    void Terrain::addHeightMap(HeightMap* _heightmap)
     {
+        if(mHeightMap)
+            delete mHeightMap;
 
+        mWidth = _heightmap->width();
+        mHeight = _heightmap->height();
+        mHeightMap = _heightmap;
+
+        splitIntoChunks(0, 0, mWidth, mHeight, mChunkDimension);
     }
 
-    /* Generate Perlin noise.
-     */
-    void Terrain::generateNoise(int _width, int _height, HeightMap::NoiseType _type)
+    void Terrain::addFlatTerrain(int _width, int _height)
     {
         mWidth = _width;
         mHeight = _height;
 
-        HeightMap map1;
-        float** heightMap1 = map1.generateFromNoise(_width, _height, HeightMap::NoiseType::Perlin);
+        if(mHeightMap)
+            delete mHeightMap;
 
-        useHeightMap(_width, _height, heightMap1);
-        setupBuffer();
-        //splitIntoChunks(0, 0, mWidth, mHeight, 5);
+        mHeightMap = new HeightMap;
+        mHeightMap->flat(_width, _height);
+
+        splitIntoChunks(0, 0, _width, _height, mChunkDimension);
     }
 
     /* Load mesh from the file.
      */
     void Terrain::loadFromFile(const std::string& _path)
     {
-
+        // TODO
+        NAGE_UNUSED(_path);
     }
 
     /* Send material values to the shader.
@@ -105,65 +141,17 @@ namespace NAGE
         {
             int halfWidth = _width / 2;
             int halfHeight = _height / 2;
-            int newPagesPerDimension = _dimension - 1;
+            int newDimension = _dimension - 1;
 
-            splitIntoChunks(_x, _y, halfWidth, halfHeight, newPagesPerDimension);
-            splitIntoChunks(_x + halfWidth, _y, halfWidth, halfHeight, newPagesPerDimension);
-            splitIntoChunks(_x, _y + halfHeight, halfWidth, halfHeight, newPagesPerDimension);
-            splitIntoChunks(_x + halfWidth, _y + halfHeight, halfWidth, halfHeight, newPagesPerDimension);
+            splitIntoChunks(_x, _y, halfWidth, halfHeight, newDimension);
+            splitIntoChunks(_x + halfWidth, _y, halfWidth, halfHeight, newDimension);
+            splitIntoChunks(_x, _y + halfHeight, halfWidth, halfHeight, newDimension);
+            splitIntoChunks(_x + halfWidth, _y + halfHeight, halfWidth, halfHeight, newDimension);
         }
         else
         {
             mChunks.push_back(new TerrainChunk(this, _x, _y, _width, _height));
         }
-    }
-
-    void Terrain::useHeightMap(int _width, int _height, float** _heightMap)
-    {
-        Plane primitive(_width, _height);
-        std::vector<Vertex> vertices = primitive.vertices();
-        std::vector<unsigned int> indices = primitive.indices();
-
-        for(auto& vertice : vertices)
-        {
-            int x = static_cast<int>(vertice.position.x());
-            int z = static_cast<int>(vertice.position.z());
-            vertice.position.setY(_heightMap[x][z]);
-        }
-
-
-        mVertices = vertices;
-        mIndices = indices;
-        Primitive::calculateNormals(mVertices, mIndices);
-    }
-
-    /* Draw all terrain chunks.
-     */
-    void Terrain::drawChunks(Camera *_camera)
-    {
-        for(auto& chunk : mChunks)
-        {
-            chunk->draw(_camera, mShader);
-        }
-
-        if(!mShader)
-        {
-            std::error_code code = ERROR::SHADER_FAILED_TO_FIND_PROGRAM;
-            Log::error(code.message());
-
-            return;
-        }
-
-        // We need transpose matrix for OpenGL (matrix column major).
-        mShader->use();
-        mShader->setMat4("projection", GLRenderEngine::projection().perspective().transpose());
-        mShader->setMat4("view", _camera->view().transpose());
-        mShader->setMat4("model", mTransform->model().transpose());
-
-        // Draw mesh.
-        glBindVertexArray(mVAO);
-        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(mIndices.size()), GL_UNSIGNED_INT,
-            reinterpret_cast<void*>(0));
     }
 
     void Terrain::bindTextures()
@@ -176,5 +164,13 @@ namespace NAGE
                 glBindTexture(GL_TEXTURE_2D, mTextures[i]->id());
             }
         }
+    }
+
+    /* Draw all terrain chunks.
+     */
+    void Terrain::drawChunks(Camera *_camera)
+    {
+        for(auto& chunk : mChunks)
+            chunk->draw(_camera, mShader);
     }
 }

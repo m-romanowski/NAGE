@@ -12,7 +12,7 @@ namespace NAGE
     public:
         Model();
         explicit Model(Primitive& _primitive);
-        virtual ~Model();
+        ~Model();
 
         // Getters
         std::vector<Mesh*> meshes() const;

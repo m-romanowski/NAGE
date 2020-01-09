@@ -15,6 +15,11 @@
 
 namespace NAGE
 {
+    /* Window interface.
+     *
+     * TODO:
+     *  - scroll event
+     */
     class Window
     {
     public:

@@ -18,7 +18,7 @@ namespace NAGE
         setupBuffer(); // Create buffers (VAO, VBO).
     }
 
-    Mesh::Mesh(const std::vector<Vertex>& _vertices, const std::vector<unsigned int>& _indices)
+    Mesh::Mesh(const std::vector<Vertex>& _vertices, const std::vector<GLuint>& _indices)
         : IObject(_vertices, _indices),
           mMaterial(nullptr),
           mTransform(new Transform)
@@ -73,15 +73,18 @@ namespace NAGE
 
     void Mesh::loadMesh(const std::string& _path)
     {
-        IndexedModel model = OBJModel(_path).ToIndexedModel();
+        ObjectLoader loader(_path);
 
-        for(unsigned int i = 0; i < model.positions.size(); i++)
-            mVertices.push_back(Vertex(model.positions[i], model.normals[i], model.texCoords[i]));
+        for(unsigned int i = 0; i < loader.data().position.size(); i++)
+        {
+            mVertices.push_back(Vertex(loader.data().position[i], loader.data().uv[i],
+                loader.data().normal[i]));
+        }
 
-        mIndices = model.indices;
+        mIndices = loader.data().indices;
     }
 
-    void Mesh::loadMesh(const std::vector<Vertex>& _vertices, const std::vector<unsigned int>& _indices)
+    void Mesh::loadMesh(const std::vector<Vertex>& _vertices, const std::vector<GLuint>& _indices)
     {
         mVertices = _vertices;
         mIndices = _indices;
@@ -119,5 +122,6 @@ namespace NAGE
         glBindVertexArray(mVAO);
         glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(mIndices.size()), GL_UNSIGNED_INT,
             reinterpret_cast<void*>(0));
+        //glDrawArrays(GL_TRIANGLES, 0, mVertices.size());
     }
 }

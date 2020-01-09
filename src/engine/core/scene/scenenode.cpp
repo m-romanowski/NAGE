@@ -65,7 +65,7 @@ namespace NAGE
         Log::log("Skybox has been added.");
     }
 
-    void SceneNode::addToScene(DirectionalLight* _light)
+    void SceneNode::addToScene(Sun* _light)
     {
         mSunLight = _light;
         Log::log("Sun light has been added.");
@@ -132,7 +132,7 @@ namespace NAGE
         return mSkybox;
     }
 
-    DirectionalLight* SceneNode::sunLight()
+    Sun* SceneNode::sun()
     {
         return mSunLight;
     }
@@ -162,6 +162,7 @@ namespace NAGE
     void SceneNode::renderLights()
     {
         // TMP: to change
+        // Use light to any model on scene.
         for(auto& model : mModels)
         {
             for(auto& light : mPointLights)
@@ -187,8 +188,12 @@ namespace NAGE
                 mSunLight->use(mCamera, mTerrain->shader());
         }
 
+        // Draw lights
         for(const auto& light : mPointLights)
             light.second->draw(mCamera);
+
+        if(mSunLight)
+            mSunLight->draw(mCamera);
     }
 
     void SceneNode::renderSkybox()

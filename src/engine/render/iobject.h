@@ -20,17 +20,17 @@ namespace NAGE
     {
     protected:
         IObject();
-        IObject(const std::vector<Vertex>& _vertices, const std::vector<unsigned int>& _indices);
+        IObject(const std::vector<Vertex>& _vertices, const std::vector<GLuint>& _indices);
         virtual ~IObject();
 
     public:
         // Getters
         std::vector<Vertex> vertices();
-        std::vector<unsigned int> indices();
+        std::vector<GLuint> indices();
 
         // Setters
         void setVertices(const std::vector<Vertex>& _vertices);
-        void setIndices(const std::vector<unsigned int>& _indices);
+        void setIndices(const std::vector<GLuint>& _indices);
 
         virtual void draw() {}
         virtual void draw(Camera* _camera) { NAGE_UNUSED(_camera); }

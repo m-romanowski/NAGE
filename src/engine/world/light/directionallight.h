@@ -20,7 +20,7 @@ namespace NAGE
 
         void use(Camera* _camera, Shader* _shader) override;
 
-    private:
+    protected:
         Vector3f mLightDirection;
     };
 }

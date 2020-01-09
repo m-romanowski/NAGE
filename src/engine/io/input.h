@@ -122,9 +122,7 @@ namespace NAGE
 
             // Update rest inputs states.
             for(auto& it : _container)
-            {
                 updateState<Type>(it);
-            }
         }
 
         typedef std::vector<InputInstanceType> InputContainer;

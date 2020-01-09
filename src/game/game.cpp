@@ -57,8 +57,21 @@ namespace NAGE
         // terrain->generateFlatTerrain(512, 512);
         terrain->setMaterial(terrainMaterial);
         terrain->addTexture(diff);
-        terrain->generateNoise(1024, 1024, HeightMap::NoiseType::Perlin);
-        sceneManager()->sceneByKey("editor")->addToScene(terrain);
+
+        // Heightmap && noise settings
+        HeightMap heightMap;
+        heightMap.setScale(5);
+        /*FPerlinNoise::OctaveSettings settings;
+        settings.frequency = 0.0009f;
+        settings.persistence = 0.3f;
+        settings.octaves = 15;
+        settings.amplitude = 10.0f;
+        heightMap.perlinNoise(1024, 1024, 21412312, settings);*/
+        //heightMap.diamondSquare(1025, 1025);
+        heightMap.flat(512, 512);
+
+        terrain->addHeightMap(&heightMap);
+        // sceneManager()->sceneByKey("editor")->addToScene(terrain);
 
         // Skybox
         skyboxShader = new Shader;
@@ -90,7 +103,8 @@ namespace NAGE
         lampShader->link();
 
         // Cube mesh
-        mesh = new Mesh("../resources/model/sphere.obj");
+        Sphere sphere;
+        mesh = new Mesh(sphere.vertices(), sphere.indices());
 
         // Add a new lamp (point light)
         lamp = new PointLight(mesh->vertices(), mesh->indices());
@@ -107,23 +121,25 @@ namespace NAGE
         sceneManager()->sceneByKey("editor")->addToScene("lamp", lamp);
 
         // Add a sun
-        sun = new DirectionalLight;
+        sun = new Sun;
         sun->setLightDirection(Vector3f(-0.2f, -1.0f, -1.3f));
         sceneManager()->sceneByKey("editor")->addToScene(sun);
 
         // TMP
-        /*cubeShader = new Shader;
+        cubeShader = new Shader;
         cubeShader->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
             "../src/engine/shader/lighting.vert");
         cubeShader->addShaderFromSourceFile(SHADER_TYPE::SHADER_FRAGMENT,
             "../src/engine/shader/lighting.frag");
         cubeShader->link();
 
-        cubeMesh = new Mesh("../resources/model/cube.obj");
-        diff = new Texture("../resources/texture/container.png", TextureType::TEXTURE_2D);
-        spec = new Texture("../resources/texture/container_specular.png", TextureType::TEXTURE_2D);
-        cubeMesh->addTexture(diff);
-        cubeMesh->addTexture(spec);
+        Cube cube;
+        cubeMesh = new Mesh(sphere.vertices(), sphere.indices());
+        // cubeMesh = new Mesh("../resources/model/cube.obj");
+        diffCube = new Texture("../resources/texture/container.png", TextureType::TEXTURE_2D);
+        specCube = new Texture("../resources/texture/container_specular.png", TextureType::TEXTURE_2D);
+        cubeMesh->addTexture(diffCube);
+        cubeMesh->addTexture(specCube);
 
         material = new Material;
         material->setAmbient(0.2f, 0.2f, 0.2f);
@@ -143,6 +159,6 @@ namespace NAGE
         cubeModel->addMesh(cubeMesh);
         cubeModel->setTransformation(cubeTransform);
         cubeModel->setShader(cubeShader);
-        sceneManager()->sceneByKey("editor")->addToScene("cube", cubeModel);*/
+        sceneManager()->sceneByKey("editor")->addToScene("cube", cubeModel);
     }
 }

@@ -53,6 +53,16 @@ namespace QNAGE
         IWindow::mouseReleaseEvent(static_cast<NAGE::MouseButton>(_event->button()));
     }
 
+    void GLWidget::wheelEvent(QWheelEvent* _event)
+    {
+        /*if(_event->angleDelta().y() > 0)
+            NAGE::cameraMovementSpeed += QNAGE_WHEEL_STEP;
+        else
+            NAGE::cameraMovementSpeed -= QNAGE_WHEEL_STEP;
+
+        NAGE::Log::log("Mouse movement speed updated: " + std::to_string(NAGE::cameraMovementSpeed));*/
+    }
+
     void GLWidget::resizeGL(int _width, int _height)
     {
         IWindow::resizeEvent(_width, _height);

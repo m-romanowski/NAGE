@@ -6,7 +6,7 @@
 #include "engine/components/camera/camera.h"
 #include "engine/render/model/model.h"
 #include "engine/world/light/pointlight.h"
-#include "engine/world/light/directionallight.h"
+#include "engine/world/light/sun.h"
 #include "engine/world/skybox/skybox.h"
 #include "engine/world/terrain/terrain.h"
 
@@ -26,14 +26,14 @@ namespace NAGE
         PointLight* getLightObjectByKey(const std::string& _key);
         Camera* camera();
         Skybox* skybox();
-        DirectionalLight* sunLight();
+        Sun* sun();
         Terrain* terrain();
 
         // Childs oprations.
         void addToScene(const std::string& _key, Model* _model); // Models
         void addToScene(const std::string& _key, PointLight* _light); // Lights
         void addToScene(Skybox* _skybox); // Skybox
-        void addToScene(DirectionalLight* _sunLight); // Sun light
+        void addToScene(Sun* _sunLight); // Sun light
         void addToScene(Terrain* _terrain); // Terrain
         void addToScene(Camera* _camera); // Scene camera
         void removeFromScene(const std::string _key);
@@ -46,7 +46,7 @@ namespace NAGE
         std::unordered_map<std::string, Model*> mModels;
         std::unordered_map<std::string, PointLight*> mPointLights;
         Skybox* mSkybox;
-        DirectionalLight* mSunLight;
+        Sun* mSunLight;
         Terrain* mTerrain;
         Camera* mCamera;
     };
