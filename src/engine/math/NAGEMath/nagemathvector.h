@@ -118,7 +118,6 @@ namespace NAGE
         inline T length() { return static_cast<T>(std::sqrt(this->mX * this->mX + this->mY * this->mY)); }
         inline T lengthSquared() { return this->mX * this->mX + this->mY * this->mY; }
         inline T max() { return (this->mX > this->mY) ? this->mX : this->mY; }
-        inline T dot(const Vector2<T>& _rhs) { return this->mX * _rhs.mX + this->mY * _rhs.mY; }
         inline T cross(const Vector2<T>& _rhs) { return this->mX * _rhs.mY - this->mY * _rhs.mX; }
         inline T lerp(const Vector2<T>& _rhs, T _factor) { return (_rhs - *this) * _factor + *this; }
 
@@ -151,6 +150,26 @@ namespace NAGE
 
             return Vector2(static_cast<T>((this->mX * c - this->mY * s)),
                 static_cast<T>((this->mX * s + this->mY * c)));
+        }
+
+        inline T dot(const Vector2<T>& _rhs)
+        {
+            return this->mX * _rhs.mX + this->mY * _rhs.mY;
+        }
+
+        inline static T dot(const Vector2<T>& _lhs, const Vector2<T>& _rhs)
+        {
+            return _lhs.mX * _rhs.mX + _lhs.mY * _rhs.mY;
+        }
+
+        inline Vector2<T> abs()
+        {
+            return Vector2(std::abs(mX), std::abs(mY));
+        }
+
+        inline static Vector2<T> abs(const Vector2<T>& _rhs)
+        {
+            return Vector2(std::abs(_rhs.mX), std::abs(_rhs.mY));
         }
 
         // Getters and setters.
@@ -344,6 +363,8 @@ namespace NAGE
             const T x = this->mY * _rhs.mZ - _rhs.mY * this->mZ;
             const T y = this->mZ * _rhs.mX - _rhs.mZ * this->mX;
             const T z = this->mX * _rhs.mY - _rhs.mX * this->mY;
+
+            return Vector3(x, y, z);
         }
 
         inline static Vector3<T> cross(const Vector3<T>& _lhs, const Vector3<T>& _rhs)
@@ -353,6 +374,16 @@ namespace NAGE
             const T z = _lhs.x() * _rhs.y() - _rhs.x() * _lhs.y();
 
             return Vector3(x, y, z);
+        }
+
+        inline Vector3<T> abs()
+        {
+            return Vector3(std::abs(mX), std::abs(mY), std::abs(mZ));
+        }
+
+        inline static Vector3<T> abs(const Vector3<T>& _rhs)
+        {
+            return Vector3(std::abs(_rhs.mX), std::abs(_rhs.mY), std::abs(_rhs.mZ));
         }
 
         // Getters and setters.

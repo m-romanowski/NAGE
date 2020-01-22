@@ -38,6 +38,87 @@ namespace NAGE
         return mHeight;
     }
 
+    /* Texture pixel color data.
+     *
+     * @return unsigned char*
+     */
+    unsigned char* Texture::data()
+    {
+        return mData;
+    }
+
+    std::vector<unsigned char> Texture::redColorData()
+    {
+        std::vector<unsigned char> result;
+
+        for(int i = 0; i < mWidth; i++)
+        {
+            for(int j = 0; j < mHeight; j++)
+                result.push_back(Image::red(mData, mFormat, mWidth, i, j));
+        }
+
+        return result;
+    }
+
+    std::vector<unsigned char> Texture::greenColorData()
+    {
+        std::vector<unsigned char> result;
+
+        for(int i = 0; i < mWidth; i++)
+        {
+            for(int j = 0; j < mHeight; j++)
+            {
+                result.push_back(Image::green(mData, mFormat, mWidth, i, j));
+            }
+        }
+
+        return result;
+    }
+
+    std::vector<unsigned char> Texture::blueColorData()
+    {
+        std::vector<unsigned char> result;
+
+        for(int i = 0; i < mWidth; i++)
+        {
+            for(int j = 0; j < mHeight; j++)
+            {
+                result.push_back(Image::blue(mData, mFormat, mWidth, i, j));
+            }
+        }
+
+        return result;
+    }
+
+    std::vector<unsigned char> Texture::alphaColorData()
+    {
+        std::vector<unsigned char> result;
+
+        for(int i = 0; i < mWidth; i++)
+        {
+            for(int j = 0; j < mHeight; j++)
+            {
+                result.push_back(Image::alpha(mData, mFormat, mWidth, i, j));
+            }
+        }
+
+        return result;
+    }
+
+    /* Pixel color at (x, y) position
+     *
+     * @return unsigned char[4] - RGBA value
+     */
+    unsigned char* Texture::dataAt(int _x, int _y)
+    {
+        // RGBA color
+        unsigned char* pixelColor = new unsigned char[4];
+        Image::colorAt(mData, mFormat, mWidth, _x, _y, &pixelColor[0], &pixelColor[1],
+            &pixelColor[2], &pixelColor[3]);
+
+        return pixelColor;
+    }
+
     /* Texture format.
      *
      * @return GLenum { GL_RED, GL_RGB, GL_RGBA }
@@ -96,7 +177,7 @@ namespace NAGE
         mTextureFiltering = _type;
     }
 
-    /* Load and initialize texture from image.
+    /* Load and initialize texture.
      *
      * @param std::string - path to texture.
      */
@@ -105,12 +186,12 @@ namespace NAGE
         glGenTextures(1, &mId);
 
         Image image(_path);
-        unsigned char* data = image.data();
+        mData = image.data();
         mFormat = static_cast<GLenum>(image.format());
         mWidth = image.width();
         mHeight = image.height();
 
-        if(data)
+        if(mData)
         {
             GLenum textureFormat;
 
@@ -127,7 +208,7 @@ namespace NAGE
             {
                 glBindTexture(GL_TEXTURE_2D, mId);
                 glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(textureFormat), mWidth, mHeight,
-                    0, textureFormat, GL_UNSIGNED_BYTE, data);
+                    0, textureFormat, GL_UNSIGNED_BYTE, mData);
                 glGenerateMipmap(GL_TEXTURE_2D);
 
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, mTextureWrapping.x());
@@ -136,7 +217,7 @@ namespace NAGE
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mTextureFiltering.y());
             }
 
-            image.free();
+            // image.free();
         }
     }
 }

@@ -27,6 +27,7 @@ namespace NAGE
         // Getters
         std::vector<Vertex> vertices();
         std::vector<GLuint> indices();
+        unsigned int size() const;
 
         // Setters
         void setVertices(const std::vector<Vertex>& _vertices);

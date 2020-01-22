@@ -24,6 +24,10 @@ namespace NAGE
         float maxY() const;
         float minZ() const;
         float maxZ() const;
+        Vector3f min() const;
+        Vector3f max() const;
+        Vector3f center() const;
+        Vector3f extent() const;
 
         // Setters
         void setMinX(float _x);
@@ -35,15 +39,19 @@ namespace NAGE
         void setX(float _minX, float _maxX);
         void setY(float _minY, float _maxY);
         void setZ(float _minZ, float _maxZ);
+        void setMin(const Vector3f _min);
+        void setMax(const Vector3f _max);
+        void setMinMax(const Vector3f _min, const Vector3f _max);
 
-        // Per object methods.
+        // AABB
         bool intersect(const AABB _box);
+        bool intersect(const Vector3f _min, const Vector3f _max);
+        // BS
         bool intersect(const BS _bs);
+        bool intersect(const Vector3f _point, float _radius);
+        // Point
         bool isPointInside(const Vector3f _point);
-
-        // Static methods.
-        static bool intersect(const AABB _boxA, const AABB _boxB);
-        static bool isPointInside(const AABB _box, const Vector3f _point);
+        bool isPointInside(float _x, float _y, float _z);
 
     private:
         float mMinX, mMaxX;

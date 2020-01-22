@@ -24,7 +24,7 @@ namespace NAGE
         static void generateSphere(std::vector<Vertex>& _vertices, std::vector<unsigned int>& _indices,
             unsigned int _sectorCount = 36, unsigned int _stackCount = 18, float _radius = 1.0f);
 
-    private:
+    protected:
         unsigned int mSectorCount, mStackCount;
         float mRadius;
     };

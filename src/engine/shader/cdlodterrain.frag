@@ -1,6 +1,6 @@
+/* Materials source: http://devernay.free.fr/cours/opengl/materials.html
+ */
 #version 450 core
-
-// Materials source: http://devernay.free.fr/cours/opengl/materials.html
 
 // Define max array size of point lights.
 #define MAX_POINT_LIGHTS_COUNT 20
@@ -50,10 +50,31 @@ uniform int pointLightCount;
 uniform DirectionalLight directionalLight; // Directional light.
 uniform vec3 cameraPosition; // Current camera position.
 
+/* Returns result color (ambient + diffuse + specular) for point light.
+ *
+ * @param { PointLight } _light - point light settings
+ * @return { vec3 } - ambient + diffuse + specular color
+ */
 vec3 getPointLight(PointLight _light);
+
+/* Returns result color (ambient + diffuse + specular) for directional (sun) light.
+ *
+ * @param { DirectionalLight } - directional light settings
+ * @return { vec3 } - ambient + diffuse + specular color
+ */
 vec3 getDirectionalLight(DirectionalLight _light);
+
+/* Color (rgb) based on textures.
+ *
+ * @return { vec3 } - rgb color
+ */
 vec3 combineColorFromTexturesRGB();
-vec4 combineColorFromTextures();
+
+/* Color based on textures.
+ *
+ * @return { vec4 } - rgba color 
+ */
+vec4 combineColorFromTexturesRGBA();
 
 void main()
 {
@@ -137,10 +158,9 @@ vec3 getDirectionalLight(DirectionalLight _light)
 vec3 combineColorFromTexturesRGB()
 {
     return texture(material.grass, fragmentTextureCoords).rgb;
-    //return fragmentColor.xyz;
 }
 
-vec4 combineColorFromTextures()
+vec4 combineColorFromTexturesRGBA()
 {
     return texture(material.grass, fragmentTextureCoords);
 }

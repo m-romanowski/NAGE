@@ -3,9 +3,9 @@
 
 #include "engine/core/igame.h"
 #include "engine/world/light/sun.h"
-#include "engine/world/terrain/terrain.h"
 #include "engine/world/primitives/cube.h"
 #include "engine/world/primitives/sphere.h"
+#include <engine/world/terrain/cdlodterrain.h>
 
 namespace NAGE
 {
@@ -17,21 +17,24 @@ namespace NAGE
 
         void initializeScene() override;
     private:
-        Shader *lightingShader, *lampShader, *skyboxShader, *cubeShader;
-        Mesh* mesh, *cubeMesh;
-        Model* cubeModel;
-        Material* material;
-        Transform *transform, *cubeTransform;
-
-        PointLight* lamp;
-        Sun* sun;
+        // Skybox
+        Shader* skyboxShader;
         Skybox* skybox;
-        Texture* diff, *spec, *diffCube, *specCube;
+
+        // Lamp
+        Shader* lampShader;
+        PointLight* lamp;
+        Transform* lampTransform;
+
+        // Sun
+        Sun* sun;
 
         // Terrain
-        Terrain* terrain;
         Shader* terrainShader;
+        Texture* terrainTexture1;
         Material* terrainMaterial;
+        HeightMap* heightMap;
+        CDLODTerrain* cdlodTerrain;
     };
 }
 

@@ -36,7 +36,7 @@ namespace NAGE
         {
             key = std::string("scene") + std::to_string(++size);
 
-        } while(!STL_UTIL::checkKey(mChildren, key));
+        } while(!STLUTIL::checkKey(mChildren, key));
 
         // Append to scene manager container.
         SceneNode* sceneNode = new SceneNode;
@@ -48,7 +48,7 @@ namespace NAGE
 
     void SceneManager::addChild(const std::string& _key, SceneNode* _node)
     {
-        if(STL_UTIL::checkKey(mChildren, _key))
+        if(STLUTIL::checkKey(mChildren, _key))
         {
             std::error_code code = ERROR::SCENEMANAGER_FAILED_TO_ADD_NODE;
             Log::error(code.message());
@@ -61,7 +61,7 @@ namespace NAGE
 
     void SceneManager::removeChild(const std::string& _key)
     {
-        if(!STL_UTIL::checkKey(mChildren, _key))
+        if(!STLUTIL::checkKey(mChildren, _key))
         {
             // Print error if not find the key.
             std::error_code code = ERROR::SCENE_FAILED_TO_FIND_KEY;

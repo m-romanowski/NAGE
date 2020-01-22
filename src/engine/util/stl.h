@@ -1,15 +1,15 @@
-#ifndef NAGE_ENGINE_UTIL_STL_H_
-#define NAGE_ENGINE_UTIL_STL_H_
+#ifndef NAGE_ENGINE_UTIL_STLUTIL_H_
+#define NAGE_ENGINE_UTIL_STLUTIL_H_
 
 #include <string>
 #include <unordered_map>
 
 namespace NAGE
 {
-    class STL_UTIL
+    class STLUTIL
     {
     public:
-        STL_UTIL() {}
+        STLUTIL() {}
 
         // Check if the key exists in unordered_map (models, lights).
         template <typename T>
@@ -23,4 +23,4 @@ namespace NAGE
     };
 }
 
-#endif // NAGE_ENGINE_UTIL_STL_H_
+#endif // NAGE_ENGINE_UTIL_STLUTIL_H_

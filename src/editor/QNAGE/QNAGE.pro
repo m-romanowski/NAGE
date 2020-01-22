@@ -48,13 +48,18 @@ SOURCES += \
     $${LIB_DIRECTORY}/glad/glad.c \
     ../../engine/render/collision/aabb.cpp \
     ../../engine/render/collision/bs.cpp \
-    ../../engine/render/collision/plane.cpp \
+    ../../engine/render/collision/collisionplane.cpp \
     ../../engine/render/lod/cdlod/cdlod.cpp \
+    ../../engine/render/lod/cdlod/cdlodnode.cpp \
     ../../engine/render/lod/cdlod/cdlodquadtree.cpp \
+    ../../engine/render/lod/cdlod/cdlodselectednode.cpp \
     ../../engine/render/lod/geoclipmaps/geometryclipmap.cpp \
     ../../engine/world/light/sun.cpp \
+    ../../engine/world/primitives/gridmesh.cpp \
     ../../engine/world/primitives/sphere.cpp \
-    ../../engine/world/terrain/terrainlod.cpp \
+    ../../engine/world/terrain/cdlodterrain.cpp \
+    ../../engine/world/terrain/cdlodterrainchunk.cpp \
+    ../../engine/world/terrain/iterrain.cpp \
     dialog/dialog.cpp \
     dialog/projectdialog.cpp \
     log/logwidget.cpp \
@@ -99,10 +104,6 @@ SOURCES += \
     ../../engine/render/model/mesh.cpp \
     ../../engine/render/model/texture.cpp \
     ../../engine/world/skybox/skybox.cpp \
-    ../../engine/world/terrain/terrain.cpp \
-    ../../engine/world/terrain/quadtree.cpp \
-    ../../engine/world/terrain/quadtreenode.cpp \
-    ../../engine/world/terrain/terrainchunk.cpp \
     ../../engine/world/light/directionallight.cpp \
     ../../engine/world/light/pointlight.cpp \
     ../../engine/world/light/light.cpp \
@@ -127,16 +128,23 @@ HEADERS += \
     $${LIB_DIRECTORY}/KHR/khrplatform.h \
     ../../engine/render/collision/aabb.h \
     ../../engine/render/collision/bs.h \
-    ../../engine/render/collision/plane.h \
+    ../../engine/render/collision/collisionplane.h \
     ../../engine/render/lod/cdlod/cdlod.h \
+    ../../engine/render/lod/cdlod/cdlodnode.h \
     ../../engine/render/lod/cdlod/cdlodquadtree.h \
+    ../../engine/render/lod/cdlod/cdlodselectednode.h \
+    ../../engine/render/lod/cdlod/cdlodsettings.h \
     ../../engine/render/lod/geoclipmaps/geometryclipmap.h \
+    ../../engine/render/vertexhelper.h \
     ../../engine/util/size.h \
     ../../engine/world/light/sun.h \
+    ../../engine/world/primitives/gridmesh.h \
     ../../engine/world/primitives/sphere.h \
     ../../engine/world/procedural/diamondsquare.h \
     ../../engine/world/procedural/lsystem.h \
-    ../../engine/world/terrain/terrainlod.h \
+    ../../engine/world/terrain/cdlodterrain.h \
+    ../../engine/world/terrain/cdlodterrainchunk.h \
+    ../../engine/world/terrain/iterrain.h \
     dialog/dialog.h \
     dialog/projectdialog.h \
     log/logwidget.h \
@@ -191,10 +199,6 @@ HEADERS += \
     ../../engine/render/model/model.h \
     ../../engine/render/model/texture.h \
     ../../engine/world/skybox/skybox.h \
-    ../../engine/world/terrain/terrain.h \
-    ../../engine/world/terrain/quadtree.h \
-    ../../engine/world/terrain/quadtreenode.h \
-    ../../engine/world/terrain/terrainchunk.h \
     ../../engine/world/light/directionallight.h \
     ../../engine/world/light/pointlight.h \
     ../../engine/world/light/light.h \

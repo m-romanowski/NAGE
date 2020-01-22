@@ -20,6 +20,12 @@ namespace NAGE
         GLuint id() const;
         int width() const;
         int height() const;
+        unsigned char* data();
+        std::vector<unsigned char> redColorData();
+        std::vector<unsigned char> greenColorData();
+        std::vector<unsigned char> alphaColorData();
+        std::vector<unsigned char> blueColorData();
+        unsigned char* dataAt(int _x, int _y);
         GLenum format() const;
         TextureType type() const;
         Vector3<GLint> textureWrapping() const;
@@ -35,6 +41,7 @@ namespace NAGE
         GLuint mId;
         TextureType mType;
         int mWidth, mHeight;
+        unsigned char* mData;
         GLenum mFormat;
         Vector3<GLint> mTextureWrapping; // S, T, R axis
         Vector2<GLint> mTextureFiltering; // MIN - minifying, MAG - magnifying

@@ -14,7 +14,7 @@
  */
 namespace NAGE
 {
-    // Geometry clipmap mesh (block, ring fixup, etc)
+    // Geometry clipmap mesh (block, ring fixup, degenerate)
     class GeometryClipMapMesh
     {
     public:

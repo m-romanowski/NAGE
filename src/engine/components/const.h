@@ -11,7 +11,7 @@ namespace NAGE
 
     // Default camera settings.
     constexpr float cameraSensitivity = 0.2f;
-    constexpr float cameraMovementSpeed = 0.1f;
+    constexpr float cameraMovementSpeed = 0.05f;
 }
 
 #endif // NAGE_CONST_H_

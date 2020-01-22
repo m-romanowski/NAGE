@@ -1,3 +1,4 @@
+#include "engine/render/vertexhelper.h"
 #include "cube.h"
 
 namespace NAGE
@@ -37,7 +38,7 @@ namespace NAGE
             6, 7, 3
         };
 
-        Primitive::calculateNormals(mVertices, mIndices);
+        VertexHelper::calculateNormals(mVertices, mIndices);
     }
 
     void Cube::setupPrimitive()

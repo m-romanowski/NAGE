@@ -1,119 +1,88 @@
+#include "engine/components/image.h"
 #include "heightmap.h"
+
+#include <QDebug>
 
 namespace NAGE
 {
     HeightMap::HeightMap()
-        : mBuffer(nullptr),
-          mScale(1.0f),
-          mWidth(0),
-          mHeight(0)
+        : mHeightMapTexture(nullptr)
     {
 
     }
 
     HeightMap::~HeightMap()
     {
-        if(mBuffer)
-            delete[] mBuffer;
+        delete mHeightMapTexture;
     }
 
-    float HeightMap::noise(int _x, int _z) const
+    float HeightMap::heightAt(int _x, int _z) const
     {
-        return mBuffer[_x * mHeight + _z];
+        assert(_x >= 0 && _x < width() && _z >= 0 && _z < height());
+        return (mData[_z * width() + _x] * 0.2);
     }
 
-    float HeightMap::minValueFromArea(int _x, int _z, int _xOffset, int _zOffset)
+    float HeightMap::minValueFromArea(int _x, int _z, int _xOffset, int _zOffset) const
     {
-        assert(_x >= 0 && _x < mWidth && _z >=0 && _z < mHeight);
+        assert(_x >= 0 && _x < width() && _z >= 0 && _z < height());
 
-        float minValue = mBuffer[_x * mHeight + _z];
-        for(int z = _z + 1; z < _z + _zOffset; z++)
+        float minValue = 65535; // short (see: CDLOD documentation)
+        for(int x = _x; x < _x + _xOffset; x++)
         {
-            for(int x = _x + 1; x < _x + _xOffset; x++)
+            for(int z = _z; z < _z + _zOffset; z++)
             {
-                if(minValue < mBuffer[_x * mHeight + _z])
-                    minValue = mBuffer[_x + mHeight + _z];
+                minValue = std::min(minValue, heightAt(x, z));
             }
         }
 
         return minValue;
     }
 
-    float HeightMap::maxValueFromArea(int _x, int _z, int _xOffset, int _zOffset)
+    float HeightMap::maxValueFromArea(int _x, int _z, int _xOffset, int _zOffset) const
     {
-        assert(_x >= 0 && _x < mWidth && _z >=0 && _z < mHeight);
+        assert(_x >= 0 && _x < width() && _z >= 0 && _z < height());
 
-        float maxValue = mBuffer[_x * mHeight + _z];
-        for(int z = _z + 1; z < _z + _zOffset; z++)
+        float maxValue = 0;
+        for(int x = _x; x < _x + _xOffset; x++)
         {
-            for(int x = _x + 1; x < _x + _xOffset; x++)
+            for(int z = _z; z < _z + _zOffset; z++)
             {
-                if(maxValue > mBuffer[_x * mHeight + _z])
-                    maxValue = mBuffer[_x + mHeight + _z];
+                maxValue = std::max(maxValue, heightAt(x, z));
             }
         }
 
         return maxValue;
     }
 
-    float HeightMap::scale() const
-    {
-        return mScale;
-    }
-
     int HeightMap::width() const
     {
-        return mWidth;
+        return mHeightMapTexture->width();
     }
 
     int HeightMap::height() const
     {
-        return mHeight;
+        return mHeightMapTexture->height();
     }
 
     Size<int> HeightMap::size() const
     {
-        return Size<int>(mWidth, mHeight);
+        return Size<int>(mHeightMapTexture->width(), mHeightMapTexture->height());
     }
 
-    void HeightMap::setScale(float _scale)
+    GLuint HeightMap::textureId() const
     {
-        mScale = _scale;
-    }
-
-    void HeightMap::setValue(int _x, int _z, float _value)
-    {
-        mBuffer[_x * mHeight + _z] = _value;
-    }
-
-    void HeightMap::allocate()
-    {
-        assert(mWidth > 0 && mHeight > 0);
-        mBuffer = new float[mWidth * mHeight];
-
-        for(int z = 0; z < mHeight; z++)
-        {
-            for(int x = 0; x < mWidth; x++)
-            {
-                setValue(x, z, 0);
-            }
-        }
+        return mHeightMapTexture->id();
     }
 
     void HeightMap::flat(int _width, int _height)
     {
         assert(_width > 0 && _height > 0);
 
-        // Allocate memory.
-        mWidth = _width;
-        mHeight = _height;
-        allocate();
-
-        for(int z = 0; z < mHeight; z++)
+        for(int z = 0; z < _height; z++)
         {
-            for(int x = 0; x < mWidth; x++)
+            for(int x = 0; x < _width; x++)
             {
-                setValue(x, z, 0.0f);
+                //setValue(x, z, 0.0f);
             }
         }
     }
@@ -127,19 +96,14 @@ namespace NAGE
     {
         assert(_width > 0 && _height > 0);
 
-        // Allocate memory.
-        mWidth = _width;
-        mHeight = _height;
-        allocate();
-
         FPerlinNoise noise(_seed);
         if(noise.settings != _settings) noise.settings = _settings;
 
-        for(int z = 0; z < mHeight; z++)
+        for(int z = 0; z < _height; z++)
         {
-            for(int x = 0; x < mWidth; x++)
+            for(int x = 0; x < _width; x++)
             {
-                setValue(x, z, noise.FBM(x, z, 0) * mScale);
+                //setValue(x, z, noise.FBM(x / mScale, z / mScale, 0) * mScale);
             }
         }
     }
@@ -153,17 +117,13 @@ namespace NAGE
     {
         assert(_width % 2 == 1 && _height % 2 == 1); // 2 ^ n + 1
 
-        mWidth = _width;
-        mHeight = _height;
-        allocate();
-
         DiamondSquare noise(_width, _height);
 
-        for(int z = 0; z < mHeight; z++)
+        for(int z = 0; z < _height; z++)
         {
-            for(int x = 0; x < mWidth; x++)
+            for(int x = 0; x < _width; x++)
             {
-                setValue(x, z, noise.value(x, z) * mScale);
+                // setValue(x, z, noise.value(x / mScale, z / mScale) * mScale);
             }
         }
     }
@@ -171,5 +131,11 @@ namespace NAGE
     void HeightMap::diamondSquare(Size<int> _size)
     {
         diamondSquare(_size.width(), _size.height());
+    }
+
+    void HeightMap::loadFromFile(const std::string& _path)
+    {
+        mHeightMapTexture = new Texture(_path, TextureType::TEXTURE_2D);
+        mData = mHeightMapTexture->redColorData();
     }
 }

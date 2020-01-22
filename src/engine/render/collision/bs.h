@@ -31,14 +31,15 @@ namespace NAGE
         void setPoint(const Vector3f _point);
         void setRadius(float _radius);
 
-        // Per object methods.
+        // AABB
         bool intersect(const AABB _box);
+        bool intersect(const Vector3f _min, const Vector3f _max);
+        // BS
         bool intersect(const BS _bs);
+        bool intersect(const Vector3f _point, float _radius);
+        // Point
         bool isPointInsideSphere(const Vector3f _point);
-
-        // Static methods.
-        bool intersect(const BS _bsA, const BS _bsB);
-        static bool isPointInsideSphere(const BS _bs, const Vector3f _point);
+        bool isPointInsideSphere(float _x, float _y, float _z);
 
     private:
         float mX, mY, mZ; // Sphere position

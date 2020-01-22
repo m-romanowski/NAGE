@@ -38,6 +38,26 @@ namespace NAGE
         return mMaxZ;
     }
 
+    Vector3f AABB::min() const
+    {
+        return Vector3f(mMinX, mMinY, mMinZ);
+    }
+
+    Vector3f AABB::max() const
+    {
+        return Vector3f(mMaxX, mMaxY, mMaxZ);
+    }
+
+    Vector3f AABB::center() const
+    {
+        return 0.5f * (min() + max());
+    }
+
+    Vector3f AABB::extent() const
+    {
+        return max() - min();
+    }
+
     void AABB::setMinX(float _x)
     {
         mMinX = _x;
@@ -86,6 +106,26 @@ namespace NAGE
         mMaxZ = _maxZ;
     }
 
+    void AABB::setMin(const Vector3f _min)
+    {
+        mMinX = _min.x();
+        mMinY = _min.y();
+        mMinZ = _min.z();
+    }
+
+    void AABB::setMax(const Vector3f _max)
+    {
+        mMaxX = _max.x();
+        mMaxY = _max.y();
+        mMaxZ = _max.z();
+    }
+
+    void AABB::setMinMax(const Vector3f _min, const Vector3f _max)
+    {
+        setMin(_min);
+        setMax(_max);
+    }
+
     bool AABB::intersect(const BS _bs)
     {
         float x = std::max(mMinX, std::min(_bs.x(), mMaxX));
@@ -99,6 +139,15 @@ namespace NAGE
         return distance < _bs.radius();
     }
 
+    bool AABB::intersect(const Vector3f _point, float _radius)
+    {
+        BS boundingSphere;
+        boundingSphere.setPoint(_point);
+        boundingSphere.setRadius(_radius);
+
+        return intersect(boundingSphere);
+    }
+
     bool AABB::intersect(const AABB _box)
     {
         return (mMinX <= _box.mMaxX && mMaxX >= _box.mMinX) &&
@@ -106,11 +155,14 @@ namespace NAGE
                (mMinZ <= _box.mMinZ && mMaxZ >= _box.mMinZ);
     }
 
-    bool AABB::intersect(const AABB _boxA, const AABB _boxB)
+    bool AABB::intersect(const Vector3f _min, const Vector3f _max)
     {
-        return (_boxA.mMinX <= _boxB.mMaxX && _boxA.mMaxX >= _boxB.mMinX) &&
-               (_boxA.mMinY <= _boxB.mMaxY && _boxA.mMaxY >= _boxB.mMinY) &&
-               (_boxA.mMinZ <= _boxB.mMinZ && _boxA.mMaxZ >= _boxB.mMinZ);
+        AABB boundingBox;
+        boundingBox.setX(_min.x(), _max.x());
+        boundingBox.setY(_min.y(), _max.y());
+        boundingBox.setZ(_min.z(), _max.z());
+
+        return intersect(boundingBox);
     }
 
     bool AABB::isPointInside(const Vector3f _point)
@@ -120,10 +172,8 @@ namespace NAGE
                (_point.z() >= mMinZ && _point.z() <= mMaxZ);
     }
 
-    bool AABB::isPointInside(const AABB _box, const Vector3f _point)
+    bool AABB::isPointInside(float _x, float _y, float _z)
     {
-        return (_point.x() >= _box.mMinX && _point.x() <= _box.mMaxX) &&
-               (_point.y() >= _box.mMinY && _point.y() <= _box.mMaxY) &&
-               (_point.z() >= _box.mMinZ && _point.z() <= _box.mMaxZ);
+        return isPointInside(Vector3f(_x, _y, _z));
     }
 }

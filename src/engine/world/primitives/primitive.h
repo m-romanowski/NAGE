@@ -6,6 +6,11 @@
 
 namespace NAGE
 {
+    /* Primitive interface
+     *
+     * - basic shader
+     * - basic transform
+     */
     class Primitive : public IObject
     {
     public:
@@ -25,8 +30,6 @@ namespace NAGE
         // Setup primitve vertices and indices.
         void initialize();
         virtual void draw(Camera* _camera) override;
-        static void calculateNormals(std::vector<Vertex>& _vertices,
-            std::vector<unsigned int>& _indices);
 
     protected:
         virtual void setupPrimitive() = 0;

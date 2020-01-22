@@ -1,3 +1,4 @@
+#include "engine/render/vertexhelper.h"
 #include "plane.h"
 
 namespace NAGE
@@ -60,6 +61,6 @@ namespace NAGE
         }
 
         // Calculate normal vectors.
-        Primitive::calculateNormals(_vertices, _indices);
+        VertexHelper::calculateNormals(_vertices, _indices);
     }
 }

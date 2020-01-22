@@ -18,10 +18,6 @@ namespace NAGE
     {
         // Clear vertex buffers.
         clearBuffers();
-
-        // Clear vertex data
-        mVertices.clear();
-        mIndices.clear();
     }
 
     std::vector<Vertex> IObject::vertices()
@@ -32,6 +28,11 @@ namespace NAGE
     std::vector<GLuint> IObject::indices()
     {
         return mIndices;
+    }
+
+    unsigned int IObject::size() const
+    {
+        return mIndices.size();
     }
 
     void IObject::setVertices(const std::vector<Vertex>& _vertices)
@@ -84,6 +85,10 @@ namespace NAGE
 
     void IObject::clearBuffers()
     {
+        // Clear vertex data
+        mVertices.clear();
+        mIndices.clear();
+
         glDeleteVertexArrays(1, &mVAO);
         glDeleteBuffers(1, &mVBO);
         glDeleteBuffers(1, &mEBO);

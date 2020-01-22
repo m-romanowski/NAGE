@@ -30,7 +30,7 @@ namespace NAGE
     void SceneNode::addToScene(const std::string& _key, Model* _model)
     {
         // Check if the key already exists.
-        if(STL_UTIL::checkKey(mModels, _key) || STL_UTIL::checkKey(mPointLights, _key))
+        if(STLUTIL::checkKey(mModels, _key) || STLUTIL::checkKey(mPointLights, _key))
         {
             std::error_code code = ERROR::SCENE_FAILED_TO_ADD_MODEL;
             Log::error(code.message());
@@ -47,7 +47,7 @@ namespace NAGE
     void SceneNode::addToScene(const std::string& _key, PointLight* _light)
     {
         // Check if the key already exists.
-        if(STL_UTIL::checkKey(mModels, _key) || STL_UTIL::checkKey(mPointLights, _key))
+        if(STLUTIL::checkKey(mModels, _key) || STLUTIL::checkKey(mPointLights, _key))
         {
             std::error_code code = ERROR::SCENE_FAILED_TO_ADD_LIGHT;
             Log::error(code.message());
@@ -71,7 +71,7 @@ namespace NAGE
         Log::log("Sun light has been added.");
     }
 
-    void SceneNode::addToScene(Terrain* _terrain)
+    void SceneNode::addToScene(ITerrain* _terrain)
     {
         mTerrain = _terrain;
         Log::log("Terrain has been added.");
@@ -88,14 +88,14 @@ namespace NAGE
     void SceneNode::removeFromScene(const std::string _key)
     {
         // Check if key exists in any scene dictionaries (models, lights).
-        if(STL_UTIL::checkKey(mModels, _key))
+        if(STLUTIL::checkKey(mModels, _key))
         {
             mModels.erase(_key);
             Log::log(_key + " (model object) has been removed.");
             return;
         }
 
-        if(STL_UTIL::checkKey(mPointLights, _key))
+        if(STLUTIL::checkKey(mPointLights, _key))
         {
             mPointLights.erase(_key);
             Log::log(_key + " (point light) has been removed.");
@@ -137,7 +137,7 @@ namespace NAGE
         return mSunLight;
     }
 
-    Terrain* SceneNode::terrain()
+    ITerrain* SceneNode::terrain()
     {
         return mTerrain;
     }
@@ -176,9 +176,9 @@ namespace NAGE
                 mSunLight->use(mCamera, model.second->shader());
         }
 
+        // TMP: to change
         if(mTerrain)
         {
-            // TMP: to change
             for(auto& light : mPointLights)
                 light.second->use(mCamera, mTerrain->shader());
 
@@ -209,7 +209,7 @@ namespace NAGE
         {
             mTerrain->useMaterial();
             mTerrain->bindTextures();
-            mTerrain->drawChunks(mCamera);
+            mTerrain->render(mCamera);
         }
     }
 }

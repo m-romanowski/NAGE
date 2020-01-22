@@ -73,6 +73,16 @@ namespace NAGE
         return distance < mRadius;
     }
 
+    bool BS::intersect(const Vector3f _min, const Vector3f _max)
+    {
+        AABB boundingBox;
+        boundingBox.setX(_min.x(), _max.x());
+        boundingBox.setY(_min.y(), _max.y());
+        boundingBox.setZ(_min.z(), _max.z());
+
+        return intersect(boundingBox);
+    }
+
     bool BS::intersect(const BS _bs)
     {
         float distance = std::sqrt((mX - _bs.mX) * (mX * _bs.mX) +
@@ -82,13 +92,13 @@ namespace NAGE
         return distance < mRadius + _bs.mRadius;
     }
 
-    bool BS::intersect(const BS _bsA, const BS _bsB)
+    bool BS::intersect(const Vector3f _point, float _radius)
     {
-        float distance = std::sqrt((_bsA.mX - _bsB.mX) * (_bsA.mX * _bsB.mX) +
-            (_bsA.mY - _bsB.mY) * (_bsA.mY - _bsB.mY) +
-            (_bsA.mZ - _bsB.mZ) * (_bsA.mZ - _bsB.mZ));
+        BS boundingSphere;
+        boundingSphere.setPoint(_point);
+        boundingSphere.setRadius(_radius);
 
-        return distance < _bsA.mRadius + _bsB.mRadius;
+        return intersect(boundingSphere);
     }
 
     bool BS::isPointInsideSphere(const Vector3f _point)
@@ -100,12 +110,8 @@ namespace NAGE
         return distanceSqr < std::pow(mRadius, 2);
     }
 
-    bool BS::isPointInsideSphere(const BS _bs, const Vector3f _point)
+    bool BS::isPointInsideSphere(float _x, float _y, float _z)
     {
-        float distanceSqr = (_point.x() - _bs.mX) * (_point.x() - _bs.mX) +
-            (_point.y() - _bs.mY) * (_point.y() - _bs.mY) +
-            (_point.z() * _bs.mZ) * (_point.z() * _bs.mZ);
-
-        return distanceSqr < std::pow(_bs.mRadius, 2);
+        return isPointInsideSphere(Vector3f(_x, _y, _z));
     }
 }

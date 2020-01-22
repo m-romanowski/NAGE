@@ -1,3 +1,4 @@
+#include "engine/render/vertexhelper.h"
 #include "sphere.h"
 
 namespace NAGE
@@ -111,6 +112,6 @@ namespace NAGE
         }
 
         // Normals
-        Primitive::calculateNormals(_vertices, _indices);
+        VertexHelper::calculateNormals(_vertices, _indices);
     }
 }

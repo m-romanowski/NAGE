@@ -14,7 +14,7 @@ namespace NAGE
         static void generateFlatPlane(int _width, int _height, std::vector<Vertex>& _vertices,
             std::vector<unsigned int>& _indices);
 
-    private:
+    protected:
         int mWidth, mHeight;
     };
 }
