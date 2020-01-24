@@ -1,8 +1,8 @@
-#include "iterrain.h"
+#include "iwater.h"
 
 namespace NAGE
 {
-    ITerrain::ITerrain()
+    IWater::IWater()
         : mShader(new Shader),
           mMaterial(new Material),
           mTransform(new Transform)
@@ -11,7 +11,7 @@ namespace NAGE
 
     }
 
-    ITerrain::~ITerrain()
+    IWater::~IWater()
     {
         for(auto& texture : mTextures)
             delete texture.second;
@@ -21,27 +21,27 @@ namespace NAGE
         delete mTransform;
     }
 
-    Shader* ITerrain::shader()
+    Shader* IWater::shader()
     {
         return mShader;
     }
 
-    Material* ITerrain::material()
+    Material* IWater::material()
     {
         return mMaterial;
     }
 
-    Transform* ITerrain::transform()
+    Transform* IWater::transform()
     {
         return mTransform;
     }
 
-    unsigned int ITerrain::texturesCount() const
+    unsigned int IWater::texturesCount() const
     {
         return mTextures.size();
     }
 
-    Texture* ITerrain::textureByKey(const std::string& _key)
+    Texture* IWater::textureByKey(const std::string& _key)
     {
         auto it = mTextures.find(_key);
 
@@ -51,27 +51,27 @@ namespace NAGE
         return it->second;
     }
 
-    std::map<std::string, Texture*> ITerrain::textures() const
+    std::map<std::string, Texture*> IWater::textures() const
     {
         return mTextures;
     }
 
-    void ITerrain::setShader(Shader* _shader)
+    void IWater::setShader(Shader* _shader)
     {
         mShader = _shader;
     }
 
-    void ITerrain::setMaterial(Material* _material)
+    void IWater::setMaterial(Material* _material)
     {
         mMaterial = _material;
     }
 
-    void ITerrain::setTransformation(Transform* _transform)
+    void IWater::setTransformation(Transform* _transform)
     {
         mTransform = _transform;
     }
 
-    void ITerrain::addTexture(const std::string& _shaderUniformName, Texture* _texture)
+    void IWater::addTexture(const std::string& _shaderUniformName, Texture* _texture)
     {
         if(!mShader)
             return;
@@ -82,17 +82,17 @@ namespace NAGE
         mTextures.insert(std::make_pair(_shaderUniformName, _texture));
     }
 
-    void ITerrain::addTextures(const std::map<std::string, Texture*>&_textures)
+    void IWater::addTextures(const std::map<std::string, Texture*>&_textures)
     {
         mTextures = _textures;
     }
 
-    void ITerrain::useMaterial()
+    void IWater::useMaterial()
     {
         if(mMaterial) mMaterial->use(mShader);
     }
 
-    void ITerrain::bindTextures()
+    void IWater::bindTextures()
     {
         GLuint idx = 0;
         for(auto& texture : mTextures)

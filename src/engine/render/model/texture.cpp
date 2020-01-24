@@ -3,12 +3,20 @@
 
 namespace NAGE
 {
+    Texture::Texture(TextureType _type)
+        : mType(_type),
+          mTextureWrapping(Vector3<GLint>(GL_REPEAT, GL_REPEAT, GL_REPEAT)),
+          mTextureFiltering(Vector2<GLint>(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR))
+    {
+
+    }
+
     Texture::Texture(const std::string& _path, TextureType _type)
         : mType(_type),
           mTextureWrapping(Vector3<GLint>(GL_REPEAT, GL_REPEAT, GL_REPEAT)),
           mTextureFiltering(Vector2<GLint>(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR))
     {
-        loadTexture(_path);
+        fromFile(_path);
     }
 
     /* Texture id.
@@ -177,47 +185,56 @@ namespace NAGE
         mTextureFiltering = _type;
     }
 
+    void Texture::bindTexture()
+    {
+        glGenTextures(1, &mId);
+        GLenum textureFormat;
+
+        if(mFormat == 1) textureFormat = GL_RED;
+        else if(mFormat == 3) textureFormat = GL_RGB;
+        else if(mFormat == 4) textureFormat = GL_RGBA;
+
+        // Texture wrapping.
+        if(mType == TextureType::TEXTURE_3D)
+        {
+            // TODO: 3D texture support
+        }
+        else
+        {
+            glBindTexture(GL_TEXTURE_2D, mId);
+            glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(textureFormat), mWidth, mHeight,
+                0, textureFormat, GL_UNSIGNED_BYTE, mData);
+            glGenerateMipmap(GL_TEXTURE_2D);
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, mTextureWrapping.x());
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, mTextureWrapping.y());
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mTextureFiltering.x());
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mTextureFiltering.y());
+        }
+    }
+
     /* Load and initialize texture.
      *
      * @param std::string - path to texture.
      */
-    void Texture::loadTexture(const std::string& _path)
+    void Texture::fromFile(const std::string& _path)
     {
-        glGenTextures(1, &mId);
-
         Image image(_path);
         mData = image.data();
         mFormat = static_cast<GLenum>(image.format());
         mWidth = image.width();
         mHeight = image.height();
 
-        if(mData)
-        {
-            GLenum textureFormat;
+        if(mData) bindTexture();
+    }
 
-            if(mFormat == 1) textureFormat = GL_RED;
-            else if(mFormat == 3) textureFormat = GL_RGB;
-            else if(mFormat == 4) textureFormat = GL_RGBA;
+    void Texture::fromData(int _width, int _height, TextureFormat _format, unsigned char* _data)
+    {
+        mWidth = _width;
+        mHeight = _height;
+        mFormat = static_cast<GLenum>(_format);
+        mData = _data;
 
-            // Texture wrapping.
-            if(mType == TextureType::TEXTURE_3D)
-            {
-                // TODO: 3D texture support
-            }
-            else
-            {
-                glBindTexture(GL_TEXTURE_2D, mId);
-                glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(textureFormat), mWidth, mHeight,
-                    0, textureFormat, GL_UNSIGNED_BYTE, mData);
-                glGenerateMipmap(GL_TEXTURE_2D);
-
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, mTextureWrapping.x());
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, mTextureWrapping.y());
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mTextureFiltering.x());
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mTextureFiltering.y());
-            }
-
-            // image.free();
-        }
+        bindTexture();
     }
 }

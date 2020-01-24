@@ -25,7 +25,7 @@ namespace NAGE
             gridResolution = DEFAULT_CDLOD_GRID_RESOLUTION;
             gridMeshesCount = DEFAULT_CDLOD_GRID_MESHES_COUNT;
             morphStartValue = 0.0f;
-            morphStopValue = 0.25f;
+            morphEndValue = 0.25f;
         }
 
         // See paper: <= 128
@@ -40,7 +40,7 @@ namespace NAGE
         int leafNodeSize; // Leaf node size
         int gridResolution; // Grid resolution.
         int gridMeshesCount; // Grid meshes count.
-        float morphStartValue, morphStopValue; // Morph start and end value.
+        float morphStartValue, morphEndValue; // Morph start and end value.
     };
 }
 

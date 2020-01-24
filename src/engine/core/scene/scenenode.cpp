@@ -6,6 +6,7 @@ namespace NAGE
         : mSkybox(nullptr),
           mSunLight(nullptr),
           mTerrain(nullptr),
+          mWater(nullptr),
           mCamera(new Camera)
     {
 
@@ -17,12 +18,10 @@ namespace NAGE
         mPointLights.clear();
 
         delete mCamera;
-
-        if(mSkybox)
-            delete mSkybox;
-
-        if(mSunLight)
-            delete mSunLight;
+        delete mSkybox;
+        delete mSunLight;
+        delete mTerrain;
+        delete mWater;
     }
 
     /* Add a new model object to the dictionary (models).
@@ -75,6 +74,12 @@ namespace NAGE
     {
         mTerrain = _terrain;
         Log::log("Terrain has been added.");
+    }
+
+    void SceneNode::addToScene(IWater* _water)
+    {
+        mWater = _water;
+        Log::log("Water has been added.");
     }
 
     void SceneNode::addToScene(Camera* _camera)
@@ -142,6 +147,11 @@ namespace NAGE
         return mTerrain;
     }
 
+    IWater* SceneNode::water()
+    {
+        return mWater;
+    }
+
     Camera* SceneNode::camera()
     {
         return mCamera;
@@ -188,6 +198,18 @@ namespace NAGE
                 mSunLight->use(mCamera, mTerrain->shader());
         }
 
+        // TMP: to change
+        if(mWater)
+        {
+            for(auto& light : mPointLights)
+                light.second->use(mCamera, mWater->shader());
+
+            mWater->shader()->setInt("pointLightCount", static_cast<int>(mPointLights.size()));
+
+            if(mSunLight)
+                mSunLight->use(mCamera, mWater->shader());
+        }
+
         // Draw lights
         for(const auto& light : mPointLights)
             light.second->draw(mCamera);
@@ -210,6 +232,16 @@ namespace NAGE
             mTerrain->useMaterial();
             mTerrain->bindTextures();
             mTerrain->render(mCamera);
+        }
+    }
+
+    void SceneNode::renderWater()
+    {
+        if(mWater)
+        {
+            mWater->useMaterial();
+            mWater->bindTextures();
+            mWater->render(mCamera);
         }
     }
 }

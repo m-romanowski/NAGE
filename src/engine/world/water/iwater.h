@@ -1,5 +1,5 @@
-#ifndef NAGE_ENGINE_WORLD_TERRAIN_ITERRAIN_H_
-#define NAGE_ENGINE_WORLD_TERRAIN_ITERRAIN_H_
+#ifndef NAGE_ENGINE_WORLD_WATER_IWATER_H_
+#define NAGE_ENGINE_WORLD_WATER_IWATER_H_
 
 #include "engine/render/shader.h"
 #include "engine/render/model/material.h"
@@ -11,11 +11,11 @@
 
 namespace NAGE
 {
-    class ITerrain
+    class IWater
     {
     public:
-        ITerrain();
-        virtual ~ITerrain();
+        IWater();
+        virtual ~IWater();
 
         // Getters
         Shader* shader();
@@ -44,4 +44,4 @@ namespace NAGE
     };
 }
 
-#endif // NAGE_ENGINE_WORLD_TERRAIN_ITERRAIN_H_
+#endif // NAGE_ENGINE_WORLD_WATER_IWATER_H_

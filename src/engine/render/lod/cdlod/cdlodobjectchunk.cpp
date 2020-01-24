@@ -1,39 +1,39 @@
-#include "cdlodterrainchunk.h"
+#include "cdlodobjectchunk.h"
 
 namespace NAGE
 {
-    CDLODTerrainChunk::CDLODTerrainChunk(int _size)
+    CDLODObjectChunk::CDLODObjectChunk(int _size)
         : mSize(_size)
     {
         setupMeshBuffers();
     }
 
-    int CDLODTerrainChunk::topLeftEndIndex() const
+    int CDLODObjectChunk::topLeftEndIndex() const
     {
         return mTopLeftEndIndex;
     }
 
-    int CDLODTerrainChunk::topRightEndIndex() const
+    int CDLODObjectChunk::topRightEndIndex() const
     {
         return mTopRightEndIndex;
     }
 
-    int CDLODTerrainChunk::bottomLeftEndIndex() const
+    int CDLODObjectChunk::bottomLeftEndIndex() const
     {
         return mBottomLeftEndIndex;
     }
 
-    int CDLODTerrainChunk::bottomRightEndIndex() const
+    int CDLODObjectChunk::bottomRightEndIndex() const
     {
         return mBottomRightEndIndex;
     }
 
-    int CDLODTerrainChunk::size() const
+    int CDLODObjectChunk::size() const
     {
         return mSize;
     }
 
-    void CDLODTerrainChunk::appendIndices(int _x, int _z, int _size, int& _currentOffset)
+    void CDLODObjectChunk::appendIndices(int _x, int _z, int _size, int& _currentOffset)
     {
         mIndices[_currentOffset++] = (_x + _size * _z);
         mIndices[_currentOffset++] = ((_x + 1) + _size * _z);
@@ -43,7 +43,7 @@ namespace NAGE
         mIndices[_currentOffset++] = (_x + _size * _z);
     }
 
-    void CDLODTerrainChunk::setupMeshBuffers()
+    void CDLODObjectChunk::setupMeshBuffers()
     {
         assert(mSize > 0);
 
@@ -118,7 +118,7 @@ namespace NAGE
         setupBuffer();
     }
 
-    void CDLODTerrainChunk::drawChunk(int _indicesCount, int _indicesIndexLocation)
+    void CDLODObjectChunk::drawChunk(int _indicesCount, int _indicesIndexLocation)
     {
         glBindVertexArray(mVAO);
         glDrawElements(GL_TRIANGLES, _indicesCount, GL_UNSIGNED_INT,

@@ -101,7 +101,7 @@ void main(void)
     //  * https://stackoverflow.com/a/21079741
     fragmentNormal = mat3(transpose(inverse(model))) * calculateNormal(worldPosition);
     // Texture coordinates for fragment shader.
-    fragmentTextureCoords = calculateTextureCoords(worldPosition);
+    fragmentTextureCoords = calculateTextureCoords(worldPosition) * 20.0f;
     // Color for fragment shader.
     fragmentColor = inColor;
 

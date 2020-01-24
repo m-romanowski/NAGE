@@ -12,11 +12,6 @@ struct TerrainMaterial
     vec3 diffuse;
     vec3 specular;
     float shininess;
-    sampler2D blendmap;
-    sampler2D dirt;
-    sampler2D grass;
-    sampler2D stone;
-    sampler2D snow;
 };
 
 // Point light definition.
@@ -45,6 +40,7 @@ out vec4 outFragmentColor;
 
 // Uniforms
 uniform TerrainMaterial material; // Material specification.
+uniform sampler2D heightMapTexture;
 
 uniform PointLight pointLights[MAX_POINT_LIGHTS_COUNT]; // Array of point lights.
 // Current point light count. Fixed size if point light count < MAX_POINT_LIGHTS_COUNT.
@@ -59,14 +55,14 @@ uniform vec3 cameraPosition; // Current camera position.
  * @param { PointLight } _light - point light settings
  * @return { vec3 } - ambient + diffuse + specular color
  */
-vec4 getPointLight(PointLight _light);
+vec3 getPointLight(PointLight _light);
 
 /* Returns result color (ambient + diffuse + specular) for directional (sun) light.
  *
  * @param { DirectionalLight } - directional light settings
  * @return { vec3 } - ambient + diffuse + specular color
  */
-vec4 getDirectionalLight(DirectionalLight _light);
+vec3 getDirectionalLight(DirectionalLight _light);
 
 /* Color (rgb) based on textures.
  *
@@ -87,29 +83,29 @@ void main()
         discard;
     
     // Compute directional light.
-    vec4 dirLight = getDirectionalLight(directionalLight);
+    vec3 dirLight = getDirectionalLight(directionalLight);
 
     // Compute all point lights that containes specified data.
-    vec4 pLights = vec4(0.0f);
+    vec3 pLights = vec3(0.0f);
     for(int i = 0; i < pointLightCount; i++)
         pLights += getPointLight(pointLights[i]);
 
     // Fragment output color - sum vec3(ambient + diffuse + specular) of all lights
-    outFragmentColor = vec4(dirLight + pLights);
+    outFragmentColor = vec4(dirLight + pLights, 0.8f);
 }
 
-vec4 getPointLight(PointLight _light)
+vec3 getPointLight(PointLight _light)
 {
     // Pre-computing
     vec3 normal = normalize(fragmentNormal);
     vec3 lightDirection = normalize(_light.position - fragmentPosition);
 
     // Ambient
-    vec4 ambient = vec4(material.ambient, 1.0f) * vec4(_light.color, 1.0f) * combineColorFromTexturesRGBA(); // Ambient color = diffuse color.
+    vec3 ambient = material.ambient * _light.color * combineColorFromTexturesRGB(); // Ambient color = diffuse color.
     
     // Diffuse
     float diffuseFactor = max(dot(normal, lightDirection), 0.0f);
-    vec4 diffuse = vec4(material.diffuse, 1.0f) * vec4(_light.color, 1.0f) * diffuseFactor * combineColorFromTexturesRGBA();
+    vec3 diffuse = material.diffuse * _light.color * diffuseFactor * combineColorFromTexturesRGB();
 
     // Specular
     vec3 viewDirection = normalize(cameraPosition - fragmentPosition);
@@ -134,21 +130,21 @@ vec4 getPointLight(PointLight _light)
     diffuse *= attenuation;
     specular *= attenuation;
 
-    return ambient + diffuse + vec4(specular, 1.0f);
+    return ambient + diffuse + specular;
 }
 
-vec4 getDirectionalLight(DirectionalLight _light)
+vec3 getDirectionalLight(DirectionalLight _light)
 {
     // Pre-computing
     vec3 normal = normalize(fragmentNormal);
     vec3 lightDirection = normalize(-_light.direction);
 
     // Ambient
-    vec4 ambient = vec4(material.ambient, 1.0f) * vec4(_light.color, 1.0f) * combineColorFromTexturesRGBA(); // Ambient color = diffuse color.
+    vec3 ambient = material.ambient * _light.color * combineColorFromTexturesRGB(); // Ambient color = diffuse color.
     
     // Diffuse
     float diffuseFactor = max(dot(normal, lightDirection), 0.0f);
-    vec4 diffuse = vec4(material.diffuse, 1.0f) * vec4(_light.color, 1.0f) * diffuseFactor * combineColorFromTexturesRGBA();
+    vec3 diffuse = material.diffuse * _light.color * diffuseFactor * combineColorFromTexturesRGB();
 
     // Specular
     vec3 viewDirection = normalize(cameraPosition - fragmentPosition);
@@ -156,39 +152,16 @@ vec4 getDirectionalLight(DirectionalLight _light)
     float specularFactor = pow(max(dot(viewDirection, reflectDirection), 0.0f), material.shininess);
     vec3 specular = material.specular * _light.color * specularFactor;
 
-    return ambient + diffuse + vec4(specular, 1.0f);
+    return ambient + diffuse + specular;
 }
 
 vec3 combineColorFromTexturesRGB()
 {
-    vec4 blendMapText = texture2D(material.blendmap, fragmentTextureCoords);
-
-    float backTextureAmount = 1.0f - (blendMapText.r + blendMapText.g + blendMapText.b);
-    vec2 tiledCoords = fragmentTextureCoords * 30.0f;
-    
-    vec4 dirtTexture = texture2D(material.dirt, tiledCoords) * backTextureAmount;
-    vec4 grassTexture = texture2D(material.snow, tiledCoords) * blendMapText.r;
-    vec4 stoneTexture = texture2D(material.stone, tiledCoords) * blendMapText.g;
-    vec4 snowTexture = texture2D(material.grass, tiledCoords) * blendMapText.b;
-
-    vec4 totalColor = dirtTexture + grassTexture + stoneTexture + snowTexture;
-    
-    return totalColor.xyz;
+    //return texture2D(material.grass, fragmentTextureCoords).rgb;
+    return vec3(0.0f, 0.34f, 0.56f);
 }
 
 vec4 combineColorFromTexturesRGBA()
 {
-    vec4 blendMapText = texture2D(material.blendmap, fragmentTextureCoords);
-
-    float backTextureAmount = 1.0f - (blendMapText.r + blendMapText.g + blendMapText.b);
-    vec2 tiledCoords = fragmentTextureCoords;
-    
-    vec4 dirtTexture = texture2D(material.grass, tiledCoords) * backTextureAmount;
-    vec4 grassTexture = texture2D(material.grass, tiledCoords) * blendMapText.r;
-    vec4 stoneTexture = texture2D(material.grass, tiledCoords) * blendMapText.g;
-    vec4 snowTexture = texture2D(material.grass, tiledCoords) * blendMapText.b;
-
-    vec4 totalColor = dirtTexture + grassTexture + stoneTexture + snowTexture;
-    
-    return dirtTexture;
+    return vec4(1.0f, 1.0f, 1.0f, 1.0f);
 }

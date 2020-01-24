@@ -39,9 +39,6 @@ namespace NAGE
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
-        // If blending is enable remove "discard option" from fragment shader.
-        // glEnable(GL_BLEND);
-        // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     }
 
@@ -55,6 +52,7 @@ namespace NAGE
             scene.second->renderModels();
             scene.second->renderLights();
             scene.second->renderTerrain();
+            scene.second->renderWater();
         }
     }
 

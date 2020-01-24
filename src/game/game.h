@@ -5,7 +5,8 @@
 #include "engine/world/light/sun.h"
 #include "engine/world/primitives/cube.h"
 #include "engine/world/primitives/sphere.h"
-#include <engine/world/terrain/cdlodterrain.h>
+#include "engine/world/terrain/cdlodterrain.h"
+#include "engine/world/water/cdlodwater.h"
 
 namespace NAGE
 {
@@ -30,11 +31,13 @@ namespace NAGE
         Sun* sun;
 
         // Terrain
-        Shader* terrainShader;
-        Texture* terrainTexture1;
-        Material* terrainMaterial;
+        Texture *blendmap, *terrainTexture1, *terrainTexture2, *terrainTexture3, *terrainTexture4;
         HeightMap* heightMap;
         CDLODTerrain* cdlodTerrain;
+
+        // Water
+        CDLODWater* cdlodWater;
+        HeightMap* waterHeightmap;
     };
 }
 

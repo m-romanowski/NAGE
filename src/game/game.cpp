@@ -4,7 +4,22 @@
 namespace NAGE
 {
     Game::Game(FpsLimit _limit)
-        : IGame(_limit)
+        : IGame(_limit),
+          skyboxShader(nullptr),
+          skybox(nullptr),
+          lampShader(nullptr),
+          lamp(nullptr),
+          lampTransform(nullptr),
+          sun(nullptr),
+          blendmap(nullptr),
+          terrainTexture1(nullptr),
+          terrainTexture2(nullptr),
+          terrainTexture3(nullptr),
+          terrainTexture4(nullptr),
+          heightMap(nullptr),
+          cdlodTerrain(nullptr),
+          cdlodWater(nullptr),
+          waterHeightmap(nullptr)
     {
 
     }
@@ -17,11 +32,15 @@ namespace NAGE
         delete lamp;
         delete lampTransform;
         delete sun;
-        delete terrainMaterial;
+        delete blendmap;
         delete terrainTexture1;
-        delete terrainShader;
+        delete terrainTexture2;
+        delete terrainTexture3;
+        delete terrainTexture4;
         delete heightMap;
         delete cdlodTerrain;
+        delete waterHeightmap;
+        delete cdlodWater;
     }
 
     void Game::initializeScene()
@@ -73,12 +92,12 @@ namespace NAGE
         lamp->setShader(lampShader);
 
         lampTransform = new Transform;
-        lampTransform->setTranslation(200.0f, 50.0f, 135.0f);
+        lampTransform->setTranslation(200.0f, 80.0f, 135.0f);
         lampTransform->scale(2.0f);
 
         lamp->setTransformation(lampTransform);
         lamp->setId(0);
-        lamp->setColor(Color(255.0f, 3.0f, 3.0f));
+        lamp->setColor(Color(255.0f, 0.0f, 0.0f));
         lamp->setAttenuation(1.0f, 0.05f, 0.002f);
         sceneManager()->sceneByKey("editor")->addToScene("lamp", lamp);
 
@@ -121,31 +140,40 @@ namespace NAGE
         sceneManager()->sceneByKey("editor")->addToScene("cube", cubeModel);*/
 
         // CDLOD terrain
-        terrainShader = new Shader;
-        terrainShader->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
-            "../src/engine/shader/cdlodterrain.vert");
-        terrainShader->addShaderFromSourceFile(SHADER_TYPE::SHADER_FRAGMENT,
-            "../src/engine/shader/cdlodterrain.frag");
-        terrainShader->link();
-
-        terrainTexture1 = new Texture("../resources/texture/terrain.png", TextureType::TEXTURE_2D);
-        terrainShader->use();
-        terrainShader->setInt("material.grass", 0);
-
-        terrainMaterial = new Material;
-        terrainMaterial->setAmbient(Vector3f(0.2f, 0.2f, 0.2f));
-        terrainMaterial->setDiffuse(Vector3f(0.5f, 0.5f, 0.5f));
-        terrainMaterial->setSpecular(Vector3f(0.05f, 0.05f, 0.05f));
-        terrainMaterial->setShininess(32.0f);
-
         heightMap = new HeightMap;
-        heightMap->loadFromFile("/home/inc/Downloads/heightmap.jpg");
+        heightMap->loadFromFile("../resources/texture/terrain/heightmap1.jpg");
+        //heightMap->perlinNoise(1024, 1024, 12345);
+        //heightMap->diamondSquare(1025, 1025);
+        //heightMap->flat(1024, 1024);
+
+        blendmap = new Texture("../resources/texture/terrain/blendmap1.jpg", TextureType::TEXTURE_2D);
+        terrainTexture1 = new Texture("../resources/texture/terrain/dirt.jpg", TextureType::TEXTURE_2D);
+        terrainTexture2 = new Texture("../resources/texture/terrain/grass.jpg", TextureType::TEXTURE_2D);
+        terrainTexture3 = new Texture("../resources/texture/terrain/stone.jpg", TextureType::TEXTURE_2D);
+        terrainTexture4 = new Texture("../resources/texture/terrain/snow.jpg", TextureType::TEXTURE_2D);
 
         cdlodTerrain = new CDLODTerrain(8, heightMap);
-        cdlodTerrain->addTexture(terrainTexture1);
-        cdlodTerrain->setMaterial(terrainMaterial);
-        cdlodTerrain->setShader(terrainShader);
-        cdlodTerrain->useHeightMapTexture();
+        cdlodTerrain->addTexture("material.blendmap", blendmap);
+        cdlodTerrain->addTexture("material.dirt", terrainTexture1);
+        cdlodTerrain->addTexture("material.grass", terrainTexture2);
+        cdlodTerrain->addTexture("material.stone", terrainTexture3);
+        cdlodTerrain->addTexture("material.snow", terrainTexture4);
+        cdlodTerrain->useHeightMapTexture(cdlodTerrain->shader());
         sceneManager()->sceneByKey("editor")->addToScene(cdlodTerrain);
+
+        // CDLOD water
+        waterHeightmap = new HeightMap;
+        waterHeightmap->flat(4096, 4096);
+
+        Transform* waterTransform = new Transform;
+        waterTransform->setTranslation(0.0f, 20.0f, 0.0f);
+
+        CDLODSettings waterLodSettings;
+        waterLodSettings.gridResolution = 16;
+
+        cdlodWater = new CDLODWater(8, waterHeightmap, waterLodSettings);
+        cdlodWater->useHeightMapTexture(cdlodWater->shader());
+        cdlodWater->setTransformation(waterTransform);
+        sceneManager()->sceneByKey("editor")->addToScene(cdlodWater);
     }
 }

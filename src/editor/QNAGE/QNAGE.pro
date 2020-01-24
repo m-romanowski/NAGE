@@ -51,15 +51,18 @@ SOURCES += \
     ../../engine/render/collision/collisionplane.cpp \
     ../../engine/render/lod/cdlod/cdlod.cpp \
     ../../engine/render/lod/cdlod/cdlodnode.cpp \
+    ../../engine/render/lod/cdlod/cdlodobjectchunk.cpp \
     ../../engine/render/lod/cdlod/cdlodquadtree.cpp \
     ../../engine/render/lod/cdlod/cdlodselectednode.cpp \
+    ../../engine/render/lod/cdlod/icdlodobject.cpp \
     ../../engine/render/lod/geoclipmaps/geometryclipmap.cpp \
     ../../engine/world/light/sun.cpp \
     ../../engine/world/primitives/gridmesh.cpp \
     ../../engine/world/primitives/sphere.cpp \
     ../../engine/world/terrain/cdlodterrain.cpp \
-    ../../engine/world/terrain/cdlodterrainchunk.cpp \
     ../../engine/world/terrain/iterrain.cpp \
+    ../../engine/world/water/cdlodwater.cpp \
+    ../../engine/world/water/iwater.cpp \
     dialog/dialog.cpp \
     dialog/projectdialog.cpp \
     log/logwidget.cpp \
@@ -131,9 +134,11 @@ HEADERS += \
     ../../engine/render/collision/collisionplane.h \
     ../../engine/render/lod/cdlod/cdlod.h \
     ../../engine/render/lod/cdlod/cdlodnode.h \
+    ../../engine/render/lod/cdlod/cdlodobjectchunk.h \
     ../../engine/render/lod/cdlod/cdlodquadtree.h \
     ../../engine/render/lod/cdlod/cdlodselectednode.h \
     ../../engine/render/lod/cdlod/cdlodsettings.h \
+    ../../engine/render/lod/cdlod/icdlodobject.h \
     ../../engine/render/lod/geoclipmaps/geometryclipmap.h \
     ../../engine/render/vertexhelper.h \
     ../../engine/util/size.h \
@@ -143,8 +148,9 @@ HEADERS += \
     ../../engine/world/procedural/diamondsquare.h \
     ../../engine/world/procedural/lsystem.h \
     ../../engine/world/terrain/cdlodterrain.h \
-    ../../engine/world/terrain/cdlodterrainchunk.h \
     ../../engine/world/terrain/iterrain.h \
+    ../../engine/world/water/cdlodwater.h \
+    ../../engine/world/water/iwater.h \
     dialog/dialog.h \
     dialog/projectdialog.h \
     log/logwidget.h \

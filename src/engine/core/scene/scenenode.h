@@ -9,6 +9,7 @@
 #include "engine/world/light/sun.h"
 #include "engine/world/skybox/skybox.h"
 #include "engine/world/terrain/iterrain.h"
+#include "engine/world/water/iwater.h"
 
 #include <string>
 #include <unordered_map>
@@ -24,10 +25,11 @@ namespace NAGE
         // Getters
         Model* getModelByKey(const std::string& _key);
         PointLight* getLightObjectByKey(const std::string& _key);
-        Camera* camera();
         Skybox* skybox();
         Sun* sun();
         ITerrain* terrain();
+        IWater* water();
+        Camera* camera();
 
         // Childs oprations.
         void addToScene(const std::string& _key, Model* _model); // Models
@@ -35,12 +37,14 @@ namespace NAGE
         void addToScene(Skybox* _skybox); // Skybox
         void addToScene(Sun* _sunLight); // Sun light
         void addToScene(ITerrain* _terrain); // Terrain
+        void addToScene(IWater* _water); // Water
         void addToScene(Camera* _camera); // Scene camera
         void removeFromScene(const std::string _key);
         void renderModels();
         void renderLights();
         void renderSkybox();
         void renderTerrain();
+        void renderWater();
 
     private:
         std::unordered_map<std::string, Model*> mModels;
@@ -48,6 +52,7 @@ namespace NAGE
         Skybox* mSkybox;
         Sun* mSunLight;
         ITerrain* mTerrain;
+        IWater* mWater;
         Camera* mCamera;
     };
 }

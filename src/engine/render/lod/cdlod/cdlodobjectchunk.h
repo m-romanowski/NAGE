@@ -1,14 +1,14 @@
-#ifndef NAGE_ENGINE_WORLD_TERRAIN_CDLODTERRAINCHUNK_H_
-#define NAGE_ENGINE_WORLD_TERRAIN_CDLODTERRAINCHUNK_H_
+#ifndef NAGE_ENGINE_RENDER_LOD_CDLODOBJECTCHUNK_H_
+#define NAGE_ENGINE_RENDER_LOD_CDLODOBJECTCHUNK_H_
 
 #include "engine/render/iobject.h"
 
 namespace NAGE
 {
-    class CDLODTerrainChunk : public IObject
+    class CDLODObjectChunk : public IObject
     {
     public:
-        CDLODTerrainChunk(int _size);
+        CDLODObjectChunk(int _size);
 
         void setupMeshBuffers();
 
@@ -34,4 +34,4 @@ namespace NAGE
     };
 }
 
-#endif // NAGE_ENGINE_WORLD_TERRAIN_CDLODTERRAINCHUNK_H_
+#endif // NAGE_ENGINE_RENDER_LOD_CDLODOBJECTCHUNK_H_

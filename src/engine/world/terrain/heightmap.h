@@ -4,6 +4,7 @@
 #include "glad/glad.h"
 #include "engine/util/size.h"
 #include "engine/render/model/texture.h"
+#include "engine/render/color.h"
 #include "engine/world/procedural/perlinnoise.h"
 #include "engine/world/procedural/diamondsquare.h"
 
@@ -47,6 +48,9 @@ namespace NAGE
         void loadFromFile(const std::string& _path);
 
     private:
+        void setValue(int _x, int _y, int _width, unsigned char* _data, Color _color);
+        void createTextureFromData(int _width, int _height, unsigned char* _data);
+
         std::vector<unsigned char> mData; // Height map data (based on red color).
         Texture* mHeightMapTexture;
     };

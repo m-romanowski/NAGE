@@ -14,7 +14,15 @@ namespace NAGE
     class Texture
     {
     public:
-        Texture(const std::string& _path, TextureType _type);
+        enum TextureFormat
+        {
+            RED = 1,
+            RGB = 3,
+            RGBA = 4
+        };
+
+        explicit Texture(TextureType _type);
+        explicit Texture(const std::string& _path, TextureType _type);
 
         // Getters
         GLuint id() const;
@@ -35,8 +43,11 @@ namespace NAGE
         void setTextureWrapping(const Vector3<GLint>& _type);
         void setTextureFiltering(const Vector2<GLint>& _type);
 
+        void fromFile(const std::string& _path);
+        void fromData(int _width, int _height, TextureFormat _format, unsigned char* _data);
+
     private:
-        void loadTexture(const std::string& _path);
+        void bindTexture();
 
         GLuint mId;
         TextureType mType;

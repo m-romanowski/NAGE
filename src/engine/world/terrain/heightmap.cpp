@@ -19,7 +19,21 @@ namespace NAGE
     float HeightMap::heightAt(int _x, int _z) const
     {
         assert(_x >= 0 && _x < width() && _z >= 0 && _z < height());
-        return (mData[_z * width() + _x] * 0.2);
+        return (mData[_z * width() + _x] / std::numeric_limits<float>::max()) * HEIGHTMAP_MAX_HEIGHT;
+    }
+
+    void HeightMap::setValue(int _x, int _y, int _width, unsigned char* _data, Color _color)
+    {
+        _data[(_y * _width + _x) + 0] = std::floor(_color.red());
+        _data[(_y * _width + _x) + 1] = std::floor(_color.green());
+        _data[(_y * _width + _x) + 2] = std::floor(_color.blue());
+    }
+
+    void HeightMap::createTextureFromData(int _width, int _height, unsigned char* _data)
+    {
+        mHeightMapTexture = new Texture(TextureType::TEXTURE_2D);
+        mHeightMapTexture->fromData(_width, _height, Texture::TextureFormat::RGB, _data);
+        mData = mHeightMapTexture->redColorData();
     }
 
     float HeightMap::minValueFromArea(int _x, int _z, int _xOffset, int _zOffset) const
@@ -78,13 +92,19 @@ namespace NAGE
     {
         assert(_width > 0 && _height > 0);
 
-        for(int z = 0; z < _height; z++)
+        if(mHeightMapTexture)
+            delete mHeightMapTexture;
+
+        unsigned char* data = new unsigned char[_width * _height * 3]; // RGB format
+        for(int x = 0; x < _width; x++)
         {
-            for(int x = 0; x < _width; x++)
+            for(int y = 0; y < _height; y++)
             {
-                //setValue(x, z, 0.0f);
+                setValue(x, y, _width, data, Color(255, 255, 255));
             }
         }
+
+        createTextureFromData(_width, _height, data);
     }
 
     void HeightMap::flat(Size<int> _size)
@@ -96,16 +116,27 @@ namespace NAGE
     {
         assert(_width > 0 && _height > 0);
 
+        if(mHeightMapTexture)
+            delete mHeightMapTexture;
+
         FPerlinNoise noise(_seed);
         if(noise.settings != _settings) noise.settings = _settings;
 
-        for(int z = 0; z < _height; z++)
+        unsigned char* data = new unsigned char[_width * _height * 3]; // RGB format
+
+        float fx = _width / noise.settings.frequency;
+        float fy = _height / noise.settings.frequency;
+
+        for(int x = 0; x < _width; x++)
         {
-            for(int x = 0; x < _width; x++)
+            for(int y = 0; y < _height; y++)
             {
-                //setValue(x, z, noise.FBM(x / mScale, z / mScale, 0) * mScale);
+                float noiseValue = noise.FBM(x / fx, y / fy, 0);
+                setValue(x, y, _width, data, Color(noiseValue, noiseValue, noiseValue));
             }
         }
+
+        createTextureFromData(_width, _height, data);
     }
 
     void HeightMap::perlinNoise(Size<int> _size, unsigned long _seed, FPerlinNoise::OctaveSettings _settings)
@@ -119,13 +150,17 @@ namespace NAGE
 
         DiamondSquare noise(_width, _height);
 
-        for(int z = 0; z < _height; z++)
+        unsigned char* data = new unsigned char[_width * _height * 3]; // RGB format
+        for(int x = 0; x < _width; x++)
         {
-            for(int x = 0; x < _width; x++)
+            for(int y = 0; y < _height; y++)
             {
-                // setValue(x, z, noise.value(x / mScale, z / mScale) * mScale);
+                float noiseValue = noise.value(x, y);
+                setValue(x, y, _width, data, Color(noiseValue, noiseValue, noiseValue));
             }
         }
+
+        createTextureFromData(_width, _height, data);
     }
 
     void HeightMap::diamondSquare(Size<int> _size)
