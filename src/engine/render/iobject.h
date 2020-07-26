@@ -5,7 +5,7 @@
 #include "shader.h"
 #include "transform.h"
 #include "common/macro.h"
-#include "model/texture.h"
+#include "texture.h"
 #include "engine/components/camera/camera.h"
 #include "engine/wrapper/glwrapper.h"
 #include "engine/util/objectloader.h"
@@ -34,8 +34,30 @@ namespace NAGE
         void setIndices(const std::vector<GLuint>& _indices);
 
         virtual void draw() {}
-        virtual void draw(Camera* _camera) { NAGE_UNUSED(_camera); }
-        virtual void draw(Camera* _camera, Shader* _shader) { NAGE_UNUSED(_camera); NAGE_UNUSED(_shader); }
+
+        virtual void draw(Camera* _camera)
+        {
+            NAGE_UNUSED(_camera);
+        }
+
+        virtual void draw(Camera* _camera, Vector4f _clipPlane)
+        {
+            NAGE_UNUSED(_camera);
+            NAGE_UNUSED(_clipPlane);
+        }
+
+        virtual void draw(Camera* _camera, Shader* _shader)
+        {
+            NAGE_UNUSED(_camera);
+            NAGE_UNUSED(_shader);
+        }
+
+        virtual void draw(Camera* _camera, Shader* _shader, Vector4f _clipPlane)
+        {
+            NAGE_UNUSED(_camera);
+            NAGE_UNUSED(_shader);
+            NAGE_UNUSED(_clipPlane);
+        }
 
     protected:
         void setupBuffer();

@@ -105,4 +105,9 @@ namespace NAGE
             }
         }
     }
+
+    void ITerrain::unbindTextures()
+    {
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
 }

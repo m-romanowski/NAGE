@@ -151,8 +151,8 @@ namespace NAGE
     bool AABB::intersect(const AABB _box)
     {
         return (mMinX <= _box.mMaxX && mMaxX >= _box.mMinX) &&
-               (mMinY <= _box.mMaxY && mMaxY >= _box.mMinY) &&
-               (mMinZ <= _box.mMinZ && mMaxZ >= _box.mMinZ);
+            (mMinY <= _box.mMaxY && mMaxY >= _box.mMinY) &&
+            (mMinZ <= _box.mMinZ && mMaxZ >= _box.mMinZ);
     }
 
     bool AABB::intersect(const Vector3f _min, const Vector3f _max)
@@ -168,8 +168,8 @@ namespace NAGE
     bool AABB::isPointInside(const Vector3f _point)
     {
         return (_point.x() >= mMinX && _point.x() <= mMaxX) &&
-               (_point.y() >= mMinY && _point.y() <= mMaxY) &&
-               (_point.z() >= mMinZ && _point.z() <= mMaxZ);
+            (_point.y() >= mMinY && _point.y() <= mMaxY) &&
+            (_point.z() >= mMinZ && _point.z() <= mMaxZ);
     }
 
     bool AABB::isPointInside(float _x, float _y, float _z)

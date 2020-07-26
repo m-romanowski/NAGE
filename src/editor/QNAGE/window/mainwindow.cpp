@@ -17,8 +17,8 @@ namespace QNAGE
     MainWindow::~MainWindow()
     {
         // Menus, Actions
-        delete openProjectDialogAction;
-        delete openSettingDialogAction;
+        // delete openProjectDialogAction;
+        // delete openSettingDialogAction;
         // delete settingsMenu;
         // delete buildMenu;
         // delete editMenu;

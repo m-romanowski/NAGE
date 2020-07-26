@@ -6,18 +6,18 @@ namespace NAGE
     Sun::Sun()
         : mTransform(new Transform)
     {
-        Sphere sphere;
-        mVertices = sphere.vertices();
-        mIndices = sphere.indices();
+        mVertices = vertices();
+        mIndices = indices();
 
         setup();
         setupBuffer();
     }
 
     Sun::Sun(const std::vector<Vertex>& _vertices, const std::vector<unsigned int>& _indices)
-        : IObject(_vertices, _indices),
-          mTransform(new Transform)
+        : mTransform(new Transform)
     {
+        setVertices(_vertices);
+        setIndices(_indices);
         setup();
         setupBuffer();
     }
@@ -46,6 +46,11 @@ namespace NAGE
     void Sun::setTransformation(Transform* _transform)
     {
         mTransform = _transform;
+    }
+
+    void Sun::setGradientExpand(float _gradientExpand)
+    {
+        mGradientExpand = _gradientExpand;
     }
 
     void Sun::setup()
@@ -82,6 +87,10 @@ namespace NAGE
         mShader->setMat4("view", _camera->view().transpose());
         mShader->setMat4("model", mTransform->model().transpose());
         mShader->setVec3("color", mColor.red(), mColor.green(), mColor.blue());
+        mShader->setFloat("expand", mGradientExpand);
+        mShader->setVec2("center", mTransform->translation().x(), mTransform->translation().y());
+        mShader->setFloat("radius", radius());
+        mShader->setFloat("windowHeight", IWindow::currentWindowSize().y());
 
         // Draw mesh.
         glBindVertexArray(mVAO);

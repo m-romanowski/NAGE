@@ -10,7 +10,8 @@
 #define DEFAULT_CLIPMAP_LEVELS 5 // Clipmap level depth
 #define DEFAULT_CLIPMAP_SCALE 0.25 // Distance between vertices
 
-/* TODO
+/**
+ * IN PROGRESS
  */
 namespace NAGE
 {

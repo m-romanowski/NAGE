@@ -29,7 +29,8 @@ namespace NAGE
         inline void setVertices(const std::vector<float>& _vertices) { mVertices = _vertices; }
         void addFacesTextures(std::vector<std::string>& _faces);
 
-        void draw(Camera& _camera);
+        void draw(Camera* _camera);
+
     private:
         void setup();
         unsigned int loadCubeMap(std::vector<std::string>& _faces);

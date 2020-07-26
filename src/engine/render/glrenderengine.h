@@ -10,8 +10,7 @@
 #include "engine/components/const.h"
 #include "engine/render/color.h"
 #include "engine/render/irenderengine.h"
-
-#include <vector>
+#include "engine/util/threadpool.h"
 
 namespace NAGE
 {
@@ -29,15 +28,22 @@ namespace NAGE
         void setSceneColor(Color* _color);
         void setSceneColor(float _r, float _g, float _b, float _a = 1.0f);
 
-        virtual void render() override;
         virtual void initialize() override;
+        virtual void initializePreRenderEffects() override;
+        virtual void render() override;
         virtual std::string apiVersion() const override;
         // GLFWwindow* glfwWwindow() const;
+        GLint screenFrameBuffer() const;
 
         void clearScene();
+        void enableClipPlane(int _idx = 0);
+        void disableClipPlane(int _idx = 0);
         static Projection& projection();
 
     private:
+        void renderScene(SceneNode* _node);
+        void renderSceneObjects(SceneNode* _node, Vector4f _clipPlane);
+
         IWindow* mWindow;
         Color* mSceneColor;
         static Projection mProjection;

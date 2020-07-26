@@ -4,7 +4,7 @@
 #include "engine/render/shader.h"
 #include "engine/render/model/material.h"
 #include "engine/render/transform.h"
-#include "engine/render/model/texture.h"
+#include "engine/render/texture.h"
 #include "engine/components/camera/camera.h"
 
 #include <map>
@@ -34,7 +34,8 @@ namespace NAGE
 
         virtual void useMaterial();
         virtual void bindTextures();
-        virtual void render(Camera* _camera) = 0;
+        virtual void unbindTextures();
+        virtual void render(Camera* _camera, Vector4f _clipPlane) = 0;
 
     protected:
         Shader* mShader;

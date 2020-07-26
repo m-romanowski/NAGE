@@ -29,7 +29,8 @@ namespace NAGE
         void loadMesh(const std::string& _path);
         void loadMesh(const std::vector<Vertex>& _vertices, const std::vector<GLuint>& _indices);
         void bindTextures();
-        void draw(Camera* _camera, Shader* _shader) override;
+        void unbindTextures();
+        void draw(Camera* _camera, Shader* _shader, Vector4f _clipPlane) override;
 
     protected:
         Material* mMaterial;

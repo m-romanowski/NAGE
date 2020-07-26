@@ -19,6 +19,12 @@ namespace NAGE
         fromFile(_path);
     }
 
+    Texture::~Texture()
+    {
+        // Clean up binding.
+        clean();
+    }
+
     /* Texture id.
      *
      * @return unsigned int
@@ -213,6 +219,16 @@ namespace NAGE
         }
     }
 
+    void Texture::bindEmptyTexture()
+    {
+        glGenTextures(1, &mId);
+
+        glBindTexture(GL_TEXTURE_2D, mId);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, mWidth, mHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    }
+
     /* Load and initialize texture.
      *
      * @param std::string - path to texture.
@@ -225,7 +241,8 @@ namespace NAGE
         mWidth = image.width();
         mHeight = image.height();
 
-        if(mData) bindTexture();
+        if(mData)
+            bindTexture();
     }
 
     void Texture::fromData(int _width, int _height, TextureFormat _format, unsigned char* _data)
@@ -236,5 +253,18 @@ namespace NAGE
         mData = _data;
 
         bindTexture();
+    }
+
+    void Texture::empty(int _width, int _height)
+    {
+        mWidth = _width;
+        mHeight = _height;
+
+        bindEmptyTexture();
+    }
+
+    void Texture::clean()
+    {
+        glDeleteTextures(1, &mId);
     }
 }

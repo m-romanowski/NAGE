@@ -5,11 +5,12 @@
 #include "cdlodselectednode.h"
 #include "engine/render/collision/aabb.h"
 #include "engine/render/culling/frustumculling.h"
-#include "engine/world/terrain/heightmap.h"
+#include "engine/generators/heightmap.h"
 
 #include <vector>
 
-/* Original paper: https://github.com/fstrugar/CDLOD/blob/master/cdlod_paper_latest.pdf
+/**
+ * Original paper: https://github.com/fstrugar/CDLOD/blob/master/cdlod_paper_latest.pdf
  */
 namespace NAGE
 {

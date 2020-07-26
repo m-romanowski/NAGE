@@ -2,7 +2,7 @@
 #define NAGE_ENGINE_RENDER_WINDOW_H_
 
 #include "glad/glad.h"
-#include <GLFW/glfw3.h>
+#include "glfw/include/glfw3.h"
 
 #include "engine/components/const.h"
 #include "common/log.h"

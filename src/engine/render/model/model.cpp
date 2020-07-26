@@ -110,7 +110,16 @@ namespace NAGE
         }
     }
 
-    void Model::draw(Camera* _camera)
+    void Model::unbindTextures()
+    {
+        for(auto& mesh : mMeshes)
+        {
+            if(mesh)
+                mesh->unbindTextures();
+        }
+    }
+
+    void Model::draw(Camera* _camera, Vector4f _clipPlane)
     {
         if(!mShader)
         {
@@ -122,6 +131,6 @@ namespace NAGE
 
         // Draw model meshes.
         for(auto& mesh : mMeshes)
-            mesh->draw(_camera, mShader);
+            mesh->draw(_camera, mShader, _clipPlane);
     }
 }

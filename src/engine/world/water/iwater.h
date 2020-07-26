@@ -4,10 +4,11 @@
 #include "engine/render/shader.h"
 #include "engine/render/model/material.h"
 #include "engine/render/transform.h"
-#include "engine/render/model/texture.h"
+#include "engine/render/texture.h"
 #include "engine/components/camera/camera.h"
-
-#include <map>
+#include "engine/generators/flowmap.h"
+#include "waterreflection.h"
+#include "waterrefraction.h"
 
 namespace NAGE
 {
@@ -19,28 +20,33 @@ namespace NAGE
 
         // Getters
         Shader* shader();
-        Material* material();
         Transform* transform();
-        unsigned int texturesCount() const;
-        Texture* textureByKey(const std::string& _key);
-        std::map<std::string, Texture*> textures() const;
+        std::shared_ptr<WaterReflection> waterReflectionEffect() const;
+        std::shared_ptr<WaterRefraction> waterRefractionEffect() const;
 
         // Setters
         void setShader(Shader* _shader);
-        void setMaterial(Material* _material);
         void setTransformation(Transform* _transform);
-        void addTexture(const std::string& _shaderUniformName, Texture* _texture);
-        void addTextures(const std::map<std::string, Texture*>& _textures);
+        void setWaveNoiseFactor(float _waveNoiseFactor);
+        void setWaveFrequency(float _waveFrequency);
+        void setWaveMoveOffsetSpeed(float _waveMoveOffsetSpeed);
 
-        virtual void useMaterial();
         virtual void bindTextures();
+        virtual void unbindTextures();
         virtual void render(Camera* _camera) = 0;
+        void setupWaterEffects();
+        void setupFlowMapEffect(int _width, int _height, int _seed = -1);
 
     protected:
         Shader* mShader;
-        Material* mMaterial;
         Transform* mTransform;
-        std::map<std::string, Texture*> mTextures;
+        std::shared_ptr<WaterReflection> mWaterReflection;
+        std::shared_ptr<WaterRefraction> mWaterRefraction;
+        // std::unique_ptr<FlowMap> mFlowMap;
+        std::unique_ptr<Texture> mFlowMapTexture;
+
+        float mWaveNoiseFactor, mWaveFrequency;
+        float mWaveMoveOffset, mWaveMoveOffsetSpeed;
     };
 }
 

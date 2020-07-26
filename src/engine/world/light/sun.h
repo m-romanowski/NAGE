@@ -7,7 +7,8 @@
 
 namespace NAGE
 {
-    class Sun : public DirectionalLight, IObject
+    class Sun
+        : public DirectionalLight, Sphere
     {
     public:
         Sun();
@@ -21,14 +22,17 @@ namespace NAGE
         // Setters
         void setShader(Shader* _shader);
         void setTransformation(Transform* _transform);
+        void setGradientExpand(float _gradientExpand);
 
-        void draw(Camera* _camera);
+        void draw(Camera* _camera) override;
 
     private:
         void setup();
 
         Shader* mShader;
         Transform* mTransform;
+
+        float mGradientExpand;
     };
 }
 

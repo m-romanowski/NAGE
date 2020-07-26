@@ -42,6 +42,9 @@ namespace QNAGE
         void renderText(float _x, float _y, float _z, const QString& _str);
         void renderText(const NAGE::Vector3f& _position, const QString& _str);
 
+    signals:
+        void readyToWork();
+
     protected:
         void sync() override;
         void initializeGL() override;
@@ -80,6 +83,10 @@ namespace QNAGE
         // Editor camera
         NAGE::Camera mCamera;
         NAGE::SceneNode* mSceneNode;
+
+        QEventLoop eventLoop;
+        QFuture<void> future;
+        QFutureWatcher<void> futureWatcher;
     };
 }
 

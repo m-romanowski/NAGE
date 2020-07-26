@@ -56,27 +56,27 @@ uniform vec3 cameraPosition; // Current camera position.
 
 /* Returns result color (ambient + diffuse + specular) for point light.
  *
- * @param { PointLight } _light - point light settings
- * @return { vec3 } - ambient + diffuse + specular color
+ * @param _light - point light settings
+ * @return ambient + diffuse + specular color
  */
 vec4 getPointLight(PointLight _light);
 
 /* Returns result color (ambient + diffuse + specular) for directional (sun) light.
  *
- * @param { DirectionalLight } - directional light settings
- * @return { vec3 } - ambient + diffuse + specular color
+ * @param _light - directional light settings
+ * @return ambient + diffuse + specular color
  */
 vec4 getDirectionalLight(DirectionalLight _light);
 
 /* Color (rgb) based on textures.
  *
- * @return { vec3 } - rgb color
+ * @return rgb color
  */
 vec3 combineColorFromTexturesRGB();
 
 /* Color based on textures.
  *
- * @return { vec4 } - rgba color 
+ * @return rgba color 
  */
 vec4 combineColorFromTexturesRGBA();
 

@@ -14,30 +14,30 @@ namespace NAGE
     {
     public:
         Game(FpsLimit _limit = FpsLimit::FPS_60);
-        virtual ~Game() override;
+        virtual ~Game() override {};
 
         void initializeScene() override;
     private:
         // Skybox
-        Shader* skyboxShader;
-        Skybox* skybox;
+        std::shared_ptr<Shader> skyboxShader;
+        std::shared_ptr<Skybox> skybox;
 
         // Lamp
-        Shader* lampShader;
-        PointLight* lamp;
-        Transform* lampTransform;
+        std::shared_ptr<Shader> lampShader;
+        std::shared_ptr<PointLight> lamp;
+        std::shared_ptr<Transform> lampTransform;
 
         // Sun
-        Sun* sun;
+        std::shared_ptr<Sun> sun;
 
         // Terrain
-        Texture *blendmap, *terrainTexture1, *terrainTexture2, *terrainTexture3, *terrainTexture4;
-        HeightMap* heightMap;
-        CDLODTerrain* cdlodTerrain;
+        std::shared_ptr<Texture> blendmap, terrainTexture1, terrainTexture2, terrainTexture3, terrainTexture4;
+        std::shared_ptr<HeightMap> heightMap;
+        std::shared_ptr<CDLODTerrain> cdlodTerrain;
 
         // Water
-        CDLODWater* cdlodWater;
-        HeightMap* waterHeightmap;
+        std::shared_ptr<CDLODWater> cdlodWater;
+        std::shared_ptr<HeightMap> waterHeightmap;
     };
 }
 

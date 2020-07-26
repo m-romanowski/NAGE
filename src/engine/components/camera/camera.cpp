@@ -12,7 +12,7 @@ namespace NAGE
 
     void Camera::translate(const Vector3f& _translation)
     {
-        mTranslation += _translation;
+        mTranslation = _translation + mTranslation;
     }
 
     void Camera::translate(float _x, float _y, float _z)
@@ -88,6 +88,23 @@ namespace NAGE
     Vector3f Camera::right() const
     {
         return mRotation.rotatedVector(mRight);
+    }
+
+    float Camera::roll() const
+    {
+        return std::atan2(2.0f * mRotation.y() * mRotation.w() - 2.0f * mRotation.x() * mRotation.z(),
+            1.0f - 2.0f * mRotation.y() * mRotation.y() - 2.0f * mRotation.z() * mRotation.z());
+    }
+
+    float Camera::pitch() const
+    {
+        return std::atan2(2.0f * mRotation.x() * mRotation.w() - 2.0f * mRotation.y() * mRotation.z(),
+            1.0f - 2.0f * mRotation.x() * mRotation.x() - 2.0f * mRotation.z() * mRotation.z());
+    }
+
+    float Camera::yaw() const
+    {
+        return std::asin(2.0f * mRotation.x() * mRotation.y() + 2.0f * mRotation.z() * mRotation.w());
     }
 
     Matrix4f Camera::view() const

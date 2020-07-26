@@ -12,4 +12,4 @@ void main()
     textureCoords = inPosition;
     vec4 position = projection * view * vec4(inPosition, 1.0);
     gl_Position = position.xyww;
-}  
+}

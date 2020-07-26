@@ -29,7 +29,8 @@ namespace NAGE
 
         void useMaterials();
         void bindTextures();
-        void draw(Camera* _camera);
+        void unbindTextures();
+        void draw(Camera* _camera, Vector4f _clipPlane);
         void loadModel(const std::string& _path);
 
     protected:

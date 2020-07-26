@@ -1,6 +1,5 @@
 #include "engine/render/glrenderengine.h"
 #include "cdlodterrain.h"
-#include <QDebug>
 
 namespace NAGE
 {
@@ -24,8 +23,15 @@ namespace NAGE
 
     }
 
-    void CDLODTerrain::render(Camera* _camera)
+    void CDLODTerrain::render(Camera* _camera, Vector4f _clipPlane)
     {
+        // Heightmap
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, mHeightMap->textureId());
+
+        mShader->use();
+        mShader->setVec4("clipPlane", _clipPlane.x(), _clipPlane.y(), _clipPlane.z(), _clipPlane.w());
+
         renderCDLOD(_camera, mShader, mTransform);
     }
 }

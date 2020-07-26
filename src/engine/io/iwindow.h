@@ -39,6 +39,7 @@ namespace NAGE
 
         static Timer::Clock::duration delta();
         static double deltaMs(); // Milliseconds (double)
+        static Vector2f currentWindowSize();
 
     protected:
         // virtual void initialize() = 0;
@@ -53,7 +54,8 @@ namespace NAGE
         std::string mTitle;
         Timer *updateInterval, *fpsRenderTimer;
 
-        static Timer::Clock::time_point lastFrame;
+        static Timer::Clock::time_point mLastFrame;
+        static Vector2f mCurrentWindowSize;
     };
 }
 

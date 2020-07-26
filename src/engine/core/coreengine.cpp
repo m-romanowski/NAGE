@@ -102,6 +102,7 @@ namespace NAGE
             return;
 
         mStatus = StatusCode::Running;
+        mRenderEngine->initializePreRenderEffects();
         render();
     }
 

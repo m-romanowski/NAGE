@@ -102,7 +102,12 @@ namespace NAGE
         }
     }
 
-    void Mesh::draw(Camera* _camera, Shader* _shader)
+    void Mesh::unbindTextures()
+    {
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    void Mesh::draw(Camera* _camera, Shader* _shader, Vector4f _clipPlane)
     {
         if(!_shader)
         {
@@ -118,10 +123,12 @@ namespace NAGE
         _shader->setMat4("view", _camera->view().transpose());
         _shader->setMat4("model", mTransform->model().transpose());
 
+        // Set clip plane (water rendering).
+        _shader->setVec4("clipPlane", _clipPlane.x(), _clipPlane.y(), _clipPlane.z(), _clipPlane.w());
+
         // Draw mesh.
         glBindVertexArray(mVAO);
         glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(mIndices.size()), GL_UNSIGNED_INT,
             reinterpret_cast<void*>(0));
-        //glDrawArrays(GL_TRIANGLES, 0, mVertices.size());
     }
 }

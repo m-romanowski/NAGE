@@ -21,6 +21,7 @@ namespace NAGE
         void setSceneManager(SceneManager* _manager);
 
         virtual void initialize() = 0; // Render engine initialization.
+        virtual void initializePreRenderEffects() = 0; // Pre-render effects binding.
         virtual void render() = 0; // Render scene.
         virtual std::string apiVersion() const = 0; // Get using api version.
 

@@ -46,9 +46,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     $${LIB_DIRECTORY}/glad/glad.c \
+    ../../engine/components/resourcemanager.cpp \
+    ../../engine/generators/flowmap.cpp \
+    ../../engine/generators/heightmap.cpp \
+    ../../engine/generators/normalmap.cpp \
     ../../engine/render/collision/aabb.cpp \
     ../../engine/render/collision/bs.cpp \
     ../../engine/render/collision/collisionplane.cpp \
+    ../../engine/render/framebuffer.cpp \
     ../../engine/render/lod/cdlod/cdlod.cpp \
     ../../engine/render/lod/cdlod/cdlodnode.cpp \
     ../../engine/render/lod/cdlod/cdlodobjectchunk.cpp \
@@ -63,6 +68,9 @@ SOURCES += \
     ../../engine/world/terrain/iterrain.cpp \
     ../../engine/world/water/cdlodwater.cpp \
     ../../engine/world/water/iwater.cpp \
+    ../../engine/world/water/waterframebuffer.cpp \
+    ../../engine/world/water/waterreflection.cpp \
+    ../../engine/world/water/waterrefraction.cpp \
     dialog/dialog.cpp \
     dialog/projectdialog.cpp \
     log/logwidget.cpp \
@@ -105,7 +113,7 @@ SOURCES += \
     ../../engine/render/model/materialtype.cpp \
     ../../engine/render/model/model.cpp \
     ../../engine/render/model/mesh.cpp \
-    ../../engine/render/model/texture.cpp \
+    ../../engine/render/texture.cpp \
     ../../engine/world/skybox/skybox.cpp \
     ../../engine/world/light/directionallight.cpp \
     ../../engine/world/light/pointlight.cpp \
@@ -119,7 +127,6 @@ SOURCES += \
     ../../engine/render/transform.cpp \
     ../../engine/util/objectloader.cpp \
     ../../game/game.cpp \
-    ../../engine/world/terrain/heightmap.cpp \
     ../../engine/world/primitives/primitive.cpp \
     ../../engine/world/primitives/plane.cpp \
     ../../engine/world/primitives/cube.cpp \
@@ -129,9 +136,15 @@ HEADERS += \
     $${LIB_DIRECTORY}/glad/glad.h \
     $${LIB_DIRECTORY}/STB/stb_image.h \
     $${LIB_DIRECTORY}/KHR/khrplatform.h \
+    ../../engine/components/resourcemanager.h \
+    ../../engine/generators/flowmap.h \
+    ../../engine/generators/heightmap.h \
+    ../../engine/generators/itexturegenerator.h \
+    ../../engine/generators/normalmap.h \
     ../../engine/render/collision/aabb.h \
     ../../engine/render/collision/bs.h \
     ../../engine/render/collision/collisionplane.h \
+    ../../engine/render/framebuffer.h \
     ../../engine/render/lod/cdlod/cdlod.h \
     ../../engine/render/lod/cdlod/cdlodnode.h \
     ../../engine/render/lod/cdlod/cdlodobjectchunk.h \
@@ -142,6 +155,7 @@ HEADERS += \
     ../../engine/render/lod/geoclipmaps/geometryclipmap.h \
     ../../engine/render/vertexhelper.h \
     ../../engine/util/size.h \
+    ../../engine/util/threadpool.h \
     ../../engine/world/light/sun.h \
     ../../engine/world/primitives/gridmesh.h \
     ../../engine/world/primitives/sphere.h \
@@ -151,6 +165,9 @@ HEADERS += \
     ../../engine/world/terrain/iterrain.h \
     ../../engine/world/water/cdlodwater.h \
     ../../engine/world/water/iwater.h \
+    ../../engine/world/water/waterframebuffer.h \
+    ../../engine/world/water/waterreflection.h \
+    ../../engine/world/water/waterrefraction.h \
     dialog/dialog.h \
     dialog/projectdialog.h \
     log/logwidget.h \
@@ -203,7 +220,7 @@ HEADERS += \
     ../../engine/render/model/materialtype.h \
     ../../engine/render/model/mesh.h \
     ../../engine/render/model/model.h \
-    ../../engine/render/model/texture.h \
+    ../../engine/render/texture.h \
     ../../engine/world/skybox/skybox.h \
     ../../engine/world/light/directionallight.h \
     ../../engine/world/light/pointlight.h \
@@ -221,7 +238,6 @@ HEADERS += \
     ../../game/game.h \
     ../../engine/util/stl.h \
     ../../engine/util/random.h \
-    ../../engine/world/terrain/heightmap.h \
     ../../engine/world/primitives/primitive.h \
     ../../engine/world/primitives/plane.h \
     ../../engine/world/primitives/cube.h \

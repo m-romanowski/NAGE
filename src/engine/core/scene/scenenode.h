@@ -40,11 +40,12 @@ namespace NAGE
         void addToScene(IWater* _water); // Water
         void addToScene(Camera* _camera); // Scene camera
         void removeFromScene(const std::string _key);
-        void renderModels();
+        void renderModels(Vector4f _clipPlane);
         void renderLights();
         void renderSkybox();
-        void renderTerrain();
+        void renderTerrain(Vector4f _clipPlane);
         void renderWater();
+        void renderAllComponents(Vector4f _clipPlane);
 
     private:
         std::unordered_map<std::string, Model*> mModels;

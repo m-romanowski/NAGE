@@ -1,23 +1,25 @@
 #include "iwater.h"
 
+#include <climits>
+#include <random>
+
 namespace NAGE
 {
     IWater::IWater()
         : mShader(new Shader),
-          mMaterial(new Material),
-          mTransform(new Transform)
-
+          mTransform(new Transform),
+          mWaveMoveOffsetSpeed(0.0005)
     {
+        mWaterReflection = std::make_shared<WaterReflection>(1024, 768);
+        mWaterRefraction = std::make_shared<WaterRefraction>(640, 480);
+        //mFlowMap = std::make_unique<FlowMap>();
 
+        mFlowMapTexture = std::make_unique<Texture>("../resources/texture/water/flowmap.png", TextureType::TEXTURE_2D);
     }
 
     IWater::~IWater()
     {
-        for(auto& texture : mTextures)
-            delete texture.second;
-
         delete mShader;
-        delete mMaterial;
         delete mTransform;
     }
 
@@ -26,34 +28,19 @@ namespace NAGE
         return mShader;
     }
 
-    Material* IWater::material()
-    {
-        return mMaterial;
-    }
-
     Transform* IWater::transform()
     {
         return mTransform;
     }
 
-    unsigned int IWater::texturesCount() const
+    std::shared_ptr<WaterReflection> IWater::waterReflectionEffect() const
     {
-        return mTextures.size();
+        return this->mWaterReflection;
     }
 
-    Texture* IWater::textureByKey(const std::string& _key)
+    std::shared_ptr<WaterRefraction> IWater::waterRefractionEffect() const
     {
-        auto it = mTextures.find(_key);
-
-        if(it == mTextures.end())
-            return nullptr;
-
-        return it->second;
-    }
-
-    std::map<std::string, Texture*> IWater::textures() const
-    {
-        return mTextures;
+        return this->mWaterRefraction;
     }
 
     void IWater::setShader(Shader* _shader)
@@ -61,48 +48,65 @@ namespace NAGE
         mShader = _shader;
     }
 
-    void IWater::setMaterial(Material* _material)
-    {
-        mMaterial = _material;
-    }
-
     void IWater::setTransformation(Transform* _transform)
     {
         mTransform = _transform;
     }
 
-    void IWater::addTexture(const std::string& _shaderUniformName, Texture* _texture)
+    void IWater::setWaveNoiseFactor(float _waveNoiseFactor)
     {
-        if(!mShader)
-            return;
-
-        mShader->use();
-        mShader->setInt(_shaderUniformName, mTextures.size());
-
-        mTextures.insert(std::make_pair(_shaderUniformName, _texture));
+        mWaveNoiseFactor = _waveNoiseFactor;
     }
 
-    void IWater::addTextures(const std::map<std::string, Texture*>&_textures)
+    void IWater::setWaveFrequency(float _waveFrequency)
     {
-        mTextures = _textures;
+        mWaveFrequency = _waveFrequency;
     }
 
-    void IWater::useMaterial()
+    void IWater::setWaveMoveOffsetSpeed(float _waveMoveOffsetSpeed)
     {
-        if(mMaterial) mMaterial->use(mShader);
+        mWaveMoveOffsetSpeed = _waveMoveOffsetSpeed;
     }
 
     void IWater::bindTextures()
     {
-        GLuint idx = 0;
-        for(auto& texture : mTextures)
+        // Bind reflection texture.
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, mWaterReflection->textureId());
+
+        // Bind refraction texture.
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, mWaterRefraction->textureId());
+
+        // Bind flow map texture.
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, mFlowMapTexture->id());
+        //glBindTexture(GL_TEXTURE_2D, mFlowMap->textureId());
+    }
+
+    void IWater::unbindTextures()
+    {
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    void IWater::setupWaterEffects()
+    {
+        mWaterReflection->setup();
+        mWaterRefraction->setup();
+    }
+
+    void IWater::setupFlowMapEffect(int _width, int _height, int _seed)
+    {
+        // Generate random seed if was not defined.
+        if(_seed == -1)
         {
-            if(texture.second)
-            {
-                glActiveTexture(GL_TEXTURE0 + idx);
-                glBindTexture(GL_TEXTURE_2D, texture.second->id());
-                idx++;
-            }
+            std::random_device randomDevice;
+            std::default_random_engine randomEngine(randomDevice());
+            std::uniform_int_distribution<unsigned long> uniform_dist(1, ULONG_MAX);
+
+            _seed = uniform_dist(randomEngine);
         }
+
+        // mFlowMap->generateTexture(_width, _height, _seed);
     }
 }

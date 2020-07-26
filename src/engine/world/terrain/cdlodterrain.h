@@ -17,7 +17,7 @@ namespace NAGE
         CDLODTerrain(int _lodLevel, HeightMap* _heightmap, CDLODSettings _settins = CDLODSettings());
         ~CDLODTerrain();
 
-        void render(Camera* _camera) override;
+        void render(Camera* _camera, Vector4f _clipPlane) override;
     };
 }
 

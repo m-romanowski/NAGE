@@ -57,27 +57,27 @@ uniform vec3 cameraPosition; // Current camera position.
 
 /* Returns result color (ambient + diffuse + specular) for point light.
  *
- * @param { PointLight } _light - point light settings
- * @return { vec3 } - ambient + diffuse + specular color
+ * @param _light - point light settings
+ * @return - ambient + diffuse + specular color
  */
 vec3 getPointLight(PointLight _light);
 
 /* Returns result color (ambient + diffuse + specular) for directional (sun) light.
  *
- * @param { DirectionalLight } - directional light settings
- * @return { vec3 } - ambient + diffuse + specular color
+ * @param _light - directional light settings
+ * @return ambient + diffuse + specular color
  */
 vec3 getDirectionalLight(DirectionalLight _light);
 
 /* Color (rgb) based on textures.
  *
- * @return { vec3 } - rgb color
+ * @return rgb color
  */
 vec3 combineColorFromTexturesRGB();
 
 /* Color based on textures.
  *
- * @return { vec4 } - rgba color 
+ * @return rgba color 
  */
 vec4 combineColorFromTexturesRGBA();
 
@@ -168,9 +168,9 @@ vec3 combineColorFromTexturesRGB()
     vec2 tiledCoords = fragmentTextureCoords * 30.0f;
     
     vec4 dirtTexture = texture2D(material.dirt, tiledCoords) * backTextureAmount;
-    vec4 grassTexture = texture2D(material.snow, tiledCoords) * blendMapText.r;
+    vec4 grassTexture = texture2D(material.grass, tiledCoords) * blendMapText.r;
     vec4 stoneTexture = texture2D(material.stone, tiledCoords) * blendMapText.g;
-    vec4 snowTexture = texture2D(material.grass, tiledCoords) * blendMapText.b;
+    vec4 snowTexture = texture2D(material.snow, tiledCoords) * blendMapText.b;
 
     vec4 totalColor = dirtTexture + grassTexture + stoneTexture + snowTexture;
     

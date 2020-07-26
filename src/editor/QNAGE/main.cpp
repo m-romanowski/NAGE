@@ -27,10 +27,6 @@ int main(int argc, char *argv[])
         a.setStyleSheet(ts.readAll());
     }
 
-    /* Create a bridge between engine and world editor.
-     * Bridge inherits from the Engine (base class) - see bridge.h for details.
-     */
-
     NAGE::Game* game = new NAGE::Game;
 
     // Window setup

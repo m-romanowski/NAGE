@@ -74,13 +74,12 @@ namespace NAGE
         mMaxHeight = _height;
     }
 
-    void ICDLODObject::useHeightMapTexture(Shader* _shader)
+    void ICDLODObject::setHeightMapProperties(Shader* _shader)
     {
         if(!_shader)
             return;
 
         _shader->use();
-        _shader->setInt("heightMapTexture", 0);
         _shader->setVec2("heightMapSize", mHeightMap->width(), mHeightMap->height());
         _shader->setFloat("maxHeight", mMaxHeight);
     }
@@ -96,8 +95,7 @@ namespace NAGE
         }
 
         // Frustum culling (transpose matrix -> see below).
-        Matrix4f vp = _camera->view().transpose() *
-            GLRenderEngine::projection().perspective().transpose();
+        Matrix4f vp = _camera->view().transpose() * GLRenderEngine::projection().perspective().transpose();
         mFrustum->update(vp);
 
         // We need transpose matrix for OpenGL (matrix column major).
@@ -106,15 +104,12 @@ namespace NAGE
         _shader->setMat4("view", _camera->view().transpose());
         _shader->setMat4("model", _transform->model().transpose());
         _shader->setVec3("cameraPosition", _camera->translation());
+        _shader->setInt("heightMapTexture", 0);
 
         // Get chunk mesh by settings dimension (leafNodeSie * gridResolution).
         CDLODObjectChunk* chunkMesh = chunk(mLOD->settings().dimension());
         _shader->setVec2("cdlod.gridDimension", mLOD->settings().dimension(), mLOD->settings().dimension());
         _shader->setVec2("cdlod.morphValue", mLOD->settings().morphStartValue, mLOD->settings().morphEndValue);
-
-        // Heightmap
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, mHeightMap->textureId());
 
         // Render selected nodes.
         mLOD->createSelectedList(mLodLevel, mFrustum, _camera->translation());

@@ -1,19 +1,11 @@
 #include "engine/components/image.h"
 #include "heightmap.h"
 
-#include <QDebug>
-
 namespace NAGE
 {
     HeightMap::HeightMap()
-        : mHeightMapTexture(nullptr)
     {
 
-    }
-
-    HeightMap::~HeightMap()
-    {
-        delete mHeightMapTexture;
     }
 
     float HeightMap::heightAt(int _x, int _z) const
@@ -31,9 +23,9 @@ namespace NAGE
 
     void HeightMap::createTextureFromData(int _width, int _height, unsigned char* _data)
     {
-        mHeightMapTexture = new Texture(TextureType::TEXTURE_2D);
-        mHeightMapTexture->fromData(_width, _height, Texture::TextureFormat::RGB, _data);
-        mData = mHeightMapTexture->redColorData();
+        mTexture = std::make_unique<Texture>(TextureType::TEXTURE_2D);
+        mTexture->fromData(_width, _height, Texture::TextureFormat::RGB, _data);
+        mData = mTexture->redColorData();
     }
 
     float HeightMap::minValueFromArea(int _x, int _z, int _xOffset, int _zOffset) const
@@ -68,40 +60,24 @@ namespace NAGE
         return maxValue;
     }
 
-    int HeightMap::width() const
-    {
-        return mHeightMapTexture->width();
-    }
-
-    int HeightMap::height() const
-    {
-        return mHeightMapTexture->height();
-    }
 
     Size<int> HeightMap::size() const
     {
-        return Size<int>(mHeightMapTexture->width(), mHeightMapTexture->height());
-    }
-
-    GLuint HeightMap::textureId() const
-    {
-        return mHeightMapTexture->id();
+        return Size<int>(mTexture->width(), mTexture->height());
     }
 
     void HeightMap::flat(int _width, int _height)
     {
         assert(_width > 0 && _height > 0);
 
-        if(mHeightMapTexture)
-            delete mHeightMapTexture;
+        if(mTexture)
+            mTexture = std::make_unique<Texture>();
 
         unsigned char* data = new unsigned char[_width * _height * 3]; // RGB format
         for(int x = 0; x < _width; x++)
         {
             for(int y = 0; y < _height; y++)
-            {
                 setValue(x, y, _width, data, Color(255, 255, 255));
-            }
         }
 
         createTextureFromData(_width, _height, data);
@@ -116,8 +92,8 @@ namespace NAGE
     {
         assert(_width > 0 && _height > 0);
 
-        if(mHeightMapTexture)
-            delete mHeightMapTexture;
+        if(mTexture)
+            mTexture = std::make_unique<Texture>();
 
         FPerlinNoise noise(_seed);
         if(noise.settings != _settings) noise.settings = _settings;
@@ -170,7 +146,7 @@ namespace NAGE
 
     void HeightMap::loadFromFile(const std::string& _path)
     {
-        mHeightMapTexture = new Texture(_path, TextureType::TEXTURE_2D);
-        mData = mHeightMapTexture->redColorData();
+        mTexture = std::make_unique<Texture>(_path, TextureType::TEXTURE_2D);
+        mData = mTexture->redColorData();
     }
 }

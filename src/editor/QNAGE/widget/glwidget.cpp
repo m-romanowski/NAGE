@@ -1,4 +1,7 @@
+#include <QtConcurrent/QtConcurrentRun>
 #include "glwidget.h"
+
+#include <QDebug>
 
 namespace QNAGE
 {
@@ -89,10 +92,7 @@ namespace QNAGE
             sync();
 
             // Initialize engine components.
-            mGame->initializeComponents(NAGE::EngineType::OpenGL);
-
-            // Initialize editor scene.
-            // mCamera.setTranslation(0.0f, 25.0f, 0.0f);
+            mGame->initializeComponents(NAGE::EngineType::OpenGL, this);
 
             mSceneNode->addToScene(&mCamera);
             mGame->sceneManager()->addChild("editor", mSceneNode);
@@ -129,8 +129,9 @@ namespace QNAGE
             // Handle camera rotations.
             mCamera.rotate(-NAGE::cameraSensitivity * NAGE::Mouse::mouseDelta().x(),
                 NAGE::Vector3f::up);
-            mCamera.rotate(-NAGE::cameraSensitivity * NAGE::Mouse::mouseDelta().y(),
-                mCamera.right());
+
+            //mCamera.rotate(-NAGE::cameraSensitivity * NAGE::Mouse::mouseDelta().y(),
+            //    mCamera.right());
 
             // Handle camera translations.
             NAGE::Vector3f translation;
@@ -147,7 +148,6 @@ namespace QNAGE
              */
             float delta = static_cast<float>(IWindow::deltaMs());
             mCamera.translate(NAGE::cameraMovementSpeed * delta * translation);
-
         }
 
         // Update QT OpenGL context.

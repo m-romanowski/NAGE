@@ -21,8 +21,9 @@ namespace NAGE
             RGBA = 4
         };
 
-        explicit Texture(TextureType _type);
+        explicit Texture(TextureType _type = TextureType::TEXTURE_2D);
         explicit Texture(const std::string& _path, TextureType _type);
+        ~Texture();
 
         // Getters
         GLuint id() const;
@@ -45,9 +46,12 @@ namespace NAGE
 
         void fromFile(const std::string& _path);
         void fromData(int _width, int _height, TextureFormat _format, unsigned char* _data);
+        void empty(int _width, int _height);
+        void clean();
 
     private:
         void bindTexture();
+        void bindEmptyTexture();
 
         GLuint mId;
         TextureType mType;

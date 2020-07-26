@@ -35,6 +35,9 @@ namespace NAGE
         Vector3f right() const;
         Vector3f translation() const { return mTranslation; }
         Quaternion rotation() const { return mRotation; }
+        float roll() const;
+        float pitch() const;
+        float yaw() const;
 
         Matrix4f view() const;
 

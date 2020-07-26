@@ -8,6 +8,7 @@ uniform mat4 projection;
 
 void main()
 {
-    // Result { Matrix4 } = MVP(Projection * View * Model)
-    gl_Position = projection * view * model * vec4(inPosition, 1.0f);
+    // Result: Matrix4 = MVP(Projection * View * Model)
+    vec4 position = projection * view * model * vec4(inPosition, 1.0f);
+    gl_Position = position;
 }

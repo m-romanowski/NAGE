@@ -28,10 +28,10 @@ namespace NAGE
         mCoreEngine = _engine;
     }
 
-    void IGame::initializeComponents(EngineType _type)
+    void IGame::initializeComponents(EngineType _type, IWindow* _window)
     {
         if(_type == EngineType::OpenGL)
-            mCoreEngine->initialize(new GLRenderEngine);
+            mCoreEngine->initialize(new GLRenderEngine(_window));
     }
 
     void IGame::launch()

@@ -55,6 +55,9 @@ namespace QNAGE
         void setupGLWidget(NAGE::IGame* _game);
         void reloadUi();
 
+    signals:
+        void rendererInitialized();
+
     private slots:
         void dockGLWindow();
 

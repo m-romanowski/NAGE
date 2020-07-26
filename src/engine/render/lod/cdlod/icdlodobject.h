@@ -28,7 +28,7 @@ namespace NAGE
         // Setters
         void setMaxHeight(float _height);
 
-        virtual void useHeightMapTexture(Shader* _shader);
+        virtual void setHeightMapProperties(Shader* _shader);
         virtual void renderCDLOD(Camera* _camera, Shader* _shader, Transform* _transform);
 
     protected:

@@ -1,15 +1,8 @@
 /* Shader based on Filip Strugar paper - CDLOD 2010.
  *
- * Alghoritm source (tutorial): https://www.opengl.org/sdk/docs/tutorials/ClockworkCoders/lighting.php
- *
- * TODO:
- *  - Flashlight
- *  - Compute normal matrix on CPU and send to uniform. Doing that in the shader wastes a lot of precious GPU cycles.
- *
  * FINISHED:
  *  - CDLOD
- *  - Directional light
- *  - Point light
+ *  - reflection and refraction map
  */
 #version 450 core
 
@@ -40,93 +33,44 @@ uniform vec3 cameraPosition;
 uniform CDLOD cdlod;
 
 // Heightmap
-uniform sampler2D heightMapTexture;
 uniform vec2 heightMapSize;
 uniform float maxHeight;
 
-out vec3 fragmentPosition;
-out vec3 fragmentNormal;
-out vec2 fragmentTextureCoords;
-out vec4 fragmentColor;
+// Water settings
+uniform float waveNoiseFactor;
 
-/* Get height value by heightmap texture.
- * height = texture(textureSampler, worldPosition / textureSize).redColor * maxHeight
+// Fragment shader
+out vec4 clipSpace;
+out vec3 cameraDistance;
+out vec2 textureCoords;
+
+/**
+ * Calculates morph value (see original Filip Strugar's paper - CDLOD 2010).
  *
- * @param { vec2 } _pos - world position (xz)
- * @return { float } - height value
- */
-float getHeight(vec2 _pos);
-
-/* Calculate texture coordinates.
- * uv = worldPosition / heightmapSize
- *
- * @param { vec3 } _pos - world position
- * @return { vec2 } - uv coordinates
- */
-vec2 calculateTextureCoords(vec3 _pos);
-
-/* Calculate normal vector.
- * 
- * @param { vec3 } _pos - world position
- * @return { vec3 } - normal vector (for lighting)
- */
-vec3 calculateNormal(vec3 _pos);
-
-/* Calculate morph value (see original Filip Strugar's paper - CDLOD 2010).
- *
- * @param { vec2 } _gridPosition - local position (inPosition)
- * @param { vec2 } _vertex - world position
- * @param { float } _morphValue - morph value = 1.0f - clamp(morphStartValue - eyeDistance * morphEndValue, 0.0f, 1.0f)
- * @return { vec2 } - morph value vec2(x, z)
+ * @param _gridPosition - local position (inPosition)
+ * @param _vertex - world position
+ * @param _morphValue - morph value = 1.0f - clamp(morphStartValue - eyeDistance * morphEndValue, 0.0f, 1.0f)
+ * @return morph value vec2(x, z)
  */
 vec2 morphVertex(vec2 _gridPosition, vec2 _vertex, float _morphValue);
 
 void main(void)
 {
-	// Base vertex position.
-	vec3 worldPosition = cdlod.vecOffset + cdlod.scale * inPosition;
-	
-	// Distance between current camera position and terrain world position.
+    // Base vertex position.
+  	vec3 worldPosition = cdlod.vecOffset + cdlod.scale * inPosition;
+
+	  // Distance between current camera position and water world position.
     float eyeDist = distance(cameraPosition, worldPosition);
-    float morphLerpK  = 1.0f - clamp(cdlod.morphValue.x - eyeDist * cdlod.morphValue.y, 0.0f, 1.0f); 
-	
-	// Morph vertex for current world position.
-	worldPosition.xz = morphVertex(inPosition.xz, worldPosition.xz, morphLerpK);
-	worldPosition.y = getHeight(worldPosition.xz);
-	
-    // World vertex position.
-    fragmentPosition = vec3(model * vec4(worldPosition, 1.0f));
-    // Normal matrix (see TODO):
-    //  * http://www.lighthouse3d.com/tutorials/glsl-12-tutorial/the-normal-matrix/
-    //  * https://stackoverflow.com/a/21079741
-    fragmentNormal = mat3(transpose(inverse(model))) * calculateNormal(worldPosition);
-    // Texture coordinates for fragment shader.
-    fragmentTextureCoords = calculateTextureCoords(worldPosition) * 20.0f;
-    // Color for fragment shader.
-    fragmentColor = inColor;
+    float morphLerpK  = 1.0f - clamp(cdlod.morphValue.x - eyeDist * cdlod.morphValue.y, 0.0f, 1.0f);
 
-    gl_Position = projection * view * model * vec4(worldPosition, 1.0);
-}
+  	// Morph vertex for current world position.
+  	worldPosition.xz = morphVertex(inPosition.xz, worldPosition.xz, morphLerpK);
+    clipSpace = projection * view * model * vec4(worldPosition.x, 0.0f, worldPosition.z, 1.0f);
 
-float getHeight(vec2 _pos)
-{
-    return texture2D(heightMapTexture, _pos / heightMapSize).r * maxHeight;
-}
-
-vec2 calculateTextureCoords(vec3 _pos)
-{
-    return _pos.xz / heightMapSize;
-}
-
-vec3 calculateNormal(vec3 pos)
-{
-    float heightLeft = getHeight(pos.xz + vec2(1, 0));
-    float heightRight = getHeight(pos.xz - vec2(1, 0));
-    float heightBottom = getHeight(pos.xz + vec2(0, 1));
-    float heightTop = getHeight(pos.xz - vec2(0, 1));
-  
-    return normalize(cross(vec3(1.0f, heightLeft - heightRight, 0.0f),
-        -vec3(0.0f, heightBottom - heightTop, 1.0f)));
+    // Vertex output
+    cameraDistance = cameraPosition - worldPosition.xyz;
+    textureCoords = (worldPosition.xz / heightMapSize) * waveNoiseFactor;
+    gl_Position = clipSpace;
 }
 
 vec2 morphVertex(vec2 _gridPosition, vec2 _vertex, float _morphValue)

@@ -123,7 +123,7 @@ namespace NAGE
         return id;
     }
 
-    void Skybox::draw(Camera& _camera)
+    void Skybox::draw(Camera* _camera)
     {
         if(mShader == nullptr)
         {
@@ -141,7 +141,7 @@ namespace NAGE
         // Remove translation column from the view matrix.
         // We need that because we don't let get close to the edge of skybox.
         // Player will be always in the center of skybox - skybox will be not move with the player.
-        Matrix4f viewWithoutTranslation = Matrix4f::transform(Matrix4f::transform(_camera.view()));
+        Matrix4f viewWithoutTranslation = Matrix4f::transform(Matrix4f::transform(_camera->view()));
         mShader->setMat4("view", viewWithoutTranslation.transpose());
 
         // Draw mesh.

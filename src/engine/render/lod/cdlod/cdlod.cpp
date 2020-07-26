@@ -71,9 +71,7 @@ namespace NAGE
         for(unsigned int i = 0; i < mTreeNodes.size(); i++)
         {
             for(unsigned int j = 0; j < mTreeNodes[0].size(); j++)
-            {
                 mTreeNodes[i][j]->LODSelect(mCDLODRanges, _rootLodLevel, _frustum, _cameraPosition, mSelectedNodes);
-            }
         }
     }
 
@@ -82,9 +80,7 @@ namespace NAGE
         for(unsigned int i = 0; i < mTreeNodes.size(); i++)
         {
             for(unsigned int j = 0; j < mTreeNodes[i].size(); j++)
-            {
                 delete mTreeNodes[i][j];
-            }
         }
     }
 

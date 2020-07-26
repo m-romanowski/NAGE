@@ -157,21 +157,21 @@ namespace NAGE
         return mCamera;
     }
 
-    void SceneNode::renderModels()
+    void SceneNode::renderModels(Vector4f _clipPlane)
     {
         // Render models.
         for(const auto& model : mModels)
         {
             model.second->useMaterials();
             model.second->bindTextures();
-            model.second->draw(mCamera);
+            model.second->draw(mCamera, _clipPlane);
+            // model.second->unbindTextures();
         }
     }
 
     // TODO: change light rendering method.
     void SceneNode::renderLights()
     {
-        // TMP: to change
         // Use light to any model on scene.
         for(auto& model : mModels)
         {
@@ -186,7 +186,6 @@ namespace NAGE
                 mSunLight->use(mCamera, model.second->shader());
         }
 
-        // TMP: to change
         if(mTerrain)
         {
             for(auto& light : mPointLights)
@@ -196,18 +195,6 @@ namespace NAGE
 
             if(mSunLight)
                 mSunLight->use(mCamera, mTerrain->shader());
-        }
-
-        // TMP: to change
-        if(mWater)
-        {
-            for(auto& light : mPointLights)
-                light.second->use(mCamera, mWater->shader());
-
-            mWater->shader()->setInt("pointLightCount", static_cast<int>(mPointLights.size()));
-
-            if(mSunLight)
-                mSunLight->use(mCamera, mWater->shader());
         }
 
         // Draw lights
@@ -222,16 +209,17 @@ namespace NAGE
     {
         // Render skybox if exists
         if(mSkybox)
-            mSkybox->draw(*mCamera);
+            mSkybox->draw(mCamera);
     }
 
-    void SceneNode::renderTerrain()
+    void SceneNode::renderTerrain(Vector4f _clipPlane)
     {
         if(mTerrain)
         {
             mTerrain->useMaterial();
             mTerrain->bindTextures();
-            mTerrain->render(mCamera);
+            mTerrain->render(mCamera, _clipPlane);
+            // mTerrain->unbindTextures();
         }
     }
 
@@ -239,9 +227,18 @@ namespace NAGE
     {
         if(mWater)
         {
-            mWater->useMaterial();
             mWater->bindTextures();
             mWater->render(mCamera);
+            // mWater->unbindTextures();
         }
+    }
+
+    void SceneNode::renderAllComponents(Vector4f _clipPlane)
+    {
+        renderSkybox();
+        renderModels(_clipPlane);
+        renderLights();
+        renderTerrain(_clipPlane);
+        renderWater();
     }
 }
