@@ -33,9 +33,9 @@ namespace NAGE
         void draw(Camera* _camera, Shader* _shader, Vector4f _clipPlane) override;
 
     protected:
-        Material* mMaterial;
-        Transform* mTransform;
-        std::vector<Texture*> mTextures;
+        Material* material_;
+        Transform* transform_;
+        std::vector<Texture*> textures_;
     };
 }
 

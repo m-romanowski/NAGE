@@ -30,10 +30,10 @@ namespace NAGE
         void use(Camera* _camera, Shader* _shader) override;
 
     protected:
-        int mId;
-        Shader* mShader;
-        Transform* mTransform;
-        Vector3f mAttenuation;
+        int id_;
+        Shader* shader_;
+        Transform* transform_;
+        Vector3f attenuation_;
     };
 }
 

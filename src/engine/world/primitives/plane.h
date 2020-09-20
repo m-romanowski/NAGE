@@ -15,7 +15,7 @@ namespace NAGE
             std::vector<unsigned int>& _indices);
 
     protected:
-        int mWidth, mHeight;
+        int width_, height_;
     };
 }
 

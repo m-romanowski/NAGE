@@ -20,27 +20,27 @@ namespace NAGE
 
         void setDefaultSettings()
         {
-            maxLODLevel = DEFAULT_CDLOD_MAX_LOD_LEVEL;
-            leafNodeSize = DEFAULT_CDLOD_LEAF_NODE_SIZE;
-            gridResolution = DEFAULT_CDLOD_GRID_RESOLUTION;
-            gridMeshesCount = DEFAULT_CDLOD_GRID_MESHES_COUNT;
-            morphStartValue = 0.0f;
-            morphEndValue = 0.25f;
+            maxLODLevel_ = DEFAULT_CDLOD_MAX_LOD_LEVEL;
+            leafNodeSize_ = DEFAULT_CDLOD_LEAF_NODE_SIZE;
+            gridResolution_ = DEFAULT_CDLOD_GRID_RESOLUTION;
+            gridMeshesCount_ = DEFAULT_CDLOD_GRID_MESHES_COUNT;
+            morphStartValue_ = 0.0f;
+            morphEndValue_ = 0.25f;
         }
 
         // See paper: <= 128
         int dimension()
         {
-            assert(leafNodeSize * gridResolution <= 128);
-            return leafNodeSize * gridResolution;
+            assert(leafNodeSize_ * gridResolution_ <= 128);
+            return leafNodeSize_ * gridResolution_;
         }
 
         // CDLOD settings
-        int maxLODLevel; // Max lod level depth.
-        int leafNodeSize; // Leaf node size
-        int gridResolution; // Grid resolution.
-        int gridMeshesCount; // Grid meshes count.
-        float morphStartValue, morphEndValue; // Morph start and end value.
+        int maxLODLevel_; // Max lod level depth.
+        int leafNodeSize_; // Leaf node size
+        int gridResolution_; // Grid resolution.
+        int gridMeshesCount_; // Grid meshes count.
+        float morphStartValue_, morphEndValue_; // Morph start and end value.
     };
 }
 

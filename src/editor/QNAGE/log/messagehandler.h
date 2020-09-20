@@ -18,7 +18,7 @@ namespace QNAGE
         void catchMessage(QString _msg);
 
     private:
-        QPlainTextEdit* textEdit;
+        QPlainTextEdit* textEdit_;
     };
 }
 

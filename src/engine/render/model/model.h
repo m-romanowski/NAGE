@@ -34,9 +34,9 @@ namespace NAGE
         void loadModel(const std::string& _path);
 
     protected:
-        std::vector<Mesh*> mMeshes;
-        Transform* mTransform;
-        Shader* mShader;
+        std::vector<Mesh*> meshes_;
+        Transform* transform_;
+        Shader* shader_;
     };
 }
 

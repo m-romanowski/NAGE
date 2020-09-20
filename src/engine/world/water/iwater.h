@@ -38,15 +38,15 @@ namespace NAGE
         void setupFlowMapEffect(int _width, int _height, int _seed = -1);
 
     protected:
-        Shader* mShader;
-        Transform* mTransform;
-        std::shared_ptr<WaterReflection> mWaterReflection;
-        std::shared_ptr<WaterRefraction> mWaterRefraction;
+        Shader* shader_;
+        Transform* transform_;
+        std::shared_ptr<WaterReflection> waterReflection_;
+        std::shared_ptr<WaterRefraction> waterRefraction_;
         // std::unique_ptr<FlowMap> mFlowMap;
-        std::unique_ptr<Texture> mFlowMapTexture;
+        std::unique_ptr<Texture> flowMapTexture_;
 
-        float mWaveNoiseFactor, mWaveFrequency;
-        float mWaveMoveOffset, mWaveMoveOffsetSpeed;
+        float waveNoiseFactor_, waveFrequency_;
+        float waveMoveOffset_, waveMoveOffsetSpeed_;
     };
 }
 

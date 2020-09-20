@@ -4,20 +4,20 @@ namespace QNAGE
 {
     SettingsLayout::SettingsLayout(QWidget* _parent)
         : QWidget(_parent),
-          mainLayout(new QVBoxLayout())
+          mainLayout_(new QVBoxLayout())
     {
-        this->backButton = new CustomButton();
+        this->backButton_ = new CustomButton();
         QIcon backButtonIcon;
         backButtonIcon.addPixmap(QPixmap(":/rc/icons/left-arrow.png"), QIcon::Normal, QIcon::Off);
-        this->backButton->setCustomIcon(backButtonIcon, QSize(23, 23));
+        this->backButton_->setCustomIcon(backButtonIcon, QSize(23, 23));
 
-        this->setLayout(this->mainLayout);
+        this->setLayout(this->mainLayout_);
     }
 
     SettingsLayout::~SettingsLayout()
     {
-        delete backButton;
-        delete mainLayout;
+        delete backButton_;
+        delete mainLayout_;
     }
 
     void SettingsLayout::clearLayout(QLayout* _layout)

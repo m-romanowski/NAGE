@@ -4,41 +4,41 @@
 namespace NAGE
 {
     Sphere::Sphere(unsigned int _sectorCount, unsigned int _stackCount, float _radius)
-        : mSectorCount(_sectorCount),
-          mStackCount(_stackCount),
-          mRadius(_radius)
+        : sectorCount_(_sectorCount),
+          stackCount_(_stackCount),
+          radius_(_radius)
     {
-        generateSphere(mVertices, mIndices, _sectorCount, _stackCount, _radius);
+        generateSphere(vertices_, indices_, _sectorCount, _stackCount, _radius);
     }
 
     unsigned int Sphere::stackCount() const
     {
-        return mStackCount;
+        return stackCount_;
     }
 
     unsigned int Sphere::sectorCount() const
     {
-        return mSectorCount;
+        return sectorCount_;
     }
 
     float Sphere::radius() const
     {
-        return mRadius;
+        return radius_;
     }
 
     void Sphere::setSectorCount(unsigned int _count)
     {
-        mSectorCount = _count;
+        sectorCount_ = _count;
     }
 
     void Sphere::setStackCount(unsigned int _count)
     {
-        mStackCount = _count;
+        stackCount_ = _count;
     }
 
     void Sphere::setRadius(float _radius)
     {
-        mRadius = _radius;
+        radius_ = _radius;
     }
 
     void Sphere::setupPrimitive()

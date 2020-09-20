@@ -3,41 +3,41 @@
 namespace NAGE
 {
     CDLODNode::CDLODNode(int _x, int _z, unsigned int _lodLevel, int _dimension)
-        : mX(_x),
-          mZ(_z),
-          mDimension(_dimension),
-          mLODLevel(_lodLevel)
+        : x_(_x),
+          z_(_z),
+          dimension_(_dimension),
+          lodLevel_(_lodLevel)
     {
 
     }
 
     int CDLODNode::x() const
     {
-        return mX;
+        return x_;
     }
 
     int CDLODNode::z() const
     {
-        return mZ;
+        return z_;
     }
 
     int CDLODNode::minY() const
     {
-        return mMinY;
+        return minY_;
     }
 
     int CDLODNode::maxY() const
     {
-        return mMaxY;
+        return maxY_;
     }
 
     int CDLODNode::dimension() const
     {
-        return mDimension;
+        return dimension_;
     }
 
     unsigned int CDLODNode::lodLevel() const
     {
-        return mLODLevel;
+        return lodLevel_;
     }
 }

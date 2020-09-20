@@ -31,7 +31,7 @@ namespace NAGE
         void launch();
 
     protected:
-        CoreEngine* mCoreEngine;
+        CoreEngine* coreEngine_;
     };
 }
 

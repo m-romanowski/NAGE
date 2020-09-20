@@ -41,14 +41,14 @@ namespace NAGE
         void useTextures(Shader* _shader);
 
     private:
-        Vector3f mAmbient;
-        Vector3f mDiffuse;
-        Vector3f mSpecular;
-        GLfloat mShininess;
-        GLuint mDiffuseTexture;
-        GLuint mSpecularTexture;
+        Vector3f ambient_;
+        Vector3f diffuse_;
+        Vector3f specular_;
+        GLfloat shininess_;
+        GLuint diffuseTexture_;
+        GLuint specularTexture_;
 
-        bool texturesSent;
+        bool texturesSent_;
     };
 }
 

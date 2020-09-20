@@ -23,7 +23,7 @@ namespace NAGE
         void removeChild(const std::string& _key);
 
     private:
-        std::unordered_map<std::string, SceneNode*> mChildren;
+        std::unordered_map<std::string, SceneNode*> children_;
     };
 }
 

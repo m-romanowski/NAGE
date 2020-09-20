@@ -1,32 +1,30 @@
 #include "glrenderengine.h"
 
-#include <QDebug>
-
 namespace NAGE
 {
-    Projection GLRenderEngine::mProjection;
+    Projection GLRenderEngine::projection_;
 
     GLRenderEngine::GLRenderEngine(IWindow* _window)
-        : mWindow(_window),
-          mSceneColor(new Color)
+        : window_(_window),
+          sceneColor_(new Color)
     {
 
     }
 
     GLRenderEngine::~GLRenderEngine()
     {
-        delete mWindow;
-        delete mSceneColor;
+        delete window_;
+        delete sceneColor_;
     }
 
     IWindow* GLRenderEngine::window()
     {
-        return mWindow;
+        return window_;
     }
 
     Color* GLRenderEngine::sceneColor()
     {
-        return mSceneColor;
+        return sceneColor_;
     }
 
     GLint GLRenderEngine::screenFrameBuffer() const
@@ -39,8 +37,8 @@ namespace NAGE
 
     void GLRenderEngine::clearScene()
     {
-        glClearColor(mSceneColor->red(), mSceneColor->green(), mSceneColor->blue(),
-            mSceneColor->alpha());
+        glClearColor(sceneColor_->red(), sceneColor_->green(), sceneColor_->blue(),
+            sceneColor_->alpha());
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
@@ -55,19 +53,19 @@ namespace NAGE
     void GLRenderEngine::initializePreRenderEffects()
     {
         // Initialize scene effects.
-        for(auto scene : mSceneManager->scenes())
+        for(auto scene : sceneManager_->scenes())
         {
             scene.second->water()->setupWaterEffects();
             //scene.second->water()->setupFlowMapEffect(512, 512);
         }
 
         // Bind main frame buffer after effects initialization.
-        FrameBuffer::unbind(mWindow, screenFrameBuffer());
+        FrameBuffer::unbind(window_, screenFrameBuffer());
     }
 
     void GLRenderEngine::render()
     {
-        for(auto scene : mSceneManager->scenes())
+        for(auto scene : sceneManager_->scenes())
             renderScene(scene.second);
     }
 
@@ -87,6 +85,8 @@ namespace NAGE
             return;
 
         // Store main screen frame buffer id.
+        //
+        // [TODO]
         // This is some of "bug" type - when we resize the render window
         // the main frame buffer id changes to the "random" id (different than zero which is default).
         GLint mainFrameBuffer = screenFrameBuffer();
@@ -115,14 +115,14 @@ namespace NAGE
         _node->camera()->setTranslation(cameraPosition);
         _node->camera()->rotate(cameraPitch, Vector3f(1.0f, 0.0f, 0.0f));
 
-        FrameBuffer::unbind(mWindow, mainFrameBuffer);
+        FrameBuffer::unbind(window_, mainFrameBuffer);
 
         // Water refraction effect.
         _node->water()->waterRefractionEffect()->bind();
         renderSceneObjects(_node, Vector4f(0.0f, -1.0f, 0.0f, waterHeight));
 
         disableClipPlane();
-        FrameBuffer::unbind(mWindow, mainFrameBuffer);
+        FrameBuffer::unbind(window_, mainFrameBuffer);
 
         // Render "normal" scene.
         _node->renderAllComponents(Vector4f(0.0f, -1.0f, 0.0f, 1000.0f));
@@ -144,13 +144,13 @@ namespace NAGE
 
     Projection& GLRenderEngine::projection()
     {
-        return mProjection;
+        return projection_;
     }
 
     /*GLFWwindow* GLRenderEngine::glfwWwindow() const
     {
-        if(mWindow != nullptr)
-            return mWindow->getGLFWwindow();
+        if(window_ != nullptr)
+            return window_->getGLFWwindow();
 
         return nullptr;
     }*/

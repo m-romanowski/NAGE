@@ -1,5 +1,5 @@
-#ifndef NAGE_ENGINE_X11_H_
-#define NAGE_ENGINE_X11_H_
+#ifndef NAGE_ENGINE_IO_X11_H_
+#define NAGE_ENGINE_IO_X11_H_
 
 #include "common/log.h"
 #include "common/macro.h"
@@ -27,11 +27,11 @@ namespace NAGE
     private:
         static int XlibErrorHandler(Display* _display, XErrorEvent* _event);
 
-        Display* mDisplay;
-        Window mWindow;
-        XEvent mXEvent;
-        int mCursorX, mCursorY;
+        Display* display_;
+        Window window_;
+        XEvent xEvent_;
+        int cursorX_, cursorY_;
     };
 }
 
-#endif // NAGE_ENGINE_X11_H_
+#endif // NAGE_ENGINE_IO_X11_H_

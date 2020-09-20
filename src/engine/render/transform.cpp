@@ -3,37 +3,37 @@
 namespace NAGE
 {
     Transform::Transform()
-        : mTranslation(Vector3f(0.0f, 0.0f, 0.0f)),
-          mScaling(Vector3f(1.0f, 1.0f, 1.0f)),
-          mShearing(Vector3f(0.0f, 0.0f, 0.0f)),
-          mRotation(Quaternion(0.0f, 0.0f, 0.0f, 1.0f))
+        : translation_(Vector3f(0.0f, 0.0f, 0.0f)),
+          scaling_(Vector3f(1.0f, 1.0f, 1.0f)),
+          shearing_(Vector3f(0.0f, 0.0f, 0.0f)),
+          rotation_(Quaternion(0.0f, 0.0f, 0.0f, 1.0f))
     {
 
     }
 
     Vector3f Transform::translation() const
     {
-        return mTranslation;
+        return translation_;
     }
 
     Quaternion Transform::rotation() const
     {
-        return mRotation;
+        return rotation_;
     }
 
     Vector3f Transform::scaling() const
     {
-        return mScaling;
+        return scaling_;
     }
 
     Vector3f Transform::shearing() const
     {
-        return mShearing;
+        return shearing_;
     }
 
     void Transform::setTranslation(const Vector3f& _translation)
     {
-        mTranslation = _translation;
+        translation_ = _translation;
     }
 
     void Transform::setTranslation(float _dx, float _dy, float _dz)
@@ -43,7 +43,7 @@ namespace NAGE
 
     void Transform::setScale(const Vector3f& _scaling)
     {
-        mScaling = _scaling;
+        scaling_ = _scaling;
     }
 
     void Transform::setScale(float _dx, float _dy, float _dz)
@@ -58,7 +58,7 @@ namespace NAGE
 
     void Transform::setRotation(const Quaternion& _rotation)
     {
-        mRotation = _rotation;
+        rotation_ = _rotation;
     }
 
     void Transform::setRotation(float _angle, const Vector3f& _axis)
@@ -73,7 +73,7 @@ namespace NAGE
 
     void Transform::translate(const Vector3f& _dt)
     {
-        mTranslation += _dt;
+        translation_ += _dt;
     }
 
     void Transform::translate(float _dx, float _dy, float _dz)
@@ -83,8 +83,8 @@ namespace NAGE
 
     void Transform::scale(const Vector3f& _ds)
     {
-        mScaling = Vector3f(mScaling.x() * _ds.x(), mScaling.y() * _ds.y(),
-            mScaling.z() * _ds.z());
+        scaling_ = Vector3f(scaling_.x() * _ds.x(), scaling_.y() * _ds.y(),
+            scaling_.z() * _ds.z());
     }
 
     void Transform::scale(float _dx, float _dy, float _dz)
@@ -99,7 +99,7 @@ namespace NAGE
 
     void Transform::rotate(const Quaternion& _rotation)
     {
-        mRotation = _rotation * mRotation;
+        rotation_ = _rotation * rotation_;
     }
 
     void Transform::rotate(float _angle, const Vector3f& _axis)
@@ -114,8 +114,8 @@ namespace NAGE
 
     void Transform::shear(const Vector3f& _ds)
     {
-        mShearing = Vector3f(mScaling.x() * _ds.x(), mScaling.y() * _ds.y(),
-            mScaling.z() * _ds.z());
+        shearing_ = Vector3f(scaling_.x() * _ds.x(), scaling_.y() * _ds.y(),
+            scaling_.z() * _ds.z());
     }
 
     void Transform::shear(float _dx, float _dy, float _dz)
@@ -132,10 +132,10 @@ namespace NAGE
     {
         Matrix4f matrix;
         matrix.identity();
-        matrix.translate(mTranslation);
-        matrix.rotate(mRotation);
-        matrix.scale(mScaling);
-        matrix.shear(mShearing);
+        matrix.translate(translation_);
+        matrix.rotate(rotation_);
+        matrix.scale(scaling_);
+        matrix.shear(shearing_);
 
         return matrix;
     }

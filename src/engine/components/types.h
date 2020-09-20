@@ -1,5 +1,5 @@
-#ifndef NAGE_TYPES_H_
-#define NAGE_TYPES_H_
+#ifndef NAGE_ENGINE_COMPONENTS_TYPES_H_
+#define NAGE_ENGINE_COMPONENTS_TYPES_H_
 
 namespace NAGE
 {
@@ -34,4 +34,4 @@ namespace NAGE
     };
 }
 
-#endif // NAGE_TYPES_H_
+#endif // NAGE_ENGINE_COMPONENTS_TYPES_H_

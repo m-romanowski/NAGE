@@ -15,6 +15,6 @@ namespace QNAGE
 
     void EnvironmentSettings::setupUi()
     {
-        this->mainLayout->addWidget(this->backButton);
+        this->mainLayout_->addWidget(this->backButton_);
     }
 }

@@ -34,8 +34,8 @@ namespace NAGE
         void update(const Matrix4f& _mvp);
 
     private:
-        std::array<CollisionPlane, 6> mPlanes; // left, right, top, bottom, near, far
-        bool mNormalizePlanes;
+        std::array<CollisionPlane, 6> planes_; // left, right, top, bottom, near, far
+        bool normalizePlanes_;
     };
 }
 

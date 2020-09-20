@@ -4,52 +4,52 @@
 namespace NAGE
 {
     Primitive::Primitive()
-        : mShader(new Shader),
-          mTransform(new Transform)
+        : shader_(new Shader),
+          transform_(new Transform)
     {
 
     }
 
     Primitive::~Primitive()
     {
-        delete mShader;
-        delete mTransform;
+        delete shader_;
+        delete transform_;
     }
 
     Shader* Primitive::shader()
     {
-        return mShader;
+        return shader_;
     }
 
     Transform* Primitive::transform()
     {
-        return mTransform;
+        return transform_;
     }
 
     unsigned long Primitive::verticesCount() const
     {
-        return mVertices.size();
+        return vertices_.size();
     }
 
     unsigned long Primitive::indicesCount() const
     {
-        return mIndices.size();
+        return indices_.size();
     }
 
     void Primitive::setShader(Shader* _shader)
     {
-        mShader = _shader;
+        shader_ = _shader;
     }
 
     void Primitive::setTransform(Transform* _transform)
     {
-        mTransform = _transform;
+        transform_ = _transform;
     }
 
     void Primitive::initialize()
     {
         // Add default primitive shader (MVP and white color).
-        mShader->addShaderFromSourceCode(SHADER_TYPE::SHADER_VERTEX,
+        shader_->addShaderFromSourceCode(SHADER_TYPE::SHADER_VERTEX,
             "#version 450 core\n"
             "layout (location = 0) in vec3 position;\n"
             "uniform mat4 model;\n"
@@ -59,19 +59,19 @@ namespace NAGE
             "gl_Position = projection * view * model * vec4(position, 1.0f);\n"
             "}\n\0");
 
-        mShader->addShaderFromSourceCode(SHADER_TYPE::SHADER_FRAGMENT,
+        shader_->addShaderFromSourceCode(SHADER_TYPE::SHADER_FRAGMENT,
             "#version 450 core\n"
             "out vec4 fragColor;\n"
             "void main() {\n"
             "fragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);\n"
             "}\n\0");
 
-        mShader->link();
+        shader_->link();
     }
 
     void Primitive::draw(Camera* _camera)
     {
-        if(!mShader)
+        if(!shader_)
         {
             std::error_code code = ERROR::SHADER_FAILED_TO_FIND_PROGRAM;
             Log::error(code.message());
@@ -80,14 +80,14 @@ namespace NAGE
         }
 
         // We need transpose matrix for OpenGL (matrix column major).
-        mShader->use();
-        mShader->setMat4("projection", GLRenderEngine::projection().perspective().transpose());
-        mShader->setMat4("view", _camera->view().transpose());
-        mShader->setMat4("model", mTransform->model().transpose());
+        shader_->use();
+        shader_->setMat4("projection", GLRenderEngine::projection().perspective().transpose());
+        shader_->setMat4("view", _camera->view().transpose());
+        shader_->setMat4("model", transform_->model().transpose());
 
         // Draw mesh.
-        glBindVertexArray(mVAO);
-        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(mIndices.size()), GL_UNSIGNED_INT,
+        glBindVertexArray(VAO_);
+        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(indices_.size()), GL_UNSIGNED_INT,
             reinterpret_cast<void*>(0));
     }
 }

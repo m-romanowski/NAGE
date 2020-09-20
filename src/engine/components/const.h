@@ -1,5 +1,5 @@
-#ifndef NAGE_CONST_H_
-#define NAGE_CONST_H_
+#ifndef NAGE_ENGINE_COMPONENTS_CONST_H_
+#define NAGE_ENGINE_COMPONENTS_CONST_H_
 
 #include <string>
 
@@ -14,4 +14,4 @@ namespace NAGE
     constexpr float cameraMovementSpeed = 0.1f;
 }
 
-#endif // NAGE_CONST_H_
+#endif // NAGE_ENGINE_COMPONENTS_CONST_H_

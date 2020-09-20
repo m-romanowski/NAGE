@@ -15,24 +15,24 @@ namespace NAGE
 
         inline int width() const
         {
-            if(mTexture)
-                return mTexture->width();
+            if(texture_)
+                return texture_->width();
 
             return -1;
         }
 
         inline int height() const
         {
-            if(mTexture)
-                return mTexture->height();
+            if(texture_)
+                return texture_->height();
 
             return -1;
         }
 
         inline GLuint textureId() const
         {
-            if(mTexture)
-                return mTexture->id();
+            if(texture_)
+                return texture_->id();
 
             return 0;
         }
@@ -41,7 +41,7 @@ namespace NAGE
         virtual void loadFromFile(const std::string& _path) = 0;
         virtual void createTextureFromData(int _width, int _height, unsigned char* _data) = 0;
 
-        std::unique_ptr<Texture> mTexture;
+        std::unique_ptr<Texture> texture_;
     };
 }
 

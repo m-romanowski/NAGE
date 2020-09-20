@@ -1,5 +1,5 @@
-#ifndef NAGE_ENGINE_CORE_CAMERA_CAMERA_H_
-#define NAGE_ENGINE_CORE_CAMERA_CAMERA_H_
+#ifndef NAGE_COMPONENTS_CAMERA_CAMERA_H_
+#define NAGE_COMPONENTS_CAMERA_CAMERA_H_
 
 #include "engine/render/projection.h"
 #include "engine/math/NAGEMath/nagemathvector.h"
@@ -33,8 +33,8 @@ namespace NAGE
         Vector3f forward() const;
         Vector3f up() const;
         Vector3f right() const;
-        Vector3f translation() const { return mTranslation; }
-        Quaternion rotation() const { return mRotation; }
+        Vector3f translation() const;
+        Quaternion rotation() const;
         float roll() const;
         float pitch() const;
         float yaw() const;
@@ -42,13 +42,13 @@ namespace NAGE
         Matrix4f view() const;
 
 	private:
-		Vector3f mForward;
-		Vector3f mUp;
-		Vector3f mRight;
+        Vector3f forward_;
+        Vector3f up_;
+        Vector3f right_;
 
-		Vector3f mTranslation;
-		Quaternion mRotation;
+        Vector3f translation_;
+        Quaternion rotation_;
 	};
 }
 
-#endif // NAGE_ENGINE_CORE_CAMERA_CAMERA_H_
+#endif // NAGE_COMPONENTS_CAMERA_CAMERA_H_

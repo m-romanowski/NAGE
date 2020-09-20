@@ -15,8 +15,8 @@ namespace QNAGE
         ~MainTool();
 
     private:
-        QVBoxLayout* layout;
-        CustomButton* welcomeButton;
+        QVBoxLayout* layout_;
+        CustomButton* welcomeButton_;
     };
 }
 

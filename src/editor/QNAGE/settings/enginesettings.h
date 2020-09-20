@@ -15,7 +15,7 @@ namespace QNAGE
         virtual void setupUi();
 
     private:
-        QLabel* label;
+        QLabel* label_;
     };
 }
 

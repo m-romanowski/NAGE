@@ -1,5 +1,5 @@
-#ifndef NAGE_COMPONENTS_IMAGE_H_
-#define NAGE_COMPONENTS_IMAGE_H_
+#ifndef NAGE_ENGINE_COMPONENTS_IMAGE_H_
+#define NAGE_ENGINE_COMPONENTS_IMAGE_H_
 
 #include "STB/stb_image.h"
 #include <string>
@@ -27,9 +27,9 @@ namespace NAGE
         static unsigned char alpha(unsigned char* _data, int _format, unsigned long _imageWidth, unsigned long _x, unsigned long _y);
     private:
         // Image properties
-        int mWidth, mHeight, mFormat;
-        unsigned char* mData;
+        int width_, height_, format_;
+        unsigned char* data_;
     };
 }
 
-#endif // NAGE_COMPONENTS_IMAGE_H_
+#endif // NAGE_ENGINE_COMPONENTS_IMAGE_H_

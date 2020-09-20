@@ -30,16 +30,16 @@ namespace QNAGE
         virtual void setupUi();
 
         // Navigation Ui
-        QWidget* navigationWidget;
-        QGridLayout* navigationLayout;
-        QToolButton* environmentButton;
-        QToolButton* engineButton;
-        QToolButton* buildAndRunButton;
+        QWidget* navigationWidget_;
+        QGridLayout* navigationLayout_;
+        QToolButton* environmentButton_;
+        QToolButton* engineButton_;
+        QToolButton* buildAndRunButton_;
 
         // Setting Ui
-        EnvironmentSettings* environmentSettings;
-        EngineSettings* engineSettings;
-        BuildAndRunSettings* buildAndRunSettings;
+        EnvironmentSettings* environmentSettings_;
+        EngineSettings* engineSettings_;
+        BuildAndRunSettings* buildAndRunSettings_;
     };
 }
 

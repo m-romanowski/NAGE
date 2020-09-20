@@ -50,14 +50,14 @@ namespace NAGE
 
     private:
         // Parent node.
-        CDLODQuadTree* mParent;
+        CDLODQuadTree* parent_;
 
         // Node type
-        NodeType mNodeType;
+        NodeType nodeType_;
 
-        std::vector<CDLODQuadTree*> mChildren; // Quadtree children (4)
-        HeightMap* mHeightmap; // LOD heightmap.
-        AABB mNodeBoundingBox; // Node axis aligned bounding box
+        std::vector<CDLODQuadTree*> children_; // Quadtree children (4)
+        HeightMap* heightmap_; // LOD heightmap.
+        AABB nodeBoundingBox_; // Node axis aligned bounding box
     };
 }
 

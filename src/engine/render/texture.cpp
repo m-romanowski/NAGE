@@ -4,17 +4,17 @@
 namespace NAGE
 {
     Texture::Texture(TextureType _type)
-        : mType(_type),
-          mTextureWrapping(Vector3<GLint>(GL_REPEAT, GL_REPEAT, GL_REPEAT)),
-          mTextureFiltering(Vector2<GLint>(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR))
+        : type_(_type),
+          textureWrapping_(Vector3<GLint>(GL_REPEAT, GL_REPEAT, GL_REPEAT)),
+          textureFiltering_(Vector2<GLint>(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR))
     {
 
     }
 
     Texture::Texture(const std::string& _path, TextureType _type)
-        : mType(_type),
-          mTextureWrapping(Vector3<GLint>(GL_REPEAT, GL_REPEAT, GL_REPEAT)),
-          mTextureFiltering(Vector2<GLint>(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR))
+        : type_(_type),
+          textureWrapping_(Vector3<GLint>(GL_REPEAT, GL_REPEAT, GL_REPEAT)),
+          textureFiltering_(Vector2<GLint>(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR))
     {
         fromFile(_path);
     }
@@ -31,7 +31,7 @@ namespace NAGE
      */
     GLuint Texture::id() const
     {
-        return mId;
+        return id_;
     }
 
     /* Texture width.
@@ -40,7 +40,7 @@ namespace NAGE
      */
     int Texture::width() const
     {
-        return mWidth;
+        return width_;
     }
 
     /* Texture height.
@@ -49,7 +49,7 @@ namespace NAGE
      */
     int Texture::height() const
     {
-        return mHeight;
+        return height_;
     }
 
     /* Texture pixel color data.
@@ -58,17 +58,17 @@ namespace NAGE
      */
     unsigned char* Texture::data()
     {
-        return mData;
+        return data_;
     }
 
     std::vector<unsigned char> Texture::redColorData()
     {
         std::vector<unsigned char> result;
 
-        for(int i = 0; i < mWidth; i++)
+        for(int i = 0; i < width_; i++)
         {
-            for(int j = 0; j < mHeight; j++)
-                result.push_back(Image::red(mData, mFormat, mWidth, i, j));
+            for(int j = 0; j < height_; j++)
+                result.push_back(Image::red(data_, format_, width_, i, j));
         }
 
         return result;
@@ -78,11 +78,11 @@ namespace NAGE
     {
         std::vector<unsigned char> result;
 
-        for(int i = 0; i < mWidth; i++)
+        for(int i = 0; i < width_; i++)
         {
-            for(int j = 0; j < mHeight; j++)
+            for(int j = 0; j < height_; j++)
             {
-                result.push_back(Image::green(mData, mFormat, mWidth, i, j));
+                result.push_back(Image::green(data_, format_, width_, i, j));
             }
         }
 
@@ -93,11 +93,11 @@ namespace NAGE
     {
         std::vector<unsigned char> result;
 
-        for(int i = 0; i < mWidth; i++)
+        for(int i = 0; i < width_; i++)
         {
-            for(int j = 0; j < mHeight; j++)
+            for(int j = 0; j < height_; j++)
             {
-                result.push_back(Image::blue(mData, mFormat, mWidth, i, j));
+                result.push_back(Image::blue(data_, format_, width_, i, j));
             }
         }
 
@@ -108,11 +108,11 @@ namespace NAGE
     {
         std::vector<unsigned char> result;
 
-        for(int i = 0; i < mWidth; i++)
+        for(int i = 0; i < width_; i++)
         {
-            for(int j = 0; j < mHeight; j++)
+            for(int j = 0; j < height_; j++)
             {
-                result.push_back(Image::alpha(mData, mFormat, mWidth, i, j));
+                result.push_back(Image::alpha(data_, format_, width_, i, j));
             }
         }
 
@@ -127,7 +127,7 @@ namespace NAGE
     {
         // RGBA color
         unsigned char* pixelColor = new unsigned char[4];
-        Image::colorAt(mData, mFormat, mWidth, _x, _y, &pixelColor[0], &pixelColor[1],
+        Image::colorAt(data_, format_, width_, _x, _y, &pixelColor[0], &pixelColor[1],
             &pixelColor[2], &pixelColor[3]);
 
         return pixelColor;
@@ -139,7 +139,7 @@ namespace NAGE
      */
     GLenum Texture::format() const
     {
-        return mFormat;
+        return format_;
     }
 
     /* Texture type.
@@ -148,7 +148,7 @@ namespace NAGE
      */
     TextureType Texture::type() const
     {
-        return mType;
+        return type_;
     }
 
     /* Texture wrapping type.
@@ -157,7 +157,7 @@ namespace NAGE
      */
     Vector3<GLint> Texture::textureWrapping() const
     {
-        return mTextureWrapping;
+        return textureWrapping_;
     }
 
     /* Texture filtering type.
@@ -168,7 +168,7 @@ namespace NAGE
      */
     Vector2<GLint> Texture::textureFiltering() const
     {
-        return mTextureFiltering;
+        return textureFiltering_;
     }
 
     /* Texture wrapping type.
@@ -177,7 +177,7 @@ namespace NAGE
      */
     void Texture::setTextureWrapping(const Vector3<GLint>& _type)
     {
-        mTextureWrapping = _type;
+        textureWrapping_ = _type;
     }
 
     /* Texture filtering type.
@@ -188,43 +188,43 @@ namespace NAGE
      */
     void Texture::setTextureFiltering(const Vector2<GLint>& _type)
     {
-        mTextureFiltering = _type;
+        textureFiltering_ = _type;
     }
 
     void Texture::bindTexture()
     {
-        glGenTextures(1, &mId);
+        glGenTextures(1, &id_);
         GLenum textureFormat;
 
-        if(mFormat == 1) textureFormat = GL_RED;
-        else if(mFormat == 3) textureFormat = GL_RGB;
-        else if(mFormat == 4) textureFormat = GL_RGBA;
+        if(format_ == 1) textureFormat = GL_RED;
+        else if(format_ == 3) textureFormat = GL_RGB;
+        else if(format_ == 4) textureFormat = GL_RGBA;
 
         // Texture wrapping.
-        if(mType == TextureType::TEXTURE_3D)
+        if(type_ == TextureType::TEXTURE_3D)
         {
             // TODO: 3D texture support
         }
         else
         {
-            glBindTexture(GL_TEXTURE_2D, mId);
-            glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(textureFormat), mWidth, mHeight,
-                0, textureFormat, GL_UNSIGNED_BYTE, mData);
+            glBindTexture(GL_TEXTURE_2D, id_);
+            glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(textureFormat), width_, height_,
+                0, textureFormat, GL_UNSIGNED_BYTE, data_);
             glGenerateMipmap(GL_TEXTURE_2D);
 
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, mTextureWrapping.x());
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, mTextureWrapping.y());
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mTextureFiltering.x());
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mTextureFiltering.y());
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, textureWrapping_.x());
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, textureWrapping_.y());
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, textureFiltering_.x());
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, textureFiltering_.y());
         }
     }
 
     void Texture::bindEmptyTexture()
     {
-        glGenTextures(1, &mId);
+        glGenTextures(1, &id_);
 
-        glBindTexture(GL_TEXTURE_2D, mId);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, mWidth, mHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+        glBindTexture(GL_TEXTURE_2D, id_);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width_, height_, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     }
@@ -236,35 +236,35 @@ namespace NAGE
     void Texture::fromFile(const std::string& _path)
     {
         Image image(_path);
-        mData = image.data();
-        mFormat = static_cast<GLenum>(image.format());
-        mWidth = image.width();
-        mHeight = image.height();
+        data_ = image.data();
+        format_ = static_cast<GLenum>(image.format());
+        width_ = image.width();
+        height_ = image.height();
 
-        if(mData)
+        if(data_)
             bindTexture();
     }
 
     void Texture::fromData(int _width, int _height, TextureFormat _format, unsigned char* _data)
     {
-        mWidth = _width;
-        mHeight = _height;
-        mFormat = static_cast<GLenum>(_format);
-        mData = _data;
+        width_ = _width;
+        height_ = _height;
+        format_ = static_cast<GLenum>(_format);
+        data_ = _data;
 
         bindTexture();
     }
 
     void Texture::empty(int _width, int _height)
     {
-        mWidth = _width;
-        mHeight = _height;
+        width_ = _width;
+        height_ = _height;
 
         bindEmptyTexture();
     }
 
     void Texture::clean()
     {
-        glDeleteTextures(1, &mId);
+        glDeleteTextures(1, &id_);
     }
 }

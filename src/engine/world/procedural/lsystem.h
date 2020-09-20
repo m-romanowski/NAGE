@@ -12,14 +12,14 @@ namespace NAGE
         LSystem();
 
         // Getters
-        char axiom() const { return mAxiom; }
-        std::map<char, std::string> rules() const { return mRules; }
-        std::string rule(const char _key) const { return mRules.at(_key); };
+        char axiom() const { return axiom_; }
+        std::map<char, std::string> rules() const { return rules_; }
+        std::string rule(const char _key) const { return rules_.at(_key); };
 
         // Setters
-        void setAxiom(const char _axiom) { mAxiom = _axiom; }
-        void setRules(const std::map<char, std::string> _rules) { mRules = _rules; };
-        void addRule(const char _key, const std::string _value) { mRules.insert(std::make_pair(_key, _value)); };
+        void setAxiom(const char _axiom) { axiom_ = _axiom; }
+        void setRules(const std::map<char, std::string> _rules) { rules_ = _rules; };
+        void addRule(const char _key, const std::string _value) { rules_.insert(std::make_pair(_key, _value)); };
 
         // Plant Settings
         struct SETTINGS
@@ -34,8 +34,8 @@ namespace NAGE
         };
 
     private:
-        char mAxiom;
-        std::map<char, std::string> mRules;
+        char axiom_;
+        std::map<char, std::string> rules_;
     };
 }
 

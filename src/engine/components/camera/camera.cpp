@@ -3,16 +3,16 @@
 namespace NAGE
 {
     Camera::Camera()
-        : mForward(Vector3f::forward),
-          mUp(Vector3f::up),
-          mRight(Vector3f::right)
+        : forward_(Vector3f::forward),
+          up_(Vector3f::up),
+          right_(Vector3f::right)
     {
 
     }
 
     void Camera::translate(const Vector3f& _translation)
     {
-        mTranslation = _translation + mTranslation;
+        translation_ = _translation + translation_;
     }
 
     void Camera::translate(float _x, float _y, float _z)
@@ -22,7 +22,7 @@ namespace NAGE
 
     void Camera::rotate(const Quaternion& _rotation)
     {
-        mRotation = _rotation * mRotation;
+        rotation_ = _rotation * rotation_;
     }
 
     void Camera::rotate(float _angle, const Vector3f& _axis)
@@ -37,32 +37,32 @@ namespace NAGE
 
     void Camera::setForward(const Vector3f& _forward)
     {
-        mForward = _forward;
+        forward_ = _forward;
     }
 
     void Camera::setUp(const Vector3f& _up)
     {
-        mUp = _up;
+        up_ = _up;
     }
 
     void Camera::setRight(const Vector3f& _right)
     {
-        mRight = _right;
+        right_ = _right;
     }
 
     void Camera::setTranslation(const Vector3f& _translation)
     {
-        mTranslation = _translation;
+        translation_ = _translation;
     }
 
     void Camera::setTranslation(float _x, float _y, float _z)
     {
-        mTranslation = Vector3f(_x, _y, _z);
+        translation_ = Vector3f(_x, _y, _z);
     }
 
     void Camera::setRotation(const Quaternion& _rotation)
     {
-        mRotation = _rotation;
+        rotation_ = _rotation;
     }
 
     void Camera::setRotation(float _angle, const Vector3f& _axis)
@@ -77,42 +77,54 @@ namespace NAGE
 
     Vector3f Camera::forward() const
     {
-        return mRotation.rotatedVector(mForward);
+        return rotation_.rotatedVector(forward_);
     }
 
     Vector3f Camera::up() const
     {
-        return mRotation.rotatedVector(mUp);
+        return rotation_.rotatedVector(up_);
     }
 
     Vector3f Camera::right() const
     {
-        return mRotation.rotatedVector(mRight);
+        return rotation_.rotatedVector(right_);
+    }
+
+    Vector3f Camera::translation() const
+    {
+        return translation_;
+    }
+
+    Quaternion Camera::rotation() const
+    {
+        return rotation_;
     }
 
     float Camera::roll() const
     {
-        return std::atan2(2.0f * mRotation.y() * mRotation.w() - 2.0f * mRotation.x() * mRotation.z(),
-            1.0f - 2.0f * mRotation.y() * mRotation.y() - 2.0f * mRotation.z() * mRotation.z());
+        return std::atan2(
+                    2.0f * rotation_.y() * rotation_.w() - 2.0f * rotation_.x() * rotation_.z(),
+                    1.0f - 2.0f * rotation_.y() * rotation_.y() - 2.0f * rotation_.z() * rotation_.z());
     }
 
     float Camera::pitch() const
     {
-        return std::atan2(2.0f * mRotation.x() * mRotation.w() - 2.0f * mRotation.y() * mRotation.z(),
-            1.0f - 2.0f * mRotation.x() * mRotation.x() - 2.0f * mRotation.z() * mRotation.z());
+        return std::atan2(
+                    2.0f * rotation_.x() * rotation_.w() - 2.0f * rotation_.y() * rotation_.z(),
+                    1.0f - 2.0f * rotation_.x() * rotation_.x() - 2.0f * rotation_.z() * rotation_.z());
     }
 
     float Camera::yaw() const
     {
-        return std::asin(2.0f * mRotation.x() * mRotation.y() + 2.0f * mRotation.z() * mRotation.w());
+        return std::asin(2.0f * rotation_.x() * rotation_.y() + 2.0f * rotation_.z() * rotation_.w());
     }
 
     Matrix4f Camera::view() const
     {
         Matrix4f view;
         view.identity();
-        view.rotate(mRotation.conjugate());
-        view.translate(-mTranslation);
+        view.rotate(rotation_.conjugate());
+        view.translate(-translation_);
 
         return view;
     }

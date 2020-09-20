@@ -44,9 +44,9 @@ namespace NAGE
         void renderScene(SceneNode* _node);
         void renderSceneObjects(SceneNode* _node, Vector4f _clipPlane);
 
-        IWindow* mWindow;
-        Color* mSceneColor;
-        static Projection mProjection;
+        IWindow* window_;
+        Color* sceneColor_;
+        static Projection projection_;
     };
 }
 

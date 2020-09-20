@@ -1,5 +1,5 @@
-#ifndef NAGE_RESOURCEMANAGER_H_
-#define NAGE_RESOURCEMANAGER_H_
+#ifndef NAGE_ENGINE_COMPONENTS_RESOURCEMANAGER_H_
+#define NAGE_ENGINE_COMPONENTS_RESOURCEMANAGER_H_
 
 #include "engine/render/texture.h"
 #include "engine/render/model/model.h"
@@ -30,4 +30,4 @@ namespace NAGE
     };
 }
 
-#endif // NAGE_RESOURCEMANAGER_H_
+#endif // NAGE_ENGINE_COMPONENTS_RESOURCEMANAGER_H_

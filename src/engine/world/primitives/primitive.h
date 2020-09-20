@@ -34,9 +34,9 @@ namespace NAGE
     protected:
         virtual void setupPrimitive() = 0;
 
-        Shader* mShader;
-        Transform* mTransform;
-        unsigned int mVerticesCount, mIndicesCount;
+        Shader* shader_;
+        Transform* transform_;
+        unsigned int verticesCount_, indicesCount_;
     };
 }
 

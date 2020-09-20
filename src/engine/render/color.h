@@ -41,10 +41,10 @@ namespace NAGE
         friend std::ostream& operator<<(std::ostream& _out, const Color& _color);
 
     private:
-        float mRed;
-        float mGreen;
-        float mBlue;
-        float mAlpha;
+        float red_;
+        float green_;
+        float blue_;
+        float alpha_;
     };
 }
 

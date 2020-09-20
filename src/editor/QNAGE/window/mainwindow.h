@@ -49,17 +49,17 @@ namespace QNAGE
         virtual ~MainWindow();
 
         // Getters
-        inline int getWidth() const { return width; }
-        inline int getHeight() const { return height; }
-        inline QSize getSize() const { return QSize(width, height); }
+        inline int getWidth() const { return width_; }
+        inline int getHeight() const { return height_; }
+        inline QSize getSize() const { return QSize(width_, height_); }
 
         // Setters
-        inline void setWidth(int _width) { width = _width; }
-        inline void setHeight(int _height) { height = _height; }
-        inline void setSize(QSize _size) { width = _size.width(); height = _size.height(); }
+        inline void setWidth(int _width) { width_ = _width; }
+        inline void setHeight(int _height) { height_ = _height; }
+        inline void setSize(QSize _size) { width_ = _size.width(); height_ = _size.height(); }
 
         void addWindow(RenderWindow* _window);
-        bool isEngineWindow() const { return this->mainWidget->getRenderWindow() == nullptr ? true : false; }
+        bool isEngineWindow() const { return this->mainWidget_->getRenderWindow() == nullptr ? true : false; }
         void dockEngineWindow();
         void undockEngineWindow();
 
@@ -81,40 +81,40 @@ namespace QNAGE
         void createActions();
 
         // Dialog
-        ProjectDialog* projectDialog;
+        ProjectDialog* projectDialog_;
 
         // MainWindow Ui
-        int width;
-        int height;
-        bool isMoving;
-        QPoint lastMousePosition;
+        int width_;
+        int height_;
+        bool isMoving_;
+        QPoint lastMousePosition_;
 
-        MainWidget* mainWidget;
-        WelcomeWidget* welcomeWidget;
-        SettingsWidget* settingsWidget;
-        QWidget* centralWidget;
-        QWidget* windowTitleWidget;
+        MainWidget* mainWidget_;
+        WelcomeWidget* welcomeWidget_;
+        SettingsWidget* settingsWidget_;
+        QWidget* centralWidget_;
+        QWidget* windowTitleWidget_;
 
-        QVBoxLayout* windowLayout;
-        QGridLayout* topLayout;
-        TabWidget* tabWidget;
+        QVBoxLayout* windowLayout_;
+        QGridLayout* topLayout_;
+        TabWidget* tabWidget_;
 
-        CustomButton* exitButton;
-        CustomButton* minimizeButton;
-        CustomButton* maximizeButton;
+        CustomButton* exitButton_;
+        CustomButton* minimizeButton_;
+        CustomButton* maximizeButton_;
 
-        QToolButton* runButton;
-        QToolButton* buildButton;
+        QToolButton* runButton_;
+        QToolButton* buildButton_;
 
         // Menubar
-        QMenuBar* menuBar;
-        QMenu* projectMenu;
-        QMenu* editMenu;
-        QMenu* buildMenu;
-        QMenu* settingsMenu;
+        QMenuBar* menuBar_;
+        QMenu* projectMenu_;
+        QMenu* editMenu_;
+        QMenu* buildMenu_;
+        QMenu* settingsMenu_;
 
-        QAction* openProjectDialogAction;
-        QAction* openSettingDialogAction;
+        QAction* openProjectDialogAction_;
+        QAction* openSettingDialogAction_;
     };
 }
 

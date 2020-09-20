@@ -53,13 +53,13 @@ namespace NAGE
         void bindTexture();
         void bindEmptyTexture();
 
-        GLuint mId;
-        TextureType mType;
-        int mWidth, mHeight;
-        unsigned char* mData;
-        GLenum mFormat;
-        Vector3<GLint> mTextureWrapping; // S, T, R axis
-        Vector2<GLint> mTextureFiltering; // MIN - minifying, MAG - magnifying
+        GLuint id_;
+        TextureType type_;
+        int width_, height_;
+        unsigned char* data_;
+        GLenum format_;
+        Vector3<GLint> textureWrapping_; // S, T, R axis
+        Vector2<GLint> textureFiltering_; // MIN - minifying, MAG - magnifying
     };
 }
 

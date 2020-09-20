@@ -43,10 +43,10 @@ namespace NAGE
         Matrix4f model() const;
 
     private:
-        Vector3f mTranslation;
-        Vector3f mScaling;
-        Vector3f mShearing;
-        Quaternion mRotation;
+        Vector3f translation_;
+        Vector3f scaling_;
+        Vector3f shearing_;
+        Quaternion rotation_;
     };
 }
 

@@ -16,7 +16,7 @@ namespace NAGE
         void setup() override;
 
     private:
-        std::shared_ptr<Texture> mDepthTexture;
+        std::shared_ptr<Texture> depthTexture_;
     };
 }
 

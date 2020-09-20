@@ -5,37 +5,37 @@ namespace NAGE
     CDLODSelectedNode::CDLODSelectedNode(int _x, int _z, unsigned int _lodLevel, int _dimension, int _range,
         bool _topLeft, bool _topRight, bool _bottomLeft, bool _bottomRight)
         : CDLODNode(_x, _z, _lodLevel, _dimension),
-          mRange(_range),
-          mTopLeft(_topLeft),
-          mTopRight(_topRight),
-          mBottomLeft(_bottomLeft),
-          mBottomRight(_bottomRight)
+          range_(_range),
+          topLeft_(_topLeft),
+          topRight_(_topRight),
+          bottomLeft_(_bottomLeft),
+          bottomRight_(_bottomRight)
     {
 
     }
 
     int CDLODSelectedNode::range() const
     {
-        return mRange;
+        return range_;
     }
 
     bool CDLODSelectedNode::topLeft() const
     {
-        return mTopLeft;
+        return topLeft_;
     }
 
     bool CDLODSelectedNode::topRight() const
     {
-        return mTopRight;
+        return topRight_;
     }
 
     bool CDLODSelectedNode::bottomLeft() const
     {
-        return mBottomLeft;
+        return bottomLeft_;
     }
 
     bool CDLODSelectedNode::bottomRight() const
     {
-        return mBottomRight;
+        return bottomRight_;
     }
 }

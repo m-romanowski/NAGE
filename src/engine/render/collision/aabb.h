@@ -54,9 +54,9 @@ namespace NAGE
         bool isPointInside(float _x, float _y, float _z);
 
     private:
-        float mMinX, mMaxX;
-        float mMinY, mMaxY;
-        float mMinZ, mMaxZ;
+        float minX_, maxX_;
+        float minY_, maxY_;
+        float minZ_, maxZ_;
     };
 }
 

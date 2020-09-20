@@ -42,8 +42,8 @@ namespace NAGE
         bool isPointInsideSphere(float _x, float _y, float _z);
 
     private:
-        float mX, mY, mZ; // Sphere position
-        float mRadius; // Sphere radius
+        float x_, y_, z_; // Sphere position
+        float radius_; // Sphere radius
     };
 }
 

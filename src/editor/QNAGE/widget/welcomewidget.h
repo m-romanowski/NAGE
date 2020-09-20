@@ -19,22 +19,22 @@ namespace QNAGE
         ~WelcomeWidget();
 
         // Getters
-        QPushButton* getCreateButton() const { return createProjectButton; }
+        QPushButton* getCreateButton() const { return createProjectButton_; }
 
     private:
         void setupUi();
 
         // Ui
-        QVBoxLayout* mainLayout;
-        QGridLayout* buttonsLayout;
-        QLabel* appName;
-        QLabel* sessionLabel;
-        QLabel* sessionDir;
-        QSpacerItem* verticalSpacer1;
-        QSpacerItem* verticalSpacer2;
-        QSpacerItem* horizontalSpacer;
-        QPushButton* createProjectButton;
-        QPushButton* openProjectButton;
+        QVBoxLayout* mainLayout_;
+        QGridLayout* buttonsLayout_;
+        QLabel* appName_;
+        QLabel* sessionLabel_;
+        QLabel* sessionDir_;
+        QSpacerItem* verticalSpacer1_;
+        QSpacerItem* verticalSpacer2_;
+        QSpacerItem* horizontalSpacer_;
+        QPushButton* createProjectButton_;
+        QPushButton* openProjectButton_;
     };
 }
 

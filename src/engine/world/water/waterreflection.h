@@ -14,7 +14,7 @@ namespace NAGE
         void setup() override;
 
     private:
-        GLuint mDepthBuffer;
+        GLuint depthBuffer_;
     };
 }
 

@@ -25,8 +25,8 @@ namespace NAGE
             unsigned int _sectorCount = 36, unsigned int _stackCount = 18, float _radius = 1.0f);
 
     protected:
-        unsigned int mSectorCount, mStackCount;
-        float mRadius;
+        unsigned int sectorCount_, stackCount_;
+        float radius_;
     };
 }
 

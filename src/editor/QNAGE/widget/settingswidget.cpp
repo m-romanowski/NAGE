@@ -5,18 +5,18 @@ namespace QNAGE
     SettingsWidget::SettingsWidget(QWidget* _parent)
         : QWidget(_parent)
     {
-        this->mainLayout = new QVBoxLayout();
+        this->mainLayout_ = new QVBoxLayout();
 
         // Navigation
-        this->settingsNavigation = new SettingsNavigation();
-        this->mainLayout->addWidget(this->settingsNavigation);
+        this->settingsNavigation_ = new SettingsNavigation();
+        this->mainLayout_->addWidget(this->settingsNavigation_);
 
-        this->setLayout(this->mainLayout);
+        this->setLayout(this->mainLayout_);
     }
 
     SettingsWidget::~SettingsWidget()
     {
-        delete settingsNavigation;
-        delete mainLayout;
+        delete settingsNavigation_;
+        delete mainLayout_;
     }
 }

@@ -22,12 +22,12 @@ namespace QNAGE
         {
             if(_v == '\n')
             {
-                emit sendLogString(QString::fromStdString(string));
-                string.erase(string.begin(), string.end());
+                emit sendLogString(QString::fromStdString(string_));
+                string_.erase(string_.begin(), string_.end());
             }
             else
             {
-                string += static_cast<char>(_v);
+                string_ += static_cast<char>(_v);
             }
 
             return _v;
@@ -35,17 +35,17 @@ namespace QNAGE
 
         virtual std::streamsize xsputn(const char* _p, std::streamsize _n)
         {
-            string.append(_p, _p + _n);
+            string_.append(_p, _p + _n);
             long pos = 0;
 
             while(pos != static_cast<long>(std::string::npos))
             {
-                pos = static_cast<long>(string.find('\n'));
+                pos = static_cast<long>(string_.find('\n'));
                 if(pos != static_cast<long>(std::string::npos))
                 {
-                    std::string tmp(string.begin(), string.begin() + pos);
+                    std::string tmp(string_.begin(), string_.begin() + pos);
                     emit sendLogString(QString::fromStdString(tmp));
-                    string.erase(string.begin(), string.begin() + pos + 1);
+                    string_.erase(string_.begin(), string_.begin() + pos + 1);
                 }
             }
 
@@ -53,9 +53,9 @@ namespace QNAGE
         }
 
     private:
-        std::ostream& stream;
-        std::streambuf* oldBuf;
-        std::string string;
+        std::ostream& stream_;
+        std::streambuf* oldBuf_;
+        std::string string_;
 
     signals:
         void sendLogString(const QString& _str);

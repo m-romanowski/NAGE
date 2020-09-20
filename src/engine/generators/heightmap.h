@@ -49,7 +49,7 @@ namespace NAGE
     private:
         void setValue(int _x, int _y, int _width, unsigned char* _data, Color _color);
 
-        std::vector<unsigned char> mData; // Height map data (based on red color).
+        std::vector<unsigned char> data_; // Height map data (based on red color).
     };
 }
 

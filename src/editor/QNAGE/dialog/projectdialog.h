@@ -26,20 +26,20 @@ namespace QNAGE
         virtual void setupUi() override;
 
         // Ui
-        QVBoxLayout* layout;
-        TabWidget* tabWidget;
+        QVBoxLayout* layout_;
+        TabWidget* tabWidget_;
 
         // Create a new project
-        QWidget* createProjectWidget;
-        QVBoxLayout* createProjectLayout;
-        QGridLayout* projectWidgetsLayout;
-        QLabel* projectMainLabel;
-        QLabel* projectMainDescription;
-        QLineEdit* projectNameInput;
-        QLineEdit* projectDirInput;
-        QPushButton* browseButton;
-        QPushButton* createButton;
-        QPushButton* cancelButton;
+        QWidget* createProjectWidget_;
+        QVBoxLayout* createProjectLayout_;
+        QGridLayout* projectWidgetsLayout_;
+        QLabel* projectMainLabel_;
+        QLabel* projectMainDescription_;
+        QLineEdit* projectNameInput_;
+        QLineEdit* projectDirInput_;
+        QPushButton* browseButton_;
+        QPushButton* createButton_;
+        QPushButton* cancelButton_;
     };
 }
 

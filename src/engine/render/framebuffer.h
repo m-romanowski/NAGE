@@ -35,8 +35,8 @@ namespace NAGE
          */
         GLuint create();
 
-        GLuint mFrameBufferId;
-        GLint mWidth, mHeight;
+        GLuint frameBufferId_;
+        GLint width_, height_;
     };
 }
 

@@ -5,8 +5,8 @@ namespace NAGE
     X11::X11()
     {
         // Create a new display.
-        mDisplay = XOpenDisplay(nullptr);
-        if(mDisplay == nullptr)
+        display_ = XOpenDisplay(nullptr);
+        if(display_ == nullptr)
         {
             std::error_code code = ERROR::X11_FAILED_DISPLAY_INITIALIZATION;
             Log::critical(code.message());
@@ -16,20 +16,20 @@ namespace NAGE
         XSetErrorHandler(XlibErrorHandler);
 
         // Get root window.
-        mWindow = XDefaultRootWindow(mDisplay);
+        window_ = XDefaultRootWindow(display_);
 
-        XGrabPointer(mDisplay, mWindow, 1, PointerMotionMask, GrabModeAsync, GrabModeAsync,
+        XGrabPointer(display_, window_, 1, PointerMotionMask, GrabModeAsync, GrabModeAsync,
             None, None, CurrentTime);
 
         while(true)
         {
-            XNextEvent(mDisplay, &mXEvent);
+            XNextEvent(display_, &xEvent_);
 
-            switch (mXEvent.type)
+            switch (xEvent_.type)
             {
                 case MotionNotify:
-                    mCursorX = mXEvent.xmotion.x_root;
-                    mCursorY = mXEvent.xmotion.y_root;
+                    cursorX_ = xEvent_.xmotion.x_root;
+                    cursorY_ = xEvent_.xmotion.y_root;
                     break;
             }
         }
@@ -37,7 +37,7 @@ namespace NAGE
 
     X11::~X11()
     {
-        XCloseDisplay(mDisplay);
+        XCloseDisplay(display_);
     }
 
     int X11::XlibErrorHandler(Display* _display, XErrorEvent* _event)
@@ -51,16 +51,16 @@ namespace NAGE
 
     Vector2f X11::cursorPosition()
     {
-        return Vector2f(mCursorX, mCursorY);
+        return Vector2f(cursorX_, cursorY_);
     }
 
     int X11::cursorX()
     {
-        return mCursorX;
+        return cursorX_;
     }
 
     int X11::cursorY()
     {
-        return mCursorY;
+        return cursorY_;
     }
 }

@@ -9,14 +9,14 @@ namespace NAGE
 
     SceneManager::~SceneManager()
     {
-        mChildren.clear();
+        children_.clear();
     }
 
     SceneNode* SceneManager::sceneByKey(const std::string& _key)
     {
-        std::unordered_map<std::string, SceneNode*>::const_iterator got = mChildren.find(_key);
+        std::unordered_map<std::string, SceneNode*>::const_iterator got = children_.find(_key);
 
-        if(got != mChildren.end())
+        if(got != children_.end())
             return got->second;
 
         return nullptr;
@@ -24,23 +24,23 @@ namespace NAGE
 
     std::unordered_map<std::string, SceneNode*> SceneManager::scenes() const
     {
-        return mChildren;
+        return children_;
     }
 
     SceneNode* SceneManager::createChild()
     {
         // Find a new key for scene node.
         std::string key;
-        unsigned long size = mChildren.size();
+        unsigned long size = children_.size();
         do
         {
             key = std::string("scene") + std::to_string(++size);
 
-        } while(!STLUTIL::checkKey(mChildren, key));
+        } while(!STLUTIL::checkKey(children_, key));
 
         // Append to scene manager container.
         SceneNode* sceneNode = new SceneNode;
-        mChildren.insert(std::make_pair(key, sceneNode));
+        children_.insert(std::make_pair(key, sceneNode));
         Log::log(key + " (scene node) has been added to scene manager.");
 
         return sceneNode;
@@ -48,20 +48,20 @@ namespace NAGE
 
     void SceneManager::addChild(const std::string& _key, SceneNode* _node)
     {
-        if(STLUTIL::checkKey(mChildren, _key))
+        if(STLUTIL::checkKey(children_, _key))
         {
             std::error_code code = ERROR::SCENEMANAGER_FAILED_TO_ADD_NODE;
             Log::error(code.message());
             return;
         }
 
-        mChildren.insert(std::make_pair(_key, _node));
+        children_.insert(std::make_pair(_key, _node));
         Log::log(_key + " (scene node) has been added to scene manager.");
     }
 
     void SceneManager::removeChild(const std::string& _key)
     {
-        if(!STLUTIL::checkKey(mChildren, _key))
+        if(!STLUTIL::checkKey(children_, _key))
         {
             // Print error if not find the key.
             std::error_code code = ERROR::SCENE_FAILED_TO_FIND_KEY;
@@ -69,7 +69,7 @@ namespace NAGE
             return;
         }
 
-        mChildren.erase(_key);
+        children_.erase(_key);
         Log::log(_key + " (scene node) has been removed from scene manager");
     }
 }

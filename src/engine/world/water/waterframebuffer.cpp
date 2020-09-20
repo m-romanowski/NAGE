@@ -11,7 +11,7 @@ namespace NAGE
 
     GLuint WaterFrameBuffer::textureId() const
     {
-        return this->mBufferTexture->id();
+        return this->bufferTexture_->id();
     }
 
     void WaterFrameBuffer::initializeFrameBufferTexture()
@@ -19,10 +19,10 @@ namespace NAGE
         // Frame buffer should be created here.
 
         // Create frame buffer texture.
-        mBufferTexture = std::make_shared<Texture>(TextureType::TEXTURE_2D);
-        mBufferTexture->empty(this->mWidth, this->mHeight); // Create empty 2D texture
+        bufferTexture_ = std::make_shared<Texture>(TextureType::TEXTURE_2D);
+        bufferTexture_->empty(this->width_, this->height_); // Create empty 2D texture
 
         // Attach texture to frame buffer.
-        glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, mBufferTexture->id(), 0);
+        glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, bufferTexture_->id(), 0);
     }
 }

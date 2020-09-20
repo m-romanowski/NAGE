@@ -1,5 +1,5 @@
-#ifndef NAGE_COMPONENTS_TIMER_H_
-#define NAGE_COMPONENTS_TIMER_H_
+#ifndef NAGE_ENGINE_COMPONENTS_TIMER_H_
+#define NAGE_ENGINE_COMPONENTS_TIMER_H_
 
 #include <chrono>
 #include <thread>
@@ -26,9 +26,9 @@ namespace NAGE
         static Clock::time_point now();
 
     private:
-        Clock::time_point mEpoch;
-        bool mFlag; // 1 - active, 0 - inactive.
+        Clock::time_point epoch_;
+        bool flag_; // 1 - active, 0 - inactive.
     };
 }
 
-#endif // NAGE_COMPONENTS_TIMER_H_
+#endif // NAGE_ENGINE_COMPONENTS_TIMER_H_

@@ -26,7 +26,7 @@ namespace NAGE
         virtual std::string apiVersion() const = 0; // Get using api version.
 
     protected:
-        SceneManager* mSceneManager;
+        SceneManager* sceneManager_;
     };
 }
 

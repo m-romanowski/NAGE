@@ -22,8 +22,8 @@ namespace QNAGE
         static void clearLayout(QLayout* _layout);
         static void removeWidgetAt(QLayout* _layout, int _idx);
 
-        QVBoxLayout* mainLayout;
-        CustomButton* backButton;
+        QVBoxLayout* mainLayout_;
+        CustomButton* backButton_;
     };
 }
 

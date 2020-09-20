@@ -19,14 +19,14 @@ namespace NAGE
         ~Skybox();
 
         // Getters
-        inline Shader* shader() { return mShader; }
-        inline unsigned int textureID() const { return mTextureID; }
-        inline std::vector<std::string> faces() const { return mFaces; }
-        inline std::vector<float> vertices() const { return mVertices; }
+        inline Shader* shader() { return shader_; }
+        inline unsigned int textureID() const { return textureId_; }
+        inline std::vector<std::string> faces() const { return faces_; }
+        inline std::vector<float> vertices() const { return vertices_; }
 
         // Setters
-        inline void setShader(Shader* _shader) { mShader = _shader; }
-        inline void setVertices(const std::vector<float>& _vertices) { mVertices = _vertices; }
+        inline void setShader(Shader* _shader) { shader_ = _shader; }
+        inline void setVertices(const std::vector<float>& _vertices) { vertices_ = _vertices; }
         void addFacesTextures(std::vector<std::string>& _faces);
 
         void draw(Camera* _camera);
@@ -35,11 +35,11 @@ namespace NAGE
         void setup();
         unsigned int loadCubeMap(std::vector<std::string>& _faces);
 
-        unsigned int mVAO, mVBO;
-        unsigned int mTextureID;
-        Shader* mShader;
-        std::vector<std::string> mFaces;
-        std::vector<float> mVertices;
+        unsigned int VAO_, VBO_;
+        unsigned int textureId_;
+        Shader* shader_;
+        std::vector<std::string> faces_;
+        std::vector<float> vertices_;
     };
 }
 

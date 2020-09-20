@@ -1,5 +1,5 @@
-#ifndef NAGE_ENGINE_RENDER_WINDOW_H_
-#define NAGE_ENGINE_RENDER_WINDOW_H_
+#ifndef NAGE_ENGINE_IO_WINDOW_H_
+#define NAGE_ENGINE_IO_WINDOW_H_
 
 #include "glad/glad.h"
 #include "glfw/include/glfw3.h"
@@ -28,14 +28,14 @@ namespace NAGE
         ~Window();
 
         // Getters
-        inline int getWidth() { return width; }
-        inline int getHeight() { return height; }
-        inline GLFWwindow* getGLFWwindow() { return window; }
+        inline GLFWwindow* getGLFWwindow() { return window_; }
+        inline int getWidth() { return width_; }
+        inline int getHeight() { return width_; }
 
         // Setters
-        inline void setWidth(int _width) { width = _width; }
-        inline void setHeight(int _height) { height = _height; }
-        inline void setWindowTitle(const std::string& _title) { title = _title; }
+        inline void setWidth(int _width) { width_ = _width; }
+        inline void setHeight(int _height) { height_ = _height; }
+        inline void setWindowTitle(const std::string& _title) { title_ = _title; }
 
 
         void initGLFW(); // Init glfw window.
@@ -52,11 +52,11 @@ namespace NAGE
         static void mouseButtonCallback(GLFWwindow* _window, int _button, int _action, int _mods);
         static void scrollCallback(GLFWwindow* _window, double _xOffset, double _yOffset);
 
-        GLFWwindow* window;
-        int width;
-        int height;
-        std::string title;
+        GLFWwindow* window_;
+        int width_;
+        int height_;
+        std::string title_;
     };
 }
 
-#endif // NAGE_ENGINE_RENDER_WINDOW_H_
+#endif // NAGE_ENGINE_IO_WINDOW_H_

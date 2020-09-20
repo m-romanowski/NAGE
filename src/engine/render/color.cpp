@@ -8,37 +8,37 @@ namespace NAGE
     Color::Color(float _red, float _green, float _blue, float _alpha)
     {
         // Color r, g, b = <0.0f, 1.0f>
-        if(_red > 1.0f) mRed = _red / 255.0f;
-        else mRed = _red;
+        if(_red > 1.0f) red_ = _red / 255.0f;
+        else red_ = _red;
 
-        if(_green > 1.0f) mGreen= _green / 255.0f;
-        else mGreen = _green;
+        if(_green > 1.0f) green_ = _green / 255.0f;
+        else green_ = _green;
 
-        if(_blue > 1.0f) mBlue = _blue / 255.0f;
-        else mBlue = _blue;
+        if(_blue > 1.0f) blue_ = _blue / 255.0f;
+        else blue_ = _blue;
 
-        if(_alpha > 1.0f) mAlpha = _alpha / 255.0f;
-        else mAlpha = _alpha;
+        if(_alpha > 1.0f) alpha_ = _alpha / 255.0f;
+        else alpha_ = _alpha;
     }
 
     float Color::red() const
     {
-        return mRed;
+        return red_;
     }
 
     float Color::green() const
     {
-        return mGreen;
+        return green_;
     }
 
     float Color::blue() const
     {
-        return mBlue;
+        return blue_;
     }
 
     float Color::alpha() const
     {
-        return mAlpha;
+        return alpha_;
     }
 
     void Color::setRed(float _red)
@@ -46,7 +46,7 @@ namespace NAGE
         if(_red > 1.0f)
             _red /= 255.0f;
 
-        mRed = _red;
+        red_ = _red;
     }
 
     void Color::setGreen(float _green)
@@ -54,7 +54,7 @@ namespace NAGE
         if(_green > 1.0f)
             _green /= 255.0f;
 
-        mGreen = _green;
+        green_ = _green;
     }
 
     void Color::setBlue(float _blue)
@@ -62,7 +62,7 @@ namespace NAGE
         if(_blue > 1.0f)
             _blue /= 255.0f;
 
-        mBlue = _blue;
+        blue_ = _blue;
     }
 
     void Color::setAlpha(float _alpha)
@@ -70,7 +70,7 @@ namespace NAGE
         if(_alpha > 1.0f)
             _alpha /= 255.0f;
 
-        mAlpha = _alpha;
+        alpha_ = _alpha;
     }
 
     Color& Color::lerp(Color _color, float _blending)
@@ -81,9 +81,9 @@ namespace NAGE
         float green = inverseBlending * this->green() + _blending * _color.green();
         float blue = inverseBlending * this->blue() + _blending * _color.blue();
 
-        this->mRed = red;
-        this->mGreen = green;
-        this->mBlue = blue;
+        this->red_ = red;
+        this->green_ = green;
+        this->blue_ = blue;
 
         return *this;
     }

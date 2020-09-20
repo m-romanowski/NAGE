@@ -3,29 +3,29 @@
 namespace NAGE
 {
     Timer::Timer()
-        : mFlag(true)
+        : flag_(true)
     {
 
     }
 
     void Timer::start()
     {
-        mEpoch = Clock::now();
+        epoch_ = Clock::now();
     }
 
     void Timer::stop()
     {
-        mFlag = false;
+        flag_ = false;
     }
 
     bool Timer::isActive()
     {
-        return mFlag;
+        return flag_;
     }
 
     Timer::Clock::duration Timer::timeElapsed() const
     {
-        return Clock::now() - mEpoch;
+        return Clock::now() - epoch_;
     }
 
     Timer::ms Timer::timeElapsedMs() const
@@ -37,12 +37,14 @@ namespace NAGE
     {
         std::thread([=]()
         {
-            if(mFlag) return;
+            if(flag_)
+                return;
 
             auto x = std::chrono::steady_clock::now() + std::chrono::milliseconds(_msDelay);
             std::this_thread::sleep_until(x);
 
-            if(mFlag) return;
+            if(flag_)
+                return;
 
             _function();
         }).detach();
@@ -52,7 +54,7 @@ namespace NAGE
     {
         std::thread([=]()
         {
-            while(mFlag)
+            while(flag_)
             {
                 auto x = std::chrono::steady_clock::now() + std::chrono::milliseconds(_msInterval);
                 _function();

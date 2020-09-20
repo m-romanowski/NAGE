@@ -3,23 +3,23 @@
 namespace NAGE
 {
     IRenderEngine::IRenderEngine()
-        : mSceneManager(new SceneManager)
+        : sceneManager_(new SceneManager)
     {
 
     }
 
     IRenderEngine::~IRenderEngine()
     {
-        delete mSceneManager;
+        delete sceneManager_;
     }
 
     SceneManager* IRenderEngine::sceneManager()
     {
-        return mSceneManager;
+        return sceneManager_;
     }
 
     void IRenderEngine::setSceneManager(SceneManager* _manager)
     {
-        mSceneManager = _manager;
+        sceneManager_ = _manager;
     }
 }

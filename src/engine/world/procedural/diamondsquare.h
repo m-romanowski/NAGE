@@ -10,9 +10,9 @@ namespace NAGE
     {
     public:
         DiamondSquare(int _width, int _height)
-            : mSeedValue(0.5f),
-              mWidth(_width),
-              mHeight(_height)
+            : seedValue_(0.5f),
+              width_(_width),
+              height_(_height)
         {
             // Size (width, height) = 2 ^ n + 1, e.g. n = 2 -> width = 5, height = 5
             allocate(); // Allocate menory
@@ -22,9 +22,9 @@ namespace NAGE
         }
 
         DiamondSquare(int _size)
-            : mSeedValue(0.5f),
-              mWidth(_size),
-              mHeight(_size)
+            : seedValue_(0.5f),
+              width_(_size),
+              height_(_size)
         {
             allocate();
             fill(0.0f);
@@ -38,57 +38,57 @@ namespace NAGE
         }
 
         // Getters
-        float seedValue() const { return mSeedValue; }
-        int width() const { return mWidth; }
-        int height() const { return mHeight; }
+        float seedValue() const { return seedValue_; }
+        int width() const { return width_; }
+        int height() const { return height_; }
         float value(int _x, int _z) const
         {
-            assert(mBuffer && _x >= 0 && _x < mWidth && _z >= 0 && _z < mHeight);
-            return mBuffer[_x * mHeight + _z];
+            assert(buffer_ && _x >= 0 && _x < width_ && _z >= 0 && _z < height_);
+            return buffer_[_x * height_ + _z];
         }
 
         // Setters
-        void setSeedValue(float _value) { mSeedValue = _value; }
-        void setWidth(int _width) { mWidth = _width; }
-        void setHeight(int _height) { mHeight = _height; }
-        void setSize(int _size) { mWidth = _size; mHeight = _size; }
+        void setSeedValue(float _value) { seedValue_ = _value; }
+        void setWidth(int _width) { width_ = _width; }
+        void setHeight(int _height) { height_ = _height; }
+        void setSize(int _size) { width_ = _size; height_ = _size; }
 
     private:
         // Private methods
         void allocate()
         {
-            mBuffer = new float[mWidth * mHeight];
+            buffer_ = new float[width_ * height_];
         }
 
         void deallocate()
         {
-            delete[] mBuffer;
+            delete[] buffer_;
         }
 
         void fill(float _value)
         {
-            for(int i = 0; i < mWidth; i++)
+            for(int i = 0; i < width_; i++)
             {
-                for(int j = 0; j < mHeight; j++)
+                for(int j = 0; j < height_; j++)
                 {
-                    mBuffer[i * mHeight + j] = _value;
+                    buffer_[i * height_ + j] = _value;
                 }
             }
         }
 
         void setValue(int _x, int _z, float _value)
         {
-            assert(_x >= 0 && _x < mWidth && _z >= 0 && _z < mHeight);
-            mBuffer[_x * mHeight + _z] = _value;
+            assert(_x >= 0 && _x < width_ && _z >= 0 && _z < height_);
+            buffer_[_x * height_ + _z] = _value;
         }
 
         void initialize()
         {
             // Initialize values for 4 corners.
-            setValue(0, 0, mSeedValue);
-            setValue(mWidth - 1, 0, mSeedValue);
-            setValue(0, mHeight - 1, mSeedValue);
-            setValue(mHeight - 1, 0, mSeedValue);
+            setValue(0, 0, seedValue_);
+            setValue(width_ - 1, 0, seedValue_);
+            setValue(0, height_ - 1, seedValue_);
+            setValue(height_ - 1, 0, seedValue_);
         }
 
         /*       n
@@ -101,10 +101,10 @@ namespace NAGE
         {
             int half = _step / 2;
 
-            float n = value(_x, (_z - half + mHeight - 1) % (mHeight - 1));
-            float w = value((_x - half + mWidth - 1) % (mWidth - 1), _z);
-            float e = value((_x + half) % (mWidth - 1), _z);
-            float s = value(_x, (_z + half) % (mHeight - 1));
+            float n = value(_x, (_z - half + height_ - 1) % (height_ - 1));
+            float w = value((_x - half + width_ - 1) % (width_ - 1), _z);
+            float e = value((_x + half) % (width_ - 1), _z);
+            float s = value(_x, (_z + half) % (height_ - 1));
 
             float avg = (n + w + e + s) / 4.0f;
             return avg + random(-1.0f, 1.0f);
@@ -134,24 +134,24 @@ namespace NAGE
             if(halfStep < 1)
                 return;
 
-            for(int z = 0; z < mHeight - 1; z += _stepSize)
+            for(int z = 0; z < height_ - 1; z += _stepSize)
             {
-                for(int x = 0; x < mWidth - 1; x += _stepSize)
+                for(int x = 0; x < width_ - 1; x += _stepSize)
                 {
                     float value = squareStep(x, z, _stepSize);
                     setValue(x + halfStep, z + halfStep, value);
                 }
             }
 
-            for(int z = 0; z < mHeight - 1; z += halfStep)
+            for(int z = 0; z < height_ - 1; z += halfStep)
             {
-                for(int x = (z + halfStep) % _stepSize; x < mWidth - 1; x += _stepSize)
+                for(int x = (z + halfStep) % _stepSize; x < width_ - 1; x += _stepSize)
                 {
                     float value = diamondStep(x, z, _stepSize);
                     setValue(x, z, value);
 
-                    if(z == 0) setValue(mWidth - 1, z, value);
-                    if(x == 0) setValue(x, mHeight - 1, value);
+                    if(z == 0) setValue(width_ - 1, z, value);
+                    if(x == 0) setValue(x, height_ - 1, value);
                 }
             }
 
@@ -161,13 +161,13 @@ namespace NAGE
         void generate()
         {
             // Run recursively.
-            divide(mWidth - 1);
+            divide(width_ - 1);
         }
 
         // Members
-        float* mBuffer; // Store y height values.
-        float mSeedValue; // Initial corner value.
-        int mWidth, mHeight;
+        float* buffer_; // Store y height values.
+        float seedValue_; // Initial corner value.
+        int width_, height_;
     };
 }
 

@@ -10,21 +10,21 @@ namespace QNAGE
 
     SettingsNavigation::~SettingsNavigation()
     {
-        delete environmentButton;
-        delete engineButton;
-        delete buildAndRunButton;
-        delete navigationLayout;
-        delete environmentSettings;
-        delete engineSettings;
-        delete buildAndRunSettings;
+        delete environmentButton_;
+        delete engineButton_;
+        delete buildAndRunButton_;
+        delete navigationLayout_;
+        delete environmentSettings_;
+        delete engineSettings_;
+        delete buildAndRunSettings_;
     }
 
     void SettingsNavigation::setupUi()
     {
         // Create settings widgets.
-        this->environmentSettings = new EnvironmentSettings();
-        this->engineSettings = new EngineSettings();
-        this->buildAndRunSettings = new BuildAndRunSettings();
+        this->environmentSettings_ = new EnvironmentSettings();
+        this->engineSettings_ = new EngineSettings();
+        this->buildAndRunSettings_ = new BuildAndRunSettings();
 
         // Bind widgets
         bindNavigationWidgets();
@@ -32,53 +32,53 @@ namespace QNAGE
 
     void SettingsNavigation::bindNavigationWidgets()
     {
-        connect(this->backButton, &QPushButton::clicked, this, &SettingsNavigation::bindNavigationWidgets);
+        connect(this->backButton_, &QPushButton::clicked, this, &SettingsNavigation::bindNavigationWidgets);
 
-        this->navigationWidget = new QWidget();
+        this->navigationWidget_ = new QWidget();
 
         // Navigation layout.
-        this->navigationLayout = new QGridLayout();
+        this->navigationLayout_ = new QGridLayout();
 
-        this->environmentButton = new QToolButton();
-        this->environmentButton->setText(QString("Environment"));
-        this->environmentButton->setFixedSize(QSize(185, 185));
-        this->environmentButton->setStyleSheet("padding: 15px;");
+        this->environmentButton_ = new QToolButton();
+        this->environmentButton_->setText(QString("Environment"));
+        this->environmentButton_->setFixedSize(QSize(185, 185));
+        this->environmentButton_->setStyleSheet("padding: 15px;");
         QIcon environmentIcon;
         environmentIcon.addPixmap(QPixmap(":/rc/icons/environment.png"), QIcon::Normal, QIcon::Off);
-        this->environmentButton->setIcon(environmentIcon);
-        this->environmentButton->setIconSize(QSize(100, 100));
-        this->environmentButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        connect(this->environmentButton, &QToolButton::clicked, this, &SettingsNavigation::bindEnvironmentWidgets);
+        this->environmentButton_->setIcon(environmentIcon);
+        this->environmentButton_->setIconSize(QSize(100, 100));
+        this->environmentButton_->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        connect(this->environmentButton_, &QToolButton::clicked, this, &SettingsNavigation::bindEnvironmentWidgets);
 
-        this->engineButton = new QToolButton();
-        this->engineButton->setText(QString("Engine"));
-        this->engineButton->setFixedSize(QSize(185, 185));
-        this->engineButton->setStyleSheet("padding: 15px;");
+        this->engineButton_ = new QToolButton();
+        this->engineButton_->setText(QString("Engine"));
+        this->engineButton_->setFixedSize(QSize(185, 185));
+        this->engineButton_->setStyleSheet("padding: 15px;");
         QIcon engineIcon;
         engineIcon.addPixmap(QPixmap(":/rc/icons/welcome.png"), QIcon::Normal, QIcon::Off);
-        this->engineButton->setIcon(engineIcon);
-        this->engineButton->setIconSize(QSize(100, 100));
-        this->engineButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        connect(this->engineButton, &QToolButton::clicked, this, &SettingsNavigation::bindEngineWidgets);
+        this->engineButton_->setIcon(engineIcon);
+        this->engineButton_->setIconSize(QSize(100, 100));
+        this->engineButton_->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        connect(this->engineButton_, &QToolButton::clicked, this, &SettingsNavigation::bindEngineWidgets);
 
-        this->buildAndRunButton = new QToolButton();
-        this->buildAndRunButton->setText(QString("Build && Run"));
-        this->buildAndRunButton->setFixedSize(QSize(185, 185));
-        this->buildAndRunButton->setStyleSheet("padding: 15px;");
+        this->buildAndRunButton_ = new QToolButton();
+        this->buildAndRunButton_->setText(QString("Build && Run"));
+        this->buildAndRunButton_->setFixedSize(QSize(185, 185));
+        this->buildAndRunButton_->setStyleSheet("padding: 15px;");
         QIcon buildAndRunIcon;
         buildAndRunIcon.addPixmap(QPixmap(":/rc/icons/build.png"), QIcon::Normal, QIcon::Off);
-        this->buildAndRunButton->setIcon(buildAndRunIcon);
-        this->buildAndRunButton->setIconSize(QSize(100, 100));
-        this->buildAndRunButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        connect(this->buildAndRunButton, &QToolButton::clicked, this, &SettingsNavigation::bindBuildAndRundWidgets);
+        this->buildAndRunButton_->setIcon(buildAndRunIcon);
+        this->buildAndRunButton_->setIconSize(QSize(100, 100));
+        this->buildAndRunButton_->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        connect(this->buildAndRunButton_, &QToolButton::clicked, this, &SettingsNavigation::bindBuildAndRundWidgets);
 
         // Append widgets to grid layout.
-        this->navigationLayout->addWidget(this->environmentButton, 0, 1);
-        this->navigationLayout->addWidget(this->engineButton, 0, 2);
-        this->navigationLayout->addWidget(this->buildAndRunButton, 0, 3);
+        this->navigationLayout_->addWidget(this->environmentButton_, 0, 1);
+        this->navigationLayout_->addWidget(this->engineButton_, 0, 2);
+        this->navigationLayout_->addWidget(this->buildAndRunButton_, 0, 3);
 
-        this->navigationWidget->setLayout(this->navigationLayout);
-        this->mainLayout->addWidget(this->navigationWidget);
+        this->navigationWidget_->setLayout(this->navigationLayout_);
+        this->mainLayout_->addWidget(this->navigationWidget_);
     }
 
     void SettingsNavigation::bindEnvironmentWidgets()

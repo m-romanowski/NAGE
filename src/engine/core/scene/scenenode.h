@@ -48,13 +48,13 @@ namespace NAGE
         void renderAllComponents(Vector4f _clipPlane);
 
     private:
-        std::unordered_map<std::string, Model*> mModels;
-        std::unordered_map<std::string, PointLight*> mPointLights;
-        Skybox* mSkybox;
-        Sun* mSunLight;
-        ITerrain* mTerrain;
-        IWater* mWater;
-        Camera* mCamera;
+        std::unordered_map<std::string, Model*> models_;
+        std::unordered_map<std::string, PointLight*> pointLights_;
+        Skybox* skybox_;
+        Sun* sunLight_;
+        ITerrain* terrain_;
+        IWater* water_;
+        Camera* camera_;
     };
 }
 

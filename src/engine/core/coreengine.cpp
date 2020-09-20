@@ -3,36 +3,36 @@
 namespace NAGE
 {
     CoreEngine::CoreEngine()
-        : mFpsLimit(FpsLimit::FPS_60),
-          mStatus(StatusCode::NotInitialized),
-          mDisplayFPS(false)
+        : fpsLimit_(FpsLimit::FPS_60),
+          status_(StatusCode::NotInitialized),
+          displayFPS_(false)
     {
 
     }
 
     CoreEngine::~CoreEngine()
     {
-        delete mRenderEngine;
+        delete renderEngine_;
     }
 
     FpsLimit CoreEngine::fpsLimit() const
     {
-        return mFpsLimit;
+        return fpsLimit_;
     }
 
     bool CoreEngine::displayFps() const
     {
-        return mDisplayFPS;
+        return displayFPS_;
     }
 
     int CoreEngine::statusCode() const
     {
-        return mStatus;
+        return status_;
     }
 
     std::string CoreEngine::status() const
     {
-        switch(mStatus)
+        switch(status_)
         {
             case -1:
                 Log::log("[STATUS] Engine not initialized");
@@ -53,78 +53,78 @@ namespace NAGE
 
     IRenderEngine* CoreEngine::renderEngine()
     {
-        return mRenderEngine;
+        return renderEngine_;
     }
 
     std::chrono::milliseconds CoreEngine::frameLockMS() const
     {
-        if(mFpsLimit == FpsLimit::FPS_Unlimited)
+        if(fpsLimit_ == FpsLimit::FPS_Unlimited)
             return std::chrono::milliseconds(0);
 
-        return std::chrono::milliseconds(std::chrono::milliseconds(1000 / mFpsLimit));
+        return std::chrono::milliseconds(std::chrono::milliseconds(1000 / fpsLimit_));
     }
 
     void CoreEngine::setRenderEngine(IRenderEngine* _renderEngine)
     {
-        mRenderEngine = _renderEngine;
+        renderEngine_ = _renderEngine;
     }
 
     void CoreEngine::setFrameLimit(FpsLimit _limit)
     {
-        mFpsLimit = _limit;
+        fpsLimit_ = _limit;
     }
 
     void CoreEngine::initialize(IRenderEngine* _renderEngine)
     {
         Log::log("Engine initialization...");
 
-        mRenderEngine = _renderEngine;
-        mRenderEngine->initialize();
+        renderEngine_ = _renderEngine;
+        renderEngine_->initialize();
 
         #ifdef GL_API
-            Log::log("API: OpenGL " + mRenderEngine->apiVersion());
+            Log::log("API: OpenGL " + renderEngine_->apiVersion());
         #endif
 
-        if(mFpsLimit == FpsLimit::FPS_Unlimited)
+        if(fpsLimit_ == FpsLimit::FPS_Unlimited)
             Log::log("FPS lock: disabled");
         else
-            Log::log("FPS lock: " + std::to_string(mFpsLimit) + " fps (~" +
+            Log::log("FPS lock: " + std::to_string(fpsLimit_) + " fps (~" +
                 std::to_string(frameLockMS().count()) + " ms)");
 
-        mStatus = StatusCode::Initialized;
+        status_ = StatusCode::Initialized;
 
         Log::log("Waiting for events...");
     }
 
     void CoreEngine::run()
     {
-        if(mStatus != StatusCode::Initialized)
+        if(status_ != StatusCode::Initialized)
             return;
 
-        mStatus = StatusCode::Running;
-        mRenderEngine->initializePreRenderEffects();
+        status_ = StatusCode::Running;
+        renderEngine_->initializePreRenderEffects();
         render();
     }
 
     void CoreEngine::render()
     {
-        if(mStatus != StatusCode::Running)
+        if(status_ != StatusCode::Running)
             return;
 
-        mRenderEngine->render();
+        renderEngine_->render();
     }
 
     void CoreEngine::stop()
     {
-        if(mStatus != StatusCode::Running)
+        if(status_ != StatusCode::Running)
             return;
 
-        mStatus = StatusCode::Stopped;
+        status_ = StatusCode::Stopped;
     }
 
     void CoreEngine::startPollingEvents()
     {
-        if(mStatus != StatusCode::Running)
+        if(status_ != StatusCode::Running)
             return;
 
         // Update inputs.

@@ -29,10 +29,10 @@ namespace NAGE
         // Helper function
         static InputContainer::iterator findMouseButton(MouseButton _button);
 
-        static InputContainer mMouseContainer;
-        static Vector2f mMousePreviousPosition;
-        static Vector2f mMouseCurrentPosition;
-        static Vector2f mMouseDelta;
+        static InputContainer mouseContainer_;
+        static Vector2f mousePreviousPosition_;
+        static Vector2f mouseCurrentPosition_;
+        static Vector2f mouseDelta_;
         // static X11 mX11;
     };
 }

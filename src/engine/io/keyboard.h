@@ -24,7 +24,7 @@ namespace NAGE
         static InputContainer::iterator findKey(Key _key);
 
         // Buttons states container.
-        static InputContainer keyContainer;
+        static InputContainer keyContainer_;
     };
 }
 

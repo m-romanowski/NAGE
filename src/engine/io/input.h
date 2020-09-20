@@ -26,8 +26,8 @@ namespace NAGE
     struct InputInstance
     {
         InputInstance(T _input, InputState _state)
-            : input(_input),
-              state(_state)
+            : input_(_input),
+              state_(_state)
         {
 
         }
@@ -42,8 +42,8 @@ namespace NAGE
             return !operator==(_rhs);
         }
 
-        T input;
-        InputState state;
+        T input_;
+        InputState state_;
     };
 
     template <typename InputInstanceType>
@@ -62,7 +62,7 @@ namespace NAGE
         {
             for(; _begin != _end; ++_begin)
             {
-                if(_begin->input == _value)
+                if(_begin->input_ == _value)
                     return _begin;
             }
 
@@ -76,16 +76,16 @@ namespace NAGE
         template <typename Instance>
         static void updateState(Instance& _instance)
         {
-            switch(_instance.state)
+            switch(_instance.state_)
             {
                 case InputState::InputRegistered:
-                    _instance.state = InputState::InputTriggered;
+                    _instance.state_ = InputState::InputTriggered;
                     break;
                 case InputState::InputTriggered:
-                    _instance.state = InputState::InputPressed;
+                    _instance.state_ = InputState::InputPressed;
                     break;
                 case InputState::InputUnregistered:
-                    _instance.state = InputState::InputReleased;
+                    _instance.state_ = InputState::InputReleased;
                     break;
                 default:
                     break;
@@ -100,7 +100,7 @@ namespace NAGE
         template <typename Instance>
         static bool checkReleased(Instance& _instance)
         {
-            return _instance.state == InputState::InputReleased;
+            return _instance.state_ == InputState::InputReleased;
         }
 
         /* Updates input container - remove released inputs and update rest.

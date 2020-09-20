@@ -10,67 +10,67 @@ namespace NAGE
 
     float BS::x() const
     {
-        return mX;
+        return x_;
     }
 
     float BS::y() const
     {
-        return mY;
+        return y_;
     }
 
     float BS::z() const
     {
-        return mZ;
+        return z_;
     }
 
     Vector3f BS::point() const
     {
-        return Vector3f(mX, mY, mZ);
+        return Vector3f(x_, y_, z_);
     }
 
     float BS::radius() const
     {
-        return mRadius;
+        return radius_;
     }
 
     void BS::setX(float _x)
     {
-        mX = _x;
+        x_ = _x;
     }
 
     void BS::setY(float _y)
     {
-        mY = _y;
+        y_ = _y;
     }
 
     void BS::setZ(float _z)
     {
-        mZ = _z;
+        z_ = _z;
     }
 
     void BS::setPoint(const Vector3f _point)
     {
-        mX = _point.x();
-        mY = _point.y();
-        mZ = _point.z();
+        x_ = _point.x();
+        y_ = _point.y();
+        z_ = _point.z();
     }
 
     void BS::setRadius(float _radius)
     {
-        mRadius = _radius;
+        radius_ = _radius;
     }
 
     bool BS::intersect(const AABB _box)
     {
-        float x = std::max(_box.minX(), std::min(mX, _box.maxX()));
-        float y = std::max(_box.minY(), std::min(mY, _box.maxY()));
-        float z = std::max(_box.minZ(), std::min(mZ, _box.maxZ()));
+        float x = std::max(_box.minX(), std::min(x_, _box.maxX()));
+        float y = std::max(_box.minY(), std::min(y_, _box.maxY()));
+        float z = std::max(_box.minZ(), std::min(z_, _box.maxZ()));
 
-        float distance = std::sqrt((x - mX) * (x - mX) +
-            (y - mY) * (y - mY) +
-            (z - mZ) * (z - mZ));
+        float distance = std::sqrt((x - x_) * (x - x_) +
+            (y - y_) * (y - y_) +
+            (z - z_) * (z - z_));
 
-        return distance < mRadius;
+        return distance < radius_;
     }
 
     bool BS::intersect(const Vector3f _min, const Vector3f _max)
@@ -85,11 +85,11 @@ namespace NAGE
 
     bool BS::intersect(const BS _bs)
     {
-        float distance = std::sqrt((mX - _bs.mX) * (mX * _bs.mX) +
-            (mY - _bs.mY) * (mY - _bs.mY) +
-            (mZ - _bs.mZ) * (mZ - _bs.mZ));
+        float distance = std::sqrt((x_ - _bs.x_) * (x_ * _bs.x_) +
+            (y_ - _bs.y_) * (y_ - _bs.y_) +
+            (z_ - _bs.z_) * (z_ - _bs.z_));
 
-        return distance < mRadius + _bs.mRadius;
+        return distance < radius_ + _bs.radius_;
     }
 
     bool BS::intersect(const Vector3f _point, float _radius)
@@ -103,11 +103,11 @@ namespace NAGE
 
     bool BS::isPointInsideSphere(const Vector3f _point)
     {
-        float distanceSqr = (_point.x() - mX) * (_point.x() - mX) +
-            (_point.y() - mY) * (_point.y() - mY) +
-            (_point.z() * mZ) * (_point.z() * mZ);
+        float distanceSqr = (_point.x() - x_) * (_point.x() - x_) +
+            (_point.y() - y_) * (_point.y() - y_) +
+            (_point.z() * z_) * (_point.z() * z_);
 
-        return distanceSqr < std::pow(mRadius, 2);
+        return distanceSqr < std::pow(radius_, 2);
     }
 
     bool BS::isPointInsideSphere(float _x, float _y, float _z)

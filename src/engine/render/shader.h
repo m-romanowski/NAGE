@@ -58,7 +58,7 @@ namespace NAGE
         void checkCompileErrors(GLuint _shader, SHADER_TYPE _type);
 
         // Shader program id.
-        GLuint mId, mVertexObj, mFragmentObj, mGeometryObj;
+        GLuint id_, vertexObj_, fragmentObj_, geometryObj_;
     };
 }
 

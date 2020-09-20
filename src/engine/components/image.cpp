@@ -9,7 +9,7 @@ namespace NAGE
 {
     Image::Image(const std::string& _path)
     {
-        mData = stbi_load(_path.c_str(), &mWidth, &mHeight, &mFormat, 0);
+        data_ = stbi_load(_path.c_str(), &width_, &height_, &format_, 0);
     }
 
     Image::~Image()
@@ -19,28 +19,28 @@ namespace NAGE
 
     unsigned char* Image::data()
     {
-        return mData;
+        return data_;
     }
 
     int Image::width() const
     {
-        return mWidth;
+        return width_;
     }
 
     int Image::height() const
     {
-        return mHeight;
+        return height_;
     }
 
     int Image::format() const
     {
-        return mFormat;
+        return format_;
     }
 
     void Image::free()
     {
-        if(mData)
-            stbi_image_free(mData);
+        if(data_)
+            stbi_image_free(data_);
     }
 
     void Image::colorAt(unsigned char* _data, int _format, unsigned long _imageWidth, unsigned long _x, unsigned long _y,

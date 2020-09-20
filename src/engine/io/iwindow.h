@@ -15,7 +15,8 @@
 
 namespace NAGE
 {
-    /* Interface for OpenGL window.
+    /*
+     * Interface for OpenGL window.
      */
     class IWindow
     {
@@ -24,14 +25,14 @@ namespace NAGE
         virtual ~IWindow();
 
         // Getters
-        inline int width() const { return mWidth; }
-        inline int height() const { return mHeight; }
-        inline std::string title() const { return mTitle; }
+        inline int width() const { return width_; }
+        inline int height() const { return height_; }
+        inline std::string title() const { return title_; }
 
         // Setters
-        inline void setWidth(int _width) { mWidth = _width; }
-        inline void setHeight(int _height) { mHeight = _height; }
-        inline void setTitle(const std::string& _title) { mTitle = _title; }
+        inline void setWidth(int _width) { width_ = _width; }
+        inline void setHeight(int _height) { height_ = _height; }
+        inline void setTitle(const std::string& _title) { title_ = _title; }
 
         virtual void sync(); // Synchronize updates (fps limiter).
         virtual void update(); // Swap buffers.
@@ -50,9 +51,9 @@ namespace NAGE
         virtual void mouseReleaseEvent(MouseButton _button);
         virtual void mouseMoveEvent();
 
-        int mWidth, mHeight;
-        std::string mTitle;
-        Timer *updateInterval, *fpsRenderTimer;
+        int width_, height_;
+        std::string title_;
+        Timer *updateInterval_, *fpsRenderTimer_;
 
         static Timer::Clock::time_point mLastFrame;
         static Vector2f mCurrentWindowSize;

@@ -5,7 +5,7 @@ namespace NAGE
 {
     Plane::Plane(int _width, int _height)
     {
-        generateFlatPlane(_width, _height, mVertices, mIndices);
+        generateFlatPlane(_width, _height, vertices_, indices_);
     }
 
     void Plane::setupPrimitive()

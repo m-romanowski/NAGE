@@ -3,108 +3,108 @@
 namespace NAGE
 {
     Projection::Projection()
-        : mFov(60.0f),
-          mAspectRatio(static_cast<float>(800) / static_cast<float>(600)),
-          mTop(0),
-          mBottom(0),
-          mLeft(0),
-          mRight(0),
-          mZNear(0.1f),
-          mZFar(1000.0f)
+        : fov_(60.0f),
+          aspectRatio_(static_cast<float>(800) / static_cast<float>(600)),
+          top_(0),
+          bottom_(0),
+          left_(0),
+          right_(0),
+          zNear_(0.1f),
+          zFar_(1000.0f)
     {
 
     }
 
     float Projection::fov() const
     {
-        return mFov;
+        return fov_;
     }
 
     float Projection::aspectRatio() const
     {
-        return mAspectRatio;
+        return aspectRatio_;
     }
 
     float Projection::top() const
     {
-        return mTop;
+        return top_;
     }
 
     float Projection::bottom() const
     {
-        return mBottom;
+        return bottom_;
     }
 
     float Projection::left() const
     {
-        return mLeft;
+        return left_;
     }
 
     float Projection::right() const
     {
-        return mRight;
+        return right_;
     }
 
     float Projection::zNear() const
     {
-        return mZNear;
+        return zNear_;
     }
 
     float Projection::zFar() const
     {
-        return mZFar;
+        return zFar_;
     }
 
     void Projection::setFov(const float _fov)
     {
-        mFov = _fov;
+        fov_ = _fov;
     }
 
     void Projection::setAspectRatio(const float _aspectRatio)
     {
-        mAspectRatio = _aspectRatio;
+        aspectRatio_ = _aspectRatio;
     }
 
     void Projection::setAspectRatio(const int _width, const int _height)
     {
-        mAspectRatio = static_cast<float>(_width) / static_cast<float>(_height);
+        aspectRatio_ = static_cast<float>(_width) / static_cast<float>(_height);
     }
 
     void Projection::setTop(const float _top)
     {
-        mTop = _top;
+        top_ = _top;
     }
 
     void Projection::setBottom(const float _bottom)
     {
-        mBottom = _bottom;
+        bottom_ = _bottom;
     }
 
     void Projection::setLeft(const float _left)
     {
-        mLeft = _left;
+        left_ = _left;
     }
 
     void Projection::setRight(const float _right)
     {
-        mRight = _right;
+        right_ = _right;
     }
 
     void Projection::setZNear(const float _zNear)
     {
-        mZNear = _zNear;
+        zNear_ = _zNear;
     }
 
     void Projection::setZFar(const float _zFar)
     {
-        mZFar = _zFar;
+        zFar_ = _zFar;
     }
 
     Matrix4f Projection::perspective() const
     {
         Matrix4f perspectiveMatrix;
         perspectiveMatrix.identity();
-        perspectiveMatrix.perspective(mFov, mAspectRatio, mZNear, mZFar);
+        perspectiveMatrix.perspective(fov_, aspectRatio_, zNear_, zFar_);
 
         return perspectiveMatrix;
     }
@@ -113,7 +113,7 @@ namespace NAGE
     {
         Matrix4f orthographicMatrix;
         orthographicMatrix.identity();
-        orthographicMatrix.orthographic(mLeft, mRight, mTop, mBottom, mZNear, mZFar);
+        orthographicMatrix.orthographic(left_, right_, top_, bottom_, zNear_, zFar_);
 
         return orthographicMatrix;
     }

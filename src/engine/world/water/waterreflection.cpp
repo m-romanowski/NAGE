@@ -11,16 +11,16 @@ namespace NAGE
     WaterReflection::~WaterReflection()
     {
         // Clean up.
-        glDeleteRenderbuffers(1, &mDepthBuffer);
+        glDeleteRenderbuffers(1, &depthBuffer_);
     }
 
     void WaterReflection::setup()
     {
         // Create a new depth buffer.
-        glGenRenderbuffers(1, &mDepthBuffer);
-        glBindRenderbuffer(GL_RENDERBUFFER, mDepthBuffer);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, this->mWidth, this->mHeight);
+        glGenRenderbuffers(1, &depthBuffer_);
+        glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer_);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, this->width_, this->height_);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
-            GL_RENDERBUFFER, mDepthBuffer);
+            GL_RENDERBUFFER, depthBuffer_);
     }
 }

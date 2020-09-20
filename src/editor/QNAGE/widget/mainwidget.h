@@ -17,12 +17,12 @@ namespace QNAGE
         ~MainWidget();
 
         // Getters
-        inline RenderWindow* getRenderWindow() const { return renderWindow; }
-        inline LogWidget* getDebugWindow() const { return logWidget; }
+        inline RenderWindow* getRenderWindow() const { return renderWindow_; }
+        inline LogWidget* getDebugWindow() const { return logWidget_; }
 
         // Setters
         void setRenderWindow(RenderWindow* _window);
-        inline void setDebugWindow(LogWidget* _widget) { logWidget = _widget; }
+        inline void setDebugWindow(LogWidget* _widget) { logWidget_ = _widget; }
 
         // Public methods
         void dockGLWindow();
@@ -32,17 +32,17 @@ namespace QNAGE
         void setupUi();
 
         // Editor components
-        RenderWindow* renderWindow;
-        LogWidget* logWidget;
-        QWidget* toolsWidget;
-        QWidget* workspaceWidget;
+        RenderWindow* renderWindow_;
+        LogWidget* logWidget_;
+        QWidget* toolsWidget_;
+        QWidget* workspaceWidget_;
 
         // Ui
-        QVBoxLayout* mainLayout;
-        QVBoxLayout* workspaceLayout;
+        QVBoxLayout* mainLayout_;
+        QVBoxLayout* workspaceLayout_;
 
-        QSplitter* verticalSplitter;
-        QSplitter* horizontalSplitter;
+        QSplitter* verticalSplitter_;
+        QSplitter* horizontalSplitter_;
     };
 }
 

@@ -3,25 +3,25 @@
 namespace NAGE
 {
     SceneNode::SceneNode()
-        : mSkybox(nullptr),
-          mSunLight(nullptr),
-          mTerrain(nullptr),
-          mWater(nullptr),
-          mCamera(new Camera)
+        : skybox_(nullptr),
+          sunLight_(nullptr),
+          terrain_(nullptr),
+          water_(nullptr),
+          camera_(new Camera)
     {
 
     }
 
     SceneNode::~SceneNode()
     {
-        mModels.clear();
-        mPointLights.clear();
+        models_.clear();
+        pointLights_.clear();
 
-        delete mCamera;
-        delete mSkybox;
-        delete mSunLight;
-        delete mTerrain;
-        delete mWater;
+        delete camera_;
+        delete skybox_;
+        delete sunLight_;
+        delete terrain_;
+        delete water_;
     }
 
     /* Add a new model object to the dictionary (models).
@@ -29,7 +29,7 @@ namespace NAGE
     void SceneNode::addToScene(const std::string& _key, Model* _model)
     {
         // Check if the key already exists.
-        if(STLUTIL::checkKey(mModels, _key) || STLUTIL::checkKey(mPointLights, _key))
+        if(STLUTIL::checkKey(models_, _key) || STLUTIL::checkKey(pointLights_, _key))
         {
             std::error_code code = ERROR::SCENE_FAILED_TO_ADD_MODEL;
             Log::error(code.message());
@@ -37,7 +37,7 @@ namespace NAGE
         }
 
         // Add a new model to dictionary.
-        mModels.insert(std::make_pair(_key, _model));
+        models_.insert(std::make_pair(_key, _model));
         Log::log(_key + " (model object) has been added.");
     }
 
@@ -46,7 +46,7 @@ namespace NAGE
     void SceneNode::addToScene(const std::string& _key, PointLight* _light)
     {
         // Check if the key already exists.
-        if(STLUTIL::checkKey(mModels, _key) || STLUTIL::checkKey(mPointLights, _key))
+        if(STLUTIL::checkKey(models_, _key) || STLUTIL::checkKey(pointLights_, _key))
         {
             std::error_code code = ERROR::SCENE_FAILED_TO_ADD_LIGHT;
             Log::error(code.message());
@@ -54,37 +54,37 @@ namespace NAGE
         }
 
         // Add a new ligth to dictionary.
-        mPointLights.insert(std::make_pair(_key, _light));
+        pointLights_.insert(std::make_pair(_key, _light));
         Log::log(_key + " (point light) has been added.");
     }
 
     void SceneNode::addToScene(Skybox* _skybox)
     {
-        mSkybox = _skybox;
+        skybox_ = _skybox;
         Log::log("Skybox has been added.");
     }
 
     void SceneNode::addToScene(Sun* _light)
     {
-        mSunLight = _light;
+        sunLight_ = _light;
         Log::log("Sun light has been added.");
     }
 
     void SceneNode::addToScene(ITerrain* _terrain)
     {
-        mTerrain = _terrain;
+        terrain_ = _terrain;
         Log::log("Terrain has been added.");
     }
 
     void SceneNode::addToScene(IWater* _water)
     {
-        mWater = _water;
+        water_ = _water;
         Log::log("Water has been added.");
     }
 
     void SceneNode::addToScene(Camera* _camera)
     {
-        mCamera = _camera;
+        camera_ = _camera;
         Log::log("Camera has been added.");
     }
 
@@ -93,16 +93,16 @@ namespace NAGE
     void SceneNode::removeFromScene(const std::string _key)
     {
         // Check if key exists in any scene dictionaries (models, lights).
-        if(STLUTIL::checkKey(mModels, _key))
+        if(STLUTIL::checkKey(models_, _key))
         {
-            mModels.erase(_key);
+            models_.erase(_key);
             Log::log(_key + " (model object) has been removed.");
             return;
         }
 
-        if(STLUTIL::checkKey(mPointLights, _key))
+        if(STLUTIL::checkKey(pointLights_, _key))
         {
-            mPointLights.erase(_key);
+            pointLights_.erase(_key);
             Log::log(_key + " (point light) has been removed.");
             return;
         }
@@ -114,9 +114,9 @@ namespace NAGE
 
     Model* SceneNode::getModelByKey(const std::string& _key)
     {
-        std::unordered_map<std::string, Model*>::const_iterator got = mModels.find(_key);
+        std::unordered_map<std::string, Model*>::const_iterator got = models_.find(_key);
 
-        if(got != mModels.end())
+        if(got != models_.end())
             return got->second;
 
         return nullptr;
@@ -124,9 +124,9 @@ namespace NAGE
 
     PointLight* SceneNode::getLightObjectByKey(const std::string& _key)
     {
-        std::unordered_map<std::string, PointLight*>::const_iterator got = mPointLights.find(_key);
+        std::unordered_map<std::string, PointLight*>::const_iterator got = pointLights_.find(_key);
 
-        if(got != mPointLights.end())
+        if(got != pointLights_.end())
             return got->second;
 
         return nullptr;
@@ -134,37 +134,37 @@ namespace NAGE
 
     Skybox* SceneNode::skybox()
     {
-        return mSkybox;
+        return skybox_;
     }
 
     Sun* SceneNode::sun()
     {
-        return mSunLight;
+        return sunLight_;
     }
 
     ITerrain* SceneNode::terrain()
     {
-        return mTerrain;
+        return terrain_;
     }
 
     IWater* SceneNode::water()
     {
-        return mWater;
+        return water_;
     }
 
     Camera* SceneNode::camera()
     {
-        return mCamera;
+        return camera_;
     }
 
     void SceneNode::renderModels(Vector4f _clipPlane)
     {
         // Render models.
-        for(const auto& model : mModels)
+        for(const auto& model : models_)
         {
             model.second->useMaterials();
             model.second->bindTextures();
-            model.second->draw(mCamera, _clipPlane);
+            model.second->draw(camera_, _clipPlane);
             // model.second->unbindTextures();
         }
     }
@@ -173,62 +173,62 @@ namespace NAGE
     void SceneNode::renderLights()
     {
         // Use light to any model on scene.
-        for(auto& model : mModels)
+        for(auto& model : models_)
         {
-            for(auto& light : mPointLights)
-                light.second->use(mCamera, model.second->shader());
+            for(auto& light : pointLights_)
+                light.second->use(camera_, model.second->shader());
 
             // Set point light count.
-            model.second->shader()->setInt("pointLightCount", static_cast<int>(mPointLights.size()));
+            model.second->shader()->setInt("pointLightCount", static_cast<int>(pointLights_.size()));
 
             // Set up sun light.
-            if(mSunLight)
-                mSunLight->use(mCamera, model.second->shader());
+            if(sunLight_)
+                sunLight_->use(camera_, model.second->shader());
         }
 
-        if(mTerrain)
+        if(terrain_)
         {
-            for(auto& light : mPointLights)
-                light.second->use(mCamera, mTerrain->shader());
+            for(auto& light : pointLights_)
+                light.second->use(camera_, terrain_->shader());
 
-            mTerrain->shader()->setInt("pointLightCount", static_cast<int>(mPointLights.size()));
+            terrain_->shader()->setInt("pointLightCount", static_cast<int>(pointLights_.size()));
 
-            if(mSunLight)
-                mSunLight->use(mCamera, mTerrain->shader());
+            if(sunLight_)
+                sunLight_->use(camera_, terrain_->shader());
         }
 
         // Draw lights
-        for(const auto& light : mPointLights)
-            light.second->draw(mCamera);
+        for(const auto& light : pointLights_)
+            light.second->draw(camera_);
 
-        if(mSunLight)
-            mSunLight->draw(mCamera);
+        if(sunLight_)
+            sunLight_->draw(camera_);
     }
 
     void SceneNode::renderSkybox()
     {
         // Render skybox if exists
-        if(mSkybox)
-            mSkybox->draw(mCamera);
+        if(skybox_)
+            skybox_->draw(camera_);
     }
 
     void SceneNode::renderTerrain(Vector4f _clipPlane)
     {
-        if(mTerrain)
+        if(terrain_)
         {
-            mTerrain->useMaterial();
-            mTerrain->bindTextures();
-            mTerrain->render(mCamera, _clipPlane);
+            terrain_->useMaterial();
+            terrain_->bindTextures();
+            terrain_->render(camera_, _clipPlane);
             // mTerrain->unbindTextures();
         }
     }
 
     void SceneNode::renderWater()
     {
-        if(mWater)
+        if(water_)
         {
-            mWater->bindTextures();
-            mWater->render(mCamera);
+            water_->bindTextures();
+            water_->render(camera_);
             // mWater->unbindTextures();
         }
     }

@@ -35,15 +35,15 @@ namespace NAGE
         Matrix4f orthographic() const;
     private:
         // Perspective
-        float mFov;
-        float mAspectRatio;
+        float fov_;
+        float aspectRatio_;
 
         // Orthographic
-        float mTop, mBottom;
-        float mLeft, mRight;
+        float top_, bottom_;
+        float left_, right_;
 
         // Common
-        float mZNear, mZFar;
+        float zNear_, zFar_;
     };
 }
 

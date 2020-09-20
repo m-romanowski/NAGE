@@ -22,7 +22,7 @@ namespace NAGE
     private:
         void initializeFrameBufferTexture();
 
-        std::shared_ptr<Texture> mBufferTexture;
+        std::shared_ptr<Texture> bufferTexture_;
     };
 }
 

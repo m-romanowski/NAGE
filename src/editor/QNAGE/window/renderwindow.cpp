@@ -7,47 +7,47 @@ namespace QNAGE
 {
     RenderWindow::RenderWindow(MainWindow* _mainWindow)
         : FramelessWindow(_mainWindow, FRAMELESSWINDOW_WITHOUT_BUTTONS),
-          mainWindow(_mainWindow),
-          glWidget(nullptr),
-          vkWidget(nullptr),
-          isDocked(true),
-          dockButton(nullptr)
+          mainWindow_(_mainWindow),
+          glWidget_(nullptr),
+          vkWidget_(nullptr),
+          isDocked_(true),
+          dockButton_(nullptr)
     {
         setupUi();
     }
 
     RenderWindow::~RenderWindow()
     {
-        delete vkWidget;
-        delete glWidget;
-        delete dockButton;
+        delete vkWidget_;
+        delete glWidget_;
+        delete dockButton_;
     }
 
     void RenderWindow::reloadUi()
     {
         // Add wigets to main layout.
-        if(this->glWidget != nullptr)
+        if(this->glWidget_ != nullptr)
         {
             // Dock engine window button
-            this->dockButton = new CustomButton(this);
-            this->dockButton->setObjectName("dark-btn");
-            this->dockButton->setToolTip(tr("Dock / Undock engine window"));
+            this->dockButton_ = new CustomButton(this);
+            this->dockButton_->setObjectName("dark-btn");
+            this->dockButton_->setToolTip(tr("Dock / Undock engine window"));
             QIcon dockButtonIcon;
             dockButtonIcon.addPixmap(QPixmap(":/rc/icons/dock.png"), QIcon::Normal, QIcon::Off);
-            this->dockButton->setCustomIcon(dockButtonIcon, QSize(15, 15));
-            connect(this->dockButton, &QPushButton::clicked, this, [this]{ this->dockGLWindow(); });
-            this->topLayout->addWidget(dockButton, 0, 3, 1, 1);
+            this->dockButton_->setCustomIcon(dockButtonIcon, QSize(15, 15));
+            connect(this->dockButton_, &QPushButton::clicked, this, [this]{ this->dockGLWindow(); });
+            this->topLayout_->addWidget(dockButton_, 0, 3, 1, 1);
 
             // Add OpenGL widget to render window.
-            this->layout->addWidget(glWidget);
+            this->layout_->addWidget(glWidget_);
         }
     }
 
     void RenderWindow::setupUi()
     {
         // Window initialize
-        this->layout = new QVBoxLayout();
-        this->setMainLayout(layout);
+        this->layout_ = new QVBoxLayout();
+        this->setMainLayout(layout_);
 
         // Add wigets to main layout.
         reloadUi();
@@ -55,15 +55,15 @@ namespace QNAGE
 
     void RenderWindow::setEngineWindowTitle(const QString &_title)
     {
-        windowTitle = _title;
+        windowTitle_ = _title;
     }
 
     void RenderWindow::setupGLWidget(NAGE::IGame* _game)
     {
-        if(glWidget == nullptr)
-            glWidget = new GLWidget;
+        if(glWidget_ == nullptr)
+            glWidget_ = new GLWidget;
 
-        glWidget->setGame(_game);
+        glWidget_->setGame(_game);
     }
 
     void RenderWindow::dockGLWindow()
@@ -76,26 +76,26 @@ namespace QNAGE
                  QApplication::desktop()->height() / 2 - height() / 2);
 
             // Window is not pinned to main window.
-            isDocked = false;
-            windowTitleWidget->setCursor(Qt::OpenHandCursor);
+            isDocked_ = false;
+            windowTitleWidget_->setCursor(Qt::OpenHandCursor);
 
             // Show engine window.
             show();
         }
         else
         {
-            if(!mainWindow->isEngineWindow())
+            if(!mainWindow_->isEngineWindow())
             {
-                if(mainWindow->isVisible())
+                if(mainWindow_->isVisible())
                 {
                     setAttribute(Qt::WA_DeleteOnClose, false);
 
                     // Window is pinned to main window.
-                    isDocked = true;
-                    windowTitleWidget->setCursor(Qt::ArrowCursor);
+                    isDocked_ = true;
+                    windowTitleWidget_->setCursor(Qt::ArrowCursor);
 
                     // Dock GLWindow to MainWindow
-                    mainWindow->dockEngineWindow();
+                    mainWindow_->dockEngineWindow();
                 }
                 else
                 {

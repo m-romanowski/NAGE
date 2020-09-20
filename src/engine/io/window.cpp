@@ -5,9 +5,9 @@
 namespace NAGE
 {
     Window::Window(int _width, int _height, const std::string& _title)
-        : width(_width),
-          height(_height),
-          title(_title)
+        : width_(_width),
+          height_(_height),
+          title_(_title)
     {
 
     }
@@ -38,10 +38,10 @@ namespace NAGE
     #endif
 
         // Create window
-        window = glfwCreateWindow(width, height, title.c_str(),
+        window_ = glfwCreateWindow(width_, height_, title_.c_str(),
             nullptr, nullptr);
 
-        if (window == nullptr)
+        if (window_ == nullptr)
         {
             std::error_code code = ERROR::GLFW_FAILED_CREATE_WINDOW;
             Log::critical(code.message());
@@ -49,12 +49,12 @@ namespace NAGE
             return;
         }
 
-        glfwMakeContextCurrent(window);
+        glfwMakeContextCurrent(window_);
         // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-        glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
-        glfwSetKeyCallback(window, keyCallback);
-        glfwSetMouseButtonCallback(window, mouseButtonCallback);
-        glfwSetScrollCallback(window, scrollCallback);
+        glfwSetFramebufferSizeCallback(window_, framebufferResizeCallback);
+        glfwSetKeyCallback(window_, keyCallback);
+        glfwSetMouseButtonCallback(window_, mouseButtonCallback);
+        glfwSetScrollCallback(window_, scrollCallback);
 
         if(!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
         {
@@ -105,6 +105,6 @@ namespace NAGE
 
     void Window::closeWindow()
     {
-        glfwWindowShouldClose(window);
+        glfwWindowShouldClose(window_);
     }
 }

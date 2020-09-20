@@ -25,12 +25,12 @@ namespace NAGE
         void appendIndices(int _x, int _z, int _size, int& _currentOffset);
 
         // Indices index (when we want render a partial grid - one of quads).
-        int mTopLeftEndIndex;
-        int mTopRightEndIndex;
-        int mBottomLeftEndIndex;
-        int mBottomRightEndIndex;
+        int topLeftEndIndex_;
+        int topRightEndIndex_;
+        int bottomLeftEndIndex_;
+        int bottomRightEndIndex_;
 
-        int mSize;
+        int size_;
     };
 }
 

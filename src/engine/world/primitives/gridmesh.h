@@ -31,7 +31,7 @@ namespace NAGE
         virtual void setupMeshBuffers();
 
     protected:
-        int mWidth, mHeight;
+        int width_, height_;
     };
 }
 

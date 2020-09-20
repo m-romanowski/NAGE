@@ -49,12 +49,12 @@ namespace NAGE
 
     protected:
         // Engine sub-components
-        IRenderEngine* mRenderEngine;
+        IRenderEngine* renderEngine_;
 
         // Engine settings
-        FpsLimit mFpsLimit;
-        StatusCode mStatus;
-        bool mDisplayFPS;
+        FpsLimit fpsLimit_;
+        StatusCode status_;
+        bool displayFPS_;
     };
 }
 

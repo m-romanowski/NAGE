@@ -1,5 +1,5 @@
-#ifndef NAGE_ENGINE_UTIL_OBJ_LOADER_H_
-#define NAGE_ENGINE_UTIL_OBJ_LOADER_H_
+#ifndef NAGE_ENGINE_UTIL_OBJLOADER_H_
+#define NAGE_ENGINE_UTIL_OBJLOADER_H_
 
 #include "glad/glad.h"
 #include "engine/math/NAGEMath/nagemathvector.h"
@@ -17,10 +17,10 @@ namespace NAGE
     class ModelData
     {
     public:
-        std::vector<Vector3f> position;
-        std::vector<Vector2f> uv;
-        std::vector<Vector3f> normal;
-        std::vector<GLuint> indices;
+        std::vector<Vector3f> position_;
+        std::vector<Vector2f> uv_;
+        std::vector<Vector3f> normal_;
+        std::vector<GLuint> indices_;
     };
 
     class ObjectLoader
@@ -40,10 +40,10 @@ namespace NAGE
         std::string fileExt(const std::string& _path);
         int supportedExt(const std::string& _path);
 
-        std::vector<std::string> mSupportedExt;
-        ModelData mModelData;
-        std::string mPath;
+        std::vector<std::string> supportedExt_;
+        ModelData modelData_;
+        std::string path_;
     };
 }
 
-#endif // NAGE_ENGINE_UTIL_OBJ_LOADER_H_
+#endif // NAGE_ENGINE_UTIL_OBJLOADER_H_

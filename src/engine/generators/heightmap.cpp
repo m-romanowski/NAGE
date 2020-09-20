@@ -11,7 +11,7 @@ namespace NAGE
     float HeightMap::heightAt(int _x, int _z) const
     {
         assert(_x >= 0 && _x < width() && _z >= 0 && _z < height());
-        return (mData[_z * width() + _x] / std::numeric_limits<float>::max()) * HEIGHTMAP_MAX_HEIGHT;
+        return (data_[_z * width() + _x] / std::numeric_limits<float>::max()) * HEIGHTMAP_MAX_HEIGHT;
     }
 
     void HeightMap::setValue(int _x, int _y, int _width, unsigned char* _data, Color _color)
@@ -23,9 +23,9 @@ namespace NAGE
 
     void HeightMap::createTextureFromData(int _width, int _height, unsigned char* _data)
     {
-        mTexture = std::make_unique<Texture>(TextureType::TEXTURE_2D);
-        mTexture->fromData(_width, _height, Texture::TextureFormat::RGB, _data);
-        mData = mTexture->redColorData();
+        texture_ = std::make_unique<Texture>(TextureType::TEXTURE_2D);
+        texture_->fromData(_width, _height, Texture::TextureFormat::RGB, _data);
+        data_ = texture_->redColorData();
     }
 
     float HeightMap::minValueFromArea(int _x, int _z, int _xOffset, int _zOffset) const
@@ -63,15 +63,15 @@ namespace NAGE
 
     Size<int> HeightMap::size() const
     {
-        return Size<int>(mTexture->width(), mTexture->height());
+        return Size<int>(texture_->width(), texture_->height());
     }
 
     void HeightMap::flat(int _width, int _height)
     {
         assert(_width > 0 && _height > 0);
 
-        if(mTexture)
-            mTexture = std::make_unique<Texture>();
+        if(texture_)
+            texture_ = std::make_unique<Texture>();
 
         unsigned char* data = new unsigned char[_width * _height * 3]; // RGB format
         for(int x = 0; x < _width; x++)
@@ -92,8 +92,8 @@ namespace NAGE
     {
         assert(_width > 0 && _height > 0);
 
-        if(mTexture)
-            mTexture = std::make_unique<Texture>();
+        if(texture_)
+            texture_ = std::make_unique<Texture>();
 
         FPerlinNoise noise(_seed);
         if(noise.settings != _settings) noise.settings = _settings;
@@ -146,7 +146,7 @@ namespace NAGE
 
     void HeightMap::loadFromFile(const std::string& _path)
     {
-        mTexture = std::make_unique<Texture>(_path, TextureType::TEXTURE_2D);
-        mData = mTexture->redColorData();
+        texture_ = std::make_unique<Texture>(_path, TextureType::TEXTURE_2D);
+        data_ = texture_->redColorData();
     }
 }

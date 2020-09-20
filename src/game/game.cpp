@@ -75,7 +75,7 @@ namespace NAGE
         waterTransform->setTranslation(0.0f, 40.0f, 0.0f);
 
         CDLODSettings waterLodSettings;
-        waterLodSettings.gridResolution = 16;
+        waterLodSettings.gridResolution_ = 16;
 
         cdlodWater = std::make_shared<CDLODWater>(8, waterHeightmap.get(), waterLodSettings);
         cdlodWater->setWaveNoiseFactor(120.0f);

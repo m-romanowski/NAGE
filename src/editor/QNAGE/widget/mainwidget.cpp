@@ -10,52 +10,52 @@ namespace QNAGE
 
     MainWidget::~MainWidget()
     {
-        delete toolsWidget;
-        delete logWidget;
-        delete renderWindow;
+        delete toolsWidget_;
+        delete logWidget_;
+        delete renderWindow_;
 
-        delete workspaceLayout;
-        delete horizontalSplitter;
-        delete workspaceWidget;
+        delete workspaceLayout_;
+        delete horizontalSplitter_;
+        delete workspaceWidget_;
 
-        delete verticalSplitter;
-        delete mainLayout;
+        delete verticalSplitter_;
+        delete mainLayout_;
     }
 
     void MainWidget::setupUi()
     {
         // Main layout
-        this->mainLayout = new QVBoxLayout();
-        this->mainLayout->setContentsMargins(0, 0, 0, 0);
+        this->mainLayout_ = new QVBoxLayout();
+        this->mainLayout_->setContentsMargins(0, 0, 0, 0);
 
         // Workspace layout
-        this->workspaceLayout = new QVBoxLayout();
+        this->workspaceLayout_ = new QVBoxLayout();
 
         // Log output widget
-        this->logWidget = new LogWidget();
+        this->logWidget_ = new LogWidget();
 
         // Tools
-        this->toolsWidget = new QWidget();
+        this->toolsWidget_ = new QWidget();
 
         // Splitter
-        this->verticalSplitter = new QSplitter();
-        this->horizontalSplitter = new QSplitter();
+        this->verticalSplitter_ = new QSplitter();
+        this->horizontalSplitter_ = new QSplitter();
 
         // Bind widgets and layouts to main layout.
-        this->workspaceWidget = new QWidget();
-        this->horizontalSplitter->addWidget(this->renderWindow);
-        this->horizontalSplitter->addWidget(this->toolsWidget);
-        this->horizontalSplitter->setSizes(QList<int>({600, 150}));
-        this->workspaceLayout->addWidget(this->horizontalSplitter);
-        this->workspaceWidget->setLayout(this->workspaceLayout);
+        this->workspaceWidget_ = new QWidget();
+        this->horizontalSplitter_->addWidget(this->renderWindow_);
+        this->horizontalSplitter_->addWidget(this->toolsWidget_);
+        this->horizontalSplitter_->setSizes(QList<int>({600, 150}));
+        this->workspaceLayout_->addWidget(this->horizontalSplitter_);
+        this->workspaceWidget_->setLayout(this->workspaceLayout_);
 
-        this->verticalSplitter->setOrientation(Qt::Vertical);
-        this->verticalSplitter->addWidget(this->workspaceWidget);
-        this->verticalSplitter->addWidget(this->logWidget);
-        this->verticalSplitter->setSizes(QList<int>({650, 150}));
+        this->verticalSplitter_->setOrientation(Qt::Vertical);
+        this->verticalSplitter_->addWidget(this->workspaceWidget_);
+        this->verticalSplitter_->addWidget(this->logWidget_);
+        this->verticalSplitter_->setSizes(QList<int>({650, 150}));
 
-        this->mainLayout->addWidget(this->verticalSplitter);
-        this->setLayout(this->mainLayout);
+        this->mainLayout_->addWidget(this->verticalSplitter_);
+        this->setLayout(this->mainLayout_);
     }
 
     void MainWidget::setRenderWindow(RenderWindow* _window)
@@ -63,23 +63,23 @@ namespace QNAGE
         if(_window == nullptr)
             return;
 
-        renderWindow = _window;
+        renderWindow_ = _window;
         setupUi();
     }
 
     void MainWidget::dockGLWindow()
     {
-        if(renderWindow == nullptr)
+        if(renderWindow_ == nullptr)
             return;
 
-        this->horizontalSplitter->insertWidget(0, renderWindow);
+        this->horizontalSplitter_->insertWidget(0, renderWindow_);
     }
 
     void MainWidget::undockGLWindow()
     {
-        if(renderWindow == nullptr)
+        if(renderWindow_ == nullptr)
             return;
 
-        this->workspaceLayout->removeWidget(renderWindow);
+        this->workspaceLayout_->removeWidget(renderWindow_);
     }
 }

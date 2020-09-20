@@ -13,20 +13,20 @@ namespace NAGE
     public:
         ThreadPool()
         {
-            mWorkers.resize(std::thread::hardware_concurrency());
+            workers_.resize(std::thread::hardware_concurrency());
         }
 
         ThreadPool(unsigned int _size)
         {
             _size <= 0
-                ? mWorkers.resize(std::thread::hardware_concurrency())
-                : mWorkers.resize(_size);
+                ? workers_.resize(std::thread::hardware_concurrency())
+                : workers_.resize(_size);
         }
 
         ~ThreadPool()
         {
             // Wait for all running threads.
-            for(auto&& worker : mWorkers)
+            for(auto&& worker : workers_)
             {
                 if(worker.joinable())
                     worker.join();
@@ -36,7 +36,7 @@ namespace NAGE
         template <typename Job>
         void run(Job&& _job)
         {
-            for(auto&& worker : mWorkers)
+            for(auto&& worker : workers_)
             {
                 // Still running or waiting to join.
                 if(worker.joinable())
@@ -47,7 +47,7 @@ namespace NAGE
                 return;
             }
 
-            for(auto&& worker : mWorkers)
+            for(auto&& worker : workers_)
             {
                 // Not run or already joined.
                 if(!worker.joinable())
@@ -60,7 +60,7 @@ namespace NAGE
         }
 
     private:
-        std::vector<std::thread> mWorkers;
+        std::vector<std::thread> workers_;
     };
 }
 

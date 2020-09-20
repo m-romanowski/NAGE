@@ -5,15 +5,15 @@ namespace NAGE
     CDLODQuadTree::CDLODQuadTree(CDLODQuadTree* _parent, int _x, int _z, unsigned _lodLevel, int _dimension,
         HeightMap* _heightMap, NodeType _type)
         : CDLODNode(_x, _z, _lodLevel, _dimension),
-          mParent(_parent),
-          mNodeType(_type),
-          mHeightmap(_heightMap)
+          parent_(_parent),
+          nodeType_(_type),
+          heightmap_(_heightMap)
     {
         // Are we in leaf node?
         if(_lodLevel == 0)
         {
-            mMinY = _heightMap->minValueFromArea(_x, _z, _dimension, _dimension);
-            mMaxY = _heightMap->maxValueFromArea(_x, _z, _dimension, _dimension);
+            minY_ = _heightMap->minValueFromArea(_x, _z, _dimension, _dimension);
+            maxY_ = _heightMap->maxValueFromArea(_x, _z, _dimension, _dimension);
         }
         // Create new four node childs.
         else
@@ -21,70 +21,70 @@ namespace NAGE
             int halfDimension = _dimension / 2;
 
             // Append four children.
-            mChildren.push_back(new CDLODQuadTree(this, _x, _z, _lodLevel - 1, halfDimension,
+            children_.push_back(new CDLODQuadTree(this, _x, _z, _lodLevel - 1, halfDimension,
                 _heightMap, NodeType::TopLeft)); // Top-left
-            mChildren.push_back(new CDLODQuadTree(this, _x + halfDimension, _z, _lodLevel - 1, halfDimension,
+            children_.push_back(new CDLODQuadTree(this, _x + halfDimension, _z, _lodLevel - 1, halfDimension,
                 _heightMap, NodeType::TopRight)); // Top-right
-            mChildren.push_back(new CDLODQuadTree(this, _x, _z + halfDimension, _lodLevel - 1, halfDimension,
+            children_.push_back(new CDLODQuadTree(this, _x, _z + halfDimension, _lodLevel - 1, halfDimension,
                 _heightMap, NodeType::BottomLeft)); // Bottom-left
-            mChildren.push_back(new CDLODQuadTree(this, _x + halfDimension, _z + halfDimension, _lodLevel - 1,
+            children_.push_back(new CDLODQuadTree(this, _x + halfDimension, _z + halfDimension, _lodLevel - 1,
                 halfDimension, _heightMap, NodeType::BottomRight)); // Bottom-right
 
-            mMaxY = std::max(
-                std::max(mChildren[TopLeft]->mMaxY, mChildren[TopRight]->mMaxY),
-                std::max(mChildren[BottomLeft]->mMaxY, mChildren[BottomRight]->mMaxY)
+            maxY_ = std::max(
+                std::max(children_[TopLeft]->maxY_, children_[TopRight]->maxY_),
+                std::max(children_[BottomLeft]->maxY_, children_[BottomRight]->maxY_)
             );
 
-            mMinY = std::min(
-                std::max(mChildren[TopLeft]->mMinY, mChildren[TopRight]->mMinY),
-                std::max(mChildren[BottomLeft]->mMinY, mChildren[BottomRight]->mMinY)
+            minY_ = std::min(
+                std::max(children_[TopLeft]->minY_, children_[TopRight]->minY_),
+                std::max(children_[BottomLeft]->minY_, children_[BottomRight]->minY_)
             );
         }
 
         // Initialize node bounding box.
-        mNodeBoundingBox.setMin(Vector3f(_x, mMinY, _z));
-        mNodeBoundingBox.setMax(Vector3f(_x + _dimension, mMaxY, _z + _dimension));
+        nodeBoundingBox_.setMin(Vector3f(_x, minY_, _z));
+        nodeBoundingBox_.setMax(Vector3f(_x + _dimension, maxY_, _z + _dimension));
     }
 
     CDLODQuadTree::~CDLODQuadTree()
     {
-        for(auto& child : mChildren)
+        for(auto& child : children_)
             delete child;
 
-        delete mParent;
+        delete parent_;
     }
 
     CDLODQuadTree* CDLODQuadTree::parent()
     {
-        return mParent;
+        return parent_;
     }
 
     CDLODQuadTree* CDLODQuadTree::child(NodeType _type)
     {
-        if(mChildren.size() == 0)
+        if(children_.size() == 0)
             return nullptr;
 
-        return mChildren[_type];
+        return children_[_type];
     }
 
     std::vector<CDLODQuadTree*> CDLODQuadTree::children() const
     {
-        return mChildren;
+        return children_;
     }
 
     HeightMap* CDLODQuadTree::heightMap()
     {
-        return mHeightmap;
+        return heightmap_;
     }
 
     AABB& CDLODQuadTree::boundingBox()
     {
-        return mNodeBoundingBox;
+        return nodeBoundingBox_;
     }
 
     bool CDLODQuadTree::isRoot() const
     {
-        if(mNodeType == NodeType::Root)
+        if(nodeType_ == NodeType::Root)
             return true;
 
         return false;
@@ -92,7 +92,7 @@ namespace NAGE
 
     bool CDLODQuadTree::isLeaf() const
     {
-        if(mChildren.empty())
+        if(children_.empty())
             return true;
 
         return false;
@@ -100,25 +100,25 @@ namespace NAGE
 
     CDLODQuadTree::NodeType CDLODQuadTree::type() const
     {
-        return mNodeType;
+        return nodeType_;
     }
 
     bool CDLODQuadTree::LODSelect(int* _ranges, int _lodLevel, FrustumCulling* _frustum, const Vector3f& _cameraPosition,
         std::vector<CDLODSelectedNode*>& _selectedNodes)
     {
         // False: our parent handles area.
-        if(!mNodeBoundingBox.intersect(_cameraPosition, _ranges[_lodLevel]))
+        if(!nodeBoundingBox_.intersect(_cameraPosition, _ranges[_lodLevel]))
             return false;
 
         // True: this node was correctly handled.
-        /*if(!_frustum->isAABBInside(mNodeBoundingBox))
+        /*if(!_frustum->isAABBInside(nodeBoundingBox_))
             return true;*/
 
         // If its a root node.
         if(_lodLevel == 0)
         {
             // Add whole node to selection list.
-            _selectedNodes.push_back(new CDLODSelectedNode(mX, mZ, mLODLevel, mDimension, _ranges[_lodLevel],
+            _selectedNodes.push_back(new CDLODSelectedNode(x_, z_, lodLevel_, dimension_, _ranges[_lodLevel],
                 true, true, true, true));
 
             return true;
@@ -126,10 +126,10 @@ namespace NAGE
         // Find selected nodes in leafs.
         else
         {
-            if(!mNodeBoundingBox.intersect(_cameraPosition, _ranges[_lodLevel - 1]))
+            if(!nodeBoundingBox_.intersect(_cameraPosition, _ranges[_lodLevel - 1]))
             {
                 // Add while node to selection list.
-                _selectedNodes.push_back(new CDLODSelectedNode(mX, mZ, mLODLevel, mDimension, _ranges[_lodLevel],
+                _selectedNodes.push_back(new CDLODSelectedNode(x_, z_, lodLevel_, dimension_, _ranges[_lodLevel],
                     true, true, true, true));
             }
             else
@@ -140,19 +140,19 @@ namespace NAGE
                 bool bottomRightChild = true;
 
                 // We cover more detailed (child) levels.
-                for(auto& child : mChildren)
+                for(auto& child : children_)
                 {
                     if(!child->LODSelect(_ranges, _lodLevel - 1, _frustum, _cameraPosition, _selectedNodes))
                     {
-                        if(child->mNodeType == NodeType::TopLeft) topLeftChild = false;
-                        if(child->mNodeType == NodeType::TopRight) topRightChild = false;
-                        if(child->mNodeType == NodeType::BottomLeft) bottomLeftChild = false;
-                        if(child->mNodeType == NodeType::BottomRight) bottomRightChild = false;
+                        if(child->nodeType_ == NodeType::TopLeft) topLeftChild = false;
+                        if(child->nodeType_ == NodeType::TopRight) topRightChild = false;
+                        if(child->nodeType_ == NodeType::BottomLeft) bottomLeftChild = false;
+                        if(child->nodeType_ == NodeType::BottomRight) bottomRightChild = false;
                     }
                 }
 
                 // Add part of of parent node area to selected list if child node is out of range.
-                _selectedNodes.push_back(new CDLODSelectedNode(mX, mZ, mLODLevel, mDimension, _ranges[_lodLevel],
+                _selectedNodes.push_back(new CDLODSelectedNode(x_, z_, lodLevel_, dimension_, _ranges[_lodLevel],
                     topLeftChild, topRightChild, bottomLeftChild, bottomRightChild));
             }
 

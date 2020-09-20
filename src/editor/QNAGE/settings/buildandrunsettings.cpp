@@ -15,7 +15,7 @@ namespace QNAGE
 
     void BuildAndRunSettings::setupUi()
     {
-        this->label = new QLabel(tr("Build && Run"));
-        this->mainLayout->addWidget(this->label);
+        this->label_ = new QLabel(tr("Build && Run"));
+        this->mainLayout_->addWidget(this->label_);
     }
 }

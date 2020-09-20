@@ -1,27 +1,25 @@
 #include <QtConcurrent/QtConcurrentRun>
 #include "glwidget.h"
 
-#include <QDebug>
-
 namespace QNAGE
 {
     GLWidget::GLWidget(QWidget* _parent)
         : QOpenGLWidget(_parent),
           NAGE::IWindow(QOpenGLWidget::width(), QOpenGLWidget::height()),
-          font(QFont("Helvetica", 10)),
-          frameCount(0),
-          gladInitialized(false),
-          mSceneNode(new NAGE::SceneNode)
+          font_(QFont("Helvetica", 10)),
+          frameCount_(0),
+          gladInitialized_(false),
+          sceneNode_(new NAGE::SceneNode)
     {
         // Widget settings
         setFocusPolicy(Qt::StrongFocus);
 
         // Surface format settings.
-        surfaceFormat.setVersion(NAGE::GL_CONTEXT_VERSION_MAJOR, NAGE::GL_CONTEXT_VERSION_MINOR);
-        surfaceFormat.setProfile(QSurfaceFormat::CoreProfile);
-        surfaceFormat.setSwapBehavior(QSurfaceFormat::DoubleBuffer);
-        surfaceFormat.setSwapInterval(0);
-        this->setFormat(surfaceFormat);
+        surfaceFormat_.setVersion(NAGE::GL_CONTEXT_VERSION_MAJOR, NAGE::GL_CONTEXT_VERSION_MINOR);
+        surfaceFormat_.setProfile(QSurfaceFormat::CoreProfile);
+        surfaceFormat_.setSwapBehavior(QSurfaceFormat::DoubleBuffer);
+        surfaceFormat_.setSwapInterval(0);
+        this->setFormat(surfaceFormat_);
     }
 
     GLWidget::~GLWidget()
@@ -31,7 +29,7 @@ namespace QNAGE
 
     void GLWidget::setGame(NAGE::IGame* _game)
     {
-        mGame = _game;
+        game_ = _game;
     }
 
     void GLWidget::keyPressEvent(QKeyEvent* _event)
@@ -76,58 +74,58 @@ namespace QNAGE
     {
         // Update i.e. inputs, render area.
         std::function<void(void)> updateFunc = std::bind(&GLWidget::update, this);
-        updateInterval->setInterval(updateFunc, mGame->engine()->frameLockMS().count());
+        updateInterval_->setInterval(updateFunc, game_->engine()->frameLockMS().count());
 
         std::function<void(void)> renderFPSFunc = std::bind(&GLWidget::renderFPS, this);
-        updateInterval->setInterval(renderFPSFunc, 1000); // Refresh fps text every 1s.
+        updateInterval_->setInterval(renderFPSFunc, 1000); // Refresh fps text every 1s.
     }
 
     void GLWidget::initializeGL()
     {
         if(initialized())
         {
-            gladInitialized = true;
+            gladInitialized_ = true;
 
             // Initialize update timers.
             sync();
 
             // Initialize engine components.
-            mGame->initializeComponents(NAGE::EngineType::OpenGL, this);
+            game_->initializeComponents(NAGE::EngineType::OpenGL, this);
 
-            mSceneNode->addToScene(&mCamera);
-            mGame->sceneManager()->addChild("editor", mSceneNode);
+            sceneNode_->addToScene(&camera_);
+            game_->sceneManager()->addChild("editor", sceneNode_);
 
             // Initialize game scene and run engine.
-            mGame->initializeScene();
-            mGame->launch();
+            game_->initializeScene();
+            game_->launch();
         }
     }
 
     void GLWidget::paintGL()
     {
-        if(gladInitialized)
+        if(gladInitialized_)
         {
             // Editor keyboard options.
             if(NAGE::Keyboard::keyPressed(NAGE::Key::KEY_F)) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             if(NAGE::Keyboard::keyReleased(NAGE::Key::KEY_F)) glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
             // Start rendering scene(s).
-            mGame->engine()->render();
+            game_->engine()->render();
         }
     }
 
     void GLWidget::update()
     {
         // Update FPS
-        frameCount++;
+        frameCount_++;
 
         // Engine pool event
-        mGame->engine()->startPollingEvents();
+        game_->engine()->startPollingEvents();
 
         if(NAGE::Mouse::mouseButtonPressed(NAGE::MouseButton::QEDITOR_MOUSE_RIGHT_BUTTON))
         {
             // Handle camera rotations.
-            mCamera.rotate(-NAGE::cameraSensitivity * NAGE::Mouse::mouseDelta().x(),
+            camera_.rotate(-NAGE::cameraSensitivity * NAGE::Mouse::mouseDelta().x(),
                 NAGE::Vector3f::up);
 
             //mCamera.rotate(-NAGE::cameraSensitivity * NAGE::Mouse::mouseDelta().y(),
@@ -135,19 +133,19 @@ namespace QNAGE
 
             // Handle camera translations.
             NAGE::Vector3f translation;
-            if(NAGE::Keyboard::keyPressed(NAGE::Key::KEY_W)) translation -= mCamera.forward();
-            if(NAGE::Keyboard::keyPressed(NAGE::Key::KEY_S)) translation += mCamera.forward();
-            if(NAGE::Keyboard::keyPressed(NAGE::Key::KEY_A)) translation -= mCamera.right();
-            if(NAGE::Keyboard::keyPressed(NAGE::Key::KEY_D)) translation += mCamera.right();
-            if(NAGE::Keyboard::keyPressed(NAGE::Key::KEY_Q)) translation -= mCamera.up();
-            if(NAGE::Keyboard::keyPressed(NAGE::Key::KEY_E)) translation += mCamera.up();
+            if(NAGE::Keyboard::keyPressed(NAGE::Key::KEY_W)) translation -= camera_.forward();
+            if(NAGE::Keyboard::keyPressed(NAGE::Key::KEY_S)) translation += camera_.forward();
+            if(NAGE::Keyboard::keyPressed(NAGE::Key::KEY_A)) translation -= camera_.right();
+            if(NAGE::Keyboard::keyPressed(NAGE::Key::KEY_D)) translation += camera_.right();
+            if(NAGE::Keyboard::keyPressed(NAGE::Key::KEY_Q)) translation -= camera_.up();
+            if(NAGE::Keyboard::keyPressed(NAGE::Key::KEY_E)) translation += camera_.up();
 
             /* Movement must be independent of FPS (frames per second),
              * We need compute delta time for each update and multiplicate
              * with translation vector.
              */
             float delta = static_cast<float>(IWindow::deltaMs());
-            mCamera.translate(NAGE::cameraMovementSpeed * delta * translation);
+            camera_.translate(NAGE::cameraMovementSpeed * delta * translation);
         }
 
         // Update QT OpenGL context.
@@ -156,7 +154,6 @@ namespace QNAGE
 
     void GLWidget::renderFPS()
     {
-        // qDebug() << frameCount;
-        frameCount = 0;
+        frameCount_ = 0;
     }
 }

@@ -3,9 +3,9 @@
 namespace NAGE
 {
     ITerrain::ITerrain()
-        : mShader(new Shader),
-          mMaterial(new Material),
-          mTransform(new Transform)
+        : shader_(new Shader),
+          material_(new Material),
+          transform_(new Transform)
 
     {
 
@@ -13,39 +13,39 @@ namespace NAGE
 
     ITerrain::~ITerrain()
     {
-        for(auto& texture : mTextures)
+        for(auto& texture : textures_)
             delete texture.second;
 
-        delete mShader;
-        delete mMaterial;
-        delete mTransform;
+        delete shader_;
+        delete material_;
+        delete transform_;
     }
 
     Shader* ITerrain::shader()
     {
-        return mShader;
+        return shader_;
     }
 
     Material* ITerrain::material()
     {
-        return mMaterial;
+        return material_;
     }
 
     Transform* ITerrain::transform()
     {
-        return mTransform;
+        return transform_;
     }
 
     unsigned int ITerrain::texturesCount() const
     {
-        return mTextures.size();
+        return textures_.size();
     }
 
     Texture* ITerrain::textureByKey(const std::string& _key)
     {
-        auto it = mTextures.find(_key);
+        auto it = textures_.find(_key);
 
-        if(it == mTextures.end())
+        if(it == textures_.end())
             return nullptr;
 
         return it->second;
@@ -53,49 +53,49 @@ namespace NAGE
 
     std::map<std::string, Texture*> ITerrain::textures() const
     {
-        return mTextures;
+        return textures_;
     }
 
     void ITerrain::setShader(Shader* _shader)
     {
-        mShader = _shader;
+        shader_ = _shader;
     }
 
     void ITerrain::setMaterial(Material* _material)
     {
-        mMaterial = _material;
+        material_ = _material;
     }
 
     void ITerrain::setTransformation(Transform* _transform)
     {
-        mTransform = _transform;
+        transform_ = _transform;
     }
 
     void ITerrain::addTexture(const std::string& _shaderUniformName, Texture* _texture)
     {
-        if(!mShader)
+        if(!shader_)
             return;
 
-        mShader->use();
-        mShader->setInt(_shaderUniformName, mTextures.size());
+        shader_->use();
+        shader_->setInt(_shaderUniformName, textures_.size());
 
-        mTextures.insert(std::make_pair(_shaderUniformName, _texture));
+        textures_.insert(std::make_pair(_shaderUniformName, _texture));
     }
 
     void ITerrain::addTextures(const std::map<std::string, Texture*>&_textures)
     {
-        mTextures = _textures;
+        textures_ = _textures;
     }
 
     void ITerrain::useMaterial()
     {
-        if(mMaterial) mMaterial->use(mShader);
+        if(material_) material_->use(shader_);
     }
 
     void ITerrain::bindTextures()
     {
         GLuint idx = 0;
-        for(auto& texture : mTextures)
+        for(auto& texture : textures_)
         {
             if(texture.second)
             {

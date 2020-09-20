@@ -1,5 +1,5 @@
-#ifndef NAGE_NAGEMATHMATRIX_H_
-#define NAGE_NAGEMATHMATRIX_H_
+#ifndef NAGE_MATH_NAGEMATHMATRIX_H_
+#define NAGE_MATH_NAGEMATHMATRIX_H_
 
 #include "nagemathquaternion.h"
 
@@ -33,34 +33,34 @@ namespace NAGE
     class Matrix
     {
     public:
-        Matrix<T>() : mRows(0), mCols(0) {}
+        Matrix<T>() : rows_(0), cols_(0) {}
 
         Matrix<T>(uint _rows, uint _cols)
-            : mRows(_rows),
-              mCols(_cols)
+            : rows_(_rows),
+              cols_(_cols)
         {
             allocate(); // Allocate matrix memory.
             fill(0); // Fill array with value.
         }
 
         Matrix<T>(uint _rows, uint _cols, T _value)
-            : mRows(_rows),
-              mCols(_cols)
+            : rows_(_rows),
+              cols_(_cols)
         {
             allocate();
             fill(_value);
         }
 
         Matrix<T>(const Matrix<T>& _matrix)
-            : mRows(_matrix.mRows),
-              mCols(_matrix.mCols)
+            : rows_(_matrix.rows_),
+              cols_(_matrix.cols_)
         {
             allocate();
-            for(uint i = 0; i < mRows; i++)
+            for(uint i = 0; i < rows_; i++)
             {
-                for(uint j = 0; j < mCols; j++)
+                for(uint j = 0; j < cols_; j++)
                 {
-                    mArr[i * mCols + j] = _matrix.mArr[i * mCols + j];
+                    arr_[i * cols_ + j] = _matrix.arr_[i * cols_ + j];
                 }
             }
         }
@@ -72,18 +72,18 @@ namespace NAGE
 
         inline T& operator()(uint _row, uint _col)
         {
-            if(_row < 0 || _row > mRows || _col < 0 || _col > mCols)
+            if(_row < 0 || _row > rows_ || _col < 0 || _col > cols_)
                 throw std::out_of_range("[ERROR] Access elements out of defined range");
 
-            return mArr[_row * mCols + _col];
+            return arr_[_row * cols_ + _col];
         }
 
         inline const T& operator()(uint _row, uint _col) const
         {
-            if(_row < 0 || _row > mRows || _col < 0 || _col > mCols)
+            if(_row < 0 || _row > rows_ || _col < 0 || _col > cols_)
                 throw std::out_of_range("[ERROR] Access elements out of defined range");
 
-            return mArr[_row * mCols + _col];
+            return arr_[_row * cols_ + _col];
         }
 
         inline Matrix<T>& operator=(const Matrix<T>& _rhs)
@@ -91,21 +91,21 @@ namespace NAGE
             if(this == &_rhs)
                 return *this;
 
-            if(mRows != _rhs.mRows || mCols != _rhs.mCols)
+            if(rows_ != _rhs.rows_ || cols_ != _rhs.cols_)
             {
                 deallocate();
 
-                mRows = _rhs.mRows;
-                mCols = _rhs.mCols;
+                rows_ = _rhs.rows_;
+                cols_ = _rhs.cols_;
 
                 allocate();
             }
 
-            for(uint i = 0; i < mRows; i++)
+            for(uint i = 0; i < rows_; i++)
             {
-                for(uint j = 0; j < mCols; j++)
+                for(uint j = 0; j < cols_; j++)
                 {
-                    mArr[i * mCols + j] = _rhs.mArr[i * mCols + j];
+                    arr_[i * cols_ + j] = _rhs.arr_[i * cols_ + j];
                 }
             }
 
@@ -114,18 +114,18 @@ namespace NAGE
 
         inline Matrix<T>& operator*=(const Matrix<T>& _rhs)
         {
-            if(mCols != _rhs.mRows)
+            if(cols_ != _rhs.rows_)
                 throw std::invalid_argument("[ERROR] lhs columns size != rhs rows size");
 
-            Matrix<T> result(mRows, _rhs.mCols);
-            for(uint i = 0; i < mRows; i++)
+            Matrix<T> result(rows_, _rhs.cols_);
+            for(uint i = 0; i < rows_; i++)
             {
-                for(uint j = 0; j < result.mCols; j++)
+                for(uint j = 0; j < result.cols_; j++)
                 {
-                    for(uint k = 0; k < mCols; k++)
+                    for(uint k = 0; k < cols_; k++)
                     {
-                         result.mArr[i * _rhs.mCols + j] += mArr[i * mCols + k]
-                            * _rhs.mArr[k * result.mCols + j];
+                         result.arr_[i * _rhs.cols_ + j] += arr_[i * cols_ + k]
+                            * _rhs.arr_[k * result.cols_ + j];
                     }
                 }
             }
@@ -135,11 +135,11 @@ namespace NAGE
 
         inline Matrix<T>& operator*=(T _rhs)
         {
-            for(uint i = 0; i < mRows; i++)
+            for(uint i = 0; i < rows_; i++)
             {
-                for(uint j = 0; j < mCols; j++)
+                for(uint j = 0; j < cols_; j++)
                 {
-                    mArr[i * mCols + j] *= _rhs;
+                    arr_[i * cols_ + j] *= _rhs;
                 }
             }
 
@@ -148,11 +148,11 @@ namespace NAGE
 
         inline Matrix<T>& operator/=(T _rhs)
         {
-            for(uint i = 0; i < mRows; i++)
+            for(uint i = 0; i < rows_; i++)
             {
-                for(uint j = 0; j < mCols; j++)
+                for(uint j = 0; j < cols_; j++)
                 {
-                    mArr[i * mCols + j] /= _rhs;
+                    arr_[i * cols_ + j] /= _rhs;
                 }
             }
 
@@ -161,14 +161,14 @@ namespace NAGE
 
         inline Matrix<T>& operator+=(const Matrix<T>& _rhs)
         {
-            if(mRows != _rhs.mRows || mCols != _rhs.mCols)
+            if(rows_ != _rhs.rows_ || cols_ != _rhs.cols_)
                 throw std::invalid_argument("[ERROR] Unexpected data size, matrices sizes must be equal.");
 
-            for(uint i = 0; i < mRows; i++)
+            for(uint i = 0; i < rows_; i++)
             {
-                for(uint j = 0; j < mCols; j++)
+                for(uint j = 0; j < cols_; j++)
                 {
-                    mArr[i * mCols + j] += _rhs.mArr[i * mCols + j];
+                    arr_[i * cols_ + j] += _rhs.arr_[i * cols_ + j];
                 }
             }
 
@@ -177,14 +177,14 @@ namespace NAGE
 
         inline Matrix<T>& operator-=(const Matrix<T>& _rhs)
         {
-            if(mRows != _rhs.mRows || mCols != _rhs.mCols)
+            if(rows_ != _rhs.rows_ || cols_ != _rhs.cols_)
                 std::cerr << "[ERROR] Unexpected data size" << std::endl;
 
-            for(uint i = 0; i < mRows; i++)
+            for(uint i = 0; i < rows_; i++)
             {
-                for(uint j = 0; j < mCols; j++)
+                for(uint j = 0; j < cols_; j++)
                 {
-                    mArr[i * mCols + j] -= _rhs.mArr[i * mCols + j];
+                    arr_[i * cols_ + j] -= _rhs.arr_[i * cols_ + j];
                 }
             }
 
@@ -193,14 +193,14 @@ namespace NAGE
 
         inline bool operator==(const Matrix<T>& _rhs) const
         {
-            if(mRows != _rhs.mRows || mCols != _rhs.mCols)
+            if(rows_ != _rhs.rows_ || cols_ != _rhs.cols_)
                 return false;
 
-            for(uint i = 0; i < mRows; i++)
+            for(uint i = 0; i < rows_; i++)
             {
-                for(uint j = 0; j < mCols; j++)
+                for(uint j = 0; j < cols_; j++)
                 {
-                    if(mArr[i * mCols + j] != _rhs.mArr[i * mCols + j])
+                    if(arr_[i * cols_ + j] != _rhs.arr_[i * cols_ + j])
                         return false;
                 }
             }
@@ -235,11 +235,11 @@ namespace NAGE
             if(!isSquare())
                 return false;
 
-            for(int i = 0; i < mRows; i++)
+            for(int i = 0; i < rows_; i++)
             {
-                for(int j = 0; j < mCols; j++)
+                for(int j = 0; j < cols_; j++)
                 {
-                    if((i == j && mArr[i * mCols + j] != 1) || (i != j && mArr[i * mCols + j] != 0))
+                    if((i == j && arr_[i * cols_ + j] != 1) || (i != j && arr_[i * cols_ + j] != 0))
                         return false;
                 }
             }
@@ -249,7 +249,7 @@ namespace NAGE
 
         inline bool isSquare()
         {
-            if(mRows == mCols)
+            if(rows_ == cols_)
                 return true;
 
             return false;
@@ -257,11 +257,11 @@ namespace NAGE
 
         inline bool isNull()
         {
-            for(int i = 0; i < mRows; i++)
+            for(int i = 0; i < rows_; i++)
             {
-                for(int j = 0; j < mCols; j++)
+                for(int j = 0; j < cols_; j++)
                 {
-                    if(mArr[i * mCols + j] != 0)
+                    if(arr_[i * cols_ + j] != 0)
                         return false;
                 }
             }
@@ -274,11 +274,11 @@ namespace NAGE
             if(!isSquare())
                 return false;
 
-            for(int i = 0; i < mRows; i++)
+            for(int i = 0; i < rows_; i++)
             {
-                for(int j = 0; j < mCols; j++)
+                for(int j = 0; j < cols_; j++)
                 {
-                    if(i != j && mArr[i * mCols + j] != 0)
+                    if(i != j && arr_[i * cols_ + j] != 0)
                         return false;
                 }
             }
@@ -288,35 +288,35 @@ namespace NAGE
 
         inline void fill(T _value)
         {
-            for(uint i = 0; i < mRows; i++)
+            for(uint i = 0; i < rows_; i++)
             {
-                for(uint j = 0; j < mCols; j++)
+                for(uint j = 0; j < cols_; j++)
                 {
-                    mArr[i * mCols + j] = _value;
+                    arr_[i * cols_ + j] = _value;
                 }
             }
         }
 
         inline void identity()
         {
-            for(uint i = 0; i < mRows; i++)
+            for(uint i = 0; i < rows_; i++)
             {
-                for(uint j = 0; j < mCols; j++)
+                for(uint j = 0; j < cols_; j++)
                 {
-                    if(i == j) mArr[i * mCols + j] = 1;
-                    else mArr[i * mCols + j] = 0;
+                    if(i == j) arr_[i * cols_ + j] = 1;
+                    else arr_[i * cols_ + j] = 0;
                 }
             }
         }
 
         inline Matrix<T>& transpose()
         {
-            Matrix<T> result(mRows, mCols);
-            for(uint i = 0; i < mRows; i++)
+            Matrix<T> result(rows_, cols_);
+            for(uint i = 0; i < rows_; i++)
             {
-                for(uint j = 0; j < mCols; j++)
+                for(uint j = 0; j < cols_; j++)
                 {
-                    result.mArr[i * mCols + j] = mArr[j * mCols + i];
+                    result.arr_[i * cols_ + j] = arr_[j * cols_ + i];
                 }
             }
 
@@ -326,11 +326,11 @@ namespace NAGE
         inline std::vector<T> vector1D()
         {
             std::vector<T> result;
-            for(uint i = 0; i < mRows; i++)
+            for(uint i = 0; i < rows_; i++)
             {
-                for(uint j = 0; j < mCols; j++)
+                for(uint j = 0; j < cols_; j++)
                 {
-                    result.push_back(mArr[i * mCols + j]);
+                    result.push_back(arr_[i * cols_ + j]);
                 }
             }
 
@@ -341,39 +341,39 @@ namespace NAGE
         {
             std::vector<std::vector<T>> result;
 
-            result.resize(mRows);
+            result.resize(rows_);
             for(std::size_t i = 0; result.size(); i++)
-                result[i].resize(mCols);
+                result[i].resize(cols_);
 
-            for(uint i = 0; i < mRows; i++)
+            for(uint i = 0; i < rows_; i++)
             {
-                for(uint j = 0; j < mCols; j++)
+                for(uint j = 0; j < cols_; j++)
                 {
-                    result[i][j] = mArr[i * mCols + j];
+                    result[i][j] = arr_[i * cols_ + j];
                 }
             }
 
             return result;
         }
 
-        inline uint rows() const { return mRows; }
-        inline uint cols() const { return mCols; }
-        inline uint size() const { return mRows * mCols; }
-        inline T** data() const { return mArr; }
+        inline uint rows() const { return rows_; }
+        inline uint cols() const { return cols_; }
+        inline uint size() const { return rows_ * cols_; }
+        inline T** data() const { return arr_; }
 
     protected:
-        T* mArr; // 1D array for matrix.
-        uint mRows, mCols;
+        T* arr_; // 1D array for matrix.
+        uint rows_, cols_;
 
     private:
         void allocate()
         {
-            mArr = new T[mRows * mCols];
+            arr_ = new T[rows_ * cols_];
         }
 
         void deallocate()
         {
-            delete[] mArr;
+            delete[] arr_;
         }
     };
 
@@ -421,11 +421,11 @@ namespace NAGE
     template <typename T>
     std::istream& operator>>(std::istream& _is, const Matrix<T>& _matrix)
     {
-        for(uint i = 0; i < _matrix.mRows; i++)
+        for(uint i = 0; i < _matrix.rows_; i++)
         {
-            for(uint j = 0; j < _matrix.mCols; j++)
+            for(uint j = 0; j < _matrix.cols_; j++)
             {
-                _is >> _matrix.mArr[i * _matrix.mCols + j];
+                _is >> _matrix.arr_[i * _matrix.cols_ + j];
             }
         }
 
@@ -435,14 +435,14 @@ namespace NAGE
     template <typename T>
     std::ostream& operator<<(std::ostream& _os, const Matrix<T>& _matrix)
     {
-        _os << "Matrix<" << typeid(T).name() << ">(" << _matrix.mRows << ", " << _matrix.mCols
+        _os << "Matrix<" << typeid(T).name() << ">(" << _matrix.rows_ << ", " << _matrix.cols_
             << ")" << std::endl;
 
-        for(uint i = 0; i < _matrix.mRows; i++)
+        for(uint i = 0; i < _matrix.rows_; i++)
         {
-            for(uint j = 0; j < _matrix.mCols; j++)
+            for(uint j = 0; j < _matrix.cols_; j++)
             {
-                _os << std::setw(12) << _matrix.mArr[i * _matrix.mCols + j];
+                _os << std::setw(12) << _matrix.arr_[i * _matrix.cols_ + j];
             }
 
             _os << std::endl;
@@ -789,4 +789,4 @@ namespace NAGE
     };
 }
 
-#endif // NAGE_NAGEMATHMATRIX_H_
+#endif // NAGE_MATH_NAGEMATHMATRIX_H_

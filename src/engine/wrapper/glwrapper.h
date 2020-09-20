@@ -1,5 +1,5 @@
-#ifndef GLOVERLAY_H
-#define GLOVERLAY_H
+#ifndef GLWRAPPER_H_
+#define GLWRAPPER_H_
 
 #include "glad/glad.h"
 
@@ -15,4 +15,4 @@ namespace NAGE
     }
 }
 
-#endif // GLOVERLAY_H
+#endif // GLWRAPPER_H_

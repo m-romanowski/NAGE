@@ -15,7 +15,7 @@ namespace QNAGE
 
     void EngineSettings::setupUi()
     {
-        this->label = new QLabel(tr("Engine"));
-        this->mainLayout->addWidget(this->label);
+        this->label_ = new QLabel(tr("Engine"));
+        this->mainLayout_->addWidget(this->label_);
     }
 }

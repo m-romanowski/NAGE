@@ -37,15 +37,15 @@ namespace QNAGE
         void setupUi();
 
         // IO output handler (e.g. std::cout from iostream library)
-        MessageHandler* msgHandler;
-        ThreadLogStream* logStream;
+        MessageHandler* msgHandler_;
+        ThreadLogStream* logStream_;
 
         // Ui
-        QVBoxLayout* mainLayout;
-        QGridLayout* optLayout;
+        QVBoxLayout* mainLayout_;
+        QGridLayout* optLayout_;
 
-        QPlainTextEdit* debugIO;
-        QPushButton* clearButton;
+        QPlainTextEdit* debugIO_;
+        QPushButton* clearButton_;
     };
 }
 

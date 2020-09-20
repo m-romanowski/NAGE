@@ -63,10 +63,10 @@ namespace NAGE
         void setupBuffer();
         void clearBuffers();
 
-        std::vector<Vertex> mVertices;
-        std::vector<GLuint> mIndices;
+        std::vector<Vertex> vertices_;
+        std::vector<GLuint> indices_;
 
-        GLuint mVAO, mVBO, mEBO;
+        GLuint VAO_, VBO_, EBO_;
     };
 }
 

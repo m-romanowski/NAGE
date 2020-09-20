@@ -3,119 +3,119 @@
 namespace NAGE
 {
     Material::Material()
-        : texturesSent(false)
+        : texturesSent_(false)
     {
 
     }
 
     Material::Material(const Material& _rhs)
-        : texturesSent(false)
+        : texturesSent_(false)
     {
-        mAmbient = _rhs.mAmbient;
-        mDiffuse = _rhs.mDiffuse;
-        mSpecular = _rhs.mSpecular;
-        mShininess = _rhs.mShininess;
-        mDiffuseTexture = _rhs.mDiffuseTexture;
-        mSpecularTexture = _rhs.mSpecularTexture;
+        ambient_ = _rhs.ambient_;
+        diffuse_ = _rhs.diffuse_;
+        specular_ = _rhs.specular_;
+        shininess_ = _rhs.shininess_;
+        diffuseTexture_ = _rhs.diffuseTexture_;
+        specularTexture_ = _rhs.specularTexture_;
     }
 
     Material::Material(const Vector3f& _ambient, const Vector3f& _diffuse, const Vector3f& _specular,
         const GLfloat _shininess)
-        : mAmbient(_ambient),
-          mDiffuse(_diffuse),
-          mSpecular(_specular),
-          mShininess(_shininess),
-          texturesSent(false)
+        : ambient_(_ambient),
+          diffuse_(_diffuse),
+          specular_(_specular),
+          shininess_(_shininess),
+          texturesSent_(false)
     {
 
     }
 
     Material::Material(const Vector3f& _ambient, const Vector3f& _diffuse, const Vector3f& _specular,
         const GLfloat _shininess, const GLuint _diffuseTexture, const GLuint _specularTexture)
-        : mAmbient(_ambient),
-          mDiffuse(_diffuse),
-          mSpecular(_specular),
-          mShininess(_shininess),
-          mDiffuseTexture(_diffuseTexture),
-          mSpecularTexture(_specularTexture),
-          texturesSent(false)
+        : ambient_(_ambient),
+          diffuse_(_diffuse),
+          specular_(_specular),
+          shininess_(_shininess),
+          diffuseTexture_(_diffuseTexture),
+          specularTexture_(_specularTexture),
+          texturesSent_(false)
     {
 
     }
 
     Vector3f Material::ambient() const
     {
-        return mAmbient;
+        return ambient_;
     }
 
     Vector3f Material::diffuse() const
     {
-        return mDiffuse;
+        return diffuse_;
     }
 
     Vector3f Material::specular() const
     {
-        return mSpecular;
+        return specular_;
     }
 
     float Material::shininess() const
     {
-        return mShininess;
+        return shininess_;
     }
 
     GLuint Material::diffuseTexture() const
     {
-        return mDiffuseTexture;
+        return diffuseTexture_;
     }
 
     GLuint Material::specularTexture() const
     {
-        return mSpecularTexture;
+        return specularTexture_;
     }
 
     void Material::setAmbient(const Vector3f& _ambient)
     {
-        mAmbient = _ambient;
+        ambient_ = _ambient;
     }
 
     void Material::setAmbient(float _x, float _y, float _z)
     {
-        mAmbient = Vector3f(_x, _y, _z);
+        ambient_ = Vector3f(_x, _y, _z);
     }
 
     void Material::setDiffuse(const Vector3f& _diffuse)
     {
-        mDiffuse = _diffuse;
+        diffuse_ = _diffuse;
     }
 
     void Material::setDiffuse(float _x, float _y, float _z)
     {
-        mDiffuse = Vector3f(_x, _y, _z);
+        diffuse_ = Vector3f(_x, _y, _z);
     }
 
     void Material::setSpecular(const Vector3f& _specular)
     {
-        mSpecular = _specular;
+        specular_ = _specular;
     }
 
     void Material::setSpecular(float _x, float _y, float _z)
     {
-        mSpecular = Vector3f(_x, _y, _z);
+        specular_ = Vector3f(_x, _y, _z);
     }
 
     void Material::setShininess(const GLfloat _shinines)
     {
-        mShininess = _shinines;
+        shininess_ = _shinines;
     }
 
     void Material::setDiffuseTexture(const GLuint _textureId)
     {
-        mDiffuseTexture = _textureId;
+        diffuseTexture_ = _textureId;
     }
 
     void Material::setSpecularTexture(const GLuint _textureId)
     {
-        mSpecularTexture = _textureId;
+        specularTexture_ = _textureId;
     }
 
     /* Bind material textures (diffuse, specular) to the shader.
@@ -124,13 +124,13 @@ namespace NAGE
      */
     void Material::useTextures(Shader* _shader)
     {
-        if(texturesSent)
+        if(texturesSent_)
             return;
 
         _shader->use();
-        _shader->setInt("material.diffuseTexture", static_cast<GLint>(mDiffuseTexture));
-        _shader->setInt("material.specularTexture", static_cast<GLint>(mSpecularTexture));
-        texturesSent = true;
+        _shader->setInt("material.diffuseTexture", static_cast<GLint>(diffuseTexture_));
+        _shader->setInt("material.specularTexture", static_cast<GLint>(specularTexture_));
+        texturesSent_ = true;
     }
 
     /* Bind material to the shader.
@@ -140,9 +140,9 @@ namespace NAGE
     void Material::use(Shader* _shader)
     {
         _shader->use();
-        _shader->setVec3("material.ambient", mAmbient);
-        _shader->setVec3("material.diffuse", mDiffuse);
-        _shader->setVec3("material.specular", mSpecular);
-        _shader->setFloat("material.shininess", mShininess);
+        _shader->setVec3("material.ambient", ambient_);
+        _shader->setVec3("material.diffuse", diffuse_);
+        _shader->setVec3("material.specular", specular_);
+        _shader->setFloat("material.shininess", shininess_);
     }
 }

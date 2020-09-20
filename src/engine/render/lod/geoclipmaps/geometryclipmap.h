@@ -19,8 +19,8 @@ namespace NAGE
     class GeometryClipMapMesh
     {
     public:
-        std::vector<Vertex> mVertices;
-        std::vector<GLuint> mIndices;
+        std::vector<Vertex> vertices_;
+        std::vector<GLuint> indices_;
     };
 
     class GeometryClipmap
@@ -36,10 +36,10 @@ namespace NAGE
         void setupInteriorTrim(unsigned int _size);
         void setupDegenerate(unsigned int _size);
 
-        GeometryClipMapMesh mBlock;
-        GeometryClipMapMesh mRingFixup;
-        GeometryClipMapMesh mIteriorTrim;
-        GeometryClipMapMesh mDegenerate;
+        GeometryClipMapMesh block_;
+        GeometryClipMapMesh ringFixup_;
+        GeometryClipMapMesh iteriorTrim_;
+        GeometryClipMapMesh degenerate_;
     };
 }
 

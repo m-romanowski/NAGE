@@ -30,10 +30,10 @@ namespace QNAGE
         virtual ~FramelessWindow();
 
         // Getters
-        inline unsigned int getWindowType() const { return type; }
+        inline unsigned int getWindowType() const { return type_; }
 
         // Setters
-        inline void setMainLayout(QLayout* _layout) { mainLayout = _layout; init(); }
+        inline void setMainLayout(QLayout* _layout) { mainLayout_ = _layout; init(); }
 
     protected slots:
         virtual void mouseMoveEvent(QMouseEvent* _event);
@@ -46,23 +46,23 @@ namespace QNAGE
 
     protected:
         // Main window components.
-        QLayout* mainLayout;
-        QGridLayout* topLayout;
-        QWidget* windowTitleWidget;
+        QLayout* mainLayout_;
+        QGridLayout* topLayout_;
+        QWidget* windowTitleWidget_;
 
     private:
         void init();
 
-        unsigned int type;
-        bool isMoving;
-        QPoint lastMousePosition;
+        unsigned int type_;
+        bool isMoving_;
+        QPoint lastMousePosition_;
 
         // Ui
-        QWidget* topLayoutWidget;
+        QWidget* topLayoutWidget_;
 
-        CustomButton* exitButton;
-        CustomButton* minimizeButton;
-        CustomButton* maximizeButton;
+        CustomButton* exitButton_;
+        CustomButton* minimizeButton_;
+        CustomButton* maximizeButton_;
     };
 }
 

@@ -3,50 +3,50 @@
 namespace NAGE
 {
     FrameBuffer::FrameBuffer(const GLint _width, const GLint _height)
-        : mFrameBufferId(create()),
-          mWidth(_width),
-          mHeight(_height)
+        : frameBufferId_(create()),
+          width_(_width),
+          height_(_height)
     {
 
     }
 
     FrameBuffer::~FrameBuffer()
     {
-        glDeleteFramebuffers(1, &this->mFrameBufferId);
+        glDeleteFramebuffers(1, &this->frameBufferId_);
     }
 
     GLuint FrameBuffer::frameBufferId() const
     {
-        return this->mFrameBufferId;
+        return this->frameBufferId_;
     }
 
     GLint FrameBuffer::width() const
     {
-        return this->mWidth;
+        return this->width_;
     }
 
     GLint FrameBuffer::height() const
     {
-        return this->mHeight;
+        return this->height_;
     }
 
     void FrameBuffer::setWidth(const GLint _width)
     {
         assert(_width > 0);
-        this->mWidth = _width;
+        this->width_ = _width;
     }
 
     void FrameBuffer::setHeight(const GLint _height)
     {
         assert(_height > 0);
-        this->mHeight = _height;
+        this->height_ = _height;
     }
 
     void FrameBuffer::bind()
     {
         glBindTexture(GL_TEXTURE_2D, 0);
-        glBindFramebuffer(GL_FRAMEBUFFER, this->mFrameBufferId);
-        glViewport(0, 0, this->mWidth, this->mHeight);
+        glBindFramebuffer(GL_FRAMEBUFFER, this->frameBufferId_);
+        glViewport(0, 0, this->width_, this->height_);
     }
 
     void FrameBuffer::unbind(IWindow* _window, GLuint _frameBufferId)

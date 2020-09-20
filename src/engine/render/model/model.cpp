@@ -4,70 +4,70 @@
 namespace NAGE
 {
     Model::Model()
-        : mTransform(new Transform),
-          mShader(nullptr)
+        : transform_(new Transform),
+          shader_(nullptr)
     {
 
     }
 
     Model::Model(Primitive& _primitive)
     {
-        mShader = _primitive.shader();
-        mTransform = _primitive.transform();
+        shader_ = _primitive.shader();
+        transform_ = _primitive.transform();
 
         addMesh(_primitive.vertices(), _primitive.indices());
     }
 
     Model::~Model()
     {
-        delete mTransform;
-        delete mShader;
+        delete transform_;
+        delete shader_;
 
         // Clear meshes.
-        for(auto& mesh : mMeshes)
+        for(auto& mesh : meshes_)
             delete mesh;
     }
 
     std::vector<Mesh*> Model::meshes() const
     {
-        return mMeshes;
+        return meshes_;
     }
 
     Transform* Model::transformation()
     {
-        return mTransform;
+        return transform_;
     }
 
     Shader* Model::shader()
     {
-        return mShader;
+        return shader_;
     }
 
     void Model::addMesh(Mesh* _mesh)
     {
-        mMeshes.push_back(_mesh);
+        meshes_.push_back(_mesh);
     }
 
     void Model::addMesh(const std::string &_path)
     {
-        mMeshes.push_back(new Mesh(_path));
+        meshes_.push_back(new Mesh(_path));
     }
 
     void Model::addMesh(const std::vector<Vertex>& _vertices, const std::vector<unsigned int>& _indices)
     {
-        mMeshes.push_back(new Mesh(_vertices, _indices));
+        meshes_.push_back(new Mesh(_vertices, _indices));
     }
 
     void Model::setMeshes(const std::vector<Mesh*>& _meshes)
     {
-        mMeshes = _meshes;
+        meshes_ = _meshes;
     }
 
     void Model::setTransformation(Transform* _transform)
     {
-        mTransform = _transform;
+        transform_ = _transform;
 
-        for(auto& mesh : mMeshes)
+        for(auto& mesh : meshes_)
         {
             if(mesh)
                 mesh->setTransformation(_transform);
@@ -76,7 +76,7 @@ namespace NAGE
 
     void Model::setShader(Shader* _shader)
     {
-        mShader = _shader;
+        shader_ = _shader;
     }
 
     void Model::loadModel(const std::string& _path)
@@ -86,7 +86,7 @@ namespace NAGE
 
     void Model::useMaterials()
     {
-        if(mShader == nullptr)
+        if(shader_ == nullptr)
         {
             std::error_code code = ERROR::SHADER_FAILED_TO_FIND_PROGRAM;
             Log::error(code.message());
@@ -94,16 +94,16 @@ namespace NAGE
             return;
         }
 
-        for(auto& mesh : mMeshes)
+        for(auto& mesh : meshes_)
         {
             if(mesh->material())
-                mesh->material()->use(mShader);
+                mesh->material()->use(shader_);
         }
     }
 
     void Model::bindTextures()
     {
-        for(auto& mesh : mMeshes)
+        for(auto& mesh : meshes_)
         {
             if(mesh)
                 mesh->bindTextures();
@@ -112,7 +112,7 @@ namespace NAGE
 
     void Model::unbindTextures()
     {
-        for(auto& mesh : mMeshes)
+        for(auto& mesh : meshes_)
         {
             if(mesh)
                 mesh->unbindTextures();
@@ -121,7 +121,7 @@ namespace NAGE
 
     void Model::draw(Camera* _camera, Vector4f _clipPlane)
     {
-        if(!mShader)
+        if(!shader_)
         {
             std::error_code code = ERROR::SHADER_FAILED_TO_FIND_PROGRAM;
             Log::error(code.message());
@@ -130,7 +130,7 @@ namespace NAGE
         }
 
         // Draw model meshes.
-        for(auto& mesh : mMeshes)
-            mesh->draw(_camera, mShader, _clipPlane);
+        for(auto& mesh : meshes_)
+            mesh->draw(_camera, shader_, _clipPlane);
     }
 }

@@ -30,10 +30,10 @@ namespace NAGE
         void clearSelectedNodes();
 
     private:
-        int* mCDLODRanges; // LOD ranges.
-        CDLODSettings mCDLODSettings; // CDLOD Settings.
-        std::vector<std::vector<CDLODQuadTree*>> mTreeNodes; // All tree nodes.
-        std::vector<CDLODSelectedNode*> mSelectedNodes; // QuadTree nodes to render.
+        int* cdlodRanges_; // LOD ranges.
+        CDLODSettings cdlodSettings_; // CDLOD Settings.
+        std::vector<std::vector<CDLODQuadTree*>> treeNodes_; // All tree nodes.
+        std::vector<CDLODSelectedNode*> selectedNodes_; // QuadTree nodes to render.
     };
 }
 

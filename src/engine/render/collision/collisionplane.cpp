@@ -9,70 +9,70 @@ namespace NAGE
 
     float CollisionPlane::a() const
     {
-        return mA;
+        return a_;
     }
 
     float CollisionPlane::b() const
     {
-        return mB;
+        return b_;
     }
 
     float CollisionPlane::c() const
     {
-        return mC;
+        return c_;
     }
 
     float CollisionPlane::d() const
     {
-        return mD;
+        return d_;
     }
 
     float CollisionPlane::distance() const
     {
-        return mD;
+        return d_;
     }
 
     Vector4f CollisionPlane::vector4() const
     {
-        return Vector4f(mA, mB, mC, mD);
+        return Vector4f(a_, b_, c_, d_);
     }
 
     Vector3f CollisionPlane::vector3() const
     {
-        return Vector3f(mA, mB, mC);
+        return Vector3f(a_, b_, c_);
     }
 
     void CollisionPlane::setA(float _a)
     {
-        mA = _a;
+        a_ = _a;
     }
 
     void CollisionPlane::setB(float _b)
     {
-        mB = _b;
+        b_ = _b;
     }
 
     void CollisionPlane::setC(float _c)
     {
-        mC = _c;
+        c_ = _c;
     }
 
     void CollisionPlane::setD(float _d)
     {
-        mD = _d;
+        d_ = _d;
     }
 
     void CollisionPlane::setVector(const Vector4f _vector)
     {
-        mA = _vector.x();
-        mB = _vector.y();
-        mC = _vector.z();
-        mD = _vector.w();
+        a_ = _vector.x();
+        b_ = _vector.y();
+        c_ = _vector.z();
+        d_ = _vector.w();
     }
 
     float CollisionPlane::dotCoord(float _x, float _y, float _z)
     {
-        return mA * _x + mB * _y + mC * _z + mD;
+        return a_ * _x + b_ * _y + c_ * _z + d_;
     }
 
     float CollisionPlane::dotCoord(const Vector3f _point)
@@ -82,11 +82,11 @@ namespace NAGE
 
     void CollisionPlane::normalize()
     {
-        float length = std::sqrt(mA * mA + mB * mB + mC * mC);
+        float length = std::sqrt(a_ * a_ + b_ * b_ + c_ * c_);
 
-        mA /= length;
-        mB /= length;
-        mC /= length;
-        mD /= length;
+        a_ /= length;
+        b_ /= length;
+        c_ /= length;
+        d_ /= length;
     }
 }

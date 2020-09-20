@@ -4,23 +4,18 @@
 namespace NAGE
 {
     Light::Light()
-        : mColor(Color(1.0f, 1.0f, 1.0f))
-    {
-
-    }
-
-    Light::~Light()
+        : color_(Color(1.0f, 1.0f, 1.0f))
     {
 
     }
 
     Color Light::color() const
     {
-        return mColor;
+        return color_;
     }
 
     void Light::setColor(const Color& _color)
     {
-        mColor = _color;
+        color_ = _color;
     }
 }

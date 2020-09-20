@@ -4,9 +4,9 @@
 namespace NAGE
 {
     Skybox::Skybox(Shader* _shader)
-        : mShader(_shader)
+        : shader_(_shader)
     {
-        mVertices = {
+        vertices_ = {
             -1.0f,  1.0f, -1.0f,
             -1.0f, -1.0f, -1.0f,
             1.0f, -1.0f, -1.0f,
@@ -54,33 +54,33 @@ namespace NAGE
     }
 
     Skybox::Skybox(const std::vector<float>& _vertices, Shader* _shader)
-        : mShader(_shader),
-          mVertices(_vertices)
+        : shader_(_shader),
+          vertices_(_vertices)
     {
         setup();
     }
 
     Skybox::~Skybox()
     {
-        delete mShader;
+        delete shader_;
 
-        glDeleteVertexArrays(1, &mVAO);
-        glDeleteBuffers(1, &mVBO);
+        glDeleteVertexArrays(1, &VAO_);
+        glDeleteBuffers(1, &VBO_);
 
         // Clear arrays.
-        mFaces.clear();
-        mVertices.clear();
+        faces_.clear();
+        vertices_.clear();
     }
 
     void Skybox::setup()
     {
-        glGenVertexArrays(1, &mVAO);
-        glGenBuffers(1, &mVBO);
+        glGenVertexArrays(1, &VAO_);
+        glGenBuffers(1, &VBO_);
 
-        glBindVertexArray(mVAO);
+        glBindVertexArray(VAO_);
 
-        glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-        NAGE::nage_glBufferData(GL_ARRAY_BUFFER, mVertices, GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO_);
+        NAGE::nage_glBufferData(GL_ARRAY_BUFFER, vertices_, GL_STATIC_DRAW);
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), reinterpret_cast<void*>(0));
@@ -88,8 +88,8 @@ namespace NAGE
 
     void Skybox::addFacesTextures(std::vector<std::string>& _faces)
     {
-        mFaces = _faces;
-        mTextureID = loadCubeMap(_faces);
+        faces_ = _faces;
+        textureId_ = loadCubeMap(_faces);
     }
 
     unsigned int Skybox::loadCubeMap(std::vector<std::string>& _faces)
@@ -125,7 +125,7 @@ namespace NAGE
 
     void Skybox::draw(Camera* _camera)
     {
-        if(mShader == nullptr)
+        if(shader_ == nullptr)
         {
             std::error_code code = ERROR::SHADER_FAILED_TO_FIND_PROGRAM;
             Log::critical(code.message());
@@ -136,18 +136,18 @@ namespace NAGE
         glDepthFunc(GL_LEQUAL);
 
         // We need transpose matrix for OpenGL (matrix column major).
-        mShader->use();
-        mShader->setMat4("projection", GLRenderEngine::projection().perspective().transpose());
+        shader_->use();
+        shader_->setMat4("projection", GLRenderEngine::projection().perspective().transpose());
         // Remove translation column from the view matrix.
         // We need that because we don't let get close to the edge of skybox.
         // Player will be always in the center of skybox - skybox will be not move with the player.
         Matrix4f viewWithoutTranslation = Matrix4f::transform(Matrix4f::transform(_camera->view()));
-        mShader->setMat4("view", viewWithoutTranslation.transpose());
+        shader_->setMat4("view", viewWithoutTranslation.transpose());
 
         // Draw mesh.
-        glBindVertexArray(mVAO);
+        glBindVertexArray(VAO_);
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, mTextureID);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, textureId_);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glDepthFunc(GL_LESS);
     }

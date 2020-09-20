@@ -31,7 +31,7 @@ namespace NAGE
         void normalize();
 
     private:
-        float mA, mB, mC, mD;
+        float a_, b_, c_, d_;
     };
 }
 

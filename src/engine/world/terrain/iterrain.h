@@ -38,10 +38,10 @@ namespace NAGE
         virtual void render(Camera* _camera, Vector4f _clipPlane) = 0;
 
     protected:
-        Shader* mShader;
-        Material* mMaterial;
-        Transform* mTransform;
-        std::map<std::string, Texture*> mTextures;
+        Shader* shader_;
+        Material* material_;
+        Transform* transform_;
+        std::map<std::string, Texture*> textures_;
     };
 }
 

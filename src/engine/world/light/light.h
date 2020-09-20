@@ -14,7 +14,7 @@ namespace NAGE
     {
     public:
         Light();
-        virtual ~Light();
+        virtual ~Light() {}
 
         // Getters
         Color color() const;
@@ -25,7 +25,7 @@ namespace NAGE
         virtual void use(Camera* _camera, Shader* _shader) = 0;
 
     protected:
-        Color mColor;
+        Color color_;
     };
 }
 

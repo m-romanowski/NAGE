@@ -62,6 +62,7 @@ SOURCES += \
     ../../engine/render/lod/cdlod/icdlodobject.cpp \
     ../../engine/render/lod/geoclipmaps/geometryclipmap.cpp \
     ../../engine/world/light/sun.cpp \
+    ../../engine/world/plants/lsystem.cpp \
     ../../engine/world/primitives/gridmesh.cpp \
     ../../engine/world/primitives/sphere.cpp \
     ../../engine/world/terrain/cdlodterrain.cpp \
@@ -157,6 +158,7 @@ HEADERS += \
     ../../engine/util/size.h \
     ../../engine/util/threadpool.h \
     ../../engine/world/light/sun.h \
+    ../../engine/world/plants/lsystem.h \
     ../../engine/world/primitives/gridmesh.h \
     ../../engine/world/primitives/sphere.h \
     ../../engine/world/procedural/diamondsquare.h \

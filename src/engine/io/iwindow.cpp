@@ -7,30 +7,30 @@ namespace NAGE
     Vector2f IWindow::mCurrentWindowSize;
 
     IWindow::IWindow(int _width, int _height, const std::string& _title)
-        : mWidth(_width),
-          mHeight(_height),
-          mTitle(_title)
+        : width_(_width),
+          height_(_height),
+          title_(_title)
     {
 
     }
 
     IWindow::~IWindow()
     {
-        if(updateInterval->isActive())
-            updateInterval->stop();
+        if(updateInterval_->isActive())
+            updateInterval_->stop();
 
-        if(fpsRenderTimer->isActive())
-            fpsRenderTimer->stop();
+        if(fpsRenderTimer_->isActive())
+            fpsRenderTimer_->stop();
 
-        // delete updateInterval;
-        // delete fpsRenderTimer;
+        // delete updateInterval_;
+        // delete fpsRenderTimer_;
     }
 
     void IWindow::resizeEvent(int _width, int _height)
     {
-        mWidth = _width;
-        mHeight = _height;
-        mCurrentWindowSize = Vector2f(mWidth, mHeight);
+        width_ = _width;
+        height_ = _height;
+        mCurrentWindowSize = Vector2f(width_, height_);
 
         // Update view and projection (perspective) aspect ratio = width / height.
         GLRenderEngine::projection().setAspectRatio(_width, _height);
@@ -83,8 +83,8 @@ namespace NAGE
         }
 
         // Updates interval, FPS timer
-        updateInterval = new NAGE::Timer;
-        fpsRenderTimer = new NAGE::Timer;
+        updateInterval_ = new NAGE::Timer;
+        fpsRenderTimer_ = new NAGE::Timer;
 
         // Game timer
         mLastFrame = Timer::now();

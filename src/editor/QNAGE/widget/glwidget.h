@@ -67,26 +67,26 @@ namespace QNAGE
             const GLint viewport[4], GLfloat* winx, GLfloat* winy, GLfloat* winz);
 
         // Game
-        NAGE::IGame* mGame;
+        NAGE::IGame* game_;
 
         // GLWidget settings
-        QSurfaceFormat surfaceFormat;
+        QSurfaceFormat surfaceFormat_;
 
         // FPS counter
-        QFont font;
-        int frameCount;
-        long lastFrame;
+        QFont font_;
+        int frameCount_;
+        long lastFrame_;
 
         // GLAD
-        bool gladInitialized;
+        bool gladInitialized_;
 
         // Editor camera
-        NAGE::Camera mCamera;
-        NAGE::SceneNode* mSceneNode;
+        NAGE::Camera camera_;
+        NAGE::SceneNode* sceneNode_;
 
-        QEventLoop eventLoop;
-        QFuture<void> future;
-        QFutureWatcher<void> futureWatcher;
+        QEventLoop eventLoop_;
+        QFuture<void> future_;
+        QFutureWatcher<void> futureWatcher_;
     };
 }
 

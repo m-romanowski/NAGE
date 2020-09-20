@@ -17,8 +17,8 @@ namespace QNAGE
         ~SettingsWidget();
 
     private:
-        QVBoxLayout* mainLayout;
-        SettingsNavigation* settingsNavigation;
+        QVBoxLayout* mainLayout_;
+        SettingsNavigation* settingsNavigation_;
     };
 }
 

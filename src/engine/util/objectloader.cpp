@@ -9,27 +9,27 @@ namespace NAGE
     ObjectLoader::ObjectLoader(const std::string& _path)
     {
         // Loader supported extensions.
-        mSupportedExt.push_back("obj");
+        supportedExt_.push_back("obj");
 
         processFile(_path);
     }
 
     std::vector<std::string> ObjectLoader::supportedExt() const
     {
-        return mSupportedExt;
+        return supportedExt_;
     }
 
     ModelData ObjectLoader::data() const
     {
-        return mModelData;
+        return modelData_;
     }
 
     std::string ObjectLoader::fileExt(const std::string& _path)
     {
-        std::size_t position = _path.rfind(".");
+        std::size_t position_ = _path.rfind(".");
 
-        if(position != std::string::npos)
-            return _path.substr(position + 1);
+        if(position_ != std::string::npos)
+            return _path.substr(position_ + 1);
 
         // If no extension return empty string.
         return "";
@@ -37,9 +37,9 @@ namespace NAGE
 
     int ObjectLoader::supportedExt(const std::string& _path)
     {
-        for(unsigned int i = 0; i < mSupportedExt.size(); i++)
+        for(unsigned int i = 0; i < supportedExt_.size(); i++)
         {
-            if(mSupportedExt[i] == fileExt(_path))
+            if(supportedExt_[i] == fileExt(_path))
                 return i;
         }
 
@@ -74,7 +74,7 @@ namespace NAGE
             std::string line;
 
             ModelData modelData;
-            std::vector<unsigned int> faceIdxs, uvIdxs, normalIdxs;
+            std::vector<unsigned int> faceIdxs, uv_Idxs, normal_Idxs;
 
             while(std::getline(file, line))
             {
@@ -87,7 +87,7 @@ namespace NAGE
                     stringStream << line.substr(2);
                     stringStream >> x >> y >> z;
 
-                    modelData.position.push_back(Vector3f(x, y, z));
+                    modelData.position_.push_back(Vector3f(x, y, z));
                 }
                 else if(line.substr(0, 2) == "vt")
                 {
@@ -96,7 +96,7 @@ namespace NAGE
                     stringStream << line.substr(3);
                     stringStream >> x >> y;
 
-                    modelData.uv.push_back(Vector2f(x, y));
+                    modelData.uv_.push_back(Vector2f(x, y));
                 }
                 else if(line.substr(0, 2) == "vn")
                 {
@@ -105,16 +105,16 @@ namespace NAGE
                     stringStream << line.substr(2);
                     stringStream >> x >> y >> z;
 
-                    modelData.normal.push_back(Vector3f(x, y, z));
+                    modelData.normal_.push_back(Vector3f(x, y, z));
                 }
                 else if(line.substr(0, 2) == "f ")
                 {
                     // v/vt/vn
-                    unsigned int faceIdx[3], textureIdx[3], normalIdx[3];
+                    unsigned int faceIdx[3], textureIdx[3], normal_Idx[3];
                     const char* chLine = line.c_str();
 
-                    sscanf(chLine, "f %d/%d/%d %d/%d/%d %d/%d/%d", &faceIdx[0], &textureIdx[0], &normalIdx[0],
-                        &faceIdx[1], &textureIdx[1], &normalIdx[1], &faceIdx[2], &textureIdx[2], &normalIdx[2]);
+                    sscanf(chLine, "f %d/%d/%d %d/%d/%d %d/%d/%d", &faceIdx[0], &textureIdx[0], &normal_Idx[0],
+                        &faceIdx[1], &textureIdx[1], &normal_Idx[1], &faceIdx[2], &textureIdx[2], &normal_Idx[2]);
 
                     // Face indexes
                     faceIdxs.push_back(faceIdx[0]);
@@ -122,14 +122,14 @@ namespace NAGE
                     faceIdxs.push_back(faceIdx[2]);
 
                     // Texture indexes
-                    uvIdxs.push_back(textureIdx[0]);
-                    uvIdxs.push_back(textureIdx[1]);
-                    uvIdxs.push_back(textureIdx[2]);
+                    uv_Idxs.push_back(textureIdx[0]);
+                    uv_Idxs.push_back(textureIdx[1]);
+                    uv_Idxs.push_back(textureIdx[2]);
 
-                    // Normal indexes
-                    normalIdxs.push_back(normalIdx[0]);
-                    normalIdxs.push_back(normalIdx[1]);
-                    normalIdxs.push_back(normalIdx[2]);
+                    // normal_ indexes
+                    normal_Idxs.push_back(normal_Idx[0]);
+                    normal_Idxs.push_back(normal_Idx[1]);
+                    normal_Idxs.push_back(normal_Idx[2]);
                 }
             }
 
@@ -138,17 +138,17 @@ namespace NAGE
             for(unsigned int i = 0; i < faceIdxs.size(); i++)
             {
                 unsigned int vertexIndex = faceIdxs[i];
-                unsigned int uvIndex = uvIdxs[i];
-                unsigned int normalIndex = normalIdxs[i];
+                unsigned int uv_Index = uv_Idxs[i];
+                unsigned int normal_Index = normal_Idxs[i];
 
-                Vector3f vertex = modelData.position[vertexIndex - 1];
-                Vector2f uv = modelData.uv[uvIndex - 1];
-                Vector3f normal = modelData.normal[normalIndex - 1];
+                Vector3f vertex = modelData.position_[vertexIndex - 1];
+                Vector2f uv_ = modelData.uv_[uv_Index - 1];
+                Vector3f normal_ = modelData.normal_[normal_Index - 1];
 
-                mModelData.position.push_back(vertex);
-                mModelData.uv.push_back(uv);
-                mModelData.normal.push_back(normal);
-                mModelData.indices.push_back(i);
+                modelData_.position_.push_back(vertex);
+                modelData_.uv_.push_back(uv_);
+                modelData_.normal_.push_back(normal_);
+                modelData_.indices_.push_back(i);
             }
         }
         catch(std::ifstream::failure& error)

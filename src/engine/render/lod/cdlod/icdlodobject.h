@@ -32,12 +32,12 @@ namespace NAGE
         virtual void renderCDLOD(Camera* _camera, Shader* _shader, Transform* _transform);
 
     protected:
-        int mLodLevel;
-        float mMaxHeight;
-        CDLOD* mLOD;
-        FrustumCulling* mFrustum;
-        HeightMap* mHeightMap;
-        std::map<int, CDLODObjectChunk*> mTerrainChunks; // key: dimension, value: chunk grid
+        int lodLevel_;
+        float maxHeight_;
+        CDLOD* lod_;
+        FrustumCulling* frustum_;
+        HeightMap* heightMap_;
+        std::map<int, CDLODObjectChunk*> chunks_; // key: dimension, value: chunk grid
     };
 }
 

@@ -3,46 +3,46 @@
 namespace QNAGE
 {
     MainWindow::MainWindow(int _width, int _height)
-        : width(_width),
-          height(_height),
-          isMoving(false),
-          lastMousePosition(QPoint(0, 0)),
-          mainWidget(new MainWidget),
-          welcomeWidget(new WelcomeWidget),
-          settingsWidget(new SettingsWidget)
+        : width_(_width),
+          height_(_height),
+          isMoving_(false),
+          lastMousePosition_(QPoint(0, 0)),
+          mainWidget_(new MainWidget),
+          welcomeWidget_(new WelcomeWidget),
+          settingsWidget_(new SettingsWidget)
     {
-        this->setMinimumSize(width, height);
+        this->setMinimumSize(width_, height_);
     }
 
     MainWindow::~MainWindow()
     {
         // Menus, Actions
-        // delete openProjectDialogAction;
-        // delete openSettingDialogAction;
-        // delete settingsMenu;
-        // delete buildMenu;
-        // delete editMenu;
-        // delete projectMenu;
-        // delete menuBar;
+        // delete openProjectDialogAction_;
+        // delete openSettingDialogAction_;
+        // delete settingsMenu_;
+        // delete buildMenu_;
+        // delete editMenu_;
+        // delete projectMenu_;
+        // delete menuBar_;
 
         // Buttons
-        delete buildButton;
-        delete runButton;
-        delete exitButton;
-        delete minimizeButton;
-        delete maximizeButton;
+        delete buildButton_;
+        delete runButton_;
+        delete exitButton_;
+        delete minimizeButton_;
+        delete maximizeButton_;
 
         // Widgets
-        delete windowTitleWidget;
-        delete settingsWidget;
-        delete welcomeWidget;
-        delete mainWidget;
+        delete windowTitleWidget_;
+        delete settingsWidget_;
+        delete welcomeWidget_;
+        delete mainWidget_;
 
         // Layouts, main window widgets.
-        delete tabWidget;
-        delete topLayout;
-        delete windowLayout;
-        delete centralWidget;
+        delete tabWidget_;
+        delete topLayout_;
+        delete windowLayout_;
+        delete centralWidget_;
     }
 
     void MainWindow::init()
@@ -59,110 +59,110 @@ namespace QNAGE
         this->setWindowFlags(Qt::FramelessWindowHint);
 
         // Central widget
-        this->centralWidget = new QWidget(this);
+        this->centralWidget_ = new QWidget(this);
 
         // Top layout
-        this->topLayout = new QGridLayout();
-        this->topLayout->setContentsMargins(6, 6, 6, 6);
+        this->topLayout_ = new QGridLayout();
+        this->topLayout_->setContentsMargins(6, 6, 6, 6);
 
-        this->windowTitleWidget = new QWidget(this->centralWidget);
-        this->windowTitleWidget->setCursor(Qt::OpenHandCursor);
-        this->topLayout->addWidget(this->windowTitleWidget, 0, 0, 1, 1);
+        this->windowTitleWidget_ = new QWidget(this->centralWidget_);
+        this->windowTitleWidget_->setCursor(Qt::OpenHandCursor);
+        this->topLayout_->addWidget(this->windowTitleWidget_, 0, 0, 1, 1);
 
         // Exit button
-        this->exitButton = new CustomButton(this->centralWidget);
-        this->exitButton->setCustomName("exit-btn");
+        this->exitButton_ = new CustomButton(this->centralWidget_);
+        this->exitButton_->setCustomName("exit-btn");
         QIcon exitButtonIcon;
         exitButtonIcon.addPixmap(QPixmap(":/rc/icons/close.png"), QIcon::Normal, QIcon::Off);
-        this->exitButton->setCustomIcon(exitButtonIcon, QSize(23, 23));
-        connect(this->exitButton, &QPushButton::clicked, this, [this]{ this->onExitButtonClicked(); });
-        this->topLayout->addWidget(this->exitButton, 0, 3, 1, 1);
+        this->exitButton_->setCustomIcon(exitButtonIcon, QSize(23, 23));
+        connect(this->exitButton_, &QPushButton::clicked, this, [this]{ this->onExitButtonClicked(); });
+        this->topLayout_->addWidget(this->exitButton_, 0, 3, 1, 1);
 
         // Minimize button
-        this->minimizeButton = new CustomButton(this->centralWidget);
-        this->minimizeButton->setCustomName("dark-btn");
+        this->minimizeButton_ = new CustomButton(this->centralWidget_);
+        this->minimizeButton_->setCustomName("dark-btn");
         QIcon minimizeButtonIcon;
         minimizeButtonIcon.addPixmap(QPixmap(":/rc/icons/minimize.png"), QIcon::Normal, QIcon::Off);
-        this->minimizeButton->setCustomIcon(minimizeButtonIcon, QSize(23, 23));
-        connect(this->minimizeButton, &QPushButton::clicked, this, [this]{ this->onMinimizeButtonClicked(); });
-        this->topLayout->addWidget(this->minimizeButton, 0, 1, 1, 1);
+        this->minimizeButton_->setCustomIcon(minimizeButtonIcon, QSize(23, 23));
+        connect(this->minimizeButton_, &QPushButton::clicked, this, [this]{ this->onMinimizeButtonClicked(); });
+        this->topLayout_->addWidget(this->minimizeButton_, 0, 1, 1, 1);
 
         // Maximize button
-        this->maximizeButton = new CustomButton(this->centralWidget);
-        this->maximizeButton->setCustomName("dark-btn");
+        this->maximizeButton_ = new CustomButton(this->centralWidget_);
+        this->maximizeButton_->setCustomName("dark-btn");
         QIcon maximizeButtonIcon;
         maximizeButtonIcon.addPixmap(QPixmap(":/rc/icons/maximize.png"), QIcon::Normal, QIcon::Off);
-        this->maximizeButton->setCustomIcon(maximizeButtonIcon, QSize(23, 23));
-        connect(this->maximizeButton, &QPushButton::clicked, this, [this]{ this->onMaximizeButtonClicked(); });
-        this->topLayout->addWidget(this->maximizeButton, 0, 2, 1, 1);
+        this->maximizeButton_->setCustomIcon(maximizeButtonIcon, QSize(23, 23));
+        connect(this->maximizeButton_, &QPushButton::clicked, this, [this]{ this->onMaximizeButtonClicked(); });
+        this->topLayout_->addWidget(this->maximizeButton_, 0, 2, 1, 1);
 
         // Window widgets
         // this->menuBar = new QMenuBar();
 
         // Window tab widget
-        this->tabWidget = new TabWidget();
+        this->tabWidget_ = new TabWidget();
 
         // Tabs
         QIcon welcomeIcon;
         welcomeIcon.addPixmap(QPixmap(":/rc/icons/voidstuff-logo.png"), QIcon::Normal, QIcon::Off);
-        this->tabWidget->addTab(this->welcomeWidget, QIcon(welcomeIcon), tr(""));
-        this->tabWidget->setIconSize(QSize(30, 30));
+        this->tabWidget_->addTab(this->welcomeWidget_, QIcon(welcomeIcon), tr(""));
+        this->tabWidget_->setIconSize(QSize(30, 30));
 
         QIcon sceneIcon;
         sceneIcon.addPixmap(QPixmap(":/rc/icons/scene-disabled.png"), QIcon::Normal, QIcon::Off);
-        this->tabWidget->addTab(this->mainWidget, QIcon(sceneIcon), tr(""));
-        this->tabWidget->setTabEnabled(1, false);
-        this->tabWidget->setIconSize(QSize(30, 30));
+        this->tabWidget_->addTab(this->mainWidget_, QIcon(sceneIcon), tr(""));
+        this->tabWidget_->setTabEnabled(1, false);
+        this->tabWidget_->setIconSize(QSize(30, 30));
 
         QIcon codeEditorIcon;
         codeEditorIcon.addPixmap(QPixmap(":/rc/icons/code-editor-disabled.png"), QIcon::Normal, QIcon::Off);
-        this->tabWidget->addTab(new QWidget(), QIcon(codeEditorIcon), tr(""));
-        this->tabWidget->setTabEnabled(2, false);
-        this->tabWidget->setIconSize(QSize(30, 30));
+        this->tabWidget_->addTab(new QWidget(), QIcon(codeEditorIcon), tr(""));
+        this->tabWidget_->setTabEnabled(2, false);
+        this->tabWidget_->setIconSize(QSize(30, 30));
 
         QIcon settingsIcon;
         settingsIcon.addPixmap(QPixmap(":/rc/icons/settings.png"), QIcon::Normal, QIcon::Off);
-        this->tabWidget->addTab(this->settingsWidget, QIcon(settingsIcon), tr(""));
-        this->tabWidget->setIconSize(QSize(30, 30));
+        this->tabWidget_->addTab(this->settingsWidget_, QIcon(settingsIcon), tr(""));
+        this->tabWidget_->setIconSize(QSize(30, 30));
 
         QWidget* emptyWidget = new QWidget();
-        this->tabWidget->addTab(new QWidget(), "");
-        this->tabWidget->setTabEnabled(4, false);
-        this->tabWidget->tabBar()->setTabButton(4, QTabBar::LeftSide, emptyWidget);
+        this->tabWidget_->addTab(new QWidget(), "");
+        this->tabWidget_->setTabEnabled(4, false);
+        this->tabWidget_->tabBar()->setTabButton(4, QTabBar::LeftSide, emptyWidget);
 
         // Tools buttons
         QIcon runIcon;
         runIcon.addPixmap(QPixmap(":/rc/icons/run.png"), QIcon::Normal, QIcon::Off);
-        this->runButton = new QToolButton();
-        this->runButton->setIcon(runIcon);
-        this->runButton->setEnabled(false);
-        this->tabWidget->addTab(new QWidget(), "");
-        this->tabWidget->setTabEnabled(5, false);
-        this->tabWidget->tabBar()->setTabButton(5, QTabBar::LeftSide, this->runButton);
+        this->runButton_ = new QToolButton();
+        this->runButton_->setIcon(runIcon);
+        this->runButton_->setEnabled(false);
+        this->tabWidget_->addTab(new QWidget(), "");
+        this->tabWidget_->setTabEnabled(5, false);
+        this->tabWidget_->tabBar()->setTabButton(5, QTabBar::LeftSide, this->runButton_);
 
         QIcon buildIcon;
         buildIcon.addPixmap(QPixmap(":/rc/icons/build.png"), QIcon::Normal, QIcon::Off);
-        this->buildButton = new QToolButton();
-        this->buildButton->setIcon(buildIcon);
-        this->buildButton->setEnabled(false);
-        this->tabWidget->addTab(new QWidget(), "");
-        this->tabWidget->setTabEnabled(6, false);
-        this->tabWidget->tabBar()->setTabButton(6, QTabBar::LeftSide, this->buildButton);
+        this->buildButton_ = new QToolButton();
+        this->buildButton_->setIcon(buildIcon);
+        this->buildButton_->setEnabled(false);
+        this->tabWidget_->addTab(new QWidget(), "");
+        this->tabWidget_->setTabEnabled(6, false);
+        this->tabWidget_->tabBar()->setTabButton(6, QTabBar::LeftSide, this->buildButton_);
 
         // Bind widgets and layout to window layout.
-        this->windowLayout = new QVBoxLayout(this->centralWidget);
-        this->windowLayout->setContentsMargins(0, 0, 0, 0);
-        this->windowLayout->addLayout(this->topLayout);
+        this->windowLayout_ = new QVBoxLayout(this->centralWidget_);
+        this->windowLayout_->setContentsMargins(0, 0, 0, 0);
+        this->windowLayout_->addLayout(this->topLayout_);
         // this->windowLayout->addWidget(this->menuBar);
-        this->windowLayout->addWidget(this->tabWidget);
-        this->windowLayout->addWidget(new QSizeGrip(this), 0, Qt::AlignBottom | Qt::AlignRight);
+        this->windowLayout_->addWidget(this->tabWidget_);
+        this->windowLayout_->addWidget(new QSizeGrip(this), 0, Qt::AlignBottom | Qt::AlignRight);
 
         // Bind central widget
-        this->centralWidget->setLayout(this->windowLayout);
-        this->setCentralWidget(this->centralWidget);
+        this->centralWidget_->setLayout(this->windowLayout_);
+        this->setCentralWidget(this->centralWidget_);
 
         // Child connect components
-        connect(this->welcomeWidget->getCreateButton(), &QPushButton::clicked, this,
+        connect(this->welcomeWidget_->getCreateButton(), &QPushButton::clicked, this,
             &MainWindow::openProjectDialog);
     }
 
@@ -196,39 +196,39 @@ namespace QNAGE
 
     void MainWindow::mousePressEvent(QMouseEvent *event)
     {
-        if(!this->windowTitleWidget->underMouse())
+        if(!this->windowTitleWidget_->underMouse())
             return;
 
         if(event->button() == Qt::LeftButton)
         {
-            isMoving = true;
-            this->lastMousePosition = event->pos();
+            isMoving_ = true;
+            this->lastMousePosition_ = event->pos();
         }
     }
 
     void MainWindow::mouseMoveEvent(QMouseEvent *event)
     {
-        if(!this->windowTitleWidget->underMouse())
+        if(!this->windowTitleWidget_->underMouse())
             return;
 
-        if(event->buttons().testFlag(Qt::LeftButton) && isMoving)
-            this->move(this->pos() + (event->pos() - this->lastMousePosition));
+        if(event->buttons().testFlag(Qt::LeftButton) && isMoving_)
+            this->move(this->pos() + (event->pos() - this->lastMousePosition_));
     }
 
     void MainWindow::mouseReleaseEvent(QMouseEvent *event)
     {
-        if(!this->windowTitleWidget->underMouse())
+        if(!this->windowTitleWidget_->underMouse())
             return;
 
         if(event->button() == Qt::LeftButton)
-            isMoving = false;
+            isMoving_ = false;
     }
 
     void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
     {
         Q_UNUSED(event);
 
-        if(!this->windowTitleWidget->underMouse())
+        if(!this->windowTitleWidget_->underMouse())
             return;
 
         onMaximizeButtonClicked();
@@ -258,7 +258,7 @@ namespace QNAGE
         // this->projectDialog->show();
 
         // Reload (setup GLWidget) render window GUI.
-        this->mainWidget->getRenderWindow()->reloadUi();
+        this->mainWidget_->getRenderWindow()->reloadUi();
 
         // Enable tabs.
         QIcon sceneIcon;
@@ -267,17 +267,17 @@ namespace QNAGE
         QIcon codeEditorIcon;
         codeEditorIcon.addPixmap(QPixmap(":/rc/icons/code-editor.png"), QIcon::Normal, QIcon::Off);
 
-        this->tabWidget->setTabEnabled(1, true);
-        this->tabWidget->setTabIcon(1, sceneIcon);
-        this->tabWidget->setTabEnabled(2, true);
-        this->tabWidget->setTabIcon(2, codeEditorIcon);
+        this->tabWidget_->setTabEnabled(1, true);
+        this->tabWidget_->setTabIcon(1, sceneIcon);
+        this->tabWidget_->setTabEnabled(2, true);
+        this->tabWidget_->setTabIcon(2, codeEditorIcon);
 
         // Change current tab.
-        this->tabWidget->setCurrentIndex(1);
+        this->tabWidget_->setCurrentIndex(1);
 
         // Enable run, build button
-        this->runButton->setEnabled(true);
-        this->buildButton->setEnabled(true);
+        this->runButton_->setEnabled(true);
+        this->buildButton_->setEnabled(true);
 
         // delete projectDialog;
     }
@@ -290,13 +290,13 @@ namespace QNAGE
 
     void MainWindow::dockEngineWindow()
     {
-        this->mainWidget->dockGLWindow();
+        this->mainWidget_->dockGLWindow();
     }
 
     void MainWindow::undockEngineWindow()
     {
-        if(this->mainWidget->getRenderWindow() != nullptr)
-            this->mainWidget->undockGLWindow();
+        if(this->mainWidget_->getRenderWindow() != nullptr)
+            this->mainWidget_->undockGLWindow();
     }
 
     void MainWindow::addWindow(RenderWindow* _window)
@@ -305,7 +305,7 @@ namespace QNAGE
             return;
 
         // Init main widget.
-        this->mainWidget->setRenderWindow(_window);
+        this->mainWidget_->setRenderWindow(_window);
 
         // Setup main window ui.
         init();

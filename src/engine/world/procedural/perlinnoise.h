@@ -64,14 +64,14 @@ namespace NAGE
         {
             // First step: fill array of shuffled 0-255 values.
             for(size_t i = 0; i < 256; i++)
-                mPermutationTable[i] = static_cast<uint8_t>(i);
+                permutationTable_[i] = static_cast<uint8_t>(i);
 
             // Shuffle permutation array.
-            std::shuffle(std::begin(mPermutationTable), std::begin(mPermutationTable) + 256, std::default_random_engine(_seed));
+            std::shuffle(std::begin(permutationTable_), std::begin(permutationTable_) + 256, std::default_random_engine(_seed));
 
             // Second step: append 0-255 values.
             for(size_t i = 0; i < 256; i++)
-                mPermutationTable[256 + i] = mPermutationTable[i];
+                permutationTable_[256 + i] = permutationTable_[i];
         }
 
         // 1D, 2D and 3D noise.
@@ -130,22 +130,22 @@ namespace NAGE
             T w = fade(_z);
 
             // Hash coordinates.
-            int A = mPermutationTable[x] + y;
-            int AA = mPermutationTable[A] + z;
-            int AB = mPermutationTable[A + 1] + z;
-            int B = mPermutationTable[x + 1] + y;
-            int BA = mPermutationTable[B] + z;
-            int BB = mPermutationTable[B + 1] + z;
+            int A = permutationTable_[x] + y;
+            int AA = permutationTable_[A] + z;
+            int AB = permutationTable_[A + 1] + z;
+            int B = permutationTable_[x + 1] + y;
+            int BA = permutationTable_[B] + z;
+            int BB = permutationTable_[B + 1] + z;
 
             // Add blended results from 8 cornerrs of cube.
-            return lerp(w, lerp(v, lerp(u, grad(mPermutationTable[AA], x, y, z),
-                grad(mPermutationTable[BA], x - 1, y, z)),
-                lerp(u, grad(mPermutationTable[AB], x, y - 1, z),
-                grad(mPermutationTable[BB], x - 1, y - 1, z))),
-                lerp(v, lerp(u, grad(mPermutationTable[AA + 1], x, y, z - 1),
-                grad(mPermutationTable[BA + 1], x - 1, y, z - 1)),
-                lerp(u, grad(mPermutationTable[AB +1 ], x, y - 1, z - 1),
-                grad(mPermutationTable[BB + 1], x - 1, y - 1, z - 1))));
+            return lerp(w, lerp(v, lerp(u, grad(permutationTable_[AA], x, y, z),
+                grad(permutationTable_[BA], x - 1, y, z)),
+                lerp(u, grad(permutationTable_[AB], x, y - 1, z),
+                grad(permutationTable_[BB], x - 1, y - 1, z))),
+                lerp(v, lerp(u, grad(permutationTable_[AA + 1], x, y, z - 1),
+                grad(permutationTable_[BA + 1], x - 1, y, z - 1)),
+                lerp(u, grad(permutationTable_[AB +1 ], x, y - 1, z - 1),
+                grad(permutationTable_[BB + 1], x - 1, y - 1, z - 1))));
         }
 
         constexpr T fade(T _value)
@@ -168,7 +168,7 @@ namespace NAGE
             return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v);
         }
 
-        std::array<uint8_t, 512> mPermutationTable; // Array of 0 - 255 values (shuffled).
+        std::array<uint8_t, 512> permutationTable_; // Array of 0 - 255 values (shuffled).
     };
 }
 

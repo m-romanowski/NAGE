@@ -1,5 +1,5 @@
-#ifndef NAGE_NAGEMATHVECTOR_H_
-#define NAGE_NAGEMATHVECTOR_H_
+#ifndef NAGE_MATH_NAGEMATHVECTOR_H_
+#define NAGE_MATH_NAGEMATHVECTOR_H_
 
 #include <iostream>
 #include <cmath>
@@ -33,28 +33,28 @@ namespace NAGE
     class Vector2
     {
     public:
-        Vector2() : mX(0), mY(0) {}
-        Vector2(T _x, T _y) : mX(_x), mY(_y) {}
-        Vector2(const Vector2<T>& _rhs) { mX = _rhs.mX; mY = _rhs.mY; }
+        Vector2() : x_(0), y_(0) {}
+        Vector2(T _x, T _y) : x_(_x), y_(_y) {}
+        Vector2(const Vector2<T>& _rhs) { x_ = _rhs.x_; y_ = _rhs.y_; }
 
         // Overloaded operators.
-        inline Vector2<T> operator+(const T& _rhs) const { return Vector2(this->mX + _rhs, this->mY + _rhs); }
-        inline Vector2<T> operator+(const Vector2<T>& _rhs) const { return Vector2(this->mX + _rhs.mX, this->mY + _rhs.mY); }
-        inline Vector2<T> operator-() const { return Vector2(-this->mX, -this->mY); }
-        inline Vector2<T> operator-(const T& _rhs) const { return Vector2(this->mX - _rhs, this->mY - _rhs); }
-        inline Vector2<T> operator-(const Vector2<T>& _rhs) const { return Vector2(this->mX - _rhs.mX, this->mY - _rhs.mY); }
-        inline Vector2<T> operator*(const T& _rhs) const { return Vector2(this->mX * _rhs, this->mY * _rhs); }
-        inline Vector2<T> operator/(const T& _rhs) const { return Vector2(this->mX / _rhs, this->mY / _rhs); }
+        inline Vector2<T> operator+(const T& _rhs) const { return Vector2(this->x_ + _rhs, this->y_ + _rhs); }
+        inline Vector2<T> operator+(const Vector2<T>& _rhs) const { return Vector2(this->x_ + _rhs.x_, this->y_ + _rhs.y_); }
+        inline Vector2<T> operator-() const { return Vector2(-this->x_, -this->y_); }
+        inline Vector2<T> operator-(const T& _rhs) const { return Vector2(this->x_ - _rhs, this->y_ - _rhs); }
+        inline Vector2<T> operator-(const Vector2<T>& _rhs) const { return Vector2(this->x_ - _rhs.x_, this->y_ - _rhs.y_); }
+        inline Vector2<T> operator*(const T& _rhs) const { return Vector2(this->x_ * _rhs, this->y_ * _rhs); }
+        inline Vector2<T> operator/(const T& _rhs) const { return Vector2(this->x_ / _rhs, this->y_ / _rhs); }
 
-        inline bool operator==(const Vector2<T>& _rhs) { return this->mX == _rhs.mX && this->mY == _rhs.mY; }
+        inline bool operator==(const Vector2<T>& _rhs) { return this->x_ == _rhs.x_ && this->y_ == _rhs.y_; }
         inline bool operator!=(const Vector2<T>& _rhs) { return !(*this == _rhs); }
 
         inline Vector2<T>& operator=(const Vector2<T>& _rhs)
         {
             if (this != &_rhs)
             {
-                this->mX = _rhs.mX;
-                this->mY = _rhs.mY;
+                this->x_ = _rhs.x_;
+                this->y_ = _rhs.y_;
             }
 
             return *this;
@@ -62,48 +62,48 @@ namespace NAGE
 
         inline Vector2<T>& operator+=(const T& _rhs)
         {
-            this->mX += _rhs;
-            this->mY += _rhs;
+            this->x_ += _rhs;
+            this->y_ += _rhs;
 
             return *this;
         }
 
         inline Vector2<T>& operator+=(const Vector2<T>& _rhs)
         {
-            this->mX += _rhs.mX;
-            this->mY += _rhs.mY;
+            this->x_ += _rhs.x_;
+            this->y_ += _rhs.y_;
 
             return *this;
         }
 
         inline Vector2<T>& operator-=(const T& _rhs)
         {
-            this->mX -= _rhs;
-            this->mY -= _rhs;
+            this->x_ -= _rhs;
+            this->y_ -= _rhs;
 
             return *this;
         }
 
         inline Vector2<T>& operator-=(const Vector2<T>& _rhs)
         {
-            this->mX -= _rhs.mX;
-            this->mY -= _rhs.mY;
+            this->x_ -= _rhs.x_;
+            this->y_ -= _rhs.y_;
 
             return *this;
         }
 
         inline Vector2<T>& operator*=(const T& _rhs)
         {
-            this->mX *= _rhs;
-            this->mY *= _rhs;
+            this->x_ *= _rhs;
+            this->y_ *= _rhs;
 
             return *this;
         }
 
         inline Vector2<T> operator/=(const T& _rhs)
         {
-            this->mX /= _rhs;
-            this->mY /= _rhs;
+            this->x_ /= _rhs;
+            this->y_ /= _rhs;
 
             return *this;
         }
@@ -115,10 +115,10 @@ namespace NAGE
         friend std::ostream& operator<<(std::ostream& _out, const Vector2<T>& _vector);
 
         // Operations on vector.
-        inline T length() { return static_cast<T>(std::sqrt(this->mX * this->mX + this->mY * this->mY)); }
-        inline T lengthSquared() { return this->mX * this->mX + this->mY * this->mY; }
-        inline T max() { return (this->mX > this->mY) ? this->mX : this->mY; }
-        inline T cross(const Vector2<T>& _rhs) { return this->mX * _rhs.mY - this->mY * _rhs.mX; }
+        inline T length() { return static_cast<T>(std::sqrt(this->x_ * this->x_ + this->y_ * this->y_)); }
+        inline T lengthSquared() { return this->x_ * this->x_ + this->y_ * this->y_; }
+        inline T max() { return (this->x_ > this->y_) ? this->x_ : this->y_; }
+        inline T cross(const Vector2<T>& _rhs) { return this->x_ * _rhs.y_ - this->y_ * _rhs.x_; }
         inline T lerp(const Vector2<T>& _rhs, T _factor) { return (_rhs - *this) * _factor + *this; }
 
         inline void normalize()
@@ -128,8 +128,8 @@ namespace NAGE
             if(len == 0)
                 return;
 
-            this->mX /= len;
-            this->mY /= len;
+            this->x_ /= len;
+            this->y_ /= len;
         }
 
         inline Vector2<T> normalized() const
@@ -137,7 +137,7 @@ namespace NAGE
             T len = length();
 
             if (len != 0)
-                return Vector2(this->mX / len, this->mY / len);
+                return Vector2(this->x_ / len, this->y_ / len);
 
             return *this;
         }
@@ -148,42 +148,42 @@ namespace NAGE
             double c = std::cos(radians);
             double s = std::sin(radians);
 
-            return Vector2(static_cast<T>((this->mX * c - this->mY * s)),
-                static_cast<T>((this->mX * s + this->mY * c)));
+            return Vector2(static_cast<T>((this->x_ * c - this->y_ * s)),
+                static_cast<T>((this->x_ * s + this->y_ * c)));
         }
 
         inline T dot(const Vector2<T>& _rhs)
         {
-            return this->mX * _rhs.mX + this->mY * _rhs.mY;
+            return this->x_ * _rhs.x_ + this->y_ * _rhs.y_;
         }
 
         inline static T dot(const Vector2<T>& _lhs, const Vector2<T>& _rhs)
         {
-            return _lhs.mX * _rhs.mX + _lhs.mY * _rhs.mY;
+            return _lhs.x_ * _rhs.x_ + _lhs.y_ * _rhs.y_;
         }
 
         inline Vector2<T> abs()
         {
-            return Vector2(std::abs(mX), std::abs(mY));
+            return Vector2(std::abs(x_), std::abs(y_));
         }
 
         inline static Vector2<T> abs(const Vector2<T>& _rhs)
         {
-            return Vector2(std::abs(_rhs.mX), std::abs(_rhs.mY));
+            return Vector2(std::abs(_rhs.x_), std::abs(_rhs.y_));
         }
 
         // Getters and setters.
-        inline void setX(T _x) { this->mX = _x; }
-        inline void setY(T _y) { this->mY = _y; }
-        inline T x() const { return this->mX; }
-        inline T y() const { return this->mY; }
+        inline void setX(T _x) { this->x_ = _x; }
+        inline void setY(T _y) { this->y_ = _y; }
+        inline T x() const { return this->x_; }
+        inline T y() const { return this->y_; }
 
         // Static members
         static Vector2<T> zero;
         static Vector2<T> one;
 
     private:
-        T mX, mY;
+        T x_, y_;
     };
 
     // Static members initialization.
@@ -207,29 +207,29 @@ namespace NAGE
     class Vector3
     {
     public:
-        Vector3() : mX(0), mY(0), mZ(0) {}
-        Vector3(T _x, T _y, T _z) : mX(_x), mY(_y), mZ(_z) {}
-        Vector3(const Vector3& _rhs) { mX = _rhs.mX; mY = _rhs.mY; mZ = _rhs.mZ; }
+        Vector3() : x_(0), y_(0), z_(0) {}
+        Vector3(T _x, T _y, T _z) : x_(_x), y_(_y), z_(_z) {}
+        Vector3(const Vector3& _rhs) { x_ = _rhs.x_; y_ = _rhs.y_; z_ = _rhs.z_; }
 
         // Overloaded operators.
-        inline Vector3<T> operator+(const T& _rhs) const { return Vector3(this->mX + _rhs, this->mY + _rhs, this->mZ + _rhs); }
-        inline Vector3<T> operator+(const Vector3<T>& _rhs) const { return Vector3(this->mX + _rhs.mX, this->mY + _rhs.mY, this->mZ + _rhs.mZ); }
-        inline Vector3<T> operator-() const { return Vector3(-this->mX, -this->mY, -this->mZ); }
-        inline Vector3<T> operator-(const T& _rhs) const { return Vector3(this->mX - _rhs, this->mY - _rhs, this->mZ - _rhs); }
-        inline Vector3<T> operator-(const Vector3<T>& _rhs) const { return Vector3(this->mX - _rhs.mX, this->mY - _rhs.mY, this->mZ - _rhs.mZ); }
-        inline Vector3<T> operator*(const T& _rhs) const { return Vector3(this->mX * _rhs, this->mY * _rhs, this->mZ * _rhs); }
-        inline Vector3<T> operator/(const T& _rhs) const { return Vector3(this->mX / _rhs, this->mY / _rhs, this->mZ / _rhs); }
+        inline Vector3<T> operator+(const T& _rhs) const { return Vector3(this->x_ + _rhs, this->y_ + _rhs, this->z_ + _rhs); }
+        inline Vector3<T> operator+(const Vector3<T>& _rhs) const { return Vector3(this->x_ + _rhs.x_, this->y_ + _rhs.y_, this->z_ + _rhs.z_); }
+        inline Vector3<T> operator-() const { return Vector3(-this->x_, -this->y_, -this->z_); }
+        inline Vector3<T> operator-(const T& _rhs) const { return Vector3(this->x_ - _rhs, this->y_ - _rhs, this->z_ - _rhs); }
+        inline Vector3<T> operator-(const Vector3<T>& _rhs) const { return Vector3(this->x_ - _rhs.x_, this->y_ - _rhs.y_, this->z_ - _rhs.z_); }
+        inline Vector3<T> operator*(const T& _rhs) const { return Vector3(this->x_ * _rhs, this->y_ * _rhs, this->z_ * _rhs); }
+        inline Vector3<T> operator/(const T& _rhs) const { return Vector3(this->x_ / _rhs, this->y_ / _rhs, this->z_ / _rhs); }
 
-        inline bool operator==(const Vector3<T>& _rhs) { return this->mX == _rhs.mX && this->mY == _rhs.mY && this->mZ == _rhs.mZ; }
+        inline bool operator==(const Vector3<T>& _rhs) { return this->x_ == _rhs.x_ && this->y_ == _rhs.y_ && this->z_ == _rhs.z_; }
         inline bool operator!=(const Vector3<T>& _rhs) { return !(*this == _rhs); }
 
         inline Vector3<T> operator=(const Vector3<T>& _rhs)
         {
             if (this != &_rhs)
             {
-                this->mX = _rhs.mX;
-                this->mY = _rhs.mY;
-                this->mZ = _rhs.mZ;
+                this->x_ = _rhs.x_;
+                this->y_ = _rhs.y_;
+                this->z_ = _rhs.z_;
             }
 
             return *this;
@@ -237,54 +237,54 @@ namespace NAGE
 
         inline Vector3<T> operator+=(const T& _rhs)
         {
-            this->mX += _rhs;
-            this->mY += _rhs;
-            this->mZ += _rhs;
+            this->x_ += _rhs;
+            this->y_ += _rhs;
+            this->z_ += _rhs;
 
             return *this;
         }
 
         inline Vector3<T> operator+=(const Vector3<T>& _rhs)
         {
-            this->mX += _rhs.mX;
-            this->mY += _rhs.mY;
-            this->mZ += _rhs.mZ;
+            this->x_ += _rhs.x_;
+            this->y_ += _rhs.y_;
+            this->z_ += _rhs.z_;
 
             return *this;
         }
 
         inline Vector3<T> operator-=(const T& _rhs)
         {
-            this->mX -= _rhs;
-            this->mY -= _rhs;
-            this->mZ -= _rhs;
+            this->x_ -= _rhs;
+            this->y_ -= _rhs;
+            this->z_ -= _rhs;
 
             return *this;
         }
 
         inline Vector3<T> operator-=(const Vector3<T>& _rhs)
         {
-            this->mX -= _rhs.mX;
-            this->mY -= _rhs.mY;
-            this->mZ -= _rhs.mZ;
+            this->x_ -= _rhs.x_;
+            this->y_ -= _rhs.y_;
+            this->z_ -= _rhs.z_;
 
             return *this;
         }
 
         inline Vector3<T> operator*=(const T& _rhs)
         {
-            this->mX *= _rhs;
-            this->mY *= _rhs;
-            this->mZ *= _rhs;
+            this->x_ *= _rhs;
+            this->y_ *= _rhs;
+            this->z_ *= _rhs;
 
             return *this;
         }
 
         inline Vector3<T> operator/=(const T& _rhs)
         {
-            this->mX /= _rhs;
-            this->mY /= _rhs;
-            this->mZ /= _rhs;
+            this->x_ /= _rhs;
+            this->y_ /= _rhs;
+            this->z_ /= _rhs;
 
             return *this;
         }
@@ -295,14 +295,14 @@ namespace NAGE
         friend std::ostream& operator<<(std::ostream& _out, const Vector3& _vector);
 
         // Opertions on vector.
-        inline T length() const { return static_cast<T>(std::sqrt(this->mX * this->mX + this->mY * this->mY + this->mZ * this->mZ)); }
-        inline T lengthSquared() { return static_cast<T>(this->mX * this->mX + this->mY * this->mY + this->mZ * this->mZ); }
+        inline T length() const { return static_cast<T>(std::sqrt(this->x_ * this->x_ + this->y_ * this->y_ + this->z_ * this->z_)); }
+        inline T lengthSquared() { return static_cast<T>(this->x_ * this->x_ + this->y_ * this->y_ + this->z_ * this->z_); }
         inline T lerp(const Vector3& rhs, T factor) { return (rhs - *this) * factor + *this; }
 
         inline T max()
         {
-            T m = (this->mX < this->mY) ? this->mY : this->mX;
-            return ((m < this->mZ) ? this->mZ : m);
+            T m = (this->x_ < this->y_) ? this->y_ : this->x_;
+            return ((m < this->z_) ? this->z_ : m);
         }
 
         inline void normalize()
@@ -312,9 +312,9 @@ namespace NAGE
             if(len == 0)
                 return;
 
-            this->mX /= len;
-            this->mY /= len;
-            this->mZ /= len;
+            this->x_ /= len;
+            this->y_ /= len;
+            this->z_ /= len;
         }
 
         inline Vector3<T> normalized() const
@@ -322,20 +322,20 @@ namespace NAGE
             T len = length();
 
             if (len != 0)
-                return Vector3(this->mX / len, this->mY / len, this->mZ / len);
+                return Vector3(this->x_ / len, this->y_ / len, this->z_ / len);
 
-            return Vector3(this->mX, this->mY, this->mZ);
+            return Vector3(this->x_, this->y_, this->z_);
         }
 
         inline static Vector3<T> normalize(const Vector3<T>& _vector)
         {
-            T len = std::sqrt(_vector.mX * _vector.mX + _vector.mY * _vector.mY
-                        + _vector.mZ * _vector.mZ);
+            T len = std::sqrt(_vector.x_ * _vector.x_ + _vector.y_ * _vector.y_
+                        + _vector.z_ * _vector.z_);
 
             if(len == 0)
                 return _vector;
 
-            return Vector3<T>(_vector.mX / len, _vector.mY / len, _vector.mZ / len);
+            return Vector3<T>(_vector.x_ / len, _vector.y_ / len, _vector.z_ / len);
         }
 
         inline Vector3<T> rotate(Vector3<T> _axis, T _angle)
@@ -350,19 +350,19 @@ namespace NAGE
 
         inline T dot(const Vector3<T>& _rhs)
         {
-            return this->mX * _rhs.mX + this->mY * _rhs.mY + this->mZ * _rhs.mZ;
+            return this->x_ * _rhs.x_ + this->y_ * _rhs.y_ + this->z_ * _rhs.z_;
         }
 
         inline static T dot(const Vector3<T>& _lhs, const Vector3<T>& _rhs)
         {
-            return _lhs.mX * _rhs.mX + _lhs.mY * _rhs.mY + _lhs.mZ * _rhs.mZ;
+            return _lhs.x_ * _rhs.x_ + _lhs.y_ * _rhs.y_ + _lhs.z_ * _rhs.z_;
         }
 
         inline Vector3<T> cross(const Vector3<T>& _rhs)
         {
-            const T x = this->mY * _rhs.mZ - _rhs.mY * this->mZ;
-            const T y = this->mZ * _rhs.mX - _rhs.mZ * this->mX;
-            const T z = this->mX * _rhs.mY - _rhs.mX * this->mY;
+            const T x = this->y_ * _rhs.z_ - _rhs.y_ * this->z_;
+            const T y = this->z_ * _rhs.x_ - _rhs.z_ * this->x_;
+            const T z = this->x_ * _rhs.y_ - _rhs.x_ * this->y_;
 
             return Vector3(x, y, z);
         }
@@ -378,21 +378,21 @@ namespace NAGE
 
         inline Vector3<T> abs()
         {
-            return Vector3(std::abs(mX), std::abs(mY), std::abs(mZ));
+            return Vector3(std::abs(x_), std::abs(y_), std::abs(z_));
         }
 
         inline static Vector3<T> abs(const Vector3<T>& _rhs)
         {
-            return Vector3(std::abs(_rhs.mX), std::abs(_rhs.mY), std::abs(_rhs.mZ));
+            return Vector3(std::abs(_rhs.x_), std::abs(_rhs.y_), std::abs(_rhs.z_));
         }
 
         // Getters and setters.
-        inline void setX(T _x) { this->mX = _x; }
-        inline void setY(T _y) { this->mY = _y; }
-        inline void setZ(T _z) { this->mZ = _z; }
-        inline T x() const { return this->mX; }
-        inline T y() const { return this->mY; }
-        inline T z() const { return this->mZ; }
+        inline void setX(T _x) { this->x_ = _x; }
+        inline void setY(T _y) { this->y_ = _y; }
+        inline void setZ(T _z) { this->z_ = _z; }
+        inline T x() const { return this->x_; }
+        inline T y() const { return this->y_; }
+        inline T z() const { return this->z_; }
 
         // Static members
         static Vector3<T> zero;
@@ -402,7 +402,7 @@ namespace NAGE
         static Vector3<T> right;
 
     private:
-        T mX, mY, mZ;
+        T x_, y_, z_;
     };
 
     // Static member initialization.
@@ -432,30 +432,30 @@ namespace NAGE
     class Vector4
     {
     public:
-        Vector4() : mX(0), mY(0), mZ(0), mW(0) {}
-        Vector4(T _x, T _y, T _z, T _w) : mX(_x), mY(_y), mZ(_z), mW(_w) {}
-        Vector4(const Vector4& _rhs) { mX = _rhs.mX; mY = _rhs.mY; mZ = _rhs.mZ; mW = _rhs.mW; }
+        Vector4() : x_(0), y_(0), z_(0), w_(0) {}
+        Vector4(T _x, T _y, T _z, T _w) : x_(_x), y_(_y), z_(_z), w_(_w) {}
+        Vector4(const Vector4& _rhs) { x_ = _rhs.x_; y_ = _rhs.y_; z_ = _rhs.z_; w_ = _rhs.w_; }
 
         // Overloaded operators.
-        inline Vector4<T> operator+(const T& _rhs) const { return Vector4(this->mX + _rhs, this->mY + _rhs, this->mZ + _rhs, this->mW + _rhs); }
-        inline Vector4<T> operator+(const Vector4<T>& _rhs) const { return Vector4(this->mX + _rhs.mX, this->mY + _rhs.mY, this->mZ + _rhs.mZ, this-mW + _rhs.mW); }
-        inline Vector4<T> operator-() const { return Vector3(-this->mX, -this->mY, -this->mZ, -this->mW); }
-        inline Vector4<T> operator-(const T& _rhs) const { return Vector4(this->mX - _rhs, this->mY - _rhs, this->mZ - _rhs, this->mW - _rhs); }
-        inline Vector4<T> operator-(const Vector3<T>& _rhs) const { return Vector4(this->mX - _rhs.mX, this->mY - _rhs.mY, this->mZ - _rhs.mZ, this->mW - _rhs.mW); }
-        inline Vector4<T> operator*(const T& _rhs) const { return Vector4(this->mX * _rhs, this->mY * _rhs, this->mZ * _rhs, this->mW * _rhs); }
-        inline Vector4<T> operator/(const T& _rhs) const { return Vector4(this->mX / _rhs, this->mY / _rhs, this->mZ / _rhs, this->mW / _rhs); }
+        inline Vector4<T> operator+(const T& _rhs) const { return Vector4(this->x_ + _rhs, this->y_ + _rhs, this->z_ + _rhs, this->w_ + _rhs); }
+        inline Vector4<T> operator+(const Vector4<T>& _rhs) const { return Vector4(this->x_ + _rhs.x_, this->y_ + _rhs.y_, this->z_ + _rhs.z_, this-w_ + _rhs.w_); }
+        inline Vector4<T> operator-() const { return Vector3(-this->x_, -this->y_, -this->z_, -this->w_); }
+        inline Vector4<T> operator-(const T& _rhs) const { return Vector4(this->x_ - _rhs, this->y_ - _rhs, this->z_ - _rhs, this->w_ - _rhs); }
+        inline Vector4<T> operator-(const Vector3<T>& _rhs) const { return Vector4(this->x_ - _rhs.x_, this->y_ - _rhs.y_, this->z_ - _rhs.z_, this->w_ - _rhs.w_); }
+        inline Vector4<T> operator*(const T& _rhs) const { return Vector4(this->x_ * _rhs, this->y_ * _rhs, this->z_ * _rhs, this->w_ * _rhs); }
+        inline Vector4<T> operator/(const T& _rhs) const { return Vector4(this->x_ / _rhs, this->y_ / _rhs, this->z_ / _rhs, this->w_ / _rhs); }
 
-        inline bool operator==(const Vector4<T>& _rhs) { return this->mX == _rhs.mX && this->mY == _rhs.mY && this->mZ == _rhs.mZ && this->mW == _rhs.mW; }
+        inline bool operator==(const Vector4<T>& _rhs) { return this->x_ == _rhs.x_ && this->y_ == _rhs.y_ && this->z_ == _rhs.z_ && this->w_ == _rhs.w_; }
         inline bool operator!=(const Vector4<T>& _rhs) { return !(*this == _rhs); }
 
         inline Vector4<T> operator=(const Vector4<T>& _rhs)
         {
             if (this != &_rhs)
             {
-                this->mX = _rhs.mX;
-                this->mY = _rhs.mY;
-                this->mZ = _rhs.mZ;
-                this->mW = _rhs.mW;
+                this->x_ = _rhs.x_;
+                this->y_ = _rhs.y_;
+                this->z_ = _rhs.z_;
+                this->w_ = _rhs.w_;
             }
 
             return *this;
@@ -463,60 +463,60 @@ namespace NAGE
 
         inline Vector4<T> operator+=(const T& _rhs)
         {
-            this->mX += _rhs;
-            this->mY += _rhs;
-            this->mZ += _rhs;
-            this->mW += _rhs;
+            this->x_ += _rhs;
+            this->y_ += _rhs;
+            this->z_ += _rhs;
+            this->w_ += _rhs;
 
             return *this;
         }
 
         inline Vector4<T> operator+=(const Vector4<T>& _rhs)
         {
-            this->mX += _rhs.mX;
-            this->mY += _rhs.mY;
-            this->mZ += _rhs.mZ;
-            this->mW += _rhs.mW;
+            this->x_ += _rhs.x_;
+            this->y_ += _rhs.y_;
+            this->z_ += _rhs.z_;
+            this->w_ += _rhs.w_;
 
             return *this;
         }
 
         inline Vector4<T> operator-=(const T& _rhs)
         {
-            this->mX -= _rhs;
-            this->mY -= _rhs;
-            this->mZ -= _rhs;
-            this->mW -= _rhs;
+            this->x_ -= _rhs;
+            this->y_ -= _rhs;
+            this->z_ -= _rhs;
+            this->w_ -= _rhs;
 
             return *this;
         }
 
         inline Vector4<T> operator-=(const Vector4<T>& _rhs)
         {
-            this->mX -= _rhs.mX;
-            this->mY -= _rhs.mY;
-            this->mZ -= _rhs.mZ;
-            this->mW -= _rhs.mW;
+            this->x_ -= _rhs.x_;
+            this->y_ -= _rhs.y_;
+            this->z_ -= _rhs.z_;
+            this->w_ -= _rhs.w_;
 
             return *this;
         }
 
         inline Vector4<T> operator*=(const T& _rhs)
         {
-            this->mX *= _rhs;
-            this->mY *= _rhs;
-            this->mZ *= _rhs;
-            this->mW *= _rhs;
+            this->x_ *= _rhs;
+            this->y_ *= _rhs;
+            this->z_ *= _rhs;
+            this->w_ *= _rhs;
 
             return *this;
         }
 
         inline Vector4<T> operator/=(const T& _rhs)
         {
-            this->mX /= _rhs;
-            this->mY /= _rhs;
-            this->mZ /= _rhs;
-            this->mW /= _rhs;
+            this->x_ /= _rhs;
+            this->y_ /= _rhs;
+            this->z_ /= _rhs;
+            this->w_ /= _rhs;
 
             return *this;
         }
@@ -527,21 +527,21 @@ namespace NAGE
         friend std::ostream& operator<<(std::ostream& _out, const Vector4& _vector);
 
         // Getters and setters.
-        inline void setX(T _x) { this->mX = _x; }
-        inline void setY(T _y) { this->mY = _y; }
-        inline void setZ(T _z) { this->mZ = _z; }
-        inline void setW(T _w) { this->mW = _w; }
-        inline T x() const { return this->mX; }
-        inline T y() const { return this->mY; }
-        inline T z() const { return this->mZ; }
-        inline T w() const { return this->mW; }
+        inline void setX(T _x) { this->x_ = _x; }
+        inline void setY(T _y) { this->y_ = _y; }
+        inline void setZ(T _z) { this->z_ = _z; }
+        inline void setW(T _w) { this->w_ = _w; }
+        inline T x() const { return this->x_; }
+        inline T y() const { return this->y_; }
+        inline T z() const { return this->z_; }
+        inline T w() const { return this->w_; }
 
         // Static members
         static Vector4<T> zero;
         static Vector4<T> one;
 
     private:
-        T mX, mY, mZ, mW;
+        T x_, y_, z_, w_;
     };
 
     // Static members initialization.
@@ -559,10 +559,10 @@ namespace NAGE
     std::ostream& operator<< (std::ostream& _out, const Vector4<T>& _vector)
     {
         _out << "Vector4<" << typeid(T).name() << ">(" << _vector.x() << ", "
-            << _vector.y() << ", " << _vector.z() << ", " << _vector.mW << ")" << std::endl;
+            << _vector.y() << ", " << _vector.z() << ", " << _vector.w_ << ")" << std::endl;
 
         return _out;
     }
 }
 
-#endif // NAGE_NAGEMATHVECTOR_H_
+#endif // NAGE_MATH_NAGEMATHVECTOR_H_

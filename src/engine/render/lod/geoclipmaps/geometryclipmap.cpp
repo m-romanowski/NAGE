@@ -20,14 +20,12 @@ namespace NAGE
         for(unsigned int z = 0; z < _n; z++)
         {
             for(unsigned int x = 0; x < _n; x++)
-            {
-                mBlock.mVertices.push_back(Vertex(Vector3f(x, 0.0f, z)));
-            }
+                block_.vertices_.push_back(Vertex(Vector3f(x, 0.0f, z)));
         }
 
         // Indices
         unsigned int index = 0;
-        mBlock.mIndices.resize(_n * _n * 6);
+        block_.indices_.resize(_n * _n * 6);
 
         for (unsigned int z = 0; z < _n - 1; z++)
         {
@@ -35,12 +33,12 @@ namespace NAGE
             {
                 unsigned int offset = z * _n + x;
 
-                mBlock.mIndices[index] = offset;
-                mBlock.mIndices[index + 1] = offset + 1;
-                mBlock.mIndices[index + 2] = offset + _n;
-                mBlock.mIndices[index + 3] = offset + 1;
-                mBlock.mIndices[index + 4] = offset + _n + 1;
-                mBlock.mIndices[index + 5] = offset + _n;
+                block_.indices_[index] = offset;
+                block_.indices_[index + 1] = offset + 1;
+                block_.indices_[index + 2] = offset + _n;
+                block_.indices_[index + 3] = offset + 1;
+                block_.indices_[index + 4] = offset + _n + 1;
+                block_.indices_[index + 5] = offset + _n;
 
                 index += 6;
             }
@@ -54,18 +52,14 @@ namespace NAGE
         for(unsigned int z = 0; z < _m; z++)
         {
             for(unsigned int x = 0; x < _n; x++)
-            {
-                mRingFixup.mVertices.push_back(Vertex(Vector3f(x, 0.0f, z)));
-            }
+                ringFixup_.vertices_.push_back(Vertex(Vector3f(x, 0.0f, z)));
         }
 
         // Horizontal
         for(unsigned int z = 0; z < _n; z++)
         {
             for(unsigned int x = 0; x < _m; x++)
-            {
-                mRingFixup.mVertices.push_back(Vertex(Vector3f(x, 0.0f, z)));
-            }
+                ringFixup_.vertices_.push_back(Vertex(Vector3f(x, 0.0f, z)));
         }
 
         // Indices
@@ -79,36 +73,28 @@ namespace NAGE
         for(unsigned int z = 0; z < 2; z++)
         {
             for(unsigned int x = 0; x < 2 * _size + 1; x++)
-            {
-                mRingFixup.mVertices.push_back(Vertex(Vector3f(x, 0.0f, z)));
-            }
+                ringFixup_.vertices_.push_back(Vertex(Vector3f(x, 0.0f, z)));
         }
 
         // Bottom
         for(unsigned int z = 1; z >= 0 ; z--)
         {
             for(unsigned int x = 0; x < 2 * _size + 1; x++)
-            {
-                mRingFixup.mVertices.push_back(Vertex(Vector3f(2 * _size - x, 0.0f, (2 * _size - 1) + z)));
-            }
+                ringFixup_.vertices_.push_back(Vertex(Vector3f(2 * _size - x, 0.0f, (2 * _size - 1) + z)));
         }
 
         // Left
         for(unsigned int x = 0; x < 2; x++)
         {
             for(unsigned int z = 0; z < 2 * _size + 1; z++)
-            {
-                mRingFixup.mVertices.push_back(Vertex(Vector3f(x, 0.0f, 2 * _size - z)));
-            }
+                ringFixup_.vertices_.push_back(Vertex(Vector3f(x, 0.0f, 2 * _size - z)));
         }
 
         // Right
         for(unsigned int x = 1; x >= 0 ; x--)
         {
             for(unsigned int z = 0; z < 2 * _size + 1 ; z++)
-            {
-                mRingFixup.mVertices.push_back(Vertex(Vector3f((2 * _size - 1) + x, 0.0f, z)));
-            }
+                ringFixup_.vertices_.push_back(Vertex(Vector3f((2 * _size - 1) + x, 0.0f, z)));
         }
     }
 

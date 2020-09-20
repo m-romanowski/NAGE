@@ -10,42 +10,42 @@ namespace NAGE
 
     float AABB::minX() const
     {
-        return mMinX;
+        return minX_;
     }
 
     float AABB::maxX() const
     {
-        return mMaxX;
+        return maxX_;
     }
 
     float AABB::minY() const
     {
-        return mMinY;
+        return minY_;
     }
 
     float AABB::maxY() const
     {
-        return mMaxY;
+        return maxY_;
     }
 
     float AABB::minZ() const
     {
-        return mMinZ;
+        return minZ_;
     }
 
     float AABB::maxZ() const
     {
-        return mMaxZ;
+        return maxZ_;
     }
 
     Vector3f AABB::min() const
     {
-        return Vector3f(mMinX, mMinY, mMinZ);
+        return Vector3f(minX_, minY_, minZ_);
     }
 
     Vector3f AABB::max() const
     {
-        return Vector3f(mMaxX, mMaxY, mMaxZ);
+        return Vector3f(maxX_, maxY_, maxZ_);
     }
 
     Vector3f AABB::center() const
@@ -60,64 +60,64 @@ namespace NAGE
 
     void AABB::setMinX(float _x)
     {
-        mMinX = _x;
+        minX_ = _x;
     }
 
     void AABB::setMaxX(float _x)
     {
-        mMaxX = _x;
+        maxX_ = _x;
     }
 
     void AABB::setMinY(float _y)
     {
-        mMinY = _y;
+        minY_ = _y;
     }
 
     void AABB::setMaxY(float _y)
     {
-        mMaxY = _y;
+        maxY_ = _y;
     }
 
     void AABB::setMinZ(float _z)
     {
-        mMinZ = _z;
+        minZ_ = _z;
     }
 
     void AABB::setMaxZ(float _z)
     {
-        mMaxZ = _z;
+        maxZ_ = _z;
     }
 
     void AABB::setX(float _minX, float _maxX)
     {
-        mMinX = _minX;
-        mMaxX = _maxX;
+        minX_ = _minX;
+        maxX_ = _maxX;
     }
 
     void AABB::setY(float _minY, float _maxY)
     {
-        mMinY = _minY;
-        mMaxY = _maxY;
+        minY_ = _minY;
+        maxY_ = _maxY;
     }
 
     void AABB::setZ(float _minZ, float _maxZ)
     {
-        mMinZ = _minZ;
-        mMaxZ = _maxZ;
+        minZ_ = _minZ;
+        maxZ_ = _maxZ;
     }
 
     void AABB::setMin(const Vector3f _min)
     {
-        mMinX = _min.x();
-        mMinY = _min.y();
-        mMinZ = _min.z();
+        minX_ = _min.x();
+        minY_ = _min.y();
+        minZ_ = _min.z();
     }
 
     void AABB::setMax(const Vector3f _max)
     {
-        mMaxX = _max.x();
-        mMaxY = _max.y();
-        mMaxZ = _max.z();
+        maxX_ = _max.x();
+        maxY_ = _max.y();
+        maxZ_ = _max.z();
     }
 
     void AABB::setMinMax(const Vector3f _min, const Vector3f _max)
@@ -128,9 +128,9 @@ namespace NAGE
 
     bool AABB::intersect(const BS _bs)
     {
-        float x = std::max(mMinX, std::min(_bs.x(), mMaxX));
-        float y = std::max(mMinY, std::min(_bs.y(), mMaxY));
-        float z = std::max(mMinZ, std::min(_bs.z(), mMaxZ));
+        float x = std::max(minX_, std::min(_bs.x(), maxX_));
+        float y = std::max(minY_, std::min(_bs.y(), maxY_));
+        float z = std::max(minZ_, std::min(_bs.z(), maxZ_));
 
         float distance = std::sqrt((x - _bs.x()) * (x - _bs.x()) +
             (y - _bs.y()) * (y - _bs.y()) +
@@ -150,9 +150,9 @@ namespace NAGE
 
     bool AABB::intersect(const AABB _box)
     {
-        return (mMinX <= _box.mMaxX && mMaxX >= _box.mMinX) &&
-            (mMinY <= _box.mMaxY && mMaxY >= _box.mMinY) &&
-            (mMinZ <= _box.mMinZ && mMaxZ >= _box.mMinZ);
+        return (minX_ <= _box.maxX_ && maxX_ >= _box.minX_) &&
+            (minY_ <= _box.maxY_ && maxY_ >= _box.minY_) &&
+            (minZ_ <= _box.minZ_ && maxZ_ >= _box.minZ_);
     }
 
     bool AABB::intersect(const Vector3f _min, const Vector3f _max)
@@ -167,9 +167,9 @@ namespace NAGE
 
     bool AABB::isPointInside(const Vector3f _point)
     {
-        return (_point.x() >= mMinX && _point.x() <= mMaxX) &&
-            (_point.y() >= mMinY && _point.y() <= mMaxY) &&
-            (_point.z() >= mMinZ && _point.z() <= mMaxZ);
+        return (_point.x() >= minX_ && _point.x() <= maxX_) &&
+            (_point.y() >= minY_ && _point.y() <= maxY_) &&
+            (_point.z() >= minZ_ && _point.z() <= maxZ_);
     }
 
     bool AABB::isPointInside(float _x, float _y, float _z)

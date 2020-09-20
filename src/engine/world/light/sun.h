@@ -29,10 +29,9 @@ namespace NAGE
     private:
         void setup();
 
-        Shader* mShader;
-        Transform* mTransform;
-
-        float mGradientExpand;
+        Shader* shader_;
+        Transform* transform_;
+        float gradientExpand_;
     };
 }
 

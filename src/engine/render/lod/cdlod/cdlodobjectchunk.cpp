@@ -3,72 +3,72 @@
 namespace NAGE
 {
     CDLODObjectChunk::CDLODObjectChunk(int _size)
-        : mSize(_size)
+        : size_(_size)
     {
         setupMeshBuffers();
     }
 
     int CDLODObjectChunk::topLeftEndIndex() const
     {
-        return mTopLeftEndIndex;
+        return topLeftEndIndex_;
     }
 
     int CDLODObjectChunk::topRightEndIndex() const
     {
-        return mTopRightEndIndex;
+        return topRightEndIndex_;
     }
 
     int CDLODObjectChunk::bottomLeftEndIndex() const
     {
-        return mBottomLeftEndIndex;
+        return bottomLeftEndIndex_;
     }
 
     int CDLODObjectChunk::bottomRightEndIndex() const
     {
-        return mBottomRightEndIndex;
+        return bottomRightEndIndex_;
     }
 
     int CDLODObjectChunk::size() const
     {
-        return mSize;
+        return size_;
     }
 
     void CDLODObjectChunk::appendIndices(int _x, int _z, int _size, int& _currentOffset)
     {
-        mIndices[_currentOffset++] = (_x + _size * _z);
-        mIndices[_currentOffset++] = ((_x + 1) + _size * _z);
-        mIndices[_currentOffset++] = ((_x + 1) + _size * (_z + 1));
-        mIndices[_currentOffset++] = ((_x + 1) + _size * (_z + 1));
-        mIndices[_currentOffset++] = (_x + _size * (_z + 1));
-        mIndices[_currentOffset++] = (_x + _size * _z);
+        indices_[_currentOffset++] = (_x + _size * _z);
+        indices_[_currentOffset++] = ((_x + 1) + _size * _z);
+        indices_[_currentOffset++] = ((_x + 1) + _size * (_z + 1));
+        indices_[_currentOffset++] = ((_x + 1) + _size * (_z + 1));
+        indices_[_currentOffset++] = (_x + _size * (_z + 1));
+        indices_[_currentOffset++] = (_x + _size * _z);
     }
 
     void CDLODObjectChunk::setupMeshBuffers()
     {
-        assert(mSize > 0);
+        assert(size_ > 0);
 
-        const int dim = mSize + 1;
+        const int dim = size_ + 1;
 
         // Vertices
         for(int x = 0; x < dim; x++)
         {
             for(int z = 0; z < dim; z++)
             {
-                float xx = (x - mSize / 2);
-                float zz = (z - mSize / 2);
+                float xx = (x - size_ / 2);
+                float zz = (z - size_ / 2);
                 xx = x;
                 zz = z;
 
-                mVertices.push_back(
-                    Vertex(Vector3f(xx / mSize, 0.0f, zz / mSize))
+                vertices_.push_back(
+                    Vertex(Vector3f(xx / size_, 0.0f, zz / size_))
                 );
             }
         }
 
         // Indices
-        mIndices.resize(mSize * mSize * 6);
+        indices_.resize(size_ * size_ * 6);
         int indiceOffset = 0;
-        int halfSize = mSize / 2;
+        int halfSize = size_ / 2;
 
         // Top Left
         for(int z = 0; z < halfSize; z++)
@@ -79,21 +79,21 @@ namespace NAGE
             }
         }
 
-        mTopLeftEndIndex = indiceOffset;
+        topLeftEndIndex_ = indiceOffset;
 
         // Top right
         for(int z = 0; z < halfSize; z++)
         {
-            for(int x = halfSize; x < mSize; x++)
+            for(int x = halfSize; x < size_; x++)
             {
                 appendIndices(x, z, dim, indiceOffset);
             }
         }
 
-        mTopRightEndIndex = indiceOffset;
+        topRightEndIndex_ = indiceOffset;
 
         // Bottom left
-        for(int z = halfSize; z < mSize; z++)
+        for(int z = halfSize; z < size_; z++)
         {
             for(int x = 0; x < halfSize; x++)
             {
@@ -101,18 +101,18 @@ namespace NAGE
             }
         }
 
-        mBottomLeftEndIndex = indiceOffset;
+        bottomLeftEndIndex_ = indiceOffset;
 
         // Bottom right
-        for(int z = halfSize; z < mSize; z++)
+        for(int z = halfSize; z < size_; z++)
         {
-            for(int x = halfSize; x < mSize; x++)
+            for(int x = halfSize; x < size_; x++)
             {
                 appendIndices(x, z, dim, indiceOffset);
             }
         }
 
-        mBottomRightEndIndex = indiceOffset;
+        bottomRightEndIndex_ = indiceOffset;
 
         // Setup buffers (VAO, etc).
         setupBuffer();
@@ -120,7 +120,7 @@ namespace NAGE
 
     void CDLODObjectChunk::drawChunk(int _indicesCount, int _indicesIndexLocation)
     {
-        glBindVertexArray(mVAO);
+        glBindVertexArray(VAO_);
         glDrawElements(GL_TRIANGLES, _indicesCount, GL_UNSIGNED_INT,
             reinterpret_cast<void*>(_indicesIndexLocation));
     }

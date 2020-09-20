@@ -19,13 +19,13 @@ namespace NAGE
         bool bottomRight() const;
 
     private:
-        int mRange;
+        int range_;
 
         // Render some child quads (or all of them).
-        bool mTopLeft;
-        bool mTopRight;
-        bool mBottomLeft;
-        bool mBottomRight;
+        bool topLeft_;
+        bool topRight_;
+        bool bottomLeft_;
+        bool bottomRight_;
     };
 }
 

@@ -38,18 +38,18 @@ namespace QNAGE
         ~RenderWindow() override;
 
         // Getters
-        inline MainWindow* getMainWindow() const { return mainWindow; }
-        inline GLWidget* getGLWidget() const { return glWidget; }
-        inline VKWidget* getVKWidget() const { return vkWidget; }
-        inline QString getWindowTitle() const { return windowTitle; }
-        inline bool isWindowDocked() const { return isDocked; }
+        inline MainWindow* getMainWindow() const { return mainWindow_; }
+        inline GLWidget* getGLWidget() const { return glWidget_; }
+        inline VKWidget* getVKWidget() const { return vkWidget_; }
+        inline QString getWindowTitle() const { return windowTitle_; }
+        inline bool isWindowDocked() const { return isDocked_; }
 
         // Setters
-        void setMainWindow(MainWindow* _mainWindow) { mainWindow = _mainWindow; }
-        void setGLWidget(GLWidget* _glWidget) { glWidget = _glWidget; reloadUi(); }
-        void setVKWidget(VKWidget* _vkWidget) { vkWidget = _vkWidget; }
+        void setMainWindow(MainWindow* _mainWindow) { mainWindow_ = _mainWindow; }
+        void setGLWidget(GLWidget* _glWidget) { glWidget_ = _glWidget; reloadUi(); }
+        void setVKWidget(VKWidget* _vkWidget) { vkWidget_ = _vkWidget; }
         void setEngineWindowTitle(const QString& _title);
-        void setWindowDockProperty(bool _type) { isDocked = _type; }
+        void setWindowDockProperty(bool _type) { isDocked_ = _type; }
 
         // Public methods
         void setupGLWidget(NAGE::IGame* _game);
@@ -64,16 +64,16 @@ namespace QNAGE
     private:
         void setupUi();
 
-        MainWindow* mainWindow;
-        GLWidget* glWidget;
-        VKWidget* vkWidget;
-        QString windowTitle;
+        MainWindow* mainWindow_;
+        GLWidget* glWidget_;
+        VKWidget* vkWidget_;
+        QString windowTitle_;
 
         // Ui
-        bool isDocked;
+        bool isDocked_;
 
-        QVBoxLayout* layout;
-        CustomButton* dockButton;
+        QVBoxLayout* layout_;
+        CustomButton* dockButton_;
     };
 }
 

@@ -12,7 +12,7 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
 
     // Dark styles
     QFile file(":/rc/styles/dark-blue.qss");
@@ -24,22 +24,22 @@ int main(int argc, char *argv[])
     {
         file.open(QFile::ReadOnly | QFile::Text);
         QTextStream ts(&file);
-        a.setStyleSheet(ts.readAll());
+        app.setStyleSheet(ts.readAll());
     }
 
     NAGE::Game* game = new NAGE::Game;
 
     // Window setup
-    QNAGE::MainWindow w;
-    QNAGE::RenderWindow* window = new QNAGE::RenderWindow(&w);
+    QNAGE::MainWindow mainWindow;
+    QNAGE::RenderWindow* window = new QNAGE::RenderWindow(&mainWindow);
     window->setupGLWidget(game);
 
     // Add gl window to main window and show.
-    w.addWindow(window);
-    w.show();
+    mainWindow.addWindow(window);
+    mainWindow.show();
 
     // Setup QMessageCatch.
     qInstallMessageHandler(QNAGE::LogWidget::QMessageOutput);
 
-    return a.exec();
+    return app.exec();
 }

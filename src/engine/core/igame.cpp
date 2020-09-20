@@ -4,8 +4,8 @@ namespace NAGE
 {
     IGame::IGame(FpsLimit _limit)
     {
-        mCoreEngine = new CoreEngine;
-        mCoreEngine->setFrameLimit(_limit);
+        coreEngine_ = new CoreEngine;
+        coreEngine_->setFrameLimit(_limit);
     }
 
     IGame::~IGame()
@@ -15,27 +15,27 @@ namespace NAGE
 
     CoreEngine* IGame::engine()
     {
-        return mCoreEngine;
+        return coreEngine_;
     }
 
     SceneManager* IGame::sceneManager()
     {
-        return mCoreEngine->renderEngine()->sceneManager();
+        return coreEngine_->renderEngine()->sceneManager();
     }
 
     void IGame::setEngine(CoreEngine* _engine)
     {
-        mCoreEngine = _engine;
+        coreEngine_ = _engine;
     }
 
     void IGame::initializeComponents(EngineType _type, IWindow* _window)
     {
         if(_type == EngineType::OpenGL)
-            mCoreEngine->initialize(new GLRenderEngine(_window));
+            coreEngine_->initialize(new GLRenderEngine(_window));
     }
 
     void IGame::launch()
     {
-        mCoreEngine->run();
+        coreEngine_->run();
     }
 }

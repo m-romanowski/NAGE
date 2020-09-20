@@ -5,7 +5,7 @@ namespace NAGE
 {
     Cube::Cube()
     {
-        mVertices = {
+        vertices_ = {
             Vertex(Vector3f(-1.0, -1.0,  1.0), Vector2f(0.0f, 0.0f)),
             Vertex(Vector3f(1.0, -1.0,  1.0), Vector2f(1.0f, 0.0f)),
             Vertex(Vector3f(1.0,  1.0,  1.0), Vector2f(1.0f, 1.0f)),
@@ -17,7 +17,7 @@ namespace NAGE
             Vertex(Vector3f(-1.0,  1.0, -1.0), Vector2f(0.0f, 1.0f)),
         };
 
-        mIndices = {
+        indices_ = {
             // front
             0, 1, 2,
             2, 3, 0,
@@ -38,7 +38,7 @@ namespace NAGE
             6, 7, 3
         };
 
-        VertexHelper::calculateNormals(mVertices, mIndices);
+        VertexHelper::calculateNormals(vertices_, indices_);
     }
 
     void Cube::setupPrimitive()
