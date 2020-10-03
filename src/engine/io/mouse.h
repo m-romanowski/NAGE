@@ -7,7 +7,7 @@
 
 #include <QCursor>
 
-namespace NAGE
+namespace mr::nage
 {
     class Mouse : public Input<InputInstance<MouseButton>>
     {

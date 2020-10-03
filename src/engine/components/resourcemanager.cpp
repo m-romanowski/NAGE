@@ -1,6 +1,6 @@
 #include "resourcemanager.h"
 
-namespace NAGE
+namespace mr::nage
 {
     ResourceManager::~ResourceManager()
     {

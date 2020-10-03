@@ -12,7 +12,7 @@
 #include <QFont>
 #include <QSpacerItem>
 
-namespace QNAGE
+namespace mr::qnage
 {
     class ProjectDialog : public FramelessWindow, public Dialog
     {

@@ -10,6 +10,8 @@
 #include <iostream>
 #include <cstdlib>
 
+using namespace mr;
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -27,11 +29,11 @@ int main(int argc, char *argv[])
         app.setStyleSheet(ts.readAll());
     }
 
-    NAGE::Game* game = new NAGE::Game;
+    nage::Game* game = new nage::Game;
 
     // Window setup
-    QNAGE::MainWindow mainWindow;
-    QNAGE::RenderWindow* window = new QNAGE::RenderWindow(&mainWindow);
+    qnage::MainWindow mainWindow;
+    qnage::RenderWindow* window = new qnage::RenderWindow(&mainWindow);
     window->setupGLWidget(game);
 
     // Add gl window to main window and show.
@@ -39,7 +41,7 @@ int main(int argc, char *argv[])
     mainWindow.show();
 
     // Setup QMessageCatch.
-    qInstallMessageHandler(QNAGE::LogWidget::QMessageOutput);
+    qInstallMessageHandler(qnage::LogWidget::QMessageOutput);
 
     return app.exec();
 }

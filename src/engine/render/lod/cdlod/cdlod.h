@@ -7,7 +7,7 @@
 
 #include <vector>
 
-namespace NAGE
+namespace mr::nage
 {
     class CDLOD
     {

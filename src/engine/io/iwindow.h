@@ -13,7 +13,7 @@
 
 #include <string>
 
-namespace NAGE
+namespace mr::nage
 {
     /*
      * Interface for OpenGL window.

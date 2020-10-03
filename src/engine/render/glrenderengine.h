@@ -12,7 +12,7 @@
 #include "engine/render/irenderengine.h"
 #include "engine/util/threadpool.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class GLRenderEngine : public IRenderEngine
     {

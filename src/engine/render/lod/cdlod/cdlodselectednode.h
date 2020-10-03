@@ -3,7 +3,7 @@
 
 #include "cdlodnode.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class CDLODSelectedNode : public CDLODNode
     {

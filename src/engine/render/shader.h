@@ -15,7 +15,7 @@
 #include <string>
 #include <cstring>
 
-namespace NAGE
+namespace mr::nage
 {
     enum SHADER_TYPE
     {

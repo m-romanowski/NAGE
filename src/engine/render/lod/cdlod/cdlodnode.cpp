@@ -1,6 +1,6 @@
 #include "cdlodnode.h"
 
-namespace NAGE
+namespace mr::nage
 {
     CDLODNode::CDLODNode(int _x, int _z, unsigned int _lodLevel, int _dimension)
         : x_(_x),

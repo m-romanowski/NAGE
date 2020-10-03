@@ -5,7 +5,7 @@
 #include "engine/render/iobject.h"
 #include "engine/math/NAGEMath/nagemathcommon.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class Mesh : public IObject
     {

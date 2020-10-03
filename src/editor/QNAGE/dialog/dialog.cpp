@@ -1,6 +1,6 @@
 #include "dialog.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     Dialog::Dialog()
     {

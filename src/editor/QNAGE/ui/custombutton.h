@@ -5,7 +5,7 @@
 #include <QIcon>
 #include <QVariant>
 
-namespace QNAGE
+namespace mr::qnage
 {
     class CustomButton : public QPushButton
     {

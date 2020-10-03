@@ -7,7 +7,7 @@
 #include <streambuf>
 #include <string>
 
-namespace QNAGE
+namespace mr::qnage
 {
     class ThreadLogStream : public QObject, public std::basic_streambuf<char>
     {

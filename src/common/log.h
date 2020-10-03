@@ -9,7 +9,7 @@
 #include <vector>
 #include <ctime>
 
-namespace NAGE
+namespace mr::nage
 {
     class Log
     {

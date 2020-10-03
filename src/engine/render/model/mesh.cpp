@@ -1,7 +1,7 @@
 #include "engine/render/glrenderengine.h"
 #include "mesh.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Mesh::Mesh()
         : material_(nullptr),

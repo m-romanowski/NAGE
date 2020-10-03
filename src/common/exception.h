@@ -4,7 +4,7 @@
 #include <exception>
 #include <string>
 
-namespace NAGE
+namespace mr::nage
 {
     class Exception : public std::exception
     {

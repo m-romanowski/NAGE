@@ -6,7 +6,7 @@
 
 #include <unordered_map>
 
-namespace NAGE
+namespace mr::nage
 {
     class SceneManager
     {

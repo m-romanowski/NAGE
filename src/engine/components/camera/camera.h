@@ -6,7 +6,7 @@
 #include "engine/math/NAGEMath/nagemathmatrix.h"
 #include "engine/math/NAGEMath/nagemathquaternion.h"
 
-namespace NAGE
+namespace mr::nage
 {
 	class Camera
 	{

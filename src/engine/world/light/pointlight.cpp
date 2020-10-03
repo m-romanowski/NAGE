@@ -1,7 +1,7 @@
 #include "engine/render/glrenderengine.h"
 #include "pointlight.h"
 
-namespace NAGE
+namespace mr::nage
 {
     PointLight::PointLight()
         : id_(-1),

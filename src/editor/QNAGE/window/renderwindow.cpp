@@ -3,7 +3,7 @@
 #include "widget/vkwidget.h"
 #include "mainwindow.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     RenderWindow::RenderWindow(MainWindow* _mainWindow)
         : FramelessWindow(_mainWindow, FRAMELESSWINDOW_WITHOUT_BUTTONS),
@@ -58,7 +58,7 @@ namespace QNAGE
         windowTitle_ = _title;
     }
 
-    void RenderWindow::setupGLWidget(NAGE::IGame* _game)
+    void RenderWindow::setupGLWidget(nage::IGame* _game)
     {
         if(glWidget_ == nullptr)
             glWidget_ = new GLWidget;

@@ -1,7 +1,7 @@
 #include "lsystem.h"
 #include <random>
 
-namespace NAGE
+namespace mr::nage
 {
     LSystem::LSystem()
         : axiom_("X"),

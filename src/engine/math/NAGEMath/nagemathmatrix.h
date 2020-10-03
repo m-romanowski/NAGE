@@ -9,7 +9,7 @@
 #include <vector>
 #include <stdexcept>
 
-namespace NAGE
+namespace mr::nage
 {
     template <typename T>
     class Matrix2;

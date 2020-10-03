@@ -5,7 +5,7 @@
 #include <vector>
 #include <cstring>
 
-namespace NAGE
+namespace mr::nage
 {
     class StringExtension
     {

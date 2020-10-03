@@ -1,6 +1,6 @@
 #include "transform.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Transform::Transform()
         : translation_(Vector3f(0.0f, 0.0f, 0.0f)),

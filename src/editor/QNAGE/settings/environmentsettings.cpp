@@ -1,6 +1,6 @@
 #include "environmentsettings.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     EnvironmentSettings::EnvironmentSettings(QWidget* _parent)
         : SettingsLayout(_parent)

@@ -1,7 +1,7 @@
 #ifndef NAGE_ENGINE_RENDER_LOD_CDLOD_CDLODNODE_H_
 #define NAGE_ENGINE_RENDER_LOD_CDLOD_CDLODNODE_H_
 
-namespace NAGE
+namespace mr::nage
 {
     class CDLODNode
     {

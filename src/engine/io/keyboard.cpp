@@ -1,6 +1,6 @@
 #include "keyboard.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Keyboard::InputContainer Keyboard::keyContainer_;
 

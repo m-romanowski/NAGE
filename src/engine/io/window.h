@@ -13,7 +13,7 @@
 #include <iostream>
 #include <string>
 
-namespace NAGE
+namespace mr::nage
 {
     /* Window interface.
      *

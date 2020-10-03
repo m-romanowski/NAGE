@@ -9,7 +9,7 @@
 
 #include <string>
 
-namespace NAGE
+namespace mr::nage
 {
     class Texture
     {

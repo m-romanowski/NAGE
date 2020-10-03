@@ -3,7 +3,7 @@
 #include <climits>
 #include <random>
 
-namespace NAGE
+namespace mr::nage
 {
     IWater::IWater()
         : shader_(new Shader),

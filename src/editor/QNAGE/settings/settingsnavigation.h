@@ -12,7 +12,7 @@
 #include <QIcon>
 #include <QDebug>
 
-namespace QNAGE
+namespace mr::qnage
 {
     class SettingsNavigation : public SettingsLayout
     {

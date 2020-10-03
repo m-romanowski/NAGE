@@ -1,7 +1,7 @@
 #ifndef NAGE_ENGINE_UTIL_SIZE_H_
 #define NAGE_ENGINE_UTIL_SIZE_H_
 
-namespace NAGE
+namespace mr::nage
 {
     template <typename T>
     class Size

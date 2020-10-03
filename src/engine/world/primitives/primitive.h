@@ -4,7 +4,7 @@
 #include "engine/render/iobject.h"
 #include <string>
 
-namespace NAGE
+namespace mr::nage
 {
     /* Primitive interface
      *

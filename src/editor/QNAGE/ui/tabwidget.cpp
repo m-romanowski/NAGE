@@ -1,6 +1,6 @@
 #include "tabwidget.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     TabWidget::TabWidget(QWidget* _parent)
         : QTabWidget(_parent)

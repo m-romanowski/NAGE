@@ -1,7 +1,7 @@
 #include "engine/render/glrenderengine.h"
 #include "model.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Model::Model()
         : transform_(new Transform),

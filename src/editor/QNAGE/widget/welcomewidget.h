@@ -10,7 +10,7 @@
 #include <QSpacerItem>
 #include <QSizePolicy>
 
-namespace QNAGE
+namespace mr::qnage
 {
     class WelcomeWidget : public QWidget
     {

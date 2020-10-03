@@ -3,7 +3,7 @@
 
 #include "itexturegenerator.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class FlowMap : public ITextureGenerator
     {

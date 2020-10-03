@@ -11,7 +11,7 @@
 #include <cassert>
 #include <unistd.h>
 
-namespace NAGE
+namespace mr::nage
 {
     class X11
     {

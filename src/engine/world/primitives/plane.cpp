@@ -1,7 +1,7 @@
 #include "engine/render/vertexhelper.h"
 #include "plane.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Plane::Plane(int _width, int _height)
     {

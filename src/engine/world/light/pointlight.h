@@ -4,7 +4,7 @@
 #include "ilight.h"
 #include "engine/render/iobject.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class PointLight : public ILight, public IObject
     {

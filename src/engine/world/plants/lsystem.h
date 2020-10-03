@@ -6,7 +6,7 @@
 
 #define RANDOM_ROTATIONS_COUNT 1000
 
-namespace NAGE
+namespace mr::nage
 {
     class LSystem
     {

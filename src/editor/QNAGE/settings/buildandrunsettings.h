@@ -4,7 +4,7 @@
 #include "settingslayout.h"
 #include <QLabel>
 
-namespace QNAGE
+namespace mr::qnage
 {
     class BuildAndRunSettings : public SettingsLayout
     {

@@ -6,7 +6,7 @@
 #include <string>
 #include <memory>
 
-namespace NAGE
+namespace mr::nage
 {
     class ITextureGenerator
     {

@@ -4,7 +4,7 @@
 #include <system_error>
 #include <string>
 
-namespace NAGE
+namespace mr::nage
 {
     enum class ERROR
     {
@@ -54,7 +54,7 @@ namespace NAGE
 
 namespace std
 {
-    template <> struct is_error_code_enum<NAGE::ERROR> : public true_type {};
+    template <> struct is_error_code_enum<mr::nage::ERROR> : public true_type {};
 }
 
 #endif // NAGE_COMMON_ERRORMANAGER_H_

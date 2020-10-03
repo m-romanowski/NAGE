@@ -1,6 +1,6 @@
 #include "cdlodquadtree.h"
 
-namespace NAGE
+namespace mr::nage
 {
     CDLODQuadTree::CDLODQuadTree(CDLODQuadTree* _parent, int _x, int _z, unsigned _lodLevel, int _dimension,
         HeightMap* _heightMap, NodeType _type)

@@ -1,7 +1,7 @@
 #include "engine/render/glrenderengine.h"
 #include "primitive.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Primitive::Primitive()
         : shader_(new Shader),

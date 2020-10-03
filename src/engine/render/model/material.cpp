@@ -1,6 +1,6 @@
 #include "material.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Material::Material()
         : texturesSent_(false)

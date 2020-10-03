@@ -1,6 +1,6 @@
 #include "cdlodselectednode.h"
 
-namespace NAGE
+namespace mr::nage
 {
     CDLODSelectedNode::CDLODSelectedNode(int _x, int _z, unsigned int _lodLevel, int _dimension, int _range,
         bool _topLeft, bool _topRight, bool _bottomLeft, bool _bottomRight)

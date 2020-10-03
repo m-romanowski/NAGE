@@ -12,7 +12,7 @@
 /**
  * Original paper: https://github.com/fstrugar/CDLOD/blob/master/cdlod_paper_latest.pdf
  */
-namespace NAGE
+namespace mr::nage
 {
     class CDLODQuadTree : public CDLODNode
     {

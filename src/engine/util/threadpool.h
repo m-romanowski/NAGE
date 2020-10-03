@@ -4,7 +4,7 @@
 #include <vector>
 #include <thread>
 
-namespace NAGE
+namespace mr::nage
 {
     // Very basic and trivial thread pool (need to be remodel in the future).
     // Should not be used in production app!

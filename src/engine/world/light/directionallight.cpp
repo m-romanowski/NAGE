@@ -1,6 +1,6 @@
 #include "directionallight.h"
 
-namespace NAGE
+namespace mr::nage
 {
     DirectionalLight::DirectionalLight()
     {

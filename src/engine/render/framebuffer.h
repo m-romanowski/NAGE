@@ -6,7 +6,7 @@
 
 #include <cassert>
 
-namespace NAGE
+namespace mr::nage
 {
     class FrameBuffer
     {

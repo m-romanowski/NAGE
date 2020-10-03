@@ -1,7 +1,7 @@
 #include "texture.h"
 #include <iostream>
 
-namespace NAGE
+namespace mr::nage
 {
     Texture::Texture(TextureType _type)
         : type_(_type),

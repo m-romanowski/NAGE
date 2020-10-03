@@ -1,7 +1,7 @@
 #ifndef NAGE_ENGINE_COMPONENTS_TYPES_H_
 #define NAGE_ENGINE_COMPONENTS_TYPES_H_
 
-namespace NAGE
+namespace mr::nage
 {
     enum EngineType
     {

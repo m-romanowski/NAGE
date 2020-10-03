@@ -5,7 +5,7 @@
 #include "material.h"
 #include "engine/world/primitives/primitive.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class Model
     {

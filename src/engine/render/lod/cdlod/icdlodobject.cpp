@@ -1,7 +1,7 @@
 #include "engine/render/glrenderengine.h"
 #include "icdlodobject.h"
 
-namespace NAGE
+namespace mr::nage
 {
     ICDLODObject::ICDLODObject(int _lodLevel, HeightMap* _heightmap, CDLODSettings _settings)
         : lodLevel_(_lodLevel),

@@ -1,6 +1,6 @@
 #include "collisionplane.h"
 
-namespace NAGE
+namespace mr::nage
 {
     CollisionPlane::CollisionPlane()
     {

@@ -6,7 +6,7 @@
 
 #include <memory>
 
-namespace NAGE
+namespace mr::nage
 {
     class WaterFrameBuffer : public FrameBuffer
     {

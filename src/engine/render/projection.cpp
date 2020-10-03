@@ -1,6 +1,6 @@
 #include "projection.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Projection::Projection()
         : fov_(60.0f),

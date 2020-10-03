@@ -1,6 +1,6 @@
 #include "vkwidget.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     VKWidget::VKWidget()
     {

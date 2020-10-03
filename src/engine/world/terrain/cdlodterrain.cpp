@@ -1,7 +1,7 @@
 #include "engine/render/glrenderengine.h"
 #include "cdlodterrain.h"
 
-namespace NAGE
+namespace mr::nage
 {
     CDLODTerrain::CDLODTerrain(int _lodLevel, HeightMap* _heightmap, CDLODSettings _settings)
         : ICDLODObject(_lodLevel, _heightmap, _settings)

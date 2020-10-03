@@ -1,6 +1,6 @@
 #include "framelesswindow.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     FramelessWindow::FramelessWindow(QWidget* _parent, unsigned int _type)
         : QWidget(_parent),

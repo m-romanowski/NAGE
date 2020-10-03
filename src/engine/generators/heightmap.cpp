@@ -1,7 +1,7 @@
 #include "engine/components/image.h"
 #include "heightmap.h"
 
-namespace NAGE
+namespace mr::nage
 {
     HeightMap::HeightMap()
     {

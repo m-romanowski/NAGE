@@ -1,6 +1,6 @@
 #include "normalmap.h"
 
-namespace NAGE
+namespace mr::nage
 {
     NormalMap::NormalMap()
     {

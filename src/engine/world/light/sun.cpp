@@ -1,7 +1,7 @@
 #include "engine/render/glrenderengine.h"
 #include "sun.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Sun::Sun()
         : transform_(new Transform)

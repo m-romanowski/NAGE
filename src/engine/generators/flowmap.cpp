@@ -1,6 +1,6 @@
 #include "flowmap.h"
 
-namespace NAGE
+namespace mr::nage
 {
     void FlowMap::loadFromFile(const std::string& _path)
     {

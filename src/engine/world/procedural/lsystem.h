@@ -4,7 +4,7 @@
 #include <string>
 #include <map>
 
-namespace NAGE
+namespace mr::nage
 {
     class LSystem
     {

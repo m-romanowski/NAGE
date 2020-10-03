@@ -1,6 +1,6 @@
 #include "scenenode.h"
 
-namespace NAGE
+namespace mr::nage
 {
     SceneNode::SceneNode()
         : skybox_(nullptr),

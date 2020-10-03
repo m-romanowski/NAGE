@@ -1,7 +1,7 @@
 #include "bs.h"
 #include "aabb.h"
 
-namespace NAGE
+namespace mr::nage
 {
     AABB::AABB()
     {

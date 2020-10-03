@@ -6,7 +6,7 @@
 #include "engine/components/camera/camera.h"
 #include "engine/math/NAGEMath/nagemathvector.h"
 
-namespace NAGE
+namespace mr::nage
 {
     /* Interface for the light types.
      */

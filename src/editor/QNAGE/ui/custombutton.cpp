@@ -1,6 +1,6 @@
 #include "custombutton.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     CustomButton::CustomButton(QWidget* _parent)
         : QPushButton(_parent)

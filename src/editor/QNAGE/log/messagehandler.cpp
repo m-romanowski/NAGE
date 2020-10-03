@@ -1,6 +1,6 @@
 #include "messagehandler.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     MessageHandler::MessageHandler(QPlainTextEdit* _textEdit, QObject* _parent)
         : QObject(_parent),

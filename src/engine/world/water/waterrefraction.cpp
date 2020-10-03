@@ -1,6 +1,6 @@
 #include "waterrefraction.h"
 
-namespace NAGE
+namespace mr::nage
 {
     WaterRefraction::WaterRefraction(int _width, int _height)
         : WaterFrameBuffer(_width, _height)

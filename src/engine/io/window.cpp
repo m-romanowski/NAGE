@@ -2,7 +2,7 @@
 #include "engine/io/keyboard.h"
 #include "window.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Window::Window(int _width, int _height, const std::string& _title)
         : width_(_width),
@@ -77,10 +77,10 @@ namespace NAGE
         NAGE_UNUSED(_mods);
 
         if(_action == GLFW_PRESS)
-            NAGE::Keyboard::registerKeyPress(static_cast<Key>(_key));
+            nage::Keyboard::registerKeyPress(static_cast<Key>(_key));
 
         if(_action == GLFW_RELEASE)
-            NAGE::Keyboard::registerKeyRelease(static_cast<Key>(_key));
+            nage::Keyboard::registerKeyRelease(static_cast<Key>(_key));
     }
 
     void Window::mouseButtonCallback(GLFWwindow* _window, int _button, int _action, int _mods)
@@ -89,10 +89,10 @@ namespace NAGE
         NAGE_UNUSED(_mods);
 
         if(_action == GLFW_PRESS)
-            NAGE::Mouse::registerMousePress(static_cast<MouseButton>(_button));
+            nage::Mouse::registerMousePress(static_cast<MouseButton>(_button));
 
         if(_action == GLFW_RELEASE)
-            NAGE::Mouse::registerMouseRelease(static_cast<MouseButton>(_button));
+            nage::Mouse::registerMouseRelease(static_cast<MouseButton>(_button));
     }
 
     void Window::scrollCallback(GLFWwindow* _window, double _xOffset, double _yOffset)

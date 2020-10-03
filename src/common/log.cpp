@@ -1,6 +1,6 @@
 #include "log.h"
 
-namespace NAGE
+namespace mr::nage
 {
     /* Get current timestamp - hh:mm:ss
      */

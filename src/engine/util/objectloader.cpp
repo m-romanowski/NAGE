@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <map>
 
-namespace NAGE
+namespace mr::nage
 {
     ObjectLoader::ObjectLoader(const std::string& _path)
     {

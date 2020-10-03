@@ -8,7 +8,7 @@
 
 #define assertm(exp, msg) assert(((void)msg, exp))
 
-namespace NAGE
+namespace mr::nage
 {
     typedef unsigned int uint;
 

@@ -1,6 +1,6 @@
 #include "X11.h"
 
-namespace NAGE
+namespace mr::nage
 {
     X11::X11()
     {
@@ -45,7 +45,7 @@ namespace NAGE
         NAGE_UNUSED(_display);
         NAGE_UNUSED(_event);
 
-        NAGE::Log::error("Enexpected error: " + std::string(reinterpret_cast<char*>(_event->error_code)));
+        nage::Log::error("Enexpected error: " + std::string(reinterpret_cast<char*>(_event->error_code)));
         return True;
     }
 

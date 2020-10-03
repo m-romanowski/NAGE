@@ -5,7 +5,7 @@
 #include <thread>
 #include <functional>
 
-namespace NAGE
+namespace mr::nage
 {
     class Timer
     {

@@ -1,6 +1,6 @@
 #include "shader.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Shader::Shader()
         : vertexObj_(0),

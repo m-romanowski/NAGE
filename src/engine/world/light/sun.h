@@ -5,7 +5,7 @@
 #include "engine/render/iobject.h"
 #include "engine/world/primitives/sphere.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class Sun
         : public DirectionalLight, Sphere

@@ -4,7 +4,7 @@
 #include "nagemathcommon.h"
 #include "nagemathvector.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class Quaternion
     {

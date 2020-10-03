@@ -1,7 +1,7 @@
 #include "engine/render/vertexhelper.h"
 #include "cube.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Cube::Cube()
     {

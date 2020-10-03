@@ -1,6 +1,6 @@
 #include "camera.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Camera::Camera()
         : forward_(Vector3f::forward),

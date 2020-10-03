@@ -8,7 +8,7 @@
 #include "engine/world/terrain/cdlodterrain.h"
 #include "engine/world/water/cdlodwater.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class Game : public IGame
     {

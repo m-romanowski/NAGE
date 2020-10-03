@@ -1,7 +1,7 @@
 #include "engine/render/glrenderengine.h"
 #include "skybox.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Skybox::Skybox(Shader* _shader)
         : shader_(_shader)
@@ -80,7 +80,7 @@ namespace NAGE
         glBindVertexArray(VAO_);
 
         glBindBuffer(GL_ARRAY_BUFFER, VBO_);
-        NAGE::nage_glBufferData(GL_ARRAY_BUFFER, vertices_, GL_STATIC_DRAW);
+        nage::nage_glBufferData(GL_ARRAY_BUFFER, vertices_, GL_STATIC_DRAW);
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), reinterpret_cast<void*>(0));
@@ -140,7 +140,7 @@ namespace NAGE
         shader_->setMat4("projection", GLRenderEngine::projection().perspective().transpose());
         // Remove translation column from the view matrix.
         // We need that because we don't let get close to the edge of skybox.
-        // Player will be always in the center of skybox - skybox will be not move with the player.
+        // Player will be always in the center of skybox - skybox will be not move with the camera.
         Matrix4f viewWithoutTranslation = Matrix4f::transform(Matrix4f::transform(_camera->view()));
         shader_->setMat4("view", viewWithoutTranslation.transpose());
 

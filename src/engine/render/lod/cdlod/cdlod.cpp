@@ -1,6 +1,6 @@
 #include "cdlod.h"
 
-namespace NAGE
+namespace mr::nage
 {
     CDLOD::CDLOD(CDLODSettings _settings)
         : cdlodSettings_(_settings)

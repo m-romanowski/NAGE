@@ -7,7 +7,7 @@
 #include <QVBoxLayout>
 #include <QDebug>
 
-namespace QNAGE
+namespace mr::qnage
 {
     // Interface for other settings layouts.
     class SettingsLayout : public QWidget

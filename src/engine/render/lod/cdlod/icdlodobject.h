@@ -8,7 +8,7 @@
 
 #include <map>
 
-namespace NAGE
+namespace mr::nage
 {
     class ICDLODObject
     {

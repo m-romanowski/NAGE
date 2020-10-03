@@ -2,7 +2,7 @@
 
 using namespace std::chrono;
 
-namespace NAGE
+namespace mr::nage
 {
     CDLODWater::CDLODWater(int _lodLevel, HeightMap* _heightmap, CDLODSettings _settings)
         : ICDLODObject(_lodLevel, _heightmap, _settings)

@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace NAGE
+namespace mr::nage
 {
     // OpenGL version.
     constexpr unsigned int GL_CONTEXT_VERSION_MAJOR = 4;

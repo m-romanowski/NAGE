@@ -12,7 +12,7 @@
 #include <iostream>
 #include <chrono>
 
-namespace NAGE
+namespace mr::nage
 {
     class CoreEngine
     {

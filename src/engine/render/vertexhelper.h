@@ -6,7 +6,7 @@
 
 #include <vector>
 
-namespace NAGE
+namespace mr::nage
 {
     class VertexHelper
     {

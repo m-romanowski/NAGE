@@ -3,7 +3,7 @@
 
 #include "ilight.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class DirectionalLight : public ILight
     {

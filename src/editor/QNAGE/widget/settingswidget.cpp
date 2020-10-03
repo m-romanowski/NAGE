@@ -1,6 +1,6 @@
 #include "setingswidget.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     SettingsWidget::SettingsWidget(QWidget* _parent)
         : QWidget(_parent)

@@ -16,7 +16,7 @@
 
 #include <iostream>
 
-namespace QNAGE
+namespace mr::qnage
 {
     class LogWidget : public QWidget
     {

@@ -12,7 +12,7 @@
 #include <sstream>
 #include <exception>
 
-namespace NAGE
+namespace mr::nage
 {
     class ModelData
     {

@@ -9,7 +9,7 @@
 
 #include <map>
 
-namespace NAGE
+namespace mr::nage
 {
     class CDLODWater : public ICDLODObject, public IWater
     {

@@ -1,7 +1,7 @@
 #include "engine/render/vertexhelper.h"
 #include "gridmesh.h"
 
-namespace NAGE
+namespace mr::nage
 {
     GridMesh::GridMesh(const Size<int> _size)
         : width_(_size.width()),

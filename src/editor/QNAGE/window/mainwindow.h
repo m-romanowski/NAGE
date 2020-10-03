@@ -38,7 +38,7 @@
 #include <QMenu>
 #include <QAction>
 
-namespace QNAGE
+namespace mr::qnage
 {
     class MainWindow : public QMainWindow
     {

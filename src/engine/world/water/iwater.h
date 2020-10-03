@@ -10,7 +10,7 @@
 #include "waterreflection.h"
 #include "waterrefraction.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class IWater
     {

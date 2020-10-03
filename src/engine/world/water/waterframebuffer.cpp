@@ -1,6 +1,6 @@
 #include "waterframebuffer.h"
 
-namespace NAGE
+namespace mr::nage
 {
     WaterFrameBuffer::WaterFrameBuffer(const GLint _width, const GLint _height)
         : FrameBuffer(_width, _height)

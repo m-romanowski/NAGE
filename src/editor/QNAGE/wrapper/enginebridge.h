@@ -17,12 +17,12 @@
  * Engine - GLFW context
  * Editor - QOpenGLContext
  */
-namespace QNAGE
+namespace mr::qnage
 {
-    class EngineBridge : public NAGE::CoreEngine
+    class EngineBridge : public nage::CoreEngine
     {
     public:
-        EngineBridge(NAGE::IRenderEngine* _renderEngine, NAGE::IGame* _game, NAGE::FpsLimit _fpsLimit = NAGE::FpsLimit::FPS_Unlimited);
+        EngineBridge(nage::IRenderEngine* _renderEngine, nage::IGame* _game, nage::FpsLimit _fpsLimit = nage::FpsLimit::FPS_Unlimited);
         ~EngineBridge();
 
         // Getters
@@ -33,6 +33,7 @@ namespace QNAGE
 
         void setup(QOpenGLContext* _context);
         void startPollingEvents();
+
     private:
         QOpenGLContext* context;
     };

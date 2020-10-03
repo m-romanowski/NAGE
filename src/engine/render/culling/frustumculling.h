@@ -8,7 +8,7 @@
 
 #include <array>
 
-namespace NAGE
+namespace mr::nage
 {
     /* Frustum culling
      *

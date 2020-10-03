@@ -3,7 +3,7 @@
 
 #include "itexturegenerator.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class NormalMap : public ITextureGenerator
     {

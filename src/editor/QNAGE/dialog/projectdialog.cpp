@@ -1,6 +1,6 @@
 #include "projectdialog.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     ProjectDialog::ProjectDialog(QWidget* _parent)
         : FramelessWindow(_parent, FRAMELESSWINDOW_EXIT_BUTTON)

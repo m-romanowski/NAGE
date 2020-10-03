@@ -4,14 +4,14 @@
 #include <string>
 #include <unordered_map>
 
-namespace NAGE
+namespace mr::nage
 {
     class STLUTIL
     {
     public:
         STLUTIL() {}
 
-        // Check if the key exists in unordered_map (models, lights).
+        // Check if the key exists in unordered_map.
         template <typename T>
         static bool checkKey(std::unordered_map<std::string, T>& _data, const std::string& _key)
         {

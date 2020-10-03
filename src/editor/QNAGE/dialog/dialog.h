@@ -1,7 +1,7 @@
 #ifndef QNAGE_DIALOG_DIALOG_H_
 #define QNAGE_DIALOG_DIALOG_H_
 
-namespace QNAGE
+namespace mr::qnage
 {
     class Dialog
     {

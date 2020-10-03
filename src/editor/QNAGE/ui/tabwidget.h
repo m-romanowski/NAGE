@@ -4,7 +4,7 @@
 #include "tabbar.h"
 #include <QTabWidget>
 
-namespace QNAGE
+namespace mr::qnage
 {
     class TabWidget : public QTabWidget
     {

@@ -22,7 +22,7 @@
 #include <QPoint>
 #include <QCursor>
 
-namespace QNAGE
+namespace mr::qnage
 {
     class MainWindow;
     class GLWidget;
@@ -52,7 +52,7 @@ namespace QNAGE
         void setWindowDockProperty(bool _type) { isDocked_ = _type; }
 
         // Public methods
-        void setupGLWidget(NAGE::IGame* _game);
+        void setupGLWidget(nage::IGame* _game);
         void reloadUi();
 
     signals:

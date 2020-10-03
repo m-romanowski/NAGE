@@ -1,7 +1,7 @@
 #include "engine/render/glrenderengine.h"
 #include "iwindow.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Timer::Clock::time_point IWindow::lastFrame_;
     Vector2f IWindow::currentWindowSize_;
@@ -83,8 +83,8 @@ namespace NAGE
         }
 
         // Updates interval, FPS timer
-        updateInterval_ = new NAGE::Timer;
-        fpsRenderTimer_ = new NAGE::Timer;
+        updateInterval_ = new Timer;
+        fpsRenderTimer_ = new Timer;
 
         // Game timer
         lastFrame_ = Timer::now();

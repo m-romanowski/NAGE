@@ -1,6 +1,6 @@
 #include "buildandrunsettings.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     BuildAndRunSettings::BuildAndRunSettings(QWidget *_parent)
         : SettingsLayout(_parent)

@@ -1,6 +1,6 @@
 #include "errormanager.h"
 
-namespace NAGE
+namespace mr::nage
 {
     const char* ErrorManager::name() const noexcept
     {

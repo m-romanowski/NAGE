@@ -4,7 +4,7 @@
 #include "engine/util/size.h"
 #include "engine/render/iobject.h"
 
-namespace NAGE
+namespace mr::nage
 {
     /* Grid mesh
      *

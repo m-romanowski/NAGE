@@ -1,6 +1,6 @@
 #include "exception.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Exception::Exception(const std::string _msg)
         : message(_msg)

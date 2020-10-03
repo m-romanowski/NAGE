@@ -1,6 +1,6 @@
 #include "mainwidget.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     MainWidget::MainWidget(QWidget* _parent)
         : QWidget(_parent)

@@ -1,6 +1,6 @@
 #include "irenderengine.h"
 
-namespace NAGE
+namespace mr::nage
 {
     IRenderEngine::IRenderEngine()
         : sceneManager_(new SceneManager)

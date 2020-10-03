@@ -1,6 +1,6 @@
 #include "iobject.h"
 
-namespace NAGE
+namespace mr::nage
 {
     IObject::IObject()
     {
@@ -56,11 +56,11 @@ namespace NAGE
 
         // Load data into vertex buffers
         glBindBuffer(GL_ARRAY_BUFFER, VBO_);
-        NAGE::nage_glBufferData(GL_ARRAY_BUFFER, vertices_, GL_STATIC_DRAW);
+        mr::nage::nage_glBufferData(GL_ARRAY_BUFFER, vertices_, GL_STATIC_DRAW);
 
         // Load data (mesh indices) into element buffer
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_);
-        NAGE::nage_glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices_, GL_STATIC_DRAW);
+        mr::nage::nage_glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices_, GL_STATIC_DRAW);
 
         // Position vector attribute
         glEnableVertexAttribArray(0);

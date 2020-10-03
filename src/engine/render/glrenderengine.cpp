@@ -1,6 +1,6 @@
 #include "glrenderengine.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Projection GLRenderEngine::projection_;
 

@@ -7,7 +7,7 @@
 #include <vector>
 #include <algorithm>
 
-namespace NAGE
+namespace mr::nage
 {
     // Input states (e.g. pressed, released).
     enum InputState

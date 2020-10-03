@@ -7,7 +7,7 @@
 #include <map>
 #include <memory>
 
-namespace NAGE
+namespace mr::nage
 {
     class ResourceManager
     {

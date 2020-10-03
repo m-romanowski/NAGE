@@ -9,7 +9,7 @@
 #include <vector>
 #include <string>
 
-namespace NAGE
+namespace mr::nage
 {
     class Skybox
     {

@@ -3,7 +3,7 @@
 
 #include "primitive.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class Sphere : public Primitive
     {

@@ -8,7 +8,7 @@
 #include <QVBoxLayout>
 #include <QSplitter>
 
-namespace QNAGE
+namespace mr::qnage
 {
     class MainWidget : public QWidget
     {

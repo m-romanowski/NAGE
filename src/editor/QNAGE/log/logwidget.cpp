@@ -1,6 +1,6 @@
 #include "logwidget.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     LogWidget::LogWidget(QWidget* _parent)
         : QWidget(_parent),

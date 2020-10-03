@@ -1,6 +1,6 @@
 #include "enginesettings.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     EngineSettings::EngineSettings(QWidget* _parent)
         : SettingsLayout(_parent)

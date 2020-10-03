@@ -11,9 +11,9 @@
 #define DEFAULT_CLIPMAP_SCALE 0.25 // Distance between vertices
 
 /**
- * IN PROGRESS
+ * TODO
  */
-namespace NAGE
+namespace mr::nage
 {
     // Geometry clipmap mesh (block, ring fixup, degenerate)
     class GeometryClipMapMesh

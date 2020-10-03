@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-namespace NAGE
+namespace mr::nage
 {
     template <typename T>
     class PerlinNoise;

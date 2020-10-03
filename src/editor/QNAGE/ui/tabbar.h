@@ -9,7 +9,7 @@
 #include <QPoint>
 #include <QRect>
 
-namespace QNAGE
+namespace mr::qnage
 {
     class TabBar : public QTabBar
     {

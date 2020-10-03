@@ -1,6 +1,6 @@
 #include "tabbar.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     TabBar::TabBar()
     {

@@ -3,7 +3,7 @@
 
 #include "primitive.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class Plane : public Primitive
     {

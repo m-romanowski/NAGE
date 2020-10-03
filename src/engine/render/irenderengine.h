@@ -4,7 +4,7 @@
 #include "engine/core/scene/scenemanager.h"
 #include <string>
 
-namespace NAGE
+namespace mr::nage
 {
     /* Render engine interface (base class).
      */

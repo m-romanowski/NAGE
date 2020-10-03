@@ -1,6 +1,6 @@
 #include "coreengine.h"
 
-namespace NAGE
+namespace mr::nage
 {
     CoreEngine::CoreEngine()
         : fpsLimit_(FpsLimit::FPS_60),

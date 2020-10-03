@@ -9,7 +9,7 @@
 
 #include <map>
 
-namespace NAGE
+namespace mr::nage
 {
     class CDLODTerrain : public ICDLODObject, public ITerrain
     {

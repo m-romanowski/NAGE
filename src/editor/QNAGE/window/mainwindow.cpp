@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     MainWindow::MainWindow(int _width, int _height)
         : width_(_width),

@@ -1,6 +1,6 @@
 #include "welcomewidget.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     WelcomeWidget::WelcomeWidget(QWidget* _parent)
         : QWidget(_parent)

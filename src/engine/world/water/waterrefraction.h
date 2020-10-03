@@ -3,7 +3,7 @@
 
 #include "waterframebuffer.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class WaterRefraction : public WaterFrameBuffer
     {

@@ -1,7 +1,7 @@
 #include "engine/render/glrenderengine.h"
 #include "ilight.h"
 
-namespace NAGE
+namespace mr::nage
 {
     ILight::ILight()
         : color_(Color(1.0f, 1.0f, 1.0f))

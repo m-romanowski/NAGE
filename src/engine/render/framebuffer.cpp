@@ -1,6 +1,6 @@
 #include "framebuffer.h"
 
-namespace NAGE
+namespace mr::nage
 {
     FrameBuffer::FrameBuffer(const GLint _width, const GLint _height)
         : frameBufferId_(create()),

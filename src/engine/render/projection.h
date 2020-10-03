@@ -3,7 +3,7 @@
 
 #include "engine/math/NAGEMath/nagemathmatrix.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class Projection
     {

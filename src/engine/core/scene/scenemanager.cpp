@@ -1,6 +1,6 @@
 #include "scenemanager.h"
 
-namespace NAGE
+namespace mr::nage
 {
     SceneManager::SceneManager()
     {

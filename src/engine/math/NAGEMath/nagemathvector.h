@@ -5,7 +5,7 @@
 #include <cmath>
 #include <typeinfo>
 
-namespace NAGE
+namespace mr::nage
 {
     // Some defined vector types (int, float, double)
     template <typename T>

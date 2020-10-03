@@ -1,7 +1,7 @@
 #include "engine/render/vertexhelper.h"
 #include "sphere.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Sphere::Sphere(unsigned int _sectorCount, unsigned int _stackCount, float _radius)
         : sectorCount_(_sectorCount),

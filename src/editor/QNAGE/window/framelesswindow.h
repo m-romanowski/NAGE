@@ -14,7 +14,7 @@
 #include <QPushButton>
 #include <QIcon>
 
-namespace QNAGE
+namespace mr::qnage
 {
     const unsigned int FRAMELESSWINDOW_WITHOUT_BUTTONS = 0;
     const unsigned int FRAMELESSWINDOW_ALL_BUTTONS = 1;

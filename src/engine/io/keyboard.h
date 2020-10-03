@@ -3,7 +3,7 @@
 
 #include "input.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class Keyboard : public Input<InputInstance<Key>>
     {

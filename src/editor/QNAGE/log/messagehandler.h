@@ -5,7 +5,7 @@
 #include <QPlainTextEdit>
 #include <QString>
 
-namespace QNAGE
+namespace mr::qnage
 {
     class MessageHandler : public QObject
     {

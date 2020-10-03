@@ -1,6 +1,6 @@
 #include "threadlogstream.h"
 
-namespace QNAGE
+namespace mr::qnage
 {
     ThreadLogStream::ThreadLogStream(std::ostream& _stream, QObject* _parent)
         : QObject(_parent),

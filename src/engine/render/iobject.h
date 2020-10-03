@@ -14,7 +14,7 @@
 #include <string>
 #include <cstddef>
 
-namespace NAGE
+namespace mr::nage
 {
     class IObject
     {

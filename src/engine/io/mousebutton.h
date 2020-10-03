@@ -1,7 +1,7 @@
 #ifndef NAGE_ENGINE_IO_MOUSEBUTTON_H_
 #define NAGE_ENGINE_IO_MOUSEBUTTON_H_
 
-namespace NAGE
+namespace mr::nage
 {
     enum MouseButton
     {

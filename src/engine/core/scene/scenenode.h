@@ -14,7 +14,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace NAGE
+namespace mr::nage
 {
     class SceneNode
     {

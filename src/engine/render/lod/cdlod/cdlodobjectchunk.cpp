@@ -1,6 +1,6 @@
 #include "cdlodobjectchunk.h"
 
-namespace NAGE
+namespace mr::nage
 {
     CDLODObjectChunk::CDLODObjectChunk(int _size)
         : size_(_size)

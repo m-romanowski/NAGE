@@ -1,6 +1,6 @@
 #include "geometryclipmap.h"
 
-namespace NAGE
+namespace mr::nage
 {
     GeometryClipmap::GeometryClipmap()
     {

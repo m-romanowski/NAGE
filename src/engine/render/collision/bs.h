@@ -3,7 +3,7 @@
 
 #include "engine/math/NAGEMath/nagemathvector.h"
 
-namespace NAGE
+namespace mr::nage
 {
     /* Bounding Spheres
      *

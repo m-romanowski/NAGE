@@ -3,7 +3,7 @@
 
 #include "engine/render/iobject.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class CDLODObjectChunk : public IObject
     {

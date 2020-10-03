@@ -5,7 +5,7 @@
     #include "STB/stb_image.h"
 #endif
 
-namespace NAGE
+namespace mr::nage
 {
     Image::Image(const std::string& _path)
     {

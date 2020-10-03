@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-namespace NAGE
+namespace mr::nage
 {
     /* Pixel color representation.
      *

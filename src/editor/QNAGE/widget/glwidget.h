@@ -25,9 +25,9 @@
 
 //#define QNAGE_WHEEL_STEP 0.01
 
-namespace QNAGE
+namespace mr::qnage
 {
-    class GLWidget : public QOpenGLWidget, public NAGE::IWindow
+    class GLWidget : public QOpenGLWidget, public nage::IWindow
     {
         Q_OBJECT
 
@@ -36,11 +36,11 @@ namespace QNAGE
         ~GLWidget() override;
 
         // Setters
-        void setGame(NAGE::IGame* _game);
+        void setGame(nage::IGame* _game);
 
         // Public methods
         void renderText(float _x, float _y, float _z, const QString& _str);
-        void renderText(const NAGE::Vector3f& _position, const QString& _str);
+        void renderText(const nage::Vector3f& _position, const QString& _str);
 
     signals:
         void readyToWork();
@@ -67,7 +67,7 @@ namespace QNAGE
             const GLint viewport[4], GLfloat* winx, GLfloat* winy, GLfloat* winz);
 
         // Game
-        NAGE::IGame* game_;
+        nage::IGame* game_;
 
         // GLWidget settings
         QSurfaceFormat surfaceFormat_;
@@ -81,8 +81,8 @@ namespace QNAGE
         bool gladInitialized_;
 
         // Editor camera
-        NAGE::Camera camera_;
-        NAGE::SceneNode* sceneNode_;
+        nage::Camera camera_;
+        nage::SceneNode* sceneNode_;
 
         QEventLoop eventLoop_;
         QFuture<void> future_;

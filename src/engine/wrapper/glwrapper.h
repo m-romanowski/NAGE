@@ -6,7 +6,7 @@
 #include <vector>
 #include <cstddef>
 
-namespace NAGE
+namespace mr::nage
 {
     template <class T>
     inline void nage_glBufferData(GLenum _target, const std::vector<T>& _v, GLenum _usage)

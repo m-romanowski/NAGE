@@ -3,7 +3,7 @@
 
 #include "material.h"
 
-namespace NAGE
+namespace mr::nage
 {
     //  Materials source: http://devernay.free.fr/cours/opengl/materials.html
 

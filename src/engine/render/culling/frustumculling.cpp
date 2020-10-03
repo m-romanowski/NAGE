@@ -1,6 +1,6 @@
 #include "frustumculling.h"
 
-namespace NAGE
+namespace mr::nage
 {
     FrustumCulling::FrustumCulling(bool _normalizePlanes)
         : normalizePlanes_(_normalizePlanes)

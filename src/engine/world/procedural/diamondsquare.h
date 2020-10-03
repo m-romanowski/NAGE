@@ -4,7 +4,7 @@
 #include "engine/util/random.h" // random numbers generator
 #include <cassert> // assert
 
-namespace NAGE
+namespace mr::nage
 {
     class DiamondSquare
     {

@@ -13,7 +13,7 @@
 
 #define HEIGHTMAP_MAX_HEIGHT 255
 
-namespace NAGE
+namespace mr::nage
 {
     class HeightMap : public ITextureGenerator
     {

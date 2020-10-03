@@ -1,6 +1,6 @@
 #include "igame.h"
 
-namespace NAGE
+namespace mr::nage
 {
     IGame::IGame(FpsLimit _limit)
     {

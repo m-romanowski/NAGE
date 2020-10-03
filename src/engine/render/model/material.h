@@ -5,7 +5,7 @@
 #include "engine/render/shader.h"
 #include "engine/math/NAGEMath/nagemathvector.h"
 
-namespace NAGE
+namespace mr::nage
 {
     class Material
     {

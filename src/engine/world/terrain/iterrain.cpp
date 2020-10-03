@@ -1,6 +1,6 @@
 #include "iterrain.h"
 
-namespace NAGE
+namespace mr::nage
 {
     ITerrain::ITerrain()
         : shader_(new Shader),

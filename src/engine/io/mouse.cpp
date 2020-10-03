@@ -1,6 +1,6 @@
 #include "mouse.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Mouse::InputContainer Mouse::mouseContainer_;
     Vector2f Mouse::mousePreviousPosition_;

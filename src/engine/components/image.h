@@ -4,7 +4,7 @@
 #include "STB/stb_image.h"
 #include <string>
 
-namespace NAGE
+namespace mr::nage
 {
     class Image
     {
@@ -25,6 +25,7 @@ namespace NAGE
         static unsigned char green(unsigned char* _data, int _format, unsigned long _imageWidth, unsigned long _x, unsigned long _y);
         static unsigned char blue(unsigned char* _data, int _format, unsigned long _imageWidth, unsigned long _x, unsigned long _y);
         static unsigned char alpha(unsigned char* _data, int _format, unsigned long _imageWidth, unsigned long _x, unsigned long _y);
+
     private:
         // Image properties
         int width_, height_, format_;

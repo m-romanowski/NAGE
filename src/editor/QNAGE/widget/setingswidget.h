@@ -6,7 +6,7 @@
 #include <QWidget>
 #include <QVBoxLayout>
 
-namespace QNAGE
+namespace mr::qnage
 {
     class SettingsWidget : public QWidget
     {

@@ -1,6 +1,6 @@
 #include "materialtype.h"
 
-namespace NAGE
+namespace mr::nage
 {
     const Material MaterialType::DEFAULT = Material(
                 Vector3f(0.0f, 0.0f, 0.0f),

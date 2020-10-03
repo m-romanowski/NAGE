@@ -1,6 +1,6 @@
 #include "timer.h"
 
-namespace NAGE
+namespace mr::nage
 {
     Timer::Timer()
         : flag_(true)
