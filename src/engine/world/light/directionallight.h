@@ -1,11 +1,11 @@
 #ifndef NAGE_ENGINE_RENDER_DIRECTIONALLIGHT_LIGHT_H_
 #define NAGE_ENGINE_RENDER_DIRECTIONALLIGHT_LIGHT_H_
 
-#include "light.h"
+#include "ilight.h"
 
 namespace NAGE
 {
-    class DirectionalLight : public Light
+    class DirectionalLight : public ILight
     {
     public:
         DirectionalLight();

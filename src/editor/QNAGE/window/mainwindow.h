@@ -12,7 +12,7 @@
 #include "widget/welcomewidget.h"
 #include "widget/setingswidget.h"
 
-// Debugger
+// Logger
 #include "log/logwidget.h"
 
 // Dialog

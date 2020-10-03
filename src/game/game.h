@@ -17,6 +17,7 @@ namespace NAGE
         virtual ~Game() override {};
 
         void initializeScene() override;
+
     private:
         // Skybox
         std::shared_ptr<Shader> skyboxShader;

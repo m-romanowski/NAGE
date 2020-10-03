@@ -1,5 +1,5 @@
-#ifndef GLWRAPPER_H_
-#define GLWRAPPER_H_
+#ifndef NAGE_ENGINE_GLWRAPPER_H_
+#define NAGE_ENGINE_GLWRAPPER_H_
 
 #include "glad/glad.h"
 
@@ -15,4 +15,4 @@ namespace NAGE
     }
 }
 
-#endif // GLWRAPPER_H_
+#endif // NAGE_ENGINE_GLWRAPPER_H_

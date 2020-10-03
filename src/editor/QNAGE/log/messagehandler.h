@@ -1,5 +1,5 @@
-#ifndef QNAGE_DEBUGGER_MESSAGEHANDLER_H_
-#define QNAGE_DEBUGGER_MESSAGEHANDLER_H_
+#ifndef QNAGE_LOG_MESSAGEHANDLER_H_
+#define QNAGE_LOG_MESSAGEHANDLER_H_
 
 #include <QDateTime>
 #include <QPlainTextEdit>
@@ -22,4 +22,4 @@ namespace QNAGE
     };
 }
 
-#endif // QNAGE_DEBUGGER_MESSAGEHANDLER_H_
+#endif // QNAGE_LOG_MESSAGEHANDLER_H_

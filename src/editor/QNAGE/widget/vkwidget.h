@@ -3,6 +3,7 @@
 
 namespace QNAGE
 {
+    // TODO: Vulkan support
     class VKWidget
     {
     public:

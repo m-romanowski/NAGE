@@ -10,11 +10,11 @@ namespace NAGE
 {
     /* Interface for the light types.
      */
-    class Light
+    class ILight
     {
     public:
-        Light();
-        virtual ~Light() {}
+        ILight();
+        virtual ~ILight() {}
 
         // Getters
         Color color() const;

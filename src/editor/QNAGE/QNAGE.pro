@@ -61,6 +61,7 @@ SOURCES += \
     ../../engine/render/lod/cdlod/cdlodselectednode.cpp \
     ../../engine/render/lod/cdlod/icdlodobject.cpp \
     ../../engine/render/lod/geoclipmaps/geometryclipmap.cpp \
+    ../../engine/world/light/ilight.cpp \
     ../../engine/world/light/sun.cpp \
     ../../engine/world/plants/lsystem.cpp \
     ../../engine/world/primitives/gridmesh.cpp \
@@ -118,7 +119,6 @@ SOURCES += \
     ../../engine/world/skybox/skybox.cpp \
     ../../engine/world/light/directionallight.cpp \
     ../../engine/world/light/pointlight.cpp \
-    ../../engine/world/light/light.cpp \
     ../../engine/render/color.cpp \
     ../../engine/render/glrenderengine.cpp \
     ../../engine/render/iobject.cpp \
@@ -157,6 +157,7 @@ HEADERS += \
     ../../engine/render/vertexhelper.h \
     ../../engine/util/size.h \
     ../../engine/util/threadpool.h \
+    ../../engine/world/light/ilight.h \
     ../../engine/world/light/sun.h \
     ../../engine/world/plants/lsystem.h \
     ../../engine/world/primitives/gridmesh.h \
@@ -226,7 +227,6 @@ HEADERS += \
     ../../engine/world/skybox/skybox.h \
     ../../engine/world/light/directionallight.h \
     ../../engine/world/light/pointlight.h \
-    ../../engine/world/light/light.h \
     ../../engine/render/color.h \
     ../../engine/render/glrenderengine.h \
     ../../engine/render/vertex.h \

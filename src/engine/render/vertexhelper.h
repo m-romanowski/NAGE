@@ -11,8 +11,6 @@ namespace NAGE
     class VertexHelper
     {
     public:
-        VertexHelper();
-
         static void calculateNormals(std::vector<Vertex>& _vertices, std::vector<unsigned int>& _indices)
         {
             for(unsigned int i = 0; i < _indices.size(); i += 3)

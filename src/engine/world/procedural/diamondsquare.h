@@ -15,7 +15,7 @@ namespace NAGE
               height_(_height)
         {
             // Size (width, height) = 2 ^ n + 1, e.g. n = 2 -> width = 5, height = 5
-            allocate(); // Allocate menory
+            allocate(); // Allocate memory
             fill(0.0f); // Fill an array by random value.
             initialize(); // Initialize buffer (4 corners by seed value).
             generate(); // Generate a noise.

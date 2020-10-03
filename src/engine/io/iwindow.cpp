@@ -3,8 +3,8 @@
 
 namespace NAGE
 {
-    Timer::Clock::time_point IWindow::mLastFrame;
-    Vector2f IWindow::mCurrentWindowSize;
+    Timer::Clock::time_point IWindow::lastFrame_;
+    Vector2f IWindow::currentWindowSize_;
 
     IWindow::IWindow(int _width, int _height, const std::string& _title)
         : width_(_width),
@@ -30,7 +30,7 @@ namespace NAGE
     {
         width_ = _width;
         height_ = _height;
-        mCurrentWindowSize = Vector2f(width_, height_);
+        currentWindowSize_ = Vector2f(width_, height_);
 
         // Update view and projection (perspective) aspect ratio = width / height.
         GLRenderEngine::projection().setAspectRatio(_width, _height);
@@ -64,12 +64,12 @@ namespace NAGE
 
     void IWindow::sync()
     {
-        //
+
     }
 
     void IWindow::update()
     {
-        //
+
     }
 
     bool IWindow::initialized()
@@ -87,7 +87,7 @@ namespace NAGE
         fpsRenderTimer_ = new NAGE::Timer;
 
         // Game timer
-        mLastFrame = Timer::now();
+        lastFrame_ = Timer::now();
 
         return true;
     }
@@ -101,8 +101,8 @@ namespace NAGE
     Timer::Clock::duration IWindow::delta()
     {
         auto currentTime = Timer::now();
-        auto elapsed = currentTime - mLastFrame;
-        mLastFrame = Timer::now();
+        auto elapsed = currentTime - lastFrame_;
+        lastFrame_ = Timer::now();
 
         return elapsed;
     }
@@ -114,6 +114,6 @@ namespace NAGE
 
     Vector2f IWindow::currentWindowSize()
     {
-        return mCurrentWindowSize;
+        return currentWindowSize_;
     }
 }

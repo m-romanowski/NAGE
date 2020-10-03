@@ -31,11 +31,12 @@ namespace NAGE
         void setWaveFrequency(float _waveFrequency);
         void setWaveMoveOffsetSpeed(float _waveMoveOffsetSpeed);
 
+        void setupWaterEffects();
+        void setupFlowMapEffect(int _width, int _height, int _seed = -1);
+
         virtual void bindTextures();
         virtual void unbindTextures();
         virtual void render(Camera* _camera) = 0;
-        void setupWaterEffects();
-        void setupFlowMapEffect(int _width, int _height, int _seed = -1);
 
     protected:
         Shader* shader_;

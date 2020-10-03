@@ -32,7 +32,7 @@ namespace NAGE
         return _radians * (180 / M_PI);
     }
 
-    // https://www.embeddeduse.com/2019/08/26/qt-compare-two-floats/
+    // https://www.embeddeduse.com/2019/08/26/qt-compare-two-floats
     inline bool nage_floatCompare(float _f1, float _f2)
     {
         static constexpr auto epsilon = 1.0e-05f;

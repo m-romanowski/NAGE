@@ -26,9 +26,10 @@ namespace NAGE
         // Setters
         void setEngine(CoreEngine* _engine);
 
-        virtual void initializeScene() = 0;
         void initializeComponents(EngineType _type, IWindow* _window);
         void launch();
+
+        virtual void initializeScene() = 0;
 
     protected:
         CoreEngine* coreEngine_;

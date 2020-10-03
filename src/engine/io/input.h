@@ -71,7 +71,7 @@ namespace NAGE
 
         /* Update input state.
          *
-         * @param { InputInstance: struct } _instance - input instance to state update.
+         * @param _instance - input instance to state update.
          */
         template <typename Instance>
         static void updateState(Instance& _instance)
@@ -94,7 +94,7 @@ namespace NAGE
 
         /* Check if given input was released.
          *
-         * @param InputInstance - input instance to check.
+         * @param _instance - input instance to check.
          * @return bool - input state == InputReleased
          */
         template <typename Instance>
@@ -105,7 +105,7 @@ namespace NAGE
 
         /* Updates input container - remove released inputs and update rest.
          *
-         * @param { Container: std::vector } _container - input container.
+         * @param _container - input container.
          */
         template <class Container>
         static void updateContainer(Container& _container)

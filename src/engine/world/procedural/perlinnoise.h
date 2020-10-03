@@ -1,12 +1,6 @@
 #ifndef NAGE_ENGINE_WORLD_PROCEDURAL_PERLIN_NOISE_H_
 #define NAGE_ENGINE_WORLD_PROCEDURAL_PERLIN_NOISE_H_
 
-/* Improved Perlin noise algorithm.
- *
- * https://mrl.nyu.edu/~perlin/paper445.pdf
- * https://mrl.nyu.edu/~perlin/noise/
- */
-
 #include <random>
 #include <array>
 #include <algorithm>
@@ -21,6 +15,12 @@ namespace NAGE
     typedef PerlinNoise<float> FPerlinNoise;
     typedef PerlinNoise<double> DPerlinNoise;
 
+
+    /* Improved Perlin noise algorithm.
+     *
+     * https://mrl.nyu.edu/~perlin/paper445.pdf
+     * https://mrl.nyu.edu/~perlin/noise/
+     */
     template <typename T>
     class PerlinNoise
     {

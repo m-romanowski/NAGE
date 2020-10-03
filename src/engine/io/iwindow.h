@@ -55,8 +55,8 @@ namespace NAGE
         std::string title_;
         Timer *updateInterval_, *fpsRenderTimer_;
 
-        static Timer::Clock::time_point mLastFrame;
-        static Vector2f mCurrentWindowSize;
+        static Timer::Clock::time_point lastFrame_;
+        static Vector2f currentWindowSize_;
     };
 }
 

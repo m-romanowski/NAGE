@@ -1,12 +1,12 @@
 #ifndef NAGE_ENGINE_RENDER_POINTLIGHT_LIGHT_H_
 #define NAGE_ENGINE_RENDER_POINTLIGHT_LIGHT_H_
 
-#include "light.h"
+#include "ilight.h"
 #include "engine/render/iobject.h"
 
 namespace NAGE
 {
-    class PointLight : public Light, public IObject
+    class PointLight : public ILight, public IObject
     {
     public:
         PointLight();
