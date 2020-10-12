@@ -18,7 +18,7 @@ COMMIT_COMMENT="${INFO_COLOR}Commit comment:${NO_COLOR}"
 
 # Prompts
 COMMIT_DESC_PROMPT="${INFO_COLOR}Commit description:${NO_COLOR} "
-COMMIT_PROMPT="${INFO_COLOR}Add commit [yes/no]:${NO_COLOR} "
+COMMIT_PROMPT="${INFO_COLOR}New commit? [yes/no/change]:${NO_COLOR} "
 PUSH_TO_REMOTE_PROMPT="${INFO_COLOR}Push to remote repo [yes/no]:${NO_COLOR} "
 
 ############################################################################################################################
@@ -47,6 +47,8 @@ USER_ANSWER1=${USER_ANSWER1:-yes}
 
 if [ "$USER_ANSWER1" == "yes" ]; then
     git commit -m "$COMMIT_DESC_PREFIX $COMMIT_DESC"
+elif [ "$USER_ANSWER1" == "change" ]; then
+    git commit --amend -m "$COMMIT_DESC_PREFIX $COMMIT_DESC"
 else
     exit 1
 fi
@@ -57,7 +59,7 @@ git log -1
 read -p "$PUSH_TO_REMOTE_PROMPT" USER_ANSWER2
 USER_ANSWER2=${USER_ANSWER2:-yes}
 if [ "$USER_ANSWER2" == "yes" ]; then
-    git push origin master
+    git push origin
 else
     exit 1
 fi

@@ -1,4 +1,5 @@
 #include "game.h"
+#include "engine/io/x11openglwindow.h"
 
 namespace mr::nage
 {
@@ -10,6 +11,12 @@ namespace mr::nage
 
     void Game::initializeScene()
     {
+        SceneNode* sceneNode = new SceneNode;
+        sceneManager()->addChild("test", sceneNode);
+        sceneNode->addToScene(&camera);
+
+        sceneManager()->sceneByKey("test")->camera()->translate(80.0f, 50.0f, 100.0f);
+
         // Skybox
         skyboxShader = std::make_shared<Shader>();
         skyboxShader->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
@@ -29,7 +36,7 @@ namespace mr::nage
 
         skybox = std::make_shared<Skybox>(skyboxShader.get());
         skybox->addFacesTextures(skyboxFaces);
-        sceneManager()->sceneByKey("editor")->addToScene(skybox.get());
+        sceneManager()->sceneByKey("test")->addToScene(skybox.get());
 
         // Lamp
         Sphere sphere;
@@ -59,13 +66,13 @@ namespace mr::nage
         lamp->setColor(Color(255.0f, 0.0f, 0.0f));
         lamp->setAttenuation(1.0f, 0.05f, 0.002f);
 
-        sceneManager()->sceneByKey("editor")->addToScene("lamp", lamp.get());
+        sceneManager()->sceneByKey("test")->addToScene("lamp", lamp.get());
 
         // Sun
         sun = std::make_shared<Sun>();
         sun->setGradientExpand(0.25f);
         sun->setLightDirection(Vector3f(-0.2f, -1.0f, -1.3f));
-        sceneManager()->sceneByKey("editor")->addToScene(sun.get());
+        sceneManager()->sceneByKey("test")->addToScene(sun.get());
 
         // CDLOD water
         waterHeightmap = std::make_shared<HeightMap>();
@@ -83,9 +90,7 @@ namespace mr::nage
         cdlodWater->setWaveFrequency(0.1f);
         cdlodWater->setHeightMapProperties(cdlodWater->shader());
         cdlodWater->setTransformation(waterTransform);
-        sceneManager()->sceneByKey("editor")->addToScene(cdlodWater.get());
-
-        sceneManager()->sceneByKey("editor")->camera()->translate(80.0f, 50.0f, 100.0f);
+        sceneManager()->sceneByKey("test")->addToScene(cdlodWater.get());
 
         // CDLOD terrain
         heightMap = std::make_shared<HeightMap>();
@@ -106,6 +111,31 @@ namespace mr::nage
         cdlodTerrain->addTexture("material.snow", terrainTexture4.get());
         cdlodTerrain->setHeightMapProperties(cdlodTerrain->shader());
 
-        sceneManager()->sceneByKey("editor")->addToScene(cdlodTerrain.get());
+        sceneManager()->sceneByKey("test")->addToScene(cdlodTerrain.get());
+    }
+
+    void Game::ioEventsSupplier()
+    {
+        if(nage::Mouse::mouseButtonPressed(nage::MouseButton::X11_RIGHT_BUTTON))
+        {
+            // Handle camera rotations.
+            camera.rotate(-nage::cameraSensitivity * nage::Mouse::mouseDelta().x(),
+                nage::Vector3f::up);
+
+            //camera.rotate(-nage::cameraSensitivity * nage::Mouse::mouseDelta().y(),
+            //    camera.right());
+
+            // Handle camera translations.
+            nage::Vector3f translation;
+            if(nage::Keyboard::keyPressed(nage::Key::X11_KEY_W)) translation -= camera.forward();
+            if(nage::Keyboard::keyPressed(nage::Key::X11_KEY_S)) translation += camera.forward();
+            if(nage::Keyboard::keyPressed(nage::Key::X11_KEY_A)) translation -= camera.right();
+            if(nage::Keyboard::keyPressed(nage::Key::X11_KEY_D)) translation += camera.right();
+            if(nage::Keyboard::keyPressed(nage::Key::X11_KEY_Q)) translation -= camera.up();
+            if(nage::Keyboard::keyPressed(nage::Key::X11_KEY_E)) translation += camera.up();
+
+            float delta = static_cast<float>(IWindow::deltaMs());
+            camera.translate(nage::cameraMovementSpeed * delta * translation);
+        }
     }
 }

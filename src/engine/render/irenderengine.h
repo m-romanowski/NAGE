@@ -22,6 +22,7 @@ namespace mr::nage
 
         virtual void initialize() = 0; // Render engine initialization.
         virtual void initializePreRenderEffects() = 0; // Pre-render effects binding.
+        virtual void preRender() = 0; // Pre-reder scene.
         virtual void render() = 0; // Render scene.
         virtual std::string apiVersion() const = 0; // Get using api version.
 

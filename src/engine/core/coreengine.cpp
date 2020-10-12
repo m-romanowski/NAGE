@@ -1,3 +1,4 @@
+#include "engine/core/igame.h"
 #include "coreengine.h"
 
 namespace mr::nage
@@ -12,7 +13,11 @@ namespace mr::nage
 
     CoreEngine::~CoreEngine()
     {
+        // Stop engine and all sub-components.
+        stop();
+
         delete renderEngine_;
+        delete game_;
     }
 
     FpsLimit CoreEngine::fpsLimit() const
@@ -74,12 +79,14 @@ namespace mr::nage
         fpsLimit_ = _limit;
     }
 
-    void CoreEngine::initialize(IRenderEngine* _renderEngine)
+    void CoreEngine::initialize(IRenderEngine* _renderEngine, IGame* _game)
     {
         Log::log("Engine initialization...");
 
         renderEngine_ = _renderEngine;
         renderEngine_->initialize();
+
+        game_ = _game;
 
         #ifdef GL_API
             Log::log("API: OpenGL " + renderEngine_->apiVersion());
@@ -88,47 +95,60 @@ namespace mr::nage
         if(fpsLimit_ == FpsLimit::FPS_Unlimited)
             Log::log("FPS lock: disabled");
         else
-            Log::log("FPS lock: " + std::to_string(fpsLimit_) + " fps (~" +
-                std::to_string(frameLockMS().count()) + " ms)");
+            Log::log("FPS lock: " + std::to_string(fpsLimit_) + " fps (~" + std::to_string(frameLockMS().count()) + " ms)");
 
-        status_ = StatusCode::Initialized;
+        status_.store(StatusCode::Initialized);
 
         Log::log("Waiting for events...");
     }
 
     void CoreEngine::run()
     {
-        if(status_ != StatusCode::Initialized)
+        if(status_.load() != StatusCode::Initialized)
             return;
 
-        status_ = StatusCode::Running;
+        status_.store(StatusCode::Running);
         renderEngine_->initializePreRenderEffects();
         render();
     }
 
-    void CoreEngine::render()
-    {
-        if(status_ != StatusCode::Running)
-            return;
-
-        renderEngine_->render();
-    }
-
     void CoreEngine::stop()
     {
-        if(status_ != StatusCode::Running)
+        if(!isRunning())
             return;
 
-        status_ = StatusCode::Stopped;
+        status_.store(StatusCode::Stopped);
     }
 
-    void CoreEngine::startPollingEvents()
+    bool CoreEngine::isRunning()
     {
-        if(status_ != StatusCode::Running)
+        return status_.load() == StatusCode::Running;
+    }
+
+    void CoreEngine::render()
+    {
+        if(!isRunning())
             return;
 
-        // Update inputs.
+        while(isRunning())
+        {
+            pollEvents();
+            renderEngine_->render();
+
+            std::this_thread::sleep_for(frameLockMS());
+        }
+    }
+
+    void CoreEngine::pollEvents()
+    {
+        if(!isRunning())
+            return;
+
         Mouse::update();
         Keyboard::update();
+
+        // Run pre-render tasks.
+        renderEngine_->preRender();
+        game_->ioEventsSupplier();
     }
 }

@@ -11,9 +11,12 @@
 
 #include <iostream>
 #include <chrono>
+#include <atomic>
 
 namespace mr::nage
 {
+    class IGame;
+
     class CoreEngine
     {
         enum StatusCode
@@ -41,20 +44,24 @@ namespace mr::nage
         void setFrameLimit(FpsLimit _limit = FpsLimit::FPS_Unlimited);
 
         // Engine management
-        void initialize(IRenderEngine* _renderEngine);
+        void initialize(IRenderEngine* _renderEngine, IGame* _game);
         void run();
-        void render();
         void stop();
-        void startPollingEvents();
+        bool isRunning();
 
     protected:
         // Engine sub-components
         IRenderEngine* renderEngine_;
+        IGame* game_;
 
         // Engine settings
         FpsLimit fpsLimit_;
-        StatusCode status_;
+        std::atomic<StatusCode> status_;
         bool displayFPS_;
+
+    private:
+        void render();
+        void pollEvents();
     };
 }
 

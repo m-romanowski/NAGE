@@ -25,7 +25,7 @@ QT += core gui
 QT += opengl
 
 # LIBS
-LIBS += -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl
+LIBS += -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl
 
 # INCLUDE PATHS
 INCLUDEPATH += $${LIB_DIRECTORY}
@@ -46,10 +46,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     $${LIB_DIRECTORY}/glad/glad.c \
+    $${LIB_DIRECTORY}/glad/glad_glx.c \
     ../../engine/components/resourcemanager.cpp \
     ../../engine/generators/flowmap.cpp \
     ../../engine/generators/heightmap.cpp \
     ../../engine/generators/normalmap.cpp \
+    ../../engine/io/x11.cpp \
+    ../../engine/io/x11openglwindow.cpp \
+    ../../engine/io/x11window.cpp \
     ../../engine/render/collision/aabb.cpp \
     ../../engine/render/collision/bs.cpp \
     ../../engine/render/collision/collisionplane.cpp \
@@ -109,8 +113,6 @@ SOURCES += \
     ../../engine/io/iwindow.cpp \
     ../../engine/io/keyboard.cpp \
     ../../engine/io/mouse.cpp \
-    ../../engine/io/window.cpp \
-    ../../engine/io/X11.cpp \
     ../../engine/render/model/material.cpp \
     ../../engine/render/model/materialtype.cpp \
     ../../engine/render/model/model.cpp \
@@ -135,6 +137,7 @@ SOURCES += \
 
 HEADERS += \
     $${LIB_DIRECTORY}/glad/glad.h \
+    $${LIB_DIRECTORY}/glad/glad_glx.h \
     $${LIB_DIRECTORY}/STB/stb_image.h \
     $${LIB_DIRECTORY}/KHR/khrplatform.h \
     ../../engine/components/resourcemanager.h \
@@ -142,6 +145,9 @@ HEADERS += \
     ../../engine/generators/heightmap.h \
     ../../engine/generators/itexturegenerator.h \
     ../../engine/generators/normalmap.h \
+    ../../engine/io/x11.h \
+    ../../engine/io/x11openglwindow.h \
+    ../../engine/io/x11window.h \
     ../../engine/render/collision/aabb.h \
     ../../engine/render/collision/bs.h \
     ../../engine/render/collision/collisionplane.h \
@@ -213,8 +219,6 @@ HEADERS += \
     ../../engine/io/keyboard.h \
     ../../engine/io/mouse.h \
     ../../engine/io/mousebutton.h \
-    ../../engine/io/window.h \
-    ../../engine/io/X11.h \
     ../../engine/math/NAGEMath/nagemathcommon.h \
     ../../engine/math/NAGEMath/nagemathmatrix.h \
     ../../engine/math/NAGEMath/nagemathquaternion.h \
@@ -256,15 +260,15 @@ RESOURCES += \
     resources/rc.qrc
 
 # GLFW LIB
-win32:CONFIG(release, debug|release): LIBS += -L$${LIB_DIRECTORY}/glfw/lib/release/ -lglfw3
-else:win32:CONFIG(debug, debug|release): LIBS += -L$${LIB_DIRECTORY}/glfw/lib/debug/ -lglfw3
-else:unix: LIBS += -L$${LIB_DIRECTORY}/glfw/lib/ -lglfw3
+#win32:CONFIG(release, debug|release): LIBS += -L$${LIB_DIRECTORY}/glfw/lib/release/ -lglfw3
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$${LIB_DIRECTORY}/glfw/lib/debug/ -lglfw3
+#else:unix: LIBS += -L$${LIB_DIRECTORY}/glfw/lib/ -lglfw3
 
-INCLUDEPATH += $${LIB_DIRECTORY}/glfw/include
-DEPENDPATH += $${LIB_DIRECTORY}/glfw/include
+#INCLUDEPATH += $${LIB_DIRECTORY}/glfw/include
+#DEPENDPATH += $${LIB_DIRECTORY}/glfw/include
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $${LIB_DIRECTORY}/glfw/lib/release/libglfw3.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $${LIB_DIRECTORY}/glfw/lib/debug/libglfw3.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $${LIB_DIRECTORY}/glfw/lib/release/glfw3.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $${LIB_DIRECTORY}/glfw/lib/debug/glfw3.lib
-else:unix: PRE_TARGETDEPS += $${LIB_DIRECTORY}/glfw/lib/libglfw3.a
+#win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $${LIB_DIRECTORY}/glfw/lib/release/libglfw3.a
+#else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $${LIB_DIRECTORY}/glfw/lib/debug/libglfw3.a
+#else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $${LIB_DIRECTORY}/glfw/lib/release/glfw3.lib
+#else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $${LIB_DIRECTORY}/glfw/lib/debug/glfw3.lib
+#else:unix: PRE_TARGETDEPS += $${LIB_DIRECTORY}/glfw/lib/libglfw3.a

@@ -13,7 +13,11 @@ namespace mr::nage
         QEDITOR_MOUSE_RIGHT_BUTTON = 2,
         QEDITOR_MOUSE_MIDDLE_BUTTON = 4,
         QEDITOR_XBUTTON1 = 8,
-        QEDITOR_XBUTTON2 = 10
+        QEDITOR_XBUTTON2 = 10,
+        // X11 support
+        X11_LEFT_BUTTON = 1,
+        X11_RIGHT_BUTTON = 3,
+        X11_MIDDLE_BUTTON = 2
     };
 }
 

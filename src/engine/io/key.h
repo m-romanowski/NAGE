@@ -3,7 +3,7 @@
 
 namespace mr::nage
 {
-    enum Key
+    enum class Key
     {
         KEY_UNKNOWN = -1,
         KEY_SPACE = 32,
@@ -124,7 +124,113 @@ namespace mr::nage
         KEY_RIGHT_SHIFT = 344,
         KEY_RIGHT_CONTROL = 345,
         KEY_RIGHT_ALT = 346,
-        KEY_RIGHT_SUPER = 347
+        KEY_RIGHT_SUPER = 347,
+        // X11
+        X11_KEY_ESC = 9,
+        X11_KEY_F1 = 67,
+        X11_KEY_F2 = 68,
+        X11_KEY_F3 = 69,
+        X11_KEY_F4 = 70,
+        X11_KEY_F5 = 71,
+        X11_KEY_F6 = 72,
+        X11_KEY_F7 = 73,
+        X11_KEY_F8 = 74,
+        X11_KEY_F9 = 75,
+        X11_KEY_F10 = 76,
+        X11_KEY_F11 = 95,
+        X11_KEY_F12 = 96,
+        X11_KEY_PRINTSCRN = 111,
+        X11_KEY_SCROLL_LOCK = 78,
+        X11_KEY_PAUSE = 110,
+        X11_KEY_GRAVE_ACCENT = 49, // `
+        X11_KEY_1 = 10,
+        X11_KEY_2 = 11,
+        X11_KEY_3 = 12,
+        X11_KEY_4 = 13,
+        X11_KEY_5 = 14,
+        X11_KEY_6 = 15,
+        X11_KEY_7 = 16,
+        X11_KEY_8 = 17,
+        X11_KEY_9 = 18,
+        X11_KEY_0 = 19,
+        X11_KEY_MINUS = 20, // -
+        X11_KEY_EQUAL = 21, // =
+        X11_KEY_BACKSPACE = 22,
+        X11_KEY_INSERT = 106,
+        X11_KEY_HOME = 97,
+        X11_KEY_PAGE_UP = 99,
+        X11_KEY_NUM_LOCK = 77,
+        X11_KEY_KP_SLASH = 112, // /
+        X11_KEY_KP_MULTIPLY = 63, // *
+        X11_KEY_KP_MINUS = 82, // -
+        X11_KEY_TAB = 23,
+        X11_KEY_Q = 24,
+        X11_KEY_W = 25,
+        X11_KEY_E = 26,
+        X11_KEY_R = 27,
+        X11_KEY_T = 28,
+        X11_KEY_Y = 29,
+        X11_KEY_U = 30,
+        X11_KEY_I = 31,
+        X11_KEY_O = 32,
+        X11_KEY_P = 33,
+        X11_KEY_LEFT_BRACKER = 34, // [
+        X11_KEY_RIGHT_BRACKER = 35, // ]
+        X11_KEY_RETURN = 36,
+        X11_KEY_DELETE = 107,
+        X11_KEY_END = 103,
+        X11_KEY_PAGE_DOWN = 105,
+        X11_KEY_KP_7 = 79,
+        X11_KEY_KP_8 = 80,
+        X11_KEY_KP_9 = 81,
+        X11_KEY_KP_PLUS = 86,
+        X11_KEY_CAPS_LOCK = 66,
+        X11_KEY_A = 38,
+        X11_KEY_S = 39,
+        X11_KEY_D = 40,
+        X11_KEY_F = 41,
+        X11_KEY_G = 42,
+        X11_KEY_H = 43,
+        X11_KEY_J = 44,
+        X11_KEY_K = 45,
+        X11_KEY_L = 46,
+        X11_KEY_SEMICOLON = 47,
+        X11_KEY_APOSTROPHE = 48, // '
+        X11_KEY_KP_4 = 83,
+        X11_KEY_KP_5 = 84,
+        X11_KEY_KP_6 = 85,
+        X11_KEY_LEFT_SHIFT = 50,
+        X11_KEY_INTERNATIONAL = 94,
+        X11_KEY_Z = 52,
+        X11_KEY_X = 53,
+        X11_KEY_C = 54,
+        X11_KEY_V = 55,
+        X11_KEY_B = 56,
+        X11_KEY_N = 57,
+        X11_KEY_M = 58,
+        X11_KEY_COMMA = 59, // ,
+        X11_KEY_PERIOD = 60, // .
+        X11_KEY_SLASH = 61, // /
+        X11_KEY_RIGHT_SHIFT = 62,
+        X11_KEY_BACKSLASH = 51,
+        X11_KEY_CURSOR_UP = 98,
+        X11_KEY_KP_1 = 87,
+        X11_KEY_KP_2 = 88,
+        X11_KEY_KP_3 = 89,
+        X11_KEY_KP_ENTER = 108,
+        X11_KEY_LEFT_CTRL = 37,
+        X11_KEY_LEFT_OPTION = 115, // Logo Left (-> Option)
+        X11_KEY_LEFT_ALT = 64,
+        X11_KEY_SPACE = 65,
+        X11_KEY_RIGHT_ALT = 113,
+        X11_KEY_RIGHT_OPTION = 116, // Logo Right (-> Option)
+        X11_KEY_MENU = 117,
+        X11_KEY_RIGHT_CTRL = 109,
+        X11_KEY_CURSOR_LEFT = 100,
+        X11_KEY_CURSOR_DOWN = 104,
+        X11_KEY_CURSOR_RIGHT = 102,
+        X11_KEY_KP_0 = 90,
+        X11_KEY_KP_PERIOD = 91 // .
     };
 }
 

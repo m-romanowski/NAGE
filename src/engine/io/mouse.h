@@ -5,8 +5,6 @@
 #include "input.h"
 #include "engine/math/NAGEMath/nagemathvector.h"
 
-#include <QCursor>
-
 namespace mr::nage
 {
     class Mouse : public Input<InputInstance<MouseButton>>
@@ -23,6 +21,7 @@ namespace mr::nage
 
         static void registerMousePress(MouseButton _button);
         static void registerMouseRelease(MouseButton _button);
+        static void registerMouseMove(const Vector2f _movePosition);
         static void update();
 
     private:
@@ -33,7 +32,7 @@ namespace mr::nage
         static Vector2f mousePreviousPosition_;
         static Vector2f mouseCurrentPosition_;
         static Vector2f mouseDelta_;
-        // static X11 mX11;
+        static Vector2f mouseCursorPosition_;
     };
 }
 

@@ -10,7 +10,8 @@
 #include "engine/components/const.h"
 #include "engine/render/color.h"
 #include "engine/render/irenderengine.h"
-#include "engine/util/threadpool.h"
+
+#include <stdexcept>
 
 namespace mr::nage
 {
@@ -30,14 +31,15 @@ namespace mr::nage
 
         virtual void initialize() override;
         virtual void initializePreRenderEffects() override;
+        virtual void preRender() override;
         virtual void render() override;
         virtual std::string apiVersion() const override;
-        // GLFWwindow* glfwWwindow() const;
         GLint screenFrameBuffer() const;
 
         void clearScene();
         void enableClipPlane(int _idx = 0);
         void disableClipPlane(int _idx = 0);
+
         static Projection& projection();
 
     private:

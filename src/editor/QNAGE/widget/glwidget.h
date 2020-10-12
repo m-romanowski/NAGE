@@ -2,91 +2,39 @@
 #define QNAGE_WIDGET_GLWIDGET_H_
 
 #include "engine/core/igame.h"
-#include "engine/render/projection.h"
-#include "engine/io/iwindow.h"
-#include "engine/components/camera/camera.h"
 
-#include <QCoreApplication>
-#include <QOpenGLWidget>
-#include <QtOpenGL>
-#include <QTimer>
-#include <QLabel>
-#include <QFont>
-#include <QColor>
-#include <QSurfaceFormat>
-#include <QMouseEvent>
-#include <QWheelEvent>
+#include <QWidget>
+#include <QResizeEvent>
 
-#include <chrono>
-#include <iostream>
+#include <thread>
 
-#define QNAGE_YELLOW Qt::yellow
-#define QNAGEL_RED Qt::red
-
-//#define QNAGE_WHEEL_STEP 0.01
+namespace mr::nage
+{
+    class X11OpenGLWindow;
+}
 
 namespace mr::qnage
 {
-    class GLWidget : public QOpenGLWidget, public nage::IWindow
+
+    class GLWidget
+        : public QWidget
     {
         Q_OBJECT
 
     public:
         GLWidget(QWidget* _parent = nullptr);
-        ~GLWidget() override;
+        ~GLWidget();
 
-        // Setters
-        void setGame(nage::IGame* _game);
-
-        // Public methods
-        void renderText(float _x, float _y, float _z, const QString& _str);
-        void renderText(const nage::Vector3f& _position, const QString& _str);
-
-    signals:
-        void readyToWork();
+        void initialize(nage::IGame* _game);
+        void startRendering();
 
     protected:
-        void sync() override;
-        void initializeGL() override;
-        void paintGL() override;
-        void resizeGL(int _width, int _height) override;
-        void keyPressEvent(QKeyEvent* _event) override;
-        void keyReleaseEvent(QKeyEvent* _event) override;
-        void mousePressEvent(QMouseEvent* _event) override;
-        void mouseReleaseEvent(QMouseEvent* _event) override;
-        void wheelEvent(QWheelEvent* _event) override;
-
-    protected slots:
-        void update();
+        void resizeEvent(QResizeEvent* _event);
 
     private:
-        void renderFPS();
-        void transformPoint(GLfloat out[4], const GLfloat m[16], const GLfloat in[4]);
-        GLint project(GLfloat objx, GLfloat objy, GLfloat objz,
-            const GLfloat model[16], const GLfloat proj[16],
-            const GLint viewport[4], GLfloat* winx, GLfloat* winy, GLfloat* winz);
-
-        // Game
         nage::IGame* game_;
-
-        // GLWidget settings
-        QSurfaceFormat surfaceFormat_;
-
-        // FPS counter
-        QFont font_;
-        int frameCount_;
-        long lastFrame_;
-
-        // GLAD
-        bool gladInitialized_;
-
-        // Editor camera
-        nage::Camera camera_;
-        nage::SceneNode* sceneNode_;
-
-        QEventLoop eventLoop_;
-        QFuture<void> future_;
-        QFutureWatcher<void> futureWatcher_;
+        nage::X11OpenGLWindow* renderWindow_;
+        std::thread renderWorker_;
     };
 }
 

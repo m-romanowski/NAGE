@@ -32,7 +32,8 @@ namespace mr::nage
         GLint frameBufferId;
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &frameBufferId);
 
-        return frameBufferId;
+        // TODO: change to `frameBufferId`.
+        return 0;
     }
 
     void GLRenderEngine::clearScene()
@@ -44,10 +45,17 @@ namespace mr::nage
 
     void GLRenderEngine::initialize()
     {
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_BACK);
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        // Initialize window.
+        window_->initialize();
+
+        if(window_->initialized())
+        {
+            // OpenGL initial settings.
+            glEnable(GL_DEPTH_TEST);
+            glEnable(GL_CULL_FACE);
+            glCullFace(GL_BACK);
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        }
     }
 
     void GLRenderEngine::initializePreRenderEffects()
@@ -63,10 +71,20 @@ namespace mr::nage
         FrameBuffer::unbind(window_, screenFrameBuffer());
     }
 
+    void GLRenderEngine::preRender()
+    {
+        // Poll next window event.
+        window_->nextEvent();
+    }
+
     void GLRenderEngine::render()
     {
+        clearScene();
+
         for(auto scene : sceneManager_->scenes())
             renderScene(scene.second);
+
+        window_->update();
     }
 
     void GLRenderEngine::enableClipPlane(int _idx)
@@ -96,12 +114,19 @@ namespace mr::nage
 
         Vector3f cameraPosition = _node->camera()->translation();
 
-        float waterHeight = _node->water()->transform()->translation().y();
-        float distance = 2 * (cameraPosition.y() - waterHeight);
+        float waterHeight = 0.0f;
+        float distance = 0.0f;
         float cameraPitch = _node->camera()->pitch();
 
-        // Water reflection effect.
-        _node->water()->waterReflectionEffect()->bind();
+        IWater* water = _node->water();
+        if(water)
+        {
+            waterHeight = water->transform()->translation().y();
+            distance = 2 * (cameraPosition.y() - waterHeight);
+
+            // Water reflection effect.
+            _node->water()->waterReflectionEffect()->bind();
+        }
 
         // Move camera to the bottom.
         cameraPosition.setY(cameraPosition.y() - distance);
@@ -118,8 +143,11 @@ namespace mr::nage
         FrameBuffer::unbind(window_, mainFrameBuffer);
 
         // Water refraction effect.
-        _node->water()->waterRefractionEffect()->bind();
-        renderSceneObjects(_node, Vector4f(0.0f, -1.0f, 0.0f, waterHeight));
+        if(water)
+        {
+            water->waterRefractionEffect()->bind();
+            renderSceneObjects(_node, Vector4f(0.0f, -1.0f, 0.0f, waterHeight));
+        }
 
         disableClipPlane();
         FrameBuffer::unbind(window_, mainFrameBuffer);
@@ -146,12 +174,4 @@ namespace mr::nage
     {
         return projection_;
     }
-
-    /*GLFWwindow* GLRenderEngine::glfwWwindow() const
-    {
-        if(window_ != nullptr)
-            return window_->getGLFWwindow();
-
-        return nullptr;
-    }*/
 }

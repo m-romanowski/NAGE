@@ -31,7 +31,7 @@ namespace mr::nage
     void IGame::initializeComponents(EngineType _type, IWindow* _window)
     {
         if(_type == EngineType::OpenGL)
-            coreEngine_->initialize(new GLRenderEngine(_window));
+            coreEngine_->initialize(new GLRenderEngine(_window), this);
     }
 
     void IGame::launch()

@@ -3,6 +3,9 @@
 #include "widget/vkwidget.h"
 #include "mainwindow.h"
 
+// TODO: move to the bridge qt <-> x11
+#include "engine/io/x11openglwindow.h"
+
 namespace mr::qnage
 {
     RenderWindow::RenderWindow(MainWindow* _mainWindow)
@@ -39,6 +42,7 @@ namespace mr::qnage
             this->topLayout_->addWidget(dockButton_, 0, 3, 1, 1);
 
             // Add OpenGL widget to render window.
+            glWidget_->startRendering();
             this->layout_->addWidget(glWidget_);
         }
     }
@@ -63,7 +67,7 @@ namespace mr::qnage
         if(glWidget_ == nullptr)
             glWidget_ = new GLWidget;
 
-        glWidget_->setGame(_game);
+        glWidget_->initialize(_game);
     }
 
     void RenderWindow::dockGLWindow()

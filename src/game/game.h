@@ -17,8 +17,11 @@ namespace mr::nage
         virtual ~Game() override {};
 
         void initializeScene() override;
+        void ioEventsSupplier() override;
 
     private:
+        Camera camera;
+
         // Skybox
         std::shared_ptr<Shader> skyboxShader;
         std::shared_ptr<Skybox> skybox;

@@ -1,4 +1,5 @@
 #include "mouse.h"
+#include "engine/components/const.h"
 
 namespace mr::nage
 {
@@ -6,7 +7,7 @@ namespace mr::nage
     Vector2f Mouse::mousePreviousPosition_;
     Vector2f Mouse::mouseCurrentPosition_;
     Vector2f Mouse::mouseDelta_;
-    // X11 Mouse::mX11;
+    Vector2f Mouse::mouseCursorPosition_;
 
     Mouse::InputContainer::iterator Mouse::findMouseButton(MouseButton _button)
     {
@@ -50,8 +51,7 @@ namespace mr::nage
 
     Vector2f Mouse::mousePosition()
     {
-        // return mX11.cursorPosition();
-        return Vector2f(QCursor::pos().x(), QCursor::pos().y());
+        return mouseCursorPosition_;
     }
 
     Vector2f Mouse::mouseDelta()
@@ -73,5 +73,10 @@ namespace mr::nage
 
         if(it != mouseContainer_.end())
             it->state_ = InputState::InputUnregistered;
+    }
+
+    void Mouse::registerMouseMove(const Vector2f _movePosition)
+    {
+        mouseCursorPosition_ = _movePosition;
     }
 }
