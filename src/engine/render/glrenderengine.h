@@ -10,13 +10,17 @@
 #include "engine/components/const.h"
 #include "engine/render/color.h"
 #include "engine/render/irenderengine.h"
+#include "engine/world/water/iwater.h"
 
 #include <stdexcept>
 
 namespace mr::nage
 {
-    class GLRenderEngine : public IRenderEngine
+    class GLRenderEngine
+        : public IRenderEngine
     {
+        typedef std::vector<RenderableObject*> RenderableContainer;
+
     public:
         GLRenderEngine(IWindow* _window = nullptr);
         virtual ~GLRenderEngine() override;
@@ -44,7 +48,13 @@ namespace mr::nage
 
     private:
         void renderScene(SceneNode* _node);
-        void renderSceneObjects(SceneNode* _node, Vector4f _clipPlane);
+        void renderBaseScene(const RenderableContainer& _renderableObjects, Camera* _camera, const Vector4f _clipPlane);
+        void renderFullScene(const RenderableContainer& _renderableObjects, Camera* _camera, const Vector4f _clipPlane);
+        void renderObject(RenderableObject* _renderable, Camera* _camera, const Vector4f _clipPlane, const std::vector<ILight*>& _lightSource);
+        void setWaterEffect(const RenderableContainer& _renderableObjects, Camera* _camera);
+        std::vector<ILight*> lightSources(const RenderableContainer& _renderableObjects) const;
+        std::vector<IWater*> waterSources(const RenderableContainer& _renderableObjects) const;
+        RenderableContainer sortByDepth(RenderableContainer _renderableObjects) const;
 
         IWindow* window_;
         Color* sceneColor_;

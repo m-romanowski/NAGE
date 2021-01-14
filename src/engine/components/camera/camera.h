@@ -8,9 +8,9 @@
 
 namespace mr::nage
 {
-	class Camera
-	{
-	public:
+    class Camera
+    {
+    public:
         Camera();
 
         void translate(const Vector3f& _translation);

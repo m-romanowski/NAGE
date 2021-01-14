@@ -1,78 +1,72 @@
 #include "engine/render/glrenderengine.h"
-#include "sun.h"
+#include "directionallightobject.h"
 
 namespace mr::nage
 {
-    Sun::Sun()
-        : transform_(new Transform)
+    DirectionalLightObject::DirectionalLightObject(const std::string& _id)
+        : id_(_id),
+          transform_(new Transform)
     {
         vertices_ = vertices();
         indices_ = indices();
 
-        setup();
         setupBuffer();
     }
 
-    Sun::Sun(const std::vector<Vertex>& _vertices, const std::vector<unsigned int>& _indices)
-        : transform_(new Transform)
+    DirectionalLightObject::DirectionalLightObject(const std::string& _id, const std::vector<Vertex>& _vertices, const std::vector<unsigned int>& _indices)
+        : id_(_id),
+          transform_(new Transform)
     {
         setVertices(_vertices);
         setIndices(_indices);
-        setup();
         setupBuffer();
     }
 
-    Sun::~Sun()
+    DirectionalLightObject::~DirectionalLightObject()
     {
         delete shader_;
         delete transform_;
     }
 
-    Shader* Sun::shader()
+    std::string DirectionalLightObject::id() const
+    {
+        return id_;
+    }
+
+    Shader* DirectionalLightObject::shader()
     {
         return shader_;
     }
 
-    Transform* Sun::transform()
+    Transform* DirectionalLightObject::transformation()
     {
         return transform_;
     }
 
-    void Sun::setShader(Shader* _shader)
+    bool DirectionalLightObject::isLightSource() const
+    {
+        return true;
+    }
+
+    void DirectionalLightObject::setShader(Shader* _shader)
     {
         shader_ = _shader;
     }
 
-    void Sun::setTransformation(Transform* _transform)
+    void DirectionalLightObject::setTransformation(Transform* _transform)
     {
         transform_ = _transform;
     }
 
-    void Sun::setGradientExpand(float _gradientExpand)
+    void DirectionalLightObject::setGradientExpand(float _gradientExpand)
     {
         gradientExpand_ = _gradientExpand;
     }
 
-    void Sun::setup()
+    void DirectionalLightObject::draw(Camera* _camera, const Vector4f _clipPlane)
     {
-        // Shader
-        shader_ = new Shader;
-        shader_->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
-            "../src/engine/shader/lamp.vert");
-        shader_->addShaderFromSourceFile(SHADER_TYPE::SHADER_FRAGMENT,
-            "../src/engine/shader/lamp.frag");
-        shader_->link();
+        NAGE_UNUSED(_clipPlane);
 
-        // Transformation
-        transform_->setTranslation(Vector3f(200.0f, 1000.0f, 140.0f));
-        transform_->setScale(30.0f);
-
-        // Sun color
-        color_ = Color(238, 220, 165);
-    }
-
-    void Sun::draw(Camera* _camera)
-    {
         if(!shader_)
         {
             std::error_code code = ERROR::SHADER_FAILED_TO_FIND_PROGRAM;
@@ -89,7 +83,6 @@ namespace mr::nage
         shader_->setVec3("color", color_.red(), color_.green(), color_.blue());
         shader_->setFloat("expand", gradientExpand_);
         shader_->setVec2("center", transform_->translation().x(), transform_->translation().y());
-        shader_->setFloat("radius", radius());
         shader_->setFloat("windowHeight", IWindow::currentWindowSize().y());
 
         // Draw mesh.

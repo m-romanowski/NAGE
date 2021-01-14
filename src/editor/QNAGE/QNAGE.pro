@@ -64,13 +64,25 @@ SOURCES += \
     ../../engine/render/lod/cdlod/cdlodquadtree.cpp \
     ../../engine/render/lod/cdlod/cdlodselectednode.cpp \
     ../../engine/render/lod/cdlod/icdlodobject.cpp \
+    ../../engine/render/lod/geoclipmaps/geoclipmapblock.cpp \
+    ../../engine/render/lod/geoclipmaps/geoclipmapdegeneratetriangle.cpp \
+    ../../engine/render/lod/geoclipmaps/geoclipmapinteriortrim.cpp \
+    ../../engine/render/lod/geoclipmaps/geoclipmaplevel.cpp \
+    ../../engine/render/lod/geoclipmaps/geoclipmaplod.cpp \
+    ../../engine/render/lod/geoclipmaps/geoclipmapringfixup.cpp \
     ../../engine/render/lod/geoclipmaps/geometryclipmap.cpp \
+    ../../engine/render/renderableobject.cpp \
+    ../../engine/world/light/directionallightobject.cpp \
     ../../engine/world/light/ilight.cpp \
-    ../../engine/world/light/sun.cpp \
+    ../../engine/world/light/pointlightobject.cpp \
     ../../engine/world/plants/lsystem.cpp \
     ../../engine/world/primitives/gridmesh.cpp \
     ../../engine/world/primitives/sphere.cpp \
+    ../../engine/world/skybox/daynightskybox.cpp \
+    ../../engine/world/skybox/daynightskydome.cpp \
+    ../../engine/world/skybox/sunlight.cpp \
     ../../engine/world/terrain/cdlodterrain.cpp \
+    ../../engine/world/terrain/geoclipmapterrain.cpp \
     ../../engine/world/terrain/iterrain.cpp \
     ../../engine/world/water/cdlodwater.cpp \
     ../../engine/world/water/iwater.cpp \
@@ -82,20 +94,27 @@ SOURCES += \
     log/logwidget.cpp \
     log/messagehandler.cpp \
     log/threadlogstream.cpp \
+    qnage.cpp \
+    scene/scenetree.cpp \
+    scene/scenetreenode.cpp \
+    scene/scenetreenodeitemtransformations.cpp \
     settings/buildandrunsettings.cpp \
     settings/enginesettings.cpp \
     settings/environmentsettings.cpp \
     settings/settingslayout.cpp \
     settings/settingsnavigation.cpp \
     ui/custombutton.cpp \
+    ui/decimallineedit.cpp \
     ui/maintool.cpp \
     ui/tabbar.cpp \
     ui/tabwidget.cpp \
     widget/glwidget.cpp \
     widget/mainwidget.cpp \
+    widget/scenewidget.cpp \
     widget/settingswidget.cpp \
     widget/vkwidget.cpp \
     widget/welcomewidget.cpp \
+    widget/workspacewidget.cpp \
     window/framelesswindow.cpp \
     window/mainwindow.cpp \
     window/renderwindow.cpp \
@@ -123,7 +142,6 @@ SOURCES += \
     ../../engine/world/light/pointlight.cpp \
     ../../engine/render/color.cpp \
     ../../engine/render/glrenderengine.cpp \
-    ../../engine/render/iobject.cpp \
     ../../engine/render/irenderengine.cpp \
     ../../engine/render/projection.cpp \
     ../../engine/render/shader.cpp \
@@ -141,6 +159,7 @@ HEADERS += \
     $${LIB_DIRECTORY}/STB/stb_image.h \
     $${LIB_DIRECTORY}/KHR/khrplatform.h \
     ../../engine/components/resourcemanager.h \
+    ../../engine/core/iobject.h \
     ../../engine/generators/flowmap.h \
     ../../engine/generators/heightmap.h \
     ../../engine/generators/itexturegenerator.h \
@@ -159,18 +178,30 @@ HEADERS += \
     ../../engine/render/lod/cdlod/cdlodselectednode.h \
     ../../engine/render/lod/cdlod/cdlodsettings.h \
     ../../engine/render/lod/cdlod/icdlodobject.h \
+    ../../engine/render/lod/geoclipmaps/geoclipmapblock.h \
+    ../../engine/render/lod/geoclipmaps/geoclipmapdegeneratetriangle.h \
+    ../../engine/render/lod/geoclipmaps/geoclipmapinteriortrim.h \
+    ../../engine/render/lod/geoclipmaps/geoclipmaplevel.h \
+    ../../engine/render/lod/geoclipmaps/geoclipmaplod.h \
+    ../../engine/render/lod/geoclipmaps/geoclipmapringfixup.h \
     ../../engine/render/lod/geoclipmaps/geometryclipmap.h \
+    ../../engine/render/renderableobject.h \
     ../../engine/render/vertexhelper.h \
     ../../engine/util/size.h \
     ../../engine/util/threadpool.h \
+    ../../engine/world/light/directionallightobject.h \
     ../../engine/world/light/ilight.h \
-    ../../engine/world/light/sun.h \
+    ../../engine/world/light/pointlightobject.h \
     ../../engine/world/plants/lsystem.h \
     ../../engine/world/primitives/gridmesh.h \
     ../../engine/world/primitives/sphere.h \
     ../../engine/world/procedural/diamondsquare.h \
     ../../engine/world/procedural/lsystem.h \
+    ../../engine/world/skybox/daynightskybox.h \
+    ../../engine/world/skybox/daynightskydome.h \
+    ../../engine/world/skybox/sunlight.h \
     ../../engine/world/terrain/cdlodterrain.h \
+    ../../engine/world/terrain/geoclipmapterrain.h \
     ../../engine/world/terrain/iterrain.h \
     ../../engine/world/water/cdlodwater.h \
     ../../engine/world/water/iwater.h \
@@ -182,20 +213,28 @@ HEADERS += \
     log/logwidget.h \
     log/messagehandler.h \
     log/threadlogstream.h \
+    qnage.h \
+    scene/scenetree.h \
+    scene/scenetreenode.h \
+    scene/scenetreenodeitem.h \
+    scene/scenetreenodeitemtransformations.h \
     settings/buildandrunsettings.h \
     settings/enginesettings.h \
     settings/environmentsettings.h \
     settings/settingslayout.h \
     settings/settingsnavigation.h \
     ui/custombutton.h \
+    ui/decimallineedit.h \
     ui/maintool.h \
     ui/tabbar.h \
     ui/tabwidget.h \
     widget/glwidget.h \
     widget/mainwidget.h \
+    widget/scenewidget.h \
     widget/setingswidget.h \
     widget/vkwidget.h \
     widget/welcomewidget.h \
+    widget/workspacewidget.h \
     window/framelesswindow.h \
     window/mainwindow.h \
     window/renderwindow.h \
@@ -234,7 +273,6 @@ HEADERS += \
     ../../engine/render/color.h \
     ../../engine/render/glrenderengine.h \
     ../../engine/render/vertex.h \
-    ../../engine/render/iobject.h \
     ../../engine/render/irenderengine.h \
     ../../engine/render/projection.h \
     ../../engine/render/shader.h \

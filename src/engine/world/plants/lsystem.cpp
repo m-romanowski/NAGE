@@ -4,8 +4,8 @@
 namespace mr::nage
 {
     LSystem::LSystem()
-        : axiom_("X"),
-          randomRotations_(RANDOM_ROTATIONS_COUNT, 0.0f)
+        /*: axiom_("X"),
+          randomRotations_(RANDOM_ROTATIONS_COUNT, 0.0f)*/
     {
         /*std::random_device rd;
         std::mt19937 gen(rd());

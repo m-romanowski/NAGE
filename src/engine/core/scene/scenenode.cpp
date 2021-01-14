@@ -2,11 +2,8 @@
 
 namespace mr::nage
 {
-    SceneNode::SceneNode()
-        : skybox_(nullptr),
-          sunLight_(nullptr),
-          terrain_(nullptr),
-          water_(nullptr),
+    SceneNode::SceneNode(const std::string _name)
+        : name_(_name),
           camera_(new Camera)
     {
 
@@ -14,96 +11,66 @@ namespace mr::nage
 
     SceneNode::~SceneNode()
     {
-        models_.clear();
-        pointLights_.clear();
+        for(auto& component : sceneComponents_)
+            delete component.second;
+
+        sceneComponents_.clear();
 
         delete camera_;
-        delete skybox_;
-        delete sunLight_;
-        delete terrain_;
-        delete water_;
     }
 
-    /* Add a new model object to the dictionary (models).
-     */
-    void SceneNode::addToScene(const std::string& _key, Model* _model)
+    std::string SceneNode::name() const
     {
-        // Check if the key already exists.
-        if(STLUTIL::checkKey(models_, _key) || STLUTIL::checkKey(pointLights_, _key))
+        return name_;
+    }
+
+    std::optional<RenderableObject*> SceneNode::renderableObjectByName(const std::string& _name) const
+    {
+        if(auto it = findComponentByName(_name); it)
         {
-            std::error_code code = ERROR::SCENE_FAILED_TO_ADD_MODEL;
-            Log::error(code.message());
-            return;
+            if(it.has_value())
+                return std::optional<RenderableObject*>{ it->second };
         }
 
-        // Add a new model to dictionary.
-        models_.insert(std::make_pair(_key, _model));
-        Log::log(_key + " (model object) has been added.");
+        return std::nullopt;
     }
 
-    /* Add a new ligth to the dictionary (lights).
-     */
-    void SceneNode::addToScene(const std::string& _key, PointLight* _light)
+    std::vector<RenderableObject*> SceneNode::renderableObjects() const
     {
+        return objectsByType(RenderableObject::TYPE);
+    }
+
+    Camera* SceneNode::camera() const
+    {
+        return camera_;
+    }
+
+    void SceneNode::addToScene(RenderableObject* _object)
+    {
+        auto objectId = _object->id();
+        if(objectId.empty())
+            throw std::runtime_error("Cannot add new object with empty identifier");
+
         // Check if the key already exists.
-        if(STLUTIL::checkKey(models_, _key) || STLUTIL::checkKey(pointLights_, _key))
+        if(auto it = findComponentByName(objectId); it.has_value())
         {
-            std::error_code code = ERROR::SCENE_FAILED_TO_ADD_LIGHT;
+            std::error_code code = ERROR::SCENE_FAILED_TO_ADD_OBJECT;
             Log::error(code.message());
             return;
         }
 
         // Add a new ligth to dictionary.
-        pointLights_.insert(std::make_pair(_key, _light));
-        Log::log(_key + " (point light) has been added.");
+        sceneComponents_.insert(std::make_pair(SceneNode::ObjectIdentity::of(objectId), _object));
+        Log::log(objectId + " has been added to the scene.");
     }
 
-    void SceneNode::addToScene(Skybox* _skybox)
-    {
-        skybox_ = _skybox;
-        Log::log("Skybox has been added.");
-    }
-
-    void SceneNode::addToScene(Sun* _light)
-    {
-        sunLight_ = _light;
-        Log::log("Sun light has been added.");
-    }
-
-    void SceneNode::addToScene(ITerrain* _terrain)
-    {
-        terrain_ = _terrain;
-        Log::log("Terrain has been added.");
-    }
-
-    void SceneNode::addToScene(IWater* _water)
-    {
-        water_ = _water;
-        Log::log("Water has been added.");
-    }
-
-    void SceneNode::addToScene(Camera* _camera)
-    {
-        camera_ = _camera;
-        Log::log("Camera has been added.");
-    }
-
-    /* Remove object from the scene
-     */
-    void SceneNode::removeFromScene(const std::string _key)
+    void SceneNode::removeFromScene(const std::string& _name)
     {
         // Check if key exists in any scene dictionaries (models, lights).
-        if(STLUTIL::checkKey(models_, _key))
+        if(auto identity = objectIdentityByName(_name); identity)
         {
-            models_.erase(_key);
-            Log::log(_key + " (model object) has been removed.");
-            return;
-        }
-
-        if(STLUTIL::checkKey(pointLights_, _key))
-        {
-            pointLights_.erase(_key);
-            Log::log(_key + " (point light) has been removed.");
+            sceneComponents_.erase(identity.value());
+            Log::log(_name + " has been removed from the scene node.");
             return;
         }
 
@@ -112,133 +79,37 @@ namespace mr::nage
         Log::error(code.message());
     }
 
-    Model* SceneNode::getModelByKey(const std::string& _key)
+    std::vector<RenderableObject*> SceneNode::objectsByType(const std::string _expectedType) const
     {
-        std::unordered_map<std::string, Model*>::const_iterator got = models_.find(_key);
-
-        if(got != models_.end())
-            return got->second;
-
-        return nullptr;
-    }
-
-    PointLight* SceneNode::getLightObjectByKey(const std::string& _key)
-    {
-        std::unordered_map<std::string, PointLight*>::const_iterator got = pointLights_.find(_key);
-
-        if(got != pointLights_.end())
-            return got->second;
-
-        return nullptr;
-    }
-
-    Skybox* SceneNode::skybox()
-    {
-        return skybox_;
-    }
-
-    Sun* SceneNode::sun()
-    {
-        return sunLight_;
-    }
-
-    ITerrain* SceneNode::terrain()
-    {
-        return terrain_;
-    }
-
-    IWater* SceneNode::water()
-    {
-        return water_;
-    }
-
-    Camera* SceneNode::camera()
-    {
-        return camera_;
-    }
-
-    void SceneNode::renderModels(Vector4f _clipPlane)
-    {
-        // Render models.
-        for(const auto& model : models_)
+        std::vector<RenderableObject*> result;
+        for(auto& component : sceneComponents_)
         {
-            model.second->useMaterials();
-            model.second->bindTextures();
-            model.second->draw(camera_, _clipPlane);
-            // model.second->unbindTextures();
-        }
-    }
-
-    // TODO: change light rendering method.
-    void SceneNode::renderLights()
-    {
-        // Use light to any model on scene.
-        for(auto& model : models_)
-        {
-            for(auto& light : pointLights_)
-                light.second->use(camera_, model.second->shader());
-
-            // Set point light count.
-            model.second->shader()->setInt("pointLightCount", static_cast<int>(pointLights_.size()));
-
-            // Set up sun light.
-            if(sunLight_)
-                sunLight_->use(camera_, model.second->shader());
+            if(component.second->type() == _expectedType)
+                result.push_back(component.second);
         }
 
-        if(terrain_)
-        {
-            for(auto& light : pointLights_)
-                light.second->use(camera_, terrain_->shader());
-
-            terrain_->shader()->setInt("pointLightCount", static_cast<int>(pointLights_.size()));
-
-            if(sunLight_)
-                sunLight_->use(camera_, terrain_->shader());
-        }
-
-        // Draw lights
-        for(const auto& light : pointLights_)
-            light.second->draw(camera_);
-
-        if(sunLight_)
-            sunLight_->draw(camera_);
+        return result;
     }
 
-    void SceneNode::renderSkybox()
+    std::optional<SceneNode::ObjectIdentity> SceneNode::objectIdentityByName(const std::string &_name) const
     {
-        // Render skybox if exists
-        if(skybox_)
-            skybox_->draw(camera_);
+        if(auto it = findComponentByName(_name); it.has_value())
+            return std::optional<SceneNode::ObjectIdentity>{ it->first };
+
+        return std::nullopt;
     }
 
-    void SceneNode::renderTerrain(Vector4f _clipPlane)
+    std::optional<std::pair<SceneNode::ObjectIdentity, RenderableObject*>> SceneNode::findComponentByName(const std::string& _name) const
     {
-        if(terrain_)
-        {
-            terrain_->useMaterial();
-            terrain_->bindTextures();
-            terrain_->render(camera_, _clipPlane);
-            // mTerrain->unbindTextures();
-        }
-    }
+        using pair = std::pair<ObjectIdentity, RenderableObject*>;
 
-    void SceneNode::renderWater()
-    {
-        if(water_)
-        {
-            water_->bindTextures();
-            water_->render(camera_);
-            // mWater->unbindTextures();
-        }
-    }
+        auto it = std::find_if(sceneComponents_.begin(), sceneComponents_.end(), [&](const pair& _identity) {
+            return _identity.first.name_ == _name;
+        });
 
-    void SceneNode::renderAllComponents(Vector4f _clipPlane)
-    {
-        renderSkybox();
-        renderModels(_clipPlane);
-        renderLights();
-        renderTerrain(_clipPlane);
-        renderWater();
+        if(it != sceneComponents_.end())
+            return std::optional<pair>{ *it };
+
+        return std::nullopt;
     }
 }

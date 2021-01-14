@@ -8,16 +8,17 @@
 namespace mr::nage
 {
     class Model
+        : public RenderableObject
     {
     public:
-        Model();
+        Model(const std::string& _id);
         explicit Model(Primitive& _primitive);
         ~Model();
 
         // Getters
         std::vector<Mesh*> meshes() const;
-        Transform* transformation();
-        Shader* shader();
+        Shader* shader() override;
+        Transform* transformation() override;
 
         // Setters
         void addMesh(Mesh* _mesh);
@@ -27,13 +28,15 @@ namespace mr::nage
         void setTransformation(Transform* _transform);
         void setShader(Shader* _shader);
 
-        void useMaterials();
-        void bindTextures();
-        void unbindTextures();
-        void draw(Camera* _camera, Vector4f _clipPlane);
         void loadModel(const std::string& _path);
+        std::string id() const override;
+        void useMaterials() override;
+        void bindTextures() override;
+        void unbindTextures() override;
+        void draw(Camera* _camera, const Vector4f _clipPlane) override;
 
     protected:
+        std::string id_;
         std::vector<Mesh*> meshes_;
         Transform* transform_;
         Shader* shader_;

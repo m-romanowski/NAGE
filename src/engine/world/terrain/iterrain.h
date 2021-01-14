@@ -1,6 +1,7 @@
 #ifndef NAGE_ENGINE_WORLD_TERRAIN_ITERRAIN_H_
 #define NAGE_ENGINE_WORLD_TERRAIN_ITERRAIN_H_
 
+#include "engine/render/renderableobject.h"
 #include "engine/render/shader.h"
 #include "engine/render/model/material.h"
 #include "engine/render/transform.h"
@@ -12,18 +13,19 @@
 namespace mr::nage
 {
     class ITerrain
+        : public RenderableObject
     {
     public:
-        ITerrain();
+        ITerrain(const std::string& _id);
         virtual ~ITerrain();
 
         // Getters
-        Shader* shader();
         Material* material();
-        Transform* transform();
         unsigned int texturesCount() const;
         Texture* textureByKey(const std::string& _key);
         std::map<std::string, Texture*> textures() const;
+        Shader* shader() override;
+        Transform* transformation() override;
 
         // Setters
         void setShader(Shader* _shader);
@@ -32,12 +34,13 @@ namespace mr::nage
         void addTexture(const std::string& _shaderUniformName, Texture* _texture);
         void addTextures(const std::map<std::string, Texture*>& _textures);
 
-        virtual void useMaterial();
-        virtual void bindTextures();
-        virtual void unbindTextures();
-        virtual void render(Camera* _camera, Vector4f _clipPlane) = 0;
+        std::string id() const override;
+        virtual void useMaterials() override;
+        virtual void bindTextures() override;
+        virtual void unbindTextures() override;
 
     protected:
+        std::string id_;
         Shader* shader_;
         Material* material_;
         Transform* transform_;

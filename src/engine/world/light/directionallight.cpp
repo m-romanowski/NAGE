@@ -17,6 +17,11 @@ namespace mr::nage
         return lightDirection_;
     }
 
+    ILight::LightType DirectionalLight::lightType() const
+    {
+        return ILight::LightType::Directional;
+    }
+
     void DirectionalLight::setLightDirection(const Vector3f& _direction)
     {
         lightDirection_ = _direction;
@@ -29,9 +34,12 @@ namespace mr::nage
 
     void DirectionalLight::use(Camera* _camera, Shader* _shader)
     {
-        _shader->use();
-        _shader->setVec3("cameraPosition", _camera->translation());
-        _shader->setVec3("directionalLight.direction", lightDirection_);
-        _shader->setVec3("directionalLight.color", color_.red(), color_.green(), color_.blue());
+        if(_shader)
+        {
+            _shader->use();
+            _shader->setVec3("cameraPosition", _camera->translation());
+            _shader->setVec3("directionalLight.direction", lightDirection_);
+            _shader->setVec3("directionalLight.color", color_.red(), color_.green(), color_.blue());
+        }
     }
 }

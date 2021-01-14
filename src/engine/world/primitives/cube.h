@@ -5,10 +5,11 @@
 
 namespace mr::nage
 {
-    class Cube : public Primitive
+    class Cube
+        : public Primitive
     {
     public:
-        Cube();
+        Cube(const std::string& _id);
 
         void setupPrimitive() override;
     };

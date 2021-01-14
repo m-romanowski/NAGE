@@ -1,6 +1,8 @@
 #ifndef QNAGE_WIDGET_MAINWIDGET_H_
 #define QNAGE_WIDGET_MAINWIDGET_H_
 
+#include "workspacewidget.h"
+#include "scenewidget.h"
 #include "log/logwidget.h"
 #include "window/renderwindow.h"
 
@@ -17,8 +19,9 @@ namespace mr::qnage
         ~MainWidget();
 
         // Getters
-        inline RenderWindow* getRenderWindow() const { return renderWindow_; }
-        inline LogWidget* getDebugWindow() const { return logWidget_; }
+        inline RenderWindow* renderWindow() const { return renderWindow_; }
+        inline SceneWidget* sceneWidget() const { return sceneWidget_; }
+        inline LogWidget* debugWindow() const { return logWidget_; }
 
         // Setters
         void setRenderWindow(RenderWindow* _window);
@@ -33,8 +36,9 @@ namespace mr::qnage
 
         // Editor components
         RenderWindow* renderWindow_;
+        SceneWidget* sceneWidget_;
         LogWidget* logWidget_;
-        QWidget* toolsWidget_;
+        WorkspaceWidget* toolsWidget_;
         QWidget* workspaceWidget_;
 
         // Ui

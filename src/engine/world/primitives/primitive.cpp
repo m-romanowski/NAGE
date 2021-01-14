@@ -3,8 +3,9 @@
 
 namespace mr::nage
 {
-    Primitive::Primitive()
-        : shader_(new Shader),
+    Primitive::Primitive(const std::string& _id)
+        : id_(_id),
+          shader_(new Shader),
           transform_(new Transform)
     {
 
@@ -16,12 +17,17 @@ namespace mr::nage
         delete transform_;
     }
 
+    std::string Primitive::id() const
+    {
+        return id_;
+    }
+
     Shader* Primitive::shader()
     {
         return shader_;
     }
 
-    Transform* Primitive::transform()
+    Transform* Primitive::transformation()
     {
         return transform_;
     }
@@ -69,8 +75,10 @@ namespace mr::nage
         shader_->link();
     }
 
-    void Primitive::draw(Camera* _camera)
+    void Primitive::draw(Camera* _camera, const Vector4f _clipPlane)
     {
+        NAGE_UNUSED(_clipPlane);
+
         if(!shader_)
         {
             std::error_code code = ERROR::SHADER_FAILED_TO_FIND_PROGRAM;

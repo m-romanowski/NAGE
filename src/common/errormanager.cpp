@@ -26,9 +26,7 @@ namespace mr::nage
             case ERROR::SHADER_FAILED_TO_FIND_PROGRAM: return "Failed to find shader program.";
             // SCENE
             case ERROR::SCENE_FAILED_TO_FIND_KEY: return "Failed to find key. Check if given key exists";
-            case ERROR::SCENE_FAILED_TO_ADD_MODEL: return "Failed to add a new model to scene. Check if given key already not exists.";
-            case ERROR::SCENE_FAILED_TO_ADD_LIGHT: return "Failed to add a new ligth to scene. Check if given key already not exists.";
-            case ERROR::SCENE_FAILED_TO_ADD_CAMERA: return "Failed to add a new camera to scene. Check if given key already not exists.";
+            case ERROR::SCENE_FAILED_TO_ADD_OBJECT: return "Failed to add a new object to scene. Check if given key already not exists.";
             case ERROR::SCENEMANAGER_FAILED_TO_ADD_NODE: return "Failed to add a new scene node. Check if given key exists";
             // X11
             case ERROR::X11_FAILED_DISPLAY_INITIALIZATION: return "Failed X11 display initialization";

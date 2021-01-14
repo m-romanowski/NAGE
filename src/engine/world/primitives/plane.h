@@ -5,10 +5,11 @@
 
 namespace mr::nage
 {
-    class Plane : public Primitive
+    class Plane
+        : public Primitive
     {
     public:
-        Plane(int _width, int _height);
+        Plane(const std::string& _id, int _width, int _height);
 
         void setupPrimitive() override;
         static void generateFlatPlane(int _width, int _height, std::vector<Vertex>& _vertices,

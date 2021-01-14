@@ -1,51 +1,51 @@
-#include "iobject.h"
+#include "renderableobject.h"
 
 namespace mr::nage
 {
-    IObject::IObject()
+    RenderableObject::RenderableObject()
     {
 
     }
 
-    IObject::IObject(const std::vector<Vertex>& _vertices, const std::vector<GLuint>& _indices)
+    RenderableObject::RenderableObject(const std::vector<Vertex>& _vertices, const std::vector<GLuint>& _indices)
         : vertices_(_vertices),
           indices_(_indices)
     {
 
     }
 
-    IObject::~IObject()
+    RenderableObject::~RenderableObject()
     {
         // Clear vertex buffers.
         clearBuffers();
     }
 
-    std::vector<Vertex> IObject::vertices()
+    std::vector<Vertex> RenderableObject::vertices() const
     {
         return vertices_;
     }
 
-    std::vector<GLuint> IObject::indices()
+    std::vector<GLuint> RenderableObject::indices() const
     {
         return indices_;
     }
 
-    unsigned int IObject::size() const
+    unsigned int RenderableObject::size() const
     {
         return indices_.size();
     }
 
-    void IObject::setVertices(const std::vector<Vertex>& _vertices)
+    void RenderableObject::setVertices(const std::vector<Vertex>& _vertices)
     {
         vertices_ = _vertices;
     }
 
-    void IObject::setIndices(const std::vector<GLuint>& _indices)
+    void RenderableObject::setIndices(const std::vector<GLuint>& _indices)
     {
         indices_ = _indices;
     }
 
-    void IObject::setupBuffer()
+    void RenderableObject::setupBuffer()
     {
         // Create buffers.
         glGenVertexArrays(1, &VAO_);
@@ -83,7 +83,7 @@ namespace mr::nage
             reinterpret_cast<void*>(offsetof(Vertex, color_)));
     }
 
-    void IObject::clearBuffers()
+    void RenderableObject::clearBuffers()
     {
         // Clear vertex data
         vertices_.clear();
@@ -92,5 +92,42 @@ namespace mr::nage
         glDeleteVertexArrays(1, &VAO_);
         glDeleteBuffers(1, &VBO_);
         glDeleteBuffers(1, &EBO_);
+    }
+
+    void RenderableObject::draw(Camera* _camera, const Vector4f _clipPlane)
+    {
+        NAGE_UNUSED(_camera);
+        NAGE_UNUSED(_clipPlane);
+    }
+
+    bool RenderableObject::isLightSource() const
+    {
+        return false;
+    }
+
+    int RenderableObject::depth() const
+    {
+        return 0;
+    }
+
+    bool RenderableObject::isTransformable()
+    {
+        return transformation() != nullptr;
+    }
+
+    bool RenderableObject::isWaterSource() const
+    {
+        return false;
+    }
+
+    std::string RenderableObject::type() const
+    {
+        return TYPE;
+    }
+
+    void RenderableObject::applyLights(Camera* _camera, const std::vector<ILight*> _lights)
+    {
+        for(auto light : _lights)
+            light->use(_camera, shader());
     }
 }

@@ -103,15 +103,15 @@ namespace mr::nage
     float Camera::roll() const
     {
         return std::atan2(
-                    2.0f * rotation_.y() * rotation_.w() - 2.0f * rotation_.x() * rotation_.z(),
-                    1.0f - 2.0f * rotation_.y() * rotation_.y() - 2.0f * rotation_.z() * rotation_.z());
+            2.0f * rotation_.y() * rotation_.w() - 2.0f * rotation_.x() * rotation_.z(),
+            1.0f - 2.0f * rotation_.y() * rotation_.y() - 2.0f * rotation_.z() * rotation_.z());
     }
 
     float Camera::pitch() const
     {
         return std::atan2(
-                    2.0f * rotation_.x() * rotation_.w() - 2.0f * rotation_.y() * rotation_.z(),
-                    1.0f - 2.0f * rotation_.x() * rotation_.x() - 2.0f * rotation_.z() * rotation_.z());
+            2.0f * rotation_.x() * rotation_.w() - 2.0f * rotation_.y() * rotation_.z(),
+            1.0f - 2.0f * rotation_.x() * rotation_.x() - 2.0f * rotation_.z() * rotation_.z());
     }
 
     float Camera::yaw() const

@@ -191,11 +191,11 @@ QTreeView::branch:has-siblings:!adjoins-item {
 }
 
 QTreeView::branch:closed:has-children:has-siblings {
-    background: url('./images/rightarrowgray.png') center center no-repeat;
+    /* background: url('./images/rightarrowgray.png') center center no-repeat; */
 }
 
 QTreeView::branch:has-children:!has-siblings:closed {
-    background: url('./images/rightarrowgray.png') center center no-repeat;
+    /* background: url('./images/rightarrowgray.png') center center no-repeat; */
 }
 
 QTreeView::branch:!has-children:!has-siblings:adjoins-item {
@@ -203,11 +203,11 @@ QTreeView::branch:!has-children:!has-siblings:adjoins-item {
 }
 
 QTreeView::branch:open:has-children:has-siblings {
-    background: url('./images/downarrowgray.png') center center no-repeat;
+    /* background: url('./images/downarrowgray.png') center center no-repeat; */
 }
 
 QTreeView::branch:open:has-children:!has-siblings {
-    background: url('./images/downarrowgray.png') center center no-repeat;
+    /* background: url('./images/downarrowgray.png') center center no-repeat; */
 }
 
 QScrollBar:horizontal {
@@ -442,4 +442,47 @@ QPushButton#exit-btn:hover {
 
 QPlainTextEdit#debugIO {
     color: white;
+}
+
+/* Scene tree */
+QTreeWidget#scene-tree {
+    background-color: #12191c;
+    color: white;
+    show-decoration-selected: 0;
+}
+
+QTreeWidget#scene-tree QHeaderView:section {
+    background-color: #263238;
+    color: #CFD8DC;
+    font-size: 12pt;
+    padding: 5px;
+    border: 0;
+}
+
+QTreeWidget#scene-tree::item:hover,
+QTreeWidget#scene-tree::item:hover:selected {
+    border: none;
+    border-radius: 1px;
+    background-color: #4e565e;
+}
+
+QTreeWidget#scene-tree::item:selected,
+QTreeWidget#scene-tree::item:selected:active,
+QTreeWidget#scene-tree::item:selected:!active {
+    border: none;
+    background-color: #4e565e;
+}
+
+/* Scene items transformations */
+QScrollArea#scene-widget {
+    background-color: #192024;
+    margin-left: 10px;
+}
+
+QLabel#scene-tree-node-item-transformations-label {
+    background-color: #263238;
+    color: #CFD8DC;
+    font-size: 12pt;
+    padding: 5px;
+    border: 0;
 }

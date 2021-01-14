@@ -258,7 +258,7 @@ namespace mr::qnage
         // this->projectDialog->show();
 
         // Reload (setup GLWidget) render window GUI.
-        this->mainWidget_->getRenderWindow()->reloadUi();
+        this->mainWidget_->renderWindow()->reloadUi();
 
         // Enable tabs.
         QIcon sceneIcon;
@@ -295,7 +295,7 @@ namespace mr::qnage
 
     void MainWindow::undockEngineWindow()
     {
-        if(this->mainWidget_->getRenderWindow() != nullptr)
+        if(this->mainWidget_->renderWindow() != nullptr)
             this->mainWidget_->undockGLWindow();
     }
 

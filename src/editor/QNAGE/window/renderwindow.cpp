@@ -42,7 +42,7 @@ namespace mr::qnage
             this->topLayout_->addWidget(dockButton_, 0, 3, 1, 1);
 
             // Add OpenGL widget to render window.
-            glWidget_->startRendering();
+            this->glWidget_->startRendering();
             this->layout_->addWidget(glWidget_);
         }
     }
@@ -68,6 +68,9 @@ namespace mr::qnage
             glWidget_ = new GLWidget;
 
         glWidget_->initialize(_game);
+        connect(glWidget_, &GLWidget::ready, this, [this]() {
+            this->mainWindow_->mainWidget()->sceneWidget()->sceneTree()->setSceneHandler(glWidget_->game()->sceneManager());
+        }, Qt::ConnectionType::QueuedConnection);
     }
 
     void RenderWindow::dockGLWindow()

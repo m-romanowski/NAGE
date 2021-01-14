@@ -1,11 +1,12 @@
-#ifndef NAGE_ENGINE_RENDER_DIRECTIONALLIGHT_LIGHT_H_
-#define NAGE_ENGINE_RENDER_DIRECTIONALLIGHT_LIGHT_H_
+#ifndef NAGE_ENGINE_WORLD_LIGHT_DIRECTIONALLIGHT_H_
+#define NAGE_ENGINE_WORLD_LIGHT_DIRECTIONALLIGHT_H_
 
 #include "ilight.h"
 
 namespace mr::nage
 {
-    class DirectionalLight : public ILight
+    class DirectionalLight
+        : public ILight
     {
     public:
         DirectionalLight();
@@ -13,6 +14,7 @@ namespace mr::nage
 
         // Getters
         Vector3f lightDirection() const;
+        LightType lightType() const override;
 
         // Setters
         void setLightDirection(const Vector3f& _direction);
@@ -25,4 +27,4 @@ namespace mr::nage
     };
 }
 
-#endif // NAGE_ENGINE_RENDER_DIRECTIONALLIGHT_LIGHT_H_
+#endif // NAGE_ENGINE_WORLD_LIGHT_DIRECTIONALLIGHT_H_

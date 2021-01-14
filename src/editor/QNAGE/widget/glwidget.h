@@ -15,7 +15,6 @@ namespace mr::nage
 
 namespace mr::qnage
 {
-
     class GLWidget
         : public QWidget
     {
@@ -25,8 +24,13 @@ namespace mr::qnage
         GLWidget(QWidget* _parent = nullptr);
         ~GLWidget();
 
+        nage::IGame* game();
+
         void initialize(nage::IGame* _game);
         void startRendering();
+
+    signals:
+        void ready();
 
     protected:
         void resizeEvent(QResizeEvent* _event);

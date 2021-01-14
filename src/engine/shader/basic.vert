@@ -12,4 +12,3 @@ void main()
 	// MVP = Model * View * Projection
 	gl_Position = projection * view * model * vec4(position, 1.0);
 }
-

@@ -1,6 +1,4 @@
-#include "editor/QNAGE/window/mainwindow.h"
-#include "editor/QNAGE/window/renderwindow.h"
-#include "editor/QNAGE/widget/glwidget.h"
+#include "qnage.h"
 
 #include <QApplication>
 #include <QFile>
@@ -29,13 +27,8 @@ int main(int argc, char *argv[])
 
     nage::IGame* game = new nage::Game;
 
-    qnage::MainWindow mainWindow;
-    qnage::RenderWindow* renderWindow = new qnage::RenderWindow(&mainWindow);
-    renderWindow->setupGLWidget(game);
-
-    // Add gl window to main window and show.
-    mainWindow.addWindow(renderWindow);
-    mainWindow.show();
+    qnage::QNAGE* editor = new qnage::QNAGE;
+    editor->setup(game);
 
     // Setup QMessageCatch.
     qInstallMessageHandler(qnage::LogWidget::QMessageOutput);

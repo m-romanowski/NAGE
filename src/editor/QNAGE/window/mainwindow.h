@@ -52,6 +52,7 @@ namespace mr::qnage
         inline int getWidth() const { return width_; }
         inline int getHeight() const { return height_; }
         inline QSize getSize() const { return QSize(width_, height_); }
+        inline MainWidget* mainWidget() { return mainWidget_; }
 
         // Setters
         inline void setWidth(int _width) { width_ = _width; }
@@ -59,7 +60,7 @@ namespace mr::qnage
         inline void setSize(QSize _size) { width_ = _size.width(); height_ = _size.height(); }
 
         void addWindow(RenderWindow* _window);
-        bool isEngineWindow() const { return this->mainWidget_->getRenderWindow() == nullptr ? true : false; }
+        bool isEngineWindow() const { return this->mainWidget_->renderWindow() == nullptr ? true : false; }
         void dockEngineWindow();
         void undockEngineWindow();
 

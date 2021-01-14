@@ -1,5 +1,5 @@
-#ifndef NAGE_ENGINE_RENDER_LIGHT_LIGHT_H_
-#define NAGE_ENGINE_RENDER_LIGHT_LIGHT_H_
+#ifndef NAGE_ENGINE_WORLD_LIGHT_LIGHT_H_
+#define NAGE_ENGINE_WORLD_LIGHT_LIGHT_H_
 
 #include "engine/render/shader.h"
 #include "engine/render/color.h"
@@ -13,6 +13,13 @@ namespace mr::nage
     class ILight
     {
     public:
+        enum class LightType
+        {
+            Point,
+            Directional
+        };
+
+    public:
         ILight();
         virtual ~ILight() {}
 
@@ -23,10 +30,11 @@ namespace mr::nage
         void setColor(const Color& _color);
 
         virtual void use(Camera* _camera, Shader* _shader) = 0;
+        virtual LightType lightType() const = 0;
 
     protected:
         Color color_;
     };
 }
 
-#endif // NAGE_ENGINE_RENDER_LIGHT_LIGHT_H_
+#endif // NAGE_ENGINE_WORLD_LIGHT_LIGHT_H_

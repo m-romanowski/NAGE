@@ -1,27 +1,34 @@
 #include "engine/render/glrenderengine.h"
+#include "model.h"
 #include "mesh.h"
 
 namespace mr::nage
 {
-    Mesh::Mesh()
-        : material_(nullptr),
-          transform_(new Transform)
+    Mesh::Mesh(const std::string& _id, Model* _parent)
+        : id_(_id),
+          material_(nullptr),
+          transform_(new Transform),
+          parent_(_parent)
     {
 
     }
 
-    Mesh::Mesh(const std::string& _path)
-        : material_(nullptr),
-          transform_(new Transform)
+    Mesh::Mesh(const std::string& _id, const std::string& _path, Model* _parent)
+        : id_(_id),
+          material_(nullptr),
+          transform_(new Transform),
+          parent_(_parent)
     {
         loadMesh(_path);
         setupBuffer(); // Create buffers (VAO, VBO).
     }
 
-    Mesh::Mesh(const std::vector<Vertex>& _vertices, const std::vector<GLuint>& _indices)
-        : IObject(_vertices, _indices),
+    Mesh::Mesh(const std::string& _id, const std::vector<Vertex>& _vertices, const std::vector<GLuint>& _indices, Model* _parent)
+        : RenderableObject(_vertices, _indices),
+          id_(_id),
           material_(nullptr),
-          transform_(new Transform)
+          transform_(new Transform),
+          parent_(_parent)
     {
         setupBuffer(); // Create buffers (VAO, VBO).
     }
@@ -36,12 +43,17 @@ namespace mr::nage
             delete texture;
     }
 
+    std::string Mesh::id() const
+    {
+        return id_;
+    }
+
     Material* Mesh::material()
     {
         return material_;
     }
 
-    Transform* Mesh::transform()
+    Transform* Mesh::transformation()
     {
         return transform_;
     }
@@ -49,6 +61,11 @@ namespace mr::nage
     std::vector<Texture*> Mesh::textures() const
     {
         return textures_;
+    }
+
+    bool Mesh::isChild(Model* _model)
+    {
+        return parent_ == _model;
     }
 
     void Mesh::setMaterial(Material* _material)
@@ -69,6 +86,11 @@ namespace mr::nage
     void Mesh::setTransformation(Transform* _transform)
     {
         transform_ = _transform;
+    }
+
+    void Mesh::setParent(Model* _parent)
+    {
+        parent_ = _parent;
     }
 
     void Mesh::loadMesh(const std::string& _path)
@@ -107,9 +129,10 @@ namespace mr::nage
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-    void Mesh::draw(Camera* _camera, Shader* _shader, Vector4f _clipPlane)
+    void Mesh::draw(Camera* _camera, const Vector4f _clipPlane)
     {
-        if(!_shader)
+        Shader* shaderPtr = parent_->shader();
+        if(!shaderPtr)
         {
             std::error_code code = ERROR::SHADER_FAILED_TO_FIND_PROGRAM;
             Log::error(code.message());
@@ -118,13 +141,13 @@ namespace mr::nage
         }
 
         // We need transpose matrix for OpenGL (matrix column major).
-        _shader->use();
-        _shader->setMat4("projection", GLRenderEngine::projection().perspective().transpose());
-        _shader->setMat4("view", _camera->view().transpose());
-        _shader->setMat4("model", transform_->model().transpose());
+        shaderPtr->use();
+        shaderPtr->setMat4("projection", GLRenderEngine::projection().perspective().transpose());
+        shaderPtr->setMat4("view", _camera->view().transpose());
+        shaderPtr->setMat4("model", transform_->model().transpose());
 
         // Set clip plane (water rendering).
-        _shader->setVec4("clipPlane", _clipPlane.x(), _clipPlane.y(), _clipPlane.z(), _clipPlane.w());
+        shaderPtr->setVec4("clipPlane", _clipPlane.x(), _clipPlane.y(), _clipPlane.z(), _clipPlane.w());
 
         // Draw mesh.
         glBindVertexArray(VAO_);

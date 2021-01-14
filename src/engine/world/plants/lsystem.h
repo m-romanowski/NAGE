@@ -27,6 +27,7 @@ namespace mr::nage
     private:
         void generate();
 
+        /*
         const std::string axiom_;
 
         int iterations_;
@@ -46,6 +47,7 @@ namespace mr::nage
 
         std::string currentPath_;
         std::vector<float> randomRotations_;
+        */
     };
 }
 

@@ -3,17 +3,19 @@
 
 namespace mr::nage
 {
-    Model::Model()
-        : transform_(new Transform),
+    Model::Model(const std::string& _id)
+        : id_(_id),
+          transform_(new Transform),
           shader_(nullptr)
     {
 
     }
 
     Model::Model(Primitive& _primitive)
+        : id_(_primitive.id())
     {
         shader_ = _primitive.shader();
-        transform_ = _primitive.transform();
+        transform_ = _primitive.transformation();
 
         addMesh(_primitive.vertices(), _primitive.indices());
     }
@@ -25,7 +27,15 @@ namespace mr::nage
 
         // Clear meshes.
         for(auto& mesh : meshes_)
-            delete mesh;
+        {
+            if(mesh->isChild(this))
+                delete mesh;
+        }
+    }
+
+    std::string Model::id() const
+    {
+        return id_;
     }
 
     std::vector<Mesh*> Model::meshes() const
@@ -45,17 +55,18 @@ namespace mr::nage
 
     void Model::addMesh(Mesh* _mesh)
     {
+        _mesh->setParent(this);
         meshes_.push_back(_mesh);
     }
 
     void Model::addMesh(const std::string &_path)
     {
-        meshes_.push_back(new Mesh(_path));
+        meshes_.push_back(new Mesh(_path, this));
     }
 
     void Model::addMesh(const std::vector<Vertex>& _vertices, const std::vector<unsigned int>& _indices)
     {
-        meshes_.push_back(new Mesh(_vertices, _indices));
+        meshes_.push_back(new Mesh(id().append("-mesh-").append(std::to_string(meshes_.size())), _vertices, _indices, this));
     }
 
     void Model::setMeshes(const std::vector<Mesh*>& _meshes)
@@ -81,7 +92,8 @@ namespace mr::nage
 
     void Model::loadModel(const std::string& _path)
     {
-
+        NAGE_UNUSED(_path);
+        // TODO: load mesh from the file.
     }
 
     void Model::useMaterials()
@@ -119,7 +131,7 @@ namespace mr::nage
         }
     }
 
-    void Model::draw(Camera* _camera, Vector4f _clipPlane)
+    void Model::draw(Camera* _camera, const Vector4f _clipPlane)
     {
         if(!shader_)
         {
@@ -131,6 +143,6 @@ namespace mr::nage
 
         // Draw model meshes.
         for(auto& mesh : meshes_)
-            mesh->draw(_camera, shader_, _clipPlane);
+            mesh->draw(_camera, _clipPlane);
     }
 }

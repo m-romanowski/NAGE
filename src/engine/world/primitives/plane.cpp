@@ -3,7 +3,8 @@
 
 namespace mr::nage
 {
-    Plane::Plane(int _width, int _height)
+    Plane::Plane(const std::string& _id, int _width, int _height)
+        : Primitive(_id)
     {
         generateFlatPlane(_width, _height, vertices_, indices_);
     }

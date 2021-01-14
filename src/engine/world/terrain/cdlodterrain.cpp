@@ -3,8 +3,9 @@
 
 namespace mr::nage
 {
-    CDLODTerrain::CDLODTerrain(int _lodLevel, HeightMap* _heightmap, CDLODSettings _settings)
-        : ICDLODObject(_lodLevel, _heightmap, _settings)
+    CDLODTerrain::CDLODTerrain(const std::string& _id, int _lodLevel, HeightMap* _heightmap, CDLODSettings _settings)
+        : ICDLODObject(_lodLevel, _heightmap, _settings),
+          ITerrain(_id)
     {
         shader_->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
             "../src/engine/shader/cdlodterrain2.vert");
@@ -23,7 +24,7 @@ namespace mr::nage
 
     }
 
-    void CDLODTerrain::render(Camera* _camera, Vector4f _clipPlane)
+    void CDLODTerrain::draw(Camera* _camera, const Vector4f _clipPlane)
     {
         // Heightmap
         glActiveTexture(GL_TEXTURE0);

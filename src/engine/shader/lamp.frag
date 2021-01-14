@@ -9,7 +9,7 @@ out vec4 outFragmentColor;
 uniform vec3 color;
 uniform float expand;
 uniform vec2 center;
-uniform float radius;
+// uniform float radius;
 uniform float windowHeight;
 
 void main()

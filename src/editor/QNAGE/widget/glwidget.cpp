@@ -5,7 +5,8 @@
 namespace mr::qnage
 {
     GLWidget::GLWidget(QWidget* _parent)
-        : QWidget(_parent)
+        : QWidget(_parent),
+          game_(nullptr)
     {
         // Widget settings
         setFocusPolicy(Qt::StrongFocus);
@@ -29,7 +30,12 @@ namespace mr::qnage
         XSendEvent(renderWindow_->display(), renderWindow_->window(), False, ResizeRedirectMask, (XEvent *)&resizeEvent);
     }
 
-    void GLWidget::initialize(nage::IGame *_game)
+    nage::IGame* GLWidget::game()
+    {
+        return game_;
+    }
+
+    void GLWidget::initialize(nage::IGame* _game)
     {
         game_ = _game;
     }
@@ -43,6 +49,9 @@ namespace mr::qnage
         renderWorker_ = std::thread([this]() {
             game_->initializeComponents(nage::EngineType::OpenGL, renderWindow_);
             game_->initializeScene();
+
+            emit ready();
+
             game_->launch();
         });
         renderWorker_.detach();

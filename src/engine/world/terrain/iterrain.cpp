@@ -2,8 +2,9 @@
 
 namespace mr::nage
 {
-    ITerrain::ITerrain()
-        : shader_(new Shader),
+    ITerrain::ITerrain(const std::string& _id)
+        : id_(_id),
+          shader_(new Shader),
           material_(new Material),
           transform_(new Transform)
 
@@ -21,6 +22,11 @@ namespace mr::nage
         delete transform_;
     }
 
+    std::string ITerrain::id() const
+    {
+        return id_;
+    }
+
     Shader* ITerrain::shader()
     {
         return shader_;
@@ -31,7 +37,7 @@ namespace mr::nage
         return material_;
     }
 
-    Transform* ITerrain::transform()
+    Transform* ITerrain::transformation()
     {
         return transform_;
     }
@@ -87,9 +93,10 @@ namespace mr::nage
         textures_ = _textures;
     }
 
-    void ITerrain::useMaterial()
+    void ITerrain::useMaterials()
     {
-        if(material_) material_->use(shader_);
+        if(material_)
+            material_->use(shader_);
     }
 
     void ITerrain::bindTextures()

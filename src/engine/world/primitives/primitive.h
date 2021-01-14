@@ -1,7 +1,7 @@
 #ifndef NAGE_ENGINE_WORLD_PRIMITIVES_PRIMITIVE_H_
 #define NAGE_ENGINE_WORLD_PRIMITIVES_PRIMITIVE_H_
 
-#include "engine/render/iobject.h"
+#include "engine/render/renderableobject.h"
 #include <string>
 
 namespace mr::nage
@@ -11,17 +11,18 @@ namespace mr::nage
      * - basic shader
      * - basic transform
      */
-    class Primitive : public IObject
+    class Primitive
+        : public RenderableObject
     {
     public:
-        Primitive();
+        Primitive(const std::string& _id);
         virtual ~Primitive() override;
 
         // Getters
-        Shader* shader();
-        Transform* transform();
         unsigned long verticesCount() const;
         unsigned long indicesCount() const;
+        Shader* shader() override;
+        Transform* transformation() override;
 
         // Setters
         void setShader(Shader* _shader);
@@ -29,11 +30,16 @@ namespace mr::nage
 
         // Setup primitve vertices and indices.
         void initialize();
-        virtual void draw(Camera* _camera) override;
+        std::string id() const override;
+        void draw(Camera* _camera, const Vector4f _clipPlane) override;
+        void useMaterials() override {}
+        void bindTextures() override {}
+        void unbindTextures() override {}
 
     protected:
         virtual void setupPrimitive() = 0;
 
+        std::string id_;
         Shader* shader_;
         Transform* transform_;
         unsigned int verticesCount_, indicesCount_;

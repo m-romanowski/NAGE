@@ -3,18 +3,25 @@
 
 namespace mr::nage
 {
-    GridMesh::GridMesh(const Size<int> _size)
-        : width_(_size.width()),
+    GridMesh::GridMesh(const std::string& _id, const Size<int> _size)
+        : id_(_id),
+          width_(_size.width()),
           height_(_size.height())
     {
 
     }
 
-    GridMesh::GridMesh(int _width, int _height)
-        : width_(_width),
+    GridMesh::GridMesh(const std::string& _id, int _width, int _height)
+        : id_(_id),
+          width_(_width),
           height_(_height)
     {
 
+    }
+
+    std::string GridMesh::id() const
+    {
+        return id_;
     }
 
     int GridMesh::width() const

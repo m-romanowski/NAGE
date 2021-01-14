@@ -3,8 +3,9 @@
 
 namespace mr::nage
 {
-    Sphere::Sphere(unsigned int _sectorCount, unsigned int _stackCount, float _radius)
-        : sectorCount_(_sectorCount),
+    Sphere::Sphere(const std::string& _id, unsigned int _sectorCount, unsigned int _stackCount, float _radius)
+        : Primitive(_id),
+          sectorCount_(_sectorCount),
           stackCount_(_stackCount),
           radius_(_radius)
     {

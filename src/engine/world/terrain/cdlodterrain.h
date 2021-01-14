@@ -14,10 +14,10 @@ namespace mr::nage
     class CDLODTerrain : public ICDLODObject, public ITerrain
     {
     public:
-        CDLODTerrain(int _lodLevel, HeightMap* _heightmap, CDLODSettings _settins = CDLODSettings());
+        CDLODTerrain(const std::string& _id, int _lodLevel, HeightMap* _heightmap, CDLODSettings _settins = CDLODSettings());
         ~CDLODTerrain();
 
-        void render(Camera* _camera, Vector4f _clipPlane) override;
+        void draw(Camera* _camera, const Vector4f _clipPlane) override;
     };
 }
 

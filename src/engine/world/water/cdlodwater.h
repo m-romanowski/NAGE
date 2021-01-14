@@ -14,10 +14,10 @@ namespace mr::nage
     class CDLODWater : public ICDLODObject, public IWater
     {
     public:
-        CDLODWater(int _lodLevel, HeightMap* _heightmap, CDLODSettings _settins = CDLODSettings());
+        CDLODWater(const std::string& _id, int _lodLevel, HeightMap* _heightmap, CDLODSettings _settins = CDLODSettings());
         ~CDLODWater();
 
-        void render(Camera* _camera) override;
+        void draw(Camera* _camera, const Vector4f _clipPlane) override;
     };
 }
 

@@ -1,40 +1,32 @@
-#ifndef NAGE_ENGINE_RENDER_POINTLIGHT_LIGHT_H_
-#define NAGE_ENGINE_RENDER_POINTLIGHT_LIGHT_H_
+#ifndef NAGE_ENGINE_WORLD_LIGHT_POINTLIGHT_H_
+#define NAGE_ENGINE_WORLD_LIGHT_POINTLIGHT_H_
 
+#include "engine/render/transform.h"
 #include "ilight.h"
-#include "engine/render/iobject.h"
 
 namespace mr::nage
 {
-    class PointLight : public ILight, public IObject
+    class PointLight
+        : public ILight
     {
     public:
         PointLight();
-        PointLight(const std::vector<Vertex>& _vertices, const std::vector<unsigned int>& _indices);
-        ~PointLight() override;
 
-        // Getters
         int id() const;
-        Shader* shader();
-        Transform* transform();
         Vector3f attenuation() const;
+        LightType lightType() const override;
 
         // Setters
         void setId(int _id);
-        void setShader(Shader* _shader);
-        void setTransformation(Transform* _transform);
         void setAttenuation(float _x, float _y, float _z);
         void setAttenuation(const Vector3f& _attenuation);
 
-        void draw(Camera* _camera) override;
-        void use(Camera* _camera, Shader* _shader) override;
+        void use(Camera* _camera, Shader* _shader, Transform* _transform);
 
     protected:
         int id_;
-        Shader* shader_;
-        Transform* transform_;
         Vector3f attenuation_;
     };
 }
 
-#endif // NAGE_ENGINE_RENDER_POINTLIGHT_LIGHT_H_
+#endif // NAGE_ENGINE_WORLD_LIGHT_POINTLIGHT_H_

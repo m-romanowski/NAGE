@@ -1,6 +1,7 @@
 #ifndef NAGE_ENGINE_WORLD_WATER_IWATER_H_
 #define NAGE_ENGINE_WORLD_WATER_IWATER_H_
 
+#include "engine/render/renderableobject.h"
 #include "engine/render/shader.h"
 #include "engine/render/model/material.h"
 #include "engine/render/transform.h"
@@ -13,16 +14,17 @@
 namespace mr::nage
 {
     class IWater
+        : public RenderableObject
     {
     public:
-        IWater();
+        IWater(const std::string& _id);
         virtual ~IWater();
 
         // Getters
-        Shader* shader();
-        Transform* transform();
         std::shared_ptr<WaterReflection> waterReflectionEffect() const;
         std::shared_ptr<WaterRefraction> waterRefractionEffect() const;
+        Shader* shader() override;
+        Transform* transformation() override;
 
         // Setters
         void setShader(Shader* _shader);
@@ -34,11 +36,14 @@ namespace mr::nage
         void setupWaterEffects();
         void setupFlowMapEffect(int _width, int _height, int _seed = -1);
 
-        virtual void bindTextures();
-        virtual void unbindTextures();
-        virtual void render(Camera* _camera) = 0;
+        std::string id() const override;
+        bool isWaterSource() const override;
+        void useMaterials() override {}
+        virtual void bindTextures() override;
+        virtual void unbindTextures() override;
 
     protected:
+        std::string id_;
         Shader* shader_;
         Transform* transform_;
         std::shared_ptr<WaterReflection> waterReflection_;

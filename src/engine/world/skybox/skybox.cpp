@@ -3,8 +3,9 @@
 
 namespace mr::nage
 {
-    Skybox::Skybox(Shader* _shader)
-        : shader_(_shader)
+    Skybox::Skybox(const std::string& _id, Shader* _shader)
+        : id_(_id),
+          shader_(_shader)
     {
         vertices_ = {
             -1.0f,  1.0f, -1.0f,
@@ -72,6 +73,16 @@ namespace mr::nage
         vertices_.clear();
     }
 
+    std::string Skybox::id() const
+    {
+        return id_;
+    }
+
+    int Skybox::depth() const
+    {
+        return std::numeric_limits<int>::max();
+    }
+
     void Skybox::setup()
     {
         glGenVertexArrays(1, &VAO_);
@@ -123,9 +134,11 @@ namespace mr::nage
         return id;
     }
 
-    void Skybox::draw(Camera* _camera)
+    void Skybox::draw(Camera* _camera, const Vector4f _clipPlane)
     {
-        if(shader_ == nullptr)
+        NAGE_UNUSED(_clipPlane);
+
+        if(!shader_)
         {
             std::error_code code = ERROR::SHADER_FAILED_TO_FIND_PROGRAM;
             Log::critical(code.message());
@@ -152,3 +165,6 @@ namespace mr::nage
         glDepthFunc(GL_LESS);
     }
 }
+
+//        shader_->setVec3("inColor2", 53.0f / 255.0f, 92.0f / 255.0f, 112.0f / 255.0f);
+//shader_->setVec3("inColor1", 108.0f / 255.0f, 91.0f / 255.0f, 123.0f / 255.0f);

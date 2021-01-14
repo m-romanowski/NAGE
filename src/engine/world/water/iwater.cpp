@@ -5,8 +5,9 @@
 
 namespace mr::nage
 {
-    IWater::IWater()
-        : shader_(new Shader),
+    IWater::IWater(const std::string& _id)
+        : id_(_id),
+          shader_(new Shader),
           transform_(new Transform),
           waveMoveOffsetSpeed_(0.0005)
     {
@@ -28,7 +29,7 @@ namespace mr::nage
         return shader_;
     }
 
-    Transform* IWater::transform()
+    Transform* IWater::transformation()
     {
         return transform_;
     }
@@ -84,6 +85,11 @@ namespace mr::nage
         //glBindTexture(GL_TEXTURE_2D, mFlowMap->textureId());
     }
 
+    std::string IWater::id() const
+    {
+        return id_;
+    }
+
     void IWater::unbindTextures()
     {
         glBindTexture(GL_TEXTURE_2D, 0);
@@ -95,8 +101,16 @@ namespace mr::nage
         waterRefraction_->setup();
     }
 
+    bool IWater::isWaterSource() const
+    {
+        return true;
+    }
+
     void IWater::setupFlowMapEffect(int _width, int _height, int _seed)
     {
+        NAGE_UNUSED(_width);
+        NAGE_UNUSED(_height);
+
         // Generate random seed if was not defined.
         if(_seed == -1)
         {

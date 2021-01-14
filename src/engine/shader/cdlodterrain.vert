@@ -110,7 +110,7 @@ void main(void)
 
 float getHeight(vec2 _pos)
 {
-    return texture2D(heightMapTexture, _pos / heightMapSize).r * maxHeight;
+    return texture(heightMapTexture, _pos / heightMapSize).r * maxHeight;
 }
 
 vec2 calculateTextureCoords(vec3 _pos)

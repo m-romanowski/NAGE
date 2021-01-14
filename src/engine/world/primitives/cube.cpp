@@ -3,7 +3,8 @@
 
 namespace mr::nage
 {
-    Cube::Cube()
+    Cube::Cube(const std::string& _id)
+        : Primitive(_id)
     {
         vertices_ = {
             Vertex(Vector3f(-1.0, -1.0,  1.0), Vector2f(0.0f, 0.0f)),

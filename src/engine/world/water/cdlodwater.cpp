@@ -4,8 +4,9 @@ using namespace std::chrono;
 
 namespace mr::nage
 {
-    CDLODWater::CDLODWater(int _lodLevel, HeightMap* _heightmap, CDLODSettings _settings)
-        : ICDLODObject(_lodLevel, _heightmap, _settings)
+    CDLODWater::CDLODWater(const std::string& _id, int _lodLevel, HeightMap* _heightmap, CDLODSettings _settings)
+        : ICDLODObject(_lodLevel, _heightmap, _settings),
+          IWater(_id)
     {
         shader_->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
             "../src/engine/shader/cdlodwater.vert");
@@ -19,8 +20,10 @@ namespace mr::nage
 
     }
 
-    void CDLODWater::render(Camera* _camera)
+    void CDLODWater::draw(Camera* _camera, const Vector4f _clipPlane)
     {
+        NAGE_UNUSED(_clipPlane);
+
         // Wave move offset speed must be independent of FPS (frames per second),
         waveMoveOffset_ += waveMoveOffsetSpeed_ * static_cast<float>(IWindow::deltaMs());
         waveMoveOffset_ = std::fmod(waveMoveOffset_, 1.0f);

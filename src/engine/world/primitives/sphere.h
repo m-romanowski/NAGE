@@ -5,10 +5,11 @@
 
 namespace mr::nage
 {
-    class Sphere : public Primitive
+    class Sphere
+        : public Primitive
     {
     public:
-        Sphere(unsigned int _sectorCount = 36, unsigned int _stackCount = 18, float _radius = 1.0f);
+        Sphere(const std::string& _id, unsigned int _sectorCount = 36, unsigned int _stackCount = 18, float _radius = 1.0f);
 
         // Getters
         unsigned int sectorCount() const;

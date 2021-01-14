@@ -19,7 +19,7 @@ namespace mr::nage
 
         // Child operations.
         SceneNode* createChild();
-        void addChild(const std::string& _key, SceneNode* _node);
+        SceneNode* addChild(const std::string& _key);
         void removeChild(const std::string& _key);
 
     private:
