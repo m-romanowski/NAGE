@@ -56,6 +56,8 @@ namespace mr::nage
             glCullFace(GL_BACK);
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         }
+
+        Log::log("API: OpenGL " + apiVersion());
     }
 
     void GLRenderEngine::initializePreRenderEffects()

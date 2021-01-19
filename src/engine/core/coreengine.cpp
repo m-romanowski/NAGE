@@ -84,13 +84,7 @@ namespace mr::nage
         Log::log("Engine initialization...");
 
         renderEngine_ = _renderEngine;
-        renderEngine_->initialize();
-
         game_ = _game;
-
-        #ifdef GL_API
-            Log::log("API: OpenGL " + renderEngine_->apiVersion());
-        #endif
 
         if(fpsLimit_ == FpsLimit::FPS_Unlimited)
             Log::log("FPS lock: disabled");
@@ -98,8 +92,6 @@ namespace mr::nage
             Log::log("FPS lock: " + std::to_string(fpsLimit_) + " fps (~" + std::to_string(frameLockMS().count()) + " ms)");
 
         status_.store(StatusCode::Initialized);
-
-        Log::log("Waiting for events...");
     }
 
     void CoreEngine::run()
@@ -108,14 +100,25 @@ namespace mr::nage
             return;
 
         status_.store(StatusCode::Running);
-        renderEngine_->initializePreRenderEffects();
-        render();
+        mainWorker_ = std::thread([this]() {
+            renderEngine_->initialize();
+            renderEngine_->initializePreRenderEffects();
+            game_->initializeScene();
+
+            Log::log("Waiting for events...");
+
+            render();
+        });
+        mainWorker_.detach();
     }
 
     void CoreEngine::stop()
     {
         if(!isRunning())
             return;
+
+        if(mainWorker_.joinable())
+            mainWorker_.join();
 
         status_.store(StatusCode::Stopped);
     }

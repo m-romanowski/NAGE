@@ -14,8 +14,8 @@ namespace mr::qnage
 
     GLWidget::~GLWidget()
     {
-        if(renderWorker_.joinable())
-            renderWorker_.join();
+        if(launchWorker_.joinable())
+            launchWorker_.join();
     }
 
     void GLWidget::resizeEvent(QResizeEvent* _event)
@@ -46,14 +46,12 @@ namespace mr::qnage
         XReparentWindow(renderWindow_->display(), renderWindow_->window(), this->winId(), 0, 0);
         XMapWindow(renderWindow_->display(), renderWindow_->window());
 
-        renderWorker_ = std::thread([this]() {
+        launchWorker_ = std::thread([this]() {
             game_->initializeComponents(nage::EngineType::OpenGL, renderWindow_);
-            game_->initializeScene();
+            game_->launch();
 
             emit ready();
-
-            game_->launch();
         });
-        renderWorker_.detach();
+        launchWorker_.detach();
     }
 }

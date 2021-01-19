@@ -38,7 +38,7 @@ namespace mr::qnage
     private:
         nage::IGame* game_;
         nage::X11OpenGLWindow* renderWindow_;
-        std::thread renderWorker_;
+        std::thread launchWorker_;
     };
 }
 

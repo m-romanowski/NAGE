@@ -26,7 +26,6 @@ int main(int argc, char *argv[])
     }
 
     nage::IGame* game = new nage::Game;
-
     qnage::QNAGE* editor = new qnage::QNAGE;
     editor->setup(game);
 

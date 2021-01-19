@@ -54,6 +54,9 @@ namespace mr::nage
         IRenderEngine* renderEngine_;
         IGame* game_;
 
+        // Main loop thread
+        std::thread mainWorker_;
+
         // Engine settings
         FpsLimit fpsLimit_;
         std::atomic<StatusCode> status_;

@@ -1,10 +1,6 @@
 #ifndef NAGE_ENGINE_RENDER_GLRENDERENGINE_H_
 #define NAGE_ENGINE_RENDER_GLRENDERENGINE_H_
 
-#ifndef GL_API
-    #define GL_API
-#endif // GL_API
-
 #include "projection.h"
 #include "engine/io/iwindow.h"
 #include "engine/components/const.h"
