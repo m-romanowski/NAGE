@@ -9,9 +9,9 @@ namespace mr::nage
           IWater(_id)
     {
         shader_->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
-            "../src/engine/shader/cdlodwater.vert");
+            "src/engine/shader/cdlodwater.vert");
         shader_->addShaderFromSourceFile(SHADER_TYPE::SHADER_FRAGMENT,
-            "../src/engine/shader/cdlodwater.frag");
+            "src/engine/shader/cdlodwater.frag");
         shader_->link();
     }
 

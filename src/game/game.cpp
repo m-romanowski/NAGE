@@ -1,5 +1,4 @@
 #include "game.h"
-#include "engine/io/x11openglwindow.h"
 
 namespace mr::nage
 {
@@ -19,9 +18,9 @@ namespace mr::nage
         // Skybox
         skyboxShader = std::make_shared<Shader>();
         skyboxShader->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
-             "../src/engine/shader/dayNight.vert");
+             "src/engine/shader/dayNight.vert");
         skyboxShader->addShaderFromSourceFile(SHADER_TYPE::SHADER_FRAGMENT,
-            "../src/engine/shader/dayNight.frag");
+            "src/engine/shader/dayNight.frag");
         skyboxShader->link();
 
         skybox = std::make_shared<DayNightSkybox>("Day-night skybox", skyboxShader.get());
@@ -31,18 +30,18 @@ namespace mr::nage
         /*
         skyboxShader = std::make_shared<Shader>();
         skyboxShader->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
-             "../src/engine/shader/dayNight.vert");
+             "src/engine/shader/dayNight.vert");
         skyboxShader->addShaderFromSourceFile(SHADER_TYPE::SHADER_FRAGMENT,
-            "../src/engine/shader/dayNight.frag");
+            "src/engine/shader/dayNight.frag");
         skyboxShader->link();
 
         std::vector<std::string> skyboxFaces = {
-            "../resources/texture/skybox/2/right.jpg",
-            "../resources/texture/skybox/2/left.jpg",
-            "../resources/texture/skybox/2/top.jpg",
-            "../resources/texture/skybox/2/bottom.jpg",
-            "../resources/texture/skybox/2/front.jpg",
-            "../resources/texture/skybox/2/back.jpg",
+            "resources/texture/skybox/2/right.jpg",
+            "resources/texture/skybox/2/left.jpg",
+            "resources/texture/skybox/2/top.jpg",
+            "resources/texture/skybox/2/bottom.jpg",
+            "resources/texture/skybox/2/front.jpg",
+            "resources/texture/skybox/2/back.jpg",
         };
 
         skybox = std::make_shared<Skybox>("Skybox", skyboxShader.get());
@@ -59,9 +58,9 @@ namespace mr::nage
 
         lampShader = std::make_shared<Shader>();
         lampShader->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
-            "../src/engine/shader/lamp.vert");
+            "src/engine/shader/lamp.vert");
         lampShader->addShaderFromSourceFile(SHADER_TYPE::SHADER_FRAGMENT,
-            "../src/engine/shader/lamp.frag");
+            "src/engine/shader/lamp.frag");
         lampShader->link();
         lampShader->use();
         lampShader->setFloat("expand", 0.25f);
@@ -116,13 +115,13 @@ namespace mr::nage
 //        terrainLodSettings.gridMeshesCount_ = 9;
 
 //        heightMap = std::make_shared<HeightMap>();
-//        heightMap->loadFromFile("../resources/texture/terrain/heightmap1_2k.jpg");
+//        heightMap->loadFromFile("resources/texture/terrain/heightmap1_2k.jpg");
 
-//        blendmap = std::make_shared<Texture>("../resources/texture/terrain/blendmap1_2k.jpg", TextureType::TEXTURE_2D);
-//        terrainTexture1 = std::make_shared<Texture>("../resources/texture/terrain/dirt.jpg", TextureType::TEXTURE_2D);
-//        terrainTexture2 = std::make_shared<Texture>("../resources/texture/terrain/grass.jpg", TextureType::TEXTURE_2D);
-//        terrainTexture3 = std::make_shared<Texture>("../resources/texture/terrain/stone.jpg", TextureType::TEXTURE_2D);
-//        terrainTexture4 = std::make_shared<Texture>("../resources/texture/terrain/snow.jpg", TextureType::TEXTURE_2D);
+//        blendmap = std::make_shared<Texture>("resources/texture/terrain/blendmap1_2k.jpg", TextureType::TEXTURE_2D);
+//        terrainTexture1 = std::make_shared<Texture>("resources/texture/terrain/dirt.jpg", TextureType::TEXTURE_2D);
+//        terrainTexture2 = std::make_shared<Texture>("resources/texture/terrain/grass.jpg", TextureType::TEXTURE_2D);
+//        terrainTexture3 = std::make_shared<Texture>("resources/texture/terrain/stone.jpg", TextureType::TEXTURE_2D);
+//        terrainTexture4 = std::make_shared<Texture>("resources/texture/terrain/snow.jpg", TextureType::TEXTURE_2D);
 
 //        cdlodTerrain = std::make_shared<CDLODTerrain>("CDLOD terrain", 11, heightMap.get(), terrainLodSettings);
 
@@ -137,13 +136,13 @@ namespace mr::nage
 
         // Geoclipmapping terrain
         heightMap = std::make_shared<HeightMap>();
-        heightMap->loadFromFile("../resources/texture/terrain/heightmap1_2k.jpg");
+        heightMap->loadFromFile("resources/texture/terrain/heightmap1_2k.jpg");
 
-        blendmap = std::make_shared<Texture>("../resources/texture/terrain/blendmap1_2k.jpg", TextureType::TEXTURE_2D);
-        terrainTexture1 = std::make_shared<Texture>("../resources/texture/terrain/dirt.jpg", TextureType::TEXTURE_2D);
-        terrainTexture2 = std::make_shared<Texture>("../resources/texture/terrain/grass.jpg", TextureType::TEXTURE_2D);
-        terrainTexture3 = std::make_shared<Texture>("../resources/texture/terrain/stone.jpg", TextureType::TEXTURE_2D);
-        terrainTexture4 = std::make_shared<Texture>("../resources/texture/terrain/snow.jpg", TextureType::TEXTURE_2D);
+        blendmap = std::make_shared<Texture>("resources/texture/terrain/blendmap1_2k.jpg", TextureType::TEXTURE_2D);
+        terrainTexture1 = std::make_shared<Texture>("resources/texture/terrain/dirt.jpg", TextureType::TEXTURE_2D);
+        terrainTexture2 = std::make_shared<Texture>("resources/texture/terrain/grass.jpg", TextureType::TEXTURE_2D);
+        terrainTexture3 = std::make_shared<Texture>("resources/texture/terrain/stone.jpg", TextureType::TEXTURE_2D);
+        terrainTexture4 = std::make_shared<Texture>("resources/texture/terrain/snow.jpg", TextureType::TEXTURE_2D);
 
         geoclipmapTerrain = std::make_shared<GeoClipMapTerrain>("Geoclipmap terrain", heightMap.get(), 150.0f, 5);
 

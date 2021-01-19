@@ -8,9 +8,9 @@ namespace mr::nage
           ITerrain(_id)
     {
         shader_->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
-            "../src/engine/shader/cdlodterrain2.vert");
+            "src/engine/shader/cdlodterrain2.vert");
         shader_->addShaderFromSourceFile(SHADER_TYPE::SHADER_FRAGMENT,
-            "../src/engine/shader/cdlodterrain2.frag");
+            "src/engine/shader/cdlodterrain2.frag");
         shader_->link();
 
         material_->setAmbient(Vector3f(0.2f, 0.2f, 0.2f));

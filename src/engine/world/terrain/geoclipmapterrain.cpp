@@ -8,9 +8,9 @@ namespace mr::nage
           ITerrain(_id)
     {
         shader_->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
-            "../src/engine/shader/geoclipmap.vert");
+            "src/engine/shader/geoclipmap.vert");
         shader_->addShaderFromSourceFile(SHADER_TYPE::SHADER_FRAGMENT,
-            "../src/engine/shader/geoclipmap.frag");
+            "src/engine/shader/geoclipmap.frag");
         shader_->link();
 
         material_->setAmbient(Vector3f(0.2f, 0.2f, 0.2f));

@@ -1,4 +1,3 @@
-#include <QtConcurrent/QtConcurrentRun>
 #include "glwidget.h"
 #include "engine/io/x11openglwindow.h"
 
@@ -20,14 +19,18 @@ namespace mr::qnage
 
     void GLWidget::resizeEvent(QResizeEvent* _event)
     {
-        // TODO: resize x11 window wth on `GLWidget` resize event.
-        XResizeRequestEvent resizeEvent;
-        resizeEvent.width = _event->size().width();
-        resizeEvent.height = _event->size().height();
-        resizeEvent.display = renderWindow_->display();
-        resizeEvent.window = renderWindow_->window();
+        const QSize size = _event->size();
 
-        XSendEvent(renderWindow_->display(), renderWindow_->window(), False, ResizeRedirectMask, (XEvent *)&resizeEvent);
+        XWindowAttributes winAttribs;
+        XGetWindowAttributes(renderWindow_->display(), renderWindow_->window(), &winAttribs);
+
+        XMoveResizeWindow(
+            renderWindow_->display(),
+            renderWindow_->window(),
+            winAttribs.x, winAttribs.y,
+            size.width(),
+            size.height()
+        );
     }
 
     nage::IGame* GLWidget::game()
@@ -42,6 +45,7 @@ namespace mr::qnage
 
     void GLWidget::startRendering()
     {
+        // TODO: to refactor - should be created when "New Project" button is clicked
         renderWindow_ = new nage::X11OpenGLWindow(800, 600, "NAGE window");
         XReparentWindow(renderWindow_->display(), renderWindow_->window(), this->winId(), 0, 0);
         XMapWindow(renderWindow_->display(), renderWindow_->window());

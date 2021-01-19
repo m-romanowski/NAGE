@@ -1,0 +1,294 @@
+cmake_minimum_required(VERSION 3.1.0)
+project(QNAGE VERSION 0.0.1 LANGUAGES CXX)
+
+add_subdirectory(lib/glad/)
+
+include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/src/editor/QNAGE)
+include_directories(${CMAKE_SOURCE_DIR}/lib)
+
+cmake_policy(SET CMP0072 NEW)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+if(CMAKE_VERSION VERSION_LESS "3.7.0")
+    set(CMAKE_INCLUDE_CURRENT_DIR ON)
+endif()
+
+find_package(Threads REQUIRED)
+find_package(OpenGL REQUIRED)
+find_package(X11 REQUIRED)
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
+
+# TODO: move engine sources to another build file
+set(CXX_SOURCES
+    src/engine/components/resourcemanager.cpp
+    src/engine/generators/flowmap.cpp
+    src/engine/generators/heightmap.cpp
+    src/engine/generators/normalmap.cpp
+    src/engine/io/x11.cpp
+    src/engine/io/x11openglwindow.cpp
+    src/engine/io/x11window.cpp
+    src/engine/render/collision/aabb.cpp
+    src/engine/render/collision/bs.cpp
+    src/engine/render/collision/collisionplane.cpp
+    src/engine/render/framebuffer.cpp
+    src/engine/render/lod/cdlod/cdlod.cpp
+    src/engine/render/lod/cdlod/cdlodnode.cpp
+    src/engine/render/lod/cdlod/cdlodobjectchunk.cpp
+    src/engine/render/lod/cdlod/cdlodquadtree.cpp
+    src/engine/render/lod/cdlod/cdlodselectednode.cpp
+    src/engine/render/lod/cdlod/icdlodobject.cpp
+    src/engine/render/lod/geoclipmaps/geoclipmapblock.cpp
+    src/engine/render/lod/geoclipmaps/geoclipmapdegeneratetriangle.cpp
+    src/engine/render/lod/geoclipmaps/geoclipmapinteriortrim.cpp
+    src/engine/render/lod/geoclipmaps/geoclipmaplevel.cpp
+    src/engine/render/lod/geoclipmaps/geoclipmaplod.cpp
+    src/engine/render/lod/geoclipmaps/geoclipmapringfixup.cpp
+    src/engine/render/lod/geoclipmaps/geometryclipmap.cpp
+    src/engine/render/renderableobject.cpp
+    src/engine/world/light/directionallightobject.cpp
+    src/engine/world/light/ilight.cpp
+    src/engine/world/light/pointlightobject.cpp
+    src/engine/world/plants/lsystem.cpp
+    src/engine/world/primitives/gridmesh.cpp
+    src/engine/world/primitives/sphere.cpp
+    src/engine/world/skybox/daynightskybox.cpp
+    src/engine/world/skybox/daynightskydome.cpp
+    src/engine/world/skybox/sunlight.cpp
+    src/engine/world/terrain/cdlodterrain.cpp
+    src/engine/world/terrain/geoclipmapterrain.cpp
+    src/engine/world/terrain/iterrain.cpp
+    src/engine/world/water/cdlodwater.cpp
+    src/engine/world/water/iwater.cpp
+    src/engine/world/water/waterframebuffer.cpp
+    src/engine/world/water/waterreflection.cpp
+    src/engine/world/water/waterrefraction.cpp
+    src/engine/components/camera/camera.cpp
+    src/engine/components/image.cpp
+    src/engine/components/timer.cpp
+    src/engine/core/coreengine.cpp
+    src/engine/core/scene/scenemanager.cpp
+    src/engine/core/scene/scenenode.cpp
+    src/engine/core/igame.cpp
+    src/engine/io/iwindow.cpp
+    src/engine/io/keyboard.cpp
+    src/engine/io/mouse.cpp
+    src/engine/render/model/material.cpp
+    src/engine/render/model/materialtype.cpp
+    src/engine/render/model/model.cpp
+    src/engine/render/model/mesh.cpp
+    src/engine/render/texture.cpp
+    src/engine/world/skybox/skybox.cpp
+    src/engine/world/light/directionallight.cpp
+    src/engine/world/light/pointlight.cpp
+    src/engine/render/color.cpp
+    src/engine/render/glrenderengine.cpp
+    src/engine/render/irenderengine.cpp
+    src/engine/render/projection.cpp
+    src/engine/render/shader.cpp
+    src/engine/render/transform.cpp
+    src/engine/util/objectloader.cpp
+    src/game/game.cpp
+    src/engine/world/primitives/primitive.cpp
+    src/engine/world/primitives/plane.cpp
+    src/engine/world/primitives/cube.cpp
+    src/engine/render/culling/frustumculling.cpp
+    src/editor/QNAGE/dialog/dialog.cpp
+    src/editor/QNAGE/dialog/projectdialog.cpp
+    src/editor/QNAGE/log/logwidget.cpp
+    src/editor/QNAGE/log/messagehandler.cpp
+    src/editor/QNAGE/log/threadlogstream.cpp
+    src/editor/QNAGE/qnage.cpp
+    src/editor/QNAGE/scene/scenetree.cpp
+    src/editor/QNAGE/scene/scenetreenode.cpp
+    src/editor/QNAGE/scene/scenetreenodeitemtransformations.cpp
+    src/editor/QNAGE/settings/buildandrunsettings.cpp
+    src/editor/QNAGE/settings/enginesettings.cpp
+    src/editor/QNAGE/settings/environmentsettings.cpp
+    src/editor/QNAGE/settings/settingslayout.cpp
+    src/editor/QNAGE/settings/settingsnavigation.cpp
+    src/editor/QNAGE/ui/custombutton.cpp
+    src/editor/QNAGE/ui/decimallineedit.cpp
+    src/editor/QNAGE/ui/maintool.cpp
+    src/editor/QNAGE/ui/tabbar.cpp
+    src/editor/QNAGE/ui/tabwidget.cpp
+    src/editor/QNAGE/widget/glwidget.cpp
+    src/editor/QNAGE/widget/mainwidget.cpp
+    src/editor/QNAGE/widget/scenewidget.cpp
+    src/editor/QNAGE/widget/settingswidget.cpp
+    src/editor/QNAGE/widget/vkwidget.cpp
+    src/editor/QNAGE/widget/welcomewidget.cpp
+    src/editor/QNAGE/widget/workspacewidget.cpp
+    src/editor/QNAGE/window/framelesswindow.cpp
+    src/editor/QNAGE/window/mainwindow.cpp
+    src/editor/QNAGE/window/renderwindow.cpp
+    src/editor/QNAGE/main.cpp
+    src/common/errormanager.cpp
+    src/common/exception.cpp
+    src/common/log.cpp
+)
+
+# TODO: move engine sources to another build file
+set(CXX_HEADERS
+    lib/STB/stb_image.h
+    lib/KHR/khrplatform.h
+    src/engine/components/resourcemanager.h
+    src/engine/core/iobject.h
+    src/engine/generators/flowmap.h
+    src/engine/generators/heightmap.h
+    src/engine/generators/itexturegenerator.h
+    src/engine/generators/normalmap.h
+    src/engine/io/x11.h
+    src/engine/io/x11openglwindow.h
+    src/engine/io/x11window.h
+    src/engine/render/collision/aabb.h
+    src/engine/render/collision/bs.h
+    src/engine/render/collision/collisionplane.h
+    src/engine/render/framebuffer.h
+    src/engine/render/lod/cdlod/cdlod.h
+    src/engine/render/lod/cdlod/cdlodnode.h
+    src/engine/render/lod/cdlod/cdlodobjectchunk.h
+    src/engine/render/lod/cdlod/cdlodquadtree.h
+    src/engine/render/lod/cdlod/cdlodselectednode.h
+    src/engine/render/lod/cdlod/cdlodsettings.h
+    src/engine/render/lod/cdlod/icdlodobject.h
+    src/engine/render/lod/geoclipmaps/geoclipmapblock.h
+    src/engine/render/lod/geoclipmaps/geoclipmapdegeneratetriangle.h
+    src/engine/render/lod/geoclipmaps/geoclipmapinteriortrim.h
+    src/engine/render/lod/geoclipmaps/geoclipmaplevel.h
+    src/engine/render/lod/geoclipmaps/geoclipmaplod.h
+    src/engine/render/lod/geoclipmaps/geoclipmapringfixup.h
+    src/engine/render/lod/geoclipmaps/geometryclipmap.h
+    src/engine/render/renderableobject.h
+    src/engine/render/vertexhelper.h
+    src/engine/util/size.h
+    src/engine/util/threadpool.h
+    src/engine/world/light/directionallightobject.h
+    src/engine/world/light/ilight.h
+    src/engine/world/light/pointlightobject.h
+    src/engine/world/plants/lsystem.h
+    src/engine/world/primitives/gridmesh.h
+    src/engine/world/primitives/sphere.h
+    src/engine/world/procedural/diamondsquare.h
+    src/engine/world/procedural/lsystem.h
+    src/engine/world/skybox/daynightskybox.h
+    src/engine/world/skybox/daynightskydome.h
+    src/engine/world/skybox/sunlight.h
+    src/engine/world/terrain/cdlodterrain.h
+    src/engine/world/terrain/geoclipmapterrain.h
+    src/engine/world/terrain/iterrain.h
+    src/engine/world/water/cdlodwater.h
+    src/engine/world/water/iwater.h
+    src/engine/world/water/waterframebuffer.h
+    src/engine/world/water/waterreflection.h
+    src/engine/world/water/waterrefraction.h
+    src/engine/components/camera/camera.h
+    src/engine/components/image.h
+    src/engine/components/timer.h
+    src/engine/components/const.h
+    src/engine/components/types.h
+    src/engine/core/coreengine.h
+    src/engine/core/scene/scenemanager.h
+    src/engine/core/scene/scenenode.h
+    src/engine/core/igame.h
+    src/engine/io/input.h
+    src/engine/io/iwindow.h
+    src/engine/io/key.h
+    src/engine/io/keyboard.h
+    src/engine/io/mouse.h
+    src/engine/io/mousebutton.h
+    src/engine/math/NAGEMath/nagemathcommon.h
+    src/engine/math/NAGEMath/nagemathmatrix.h
+    src/engine/math/NAGEMath/nagemathquaternion.h
+    src/engine/math/NAGEMath/nagemathvector.h
+    src/engine/render/model/material.h
+    src/engine/render/model/materialtype.h
+    src/engine/render/model/mesh.h
+    src/engine/render/model/model.h
+    src/engine/render/texture.h
+    src/engine/world/skybox/skybox.h
+    src/engine/world/light/directionallight.h
+    src/engine/world/light/pointlight.h
+    src/engine/render/color.h
+    src/engine/render/glrenderengine.h
+    src/engine/render/vertex.h
+    src/engine/render/irenderengine.h
+    src/engine/render/projection.h
+    src/engine/render/shader.h
+    src/engine/render/transform.h
+    src/engine/util/objectloader.h
+    src/engine/wrapper/glwrapper.h
+    src/game/game.h
+    src/engine/util/stl.h
+    src/engine/util/random.h
+    src/engine/world/primitives/primitive.h
+    src/engine/world/primitives/plane.h
+    src/engine/world/primitives/cube.h
+    src/engine/render/culling/frustumculling.h
+    src/engine/world/procedural/perlinnoise.h
+    src/engine/world/procedural/simplexnoise.h
+    src/editor/QNAGE/dialog/dialog.h
+    src/editor/QNAGE/dialog/projectdialog.h
+    src/editor/QNAGE/log/logwidget.h
+    src/editor/QNAGE/log/messagehandler.h
+    src/editor/QNAGE/log/threadlogstream.h
+    src/editor/QNAGE/qnage.h
+    src/editor/QNAGE/scene/scenetree.h
+    src/editor/QNAGE/scene/scenetreenode.h
+    src/editor/QNAGE/scene/scenetreenodeitem.h
+    src/editor/QNAGE/scene/scenetreenodeitemtransformations.h
+    src/editor/QNAGE/settings/buildandrunsettings.h
+    src/editor/QNAGE/settings/enginesettings.h
+    src/editor/QNAGE/settings/environmentsettings.h
+    src/editor/QNAGE/settings/settingslayout.h
+    src/editor/QNAGE/settings/settingsnavigation.h
+    src/editor/QNAGE/ui/custombutton.h
+    src/editor/QNAGE/ui/decimallineedit.h
+    src/editor/QNAGE/ui/maintool.h
+    src/editor/QNAGE/ui/tabbar.h
+    src/editor/QNAGE/ui/tabwidget.h
+    src/editor/QNAGE/widget/glwidget.h
+    src/editor/QNAGE/widget/mainwidget.h
+    src/editor/QNAGE/widget/scenewidget.h
+    src/editor/QNAGE/widget/setingswidget.h
+    src/editor/QNAGE/widget/vkwidget.h
+    src/editor/QNAGE/widget/welcomewidget.h
+    src/editor/QNAGE/widget/workspacewidget.h
+    src/editor/QNAGE/window/framelesswindow.h
+    src/editor/QNAGE/window/mainwindow.h
+    src/editor/QNAGE/window/renderwindow.h
+    src/common/errormanager.h
+    src/common/exception.h
+    src/common/log.h
+    src/common/macro.h
+    src/common/stringextension.h
+)
+
+set(RESOURCES
+    src/editor/QNAGE/resources/rc.qrc
+)
+
+add_executable(QNAGE
+    ${CXX_SOURCES}
+    ${CXX_HEADERS}
+    ${RESOURCES}
+)
+
+target_link_libraries(QNAGE
+PUBLIC
+    Qt5::Widgets
+    Threads::Threads
+    X11::X11
+    OpenGL::GL
+    OpenGL::GLX
+    glad
+PRIVATE
+    ${CMAKE_DL_LIBS}
+)
