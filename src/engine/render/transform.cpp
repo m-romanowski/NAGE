@@ -71,6 +71,16 @@ namespace mr::nage
         setRotation(Quaternion::fromAxisAndAngle(_angle, _ax, _ay, _az));
     }
 
+    void Transform::setShearing(const Vector3f& _shearing)
+    {
+        shearing_ = _shearing;
+    }
+
+    void Transform::setShearing(float _dx, float _dy, float _dz)
+    {
+        setShearing(Vector3f(_dx, _dy, _dz));
+    }
+
     void Transform::translate(const Vector3f& _dt)
     {
         translation_ += _dt;

@@ -1,7 +1,5 @@
 #include "decimallineedit.h"
 
-#include <QDebug>
-
 namespace mr::qnage
 {
     DecimalLineEdit::DecimalLineEdit(const QString _label, QWidget* _parent)
@@ -13,8 +11,8 @@ namespace mr::qnage
         this->setValidator(new QRegExpValidator(QRegExp(VALIDATION_REGEX)));
 
         connect(this, &QLineEdit::editingFinished, [this]() {
-            auto prevValue = this->text();
-            this->setText(optLabel() + prevValue);
+            auto prevValue = extractNumber();
+            update(prevValue);
         });
     }
 
@@ -40,8 +38,13 @@ namespace mr::qnage
                 : -1;
 
             auto prevValue = extractNumber();
-            this->setText(optLabel() + QString::number(prevValue + delta));
+            update(prevValue + delta);
         }
+    }
+
+    void DecimalLineEdit::set(int _value)
+    {
+        update(_value);
     }
 
     int DecimalLineEdit::value() const
@@ -62,7 +65,8 @@ namespace mr::qnage
         QStringList numberList;
 
         int pos = 0;
-        while((pos = regex.indexIn(this->text(), pos)) != -1)
+        QString text = this->text();
+        while((pos = regex.indexIn(text, pos)) != -1)
         {
             numberList << regex.cap(1);
             pos += regex.matchedLength();
@@ -72,5 +76,10 @@ namespace mr::qnage
             throw new std::invalid_argument("Unexpected error while parsing input, reason: expect one number");
 
         return numberList.at(0).toInt();
+    }
+
+    void DecimalLineEdit::update(int newValue)
+    {
+        this->setText(optLabel() + QString::number(newValue));
     }
 }

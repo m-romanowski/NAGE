@@ -54,6 +54,7 @@ namespace mr::qnage
             game_->initializeComponents(nage::EngineType::OpenGL, renderWindow_);
             game_->launch();
 
+            while(!game_->engine()->isRunning());
             emit ready();
         });
         launchWorker_.detach();

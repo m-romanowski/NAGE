@@ -1,12 +1,13 @@
 #ifndef QNAGE_SCENE_SCENETREENODE_H_
 #define QNAGE_SCENE_SCENETREENODE_H_
 
-#include "engine/core/scene/scenenode.h"
+#include "interface/iscenenode.h"
+#include "interface/isceneobject.h"
 #include "scenetreenodeitem.h"
 
-#include <QTreeWidgetItem>
 #include <vector>
 #include <optional>
+#include <QTreeWidgetItem>
 
 namespace mr::qnage
 {
@@ -16,19 +17,19 @@ namespace mr::qnage
         : public QTreeWidgetItem
     {
     public:
-        SceneTreeNode(nage::SceneNode* _sceneNode, SceneTree* _parent = nullptr);
+        SceneTreeNode(ISceneNode* _sceneNode, SceneTree* _parent = nullptr);
 
         QString name() const;
 
-        void addItem(nage::RenderableObject* _object);
-        void addCamera(nage::Camera* _camera);
+        void addItem(ISceneObject* _object);
+        void addCamera(ICamera* _camera, bool _select = true);
         void removeItem();
+        std::optional<QTreeWidgetItem*> activeChild();
 
     private:
-        std::optional<QTreeWidgetItem*> activeChild();
         bool isChildItemExist(const QString _itemName);
 
-        nage::SceneNode* sceneNode_;
+        ISceneNode* sceneNode_;
     };
 }
 

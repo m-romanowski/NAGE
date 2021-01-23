@@ -99,7 +99,6 @@ namespace mr::nage
         if(status_.load() != StatusCode::Initialized)
             return;
 
-        status_.store(StatusCode::Running);
         mainWorker_ = std::thread([this]() {
             renderEngine_->initialize();
             renderEngine_->initializePreRenderEffects();
@@ -107,6 +106,7 @@ namespace mr::nage
 
             Log::log("Waiting for events...");
 
+            status_.store(StatusCode::Running);
             render();
         });
         mainWorker_.detach();

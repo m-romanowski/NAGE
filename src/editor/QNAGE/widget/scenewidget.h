@@ -6,6 +6,7 @@
 
 #include <QVBoxLayout>
 #include <QScrollArea>
+#include <QSplitter>
 
 namespace mr::qnage
 {
@@ -20,12 +21,16 @@ namespace mr::qnage
 
         SceneTree* sceneTree();
 
+    private slots:
+        void showTransformationSection(SceneTreeNodeItemTransformations* transformations);
+
     private:
         void setupUi();
+        bool notFoundWidget(QWidget* _widget);
 
+        QScrollArea* scrollArea_;
         QVBoxLayout* mainLayout_;
         SceneTree* sceneTree_;
-        SceneTreeNodeItemTransformations* sceneTreeNodeItemTransformations_;
     };
 }
 

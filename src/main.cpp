@@ -1,4 +1,4 @@
-#include "qnage.h"
+#include "editor/QNAGE/qnage.h"
 
 #include <QApplication>
 #include <QFile>
@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     QFile file(":/rc/styles/dark-blue.qss");
     if(!file.exists())
     {
-        std::cout << "Cannot to find styles, default path: ./resources/styles/dark.qss" << std::endl;
+        std::cout << "Cannot to find styles, default path: editor/QNAGE/resources/styles/dark.qss" << std::endl;
     }
     else
     {

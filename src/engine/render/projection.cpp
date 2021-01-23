@@ -10,7 +10,7 @@ namespace mr::nage
           left_(0),
           right_(0),
           zNear_(0.1f),
-          zFar_(1000.0f)
+          zFar_(9999.0f)
     {
 
     }

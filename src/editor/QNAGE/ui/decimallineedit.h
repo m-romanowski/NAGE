@@ -1,5 +1,5 @@
-#ifndef QNAGE_UI_LINEEDIT_H_
-#define QNAGE_UI_LINEEDIT_H_
+#ifndef QNAGE_UI_DECIMALLINEEDIT_H_
+#define QNAGE_UI_DECIMALLINEEDIT_H_
 
 #include <QLineEdit>
 #include <QFocusEvent>
@@ -19,6 +19,7 @@ namespace mr::qnage
     public:
         DecimalLineEdit(const QString _label = "", QWidget* _parent = nullptr);
 
+        void set(int _value);
         int value() const;
 
     protected:
@@ -29,10 +30,11 @@ namespace mr::qnage
     private:
         QString optLabel() const;
         int extractNumber() const;
+        void update(int newValue);
 
         bool focused_;
         QString label_;
     };
 }
 
-#endif // QNAGE_UI_LINEEDIT_H_
+#endif // QNAGE_UI_DECIMALLINEEDIT_H_

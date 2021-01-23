@@ -1,12 +1,12 @@
 #ifndef QNAGE_SCENE_SCENETREE_H_
 #define QNAGE_SCENE_SCENETREE_H_
 
-#include "engine/core/scene/scenemanager.h"
+#include "interface/iscenemanager.h"
 #include "scenetreenode.h"
 
-#include <QTreeWidget>
 #include <vector>
 #include <optional>
+#include <QTreeWidget>
 
 namespace mr::qnage
 {
@@ -18,16 +18,22 @@ namespace mr::qnage
     public:
         explicit SceneTree(QWidget* _parent = nullptr);
 
-        void setSceneHandler(nage::SceneManager* _sceneManager);
+        void setSceneHandler(ISceneManager* _sceneManager);
         void addScene(const QString _sceneName);
         void removeScene();
 
+    signals:
+        void transformationsForNode(SceneTreeNodeItemTransformations* transformations);
+
+    private slots:
+        void onClicked(QTreeWidgetItem* _item, int _column);
+
     private:
-        SceneTreeNode* addToTree(nage::SceneNode* _sceneNode);
+        SceneTreeNode* addToTree(ISceneNode* _sceneNode);
         std::optional<SceneTreeNode*> activeChildNode();
         bool isChildNodeExist(const QString _sceneName);
 
-        nage::SceneManager* sceneManager_;
+        ISceneManager* sceneManager_;
     };
 }
 

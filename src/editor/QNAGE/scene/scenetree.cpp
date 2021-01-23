@@ -8,22 +8,25 @@ namespace mr::qnage
         this->setObjectName("scene-tree");
         this->setContentsMargins(5, 20, 5, 20);
         this->setHeaderLabel("Scene manager");
+
+        connect(this, &QTreeWidget::itemClicked, this, &SceneTree::onClicked);
     }
 
-    void SceneTree::setSceneHandler(nage::SceneManager* _sceneManager)
+    void SceneTree::setSceneHandler(ISceneManager* _sceneManager)
     {
         sceneManager_ = _sceneManager;
-        for(auto sceneNodePair : sceneManager_->scenes())
+        for(auto sceneNode : sceneManager_->scenes())
         {
-            auto sceneNode = sceneNodePair.second;
             auto sceneTreeNode = addToTree(sceneNode);
 
             // Add camera.
             sceneTreeNode->addCamera(sceneNode->camera());
+            if(auto child = sceneTreeNode->activeChild(); child.has_value())
+                onClicked(child.value(), 0);
 
             // Add renderable objects.
-            for(auto renderable : sceneNode->renderableObjects())
-                sceneTreeNode->addItem(renderable);
+            for(auto object : sceneNode->objects())
+                sceneTreeNode->addItem(object);
         }
     }
 
@@ -50,7 +53,7 @@ namespace mr::qnage
         }
     }
 
-    SceneTreeNode* SceneTree::addToTree(nage::SceneNode* _sceneNode)
+    SceneTreeNode* SceneTree::addToTree(ISceneNode* _sceneNode)
     {
         auto sceneTreeNode = new SceneTreeNode(_sceneNode);
         addTopLevelItem(sceneTreeNode);
@@ -81,5 +84,11 @@ namespace mr::qnage
         }
 
         return false;
+    }
+
+    void SceneTree::onClicked(QTreeWidgetItem* _item, int _column)
+    {
+        if(ISceneTreeNodeItem* castedItem = dynamic_cast<ISceneTreeNodeItem*>(_item))
+            emit transformationsForNode(castedItem->transformations());
     }
 }

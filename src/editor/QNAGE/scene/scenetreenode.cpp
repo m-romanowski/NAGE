@@ -3,7 +3,7 @@
 
 namespace mr::qnage
 {
-    SceneTreeNode::SceneTreeNode(nage::SceneNode* _sceneNode, SceneTree* _parent)
+    SceneTreeNode::SceneTreeNode(ISceneNode* _sceneNode, SceneTree* _parent)
         : QTreeWidgetItem(_parent),
           sceneNode_(_sceneNode)
     {
@@ -16,18 +16,24 @@ namespace mr::qnage
         return QString::fromStdString(sceneNode_->name());
     }
 
-    void SceneTreeNode::addItem(nage::RenderableObject* _object)
+    void SceneTreeNode::addItem(ISceneObject* _object)
     {
         if(!isChildItemExist(QString::fromStdString(_object->id())))
         {
-            auto item = new RenderableSceneTreeNodeItem(_object, this);
+            SceneTreeNodeItemTransformations::Type transformType = 
+                _object->transformation()->isAvailable()
+                    ? SceneTreeNodeItem::ALL_TRANSFORMATIONS
+                    : SceneTreeNodeItemTransformations::Type::None;
+
+            auto item = new SceneTreeNodeItem(SceneTreeNodeItem::Type::Model, _object, transformType, this);
             addChild(item);
         }
     }
 
-    void SceneTreeNode::addCamera(nage::Camera* _camera)
+    void SceneTreeNode::addCamera(ICamera* _camera, bool _select)
     {
-        auto item = new CameraSceneTreeNodeItem(_camera, this);
+        auto item = new SceneTreeNodeItem(_camera, this);
+        item->setSelected(_select);
         addChild(item);
     }
 

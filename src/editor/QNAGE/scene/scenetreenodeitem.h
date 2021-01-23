@@ -1,19 +1,27 @@
-#ifndef QNAGE_SCENE_SCENETREEITEM_H_
-#define QNAGE_SCENE_SCENETREEITEM_H_
+#ifndef QNAGE_SCENE_SCENETREENODEITEM_H_
+#define QNAGE_SCENE_SCENETREENODEITEM_H_
 
-#include "engine/render/renderableobject.h"
+#include "scenetreenodeitemtransformations.h"
 
-#include <QTreeWidgetItem>
 #include <map>
 #include <functional>
+#include <QTreeWidgetItem>
+#include <QObject>
 
 namespace mr::qnage
 {
-    template <typename T>
-    class SceneTreeNodeItem
-        : public QTreeWidgetItem
+    class ISceneTreeNodeItem
     {
-    protected:
+    public:
+        virtual QString name() const = 0;
+        virtual SceneTreeNodeItemTransformations* transformations() = 0;
+    };
+
+    class SceneTreeNodeItem
+        : public ISceneTreeNodeItem,
+          public QTreeWidgetItem
+    {
+    public:
         enum class Type
         {
             Camera,
@@ -21,25 +29,121 @@ namespace mr::qnage
             Model
         };
 
-        SceneTreeNodeItem(const Type _type, const QString _name, T* _object, QTreeWidgetItem* _parent = nullptr)
+        inline static constexpr const SceneTreeNodeItemTransformations::Type ALL_TRANSFORMATIONS =
+            SceneTreeNodeItemTransformations::Type::Translation |
+            SceneTreeNodeItemTransformations::Type::Rotation |
+            SceneTreeNodeItemTransformations::Type::Scaling |
+            SceneTreeNodeItemTransformations::Type::Shearing;
+
+        SceneTreeNodeItem(const Type _type, ISceneObject* _object, SceneTreeNodeItemTransformations::Type transformationType,
+                QTreeWidgetItem* _parent = nullptr)
             : QTreeWidgetItem(_parent),
               type_(_type),
-              object_(_object)
+              object_(_object),
+              transformations_(new SceneTreeNodeItemTransformations(transformationType))
         {
-            this->setText(0, _name);
+            if(!_object)
+                throw new std::invalid_argument("Cannot create item for not defined object");
+
+            this->setText(0, QString::fromStdString(_object->id()));
             setupAsType(_type);
+
+            // Future updates handlers
+            QObject::connect(this->transformations_, &SceneTreeNodeItemTransformations::onTranslation,
+                [this](float x, float y, float z) {
+                    translate(x, y, z);
+                });
+            QObject::connect(this->transformations_, &SceneTreeNodeItemTransformations::onRotation,
+                [this](float x, float y, float z) {
+                    rotate(x, y, z);
+                });
+            QObject::connect(this->transformations_, &SceneTreeNodeItemTransformations::onScaling,
+                [this](float x, float y, float z) {
+                    scale(x, y, z);
+                });
+            QObject::connect(this->transformations_, &SceneTreeNodeItemTransformations::onShearing,
+                [this](float x, float y, float z) {
+                    shear(x, y, z);
+                });
         }
 
-        Type type_;
-        T* object_;
+        SceneTreeNodeItem(ICamera* _camera, QTreeWidgetItem* _parent = nullptr)
+            : SceneTreeNodeItem(Type::Camera, _camera, SceneTreeNodeItemTransformations::Type::Translation, _parent)
+        {
+            // First update
+            setTranslation(_camera->transformation()->translation());
 
-    public:
-        QString name() const
+            // Event bus
+            _camera->onTranslation(std::bind(&SceneTreeNodeItem::setTranslation, this, std::placeholders::_1));
+            // TODO: re-enable rotation section
+            // _camera->onRotation(std::bind(&SceneTreeNodeItem::setRotation, this, std::placeholders::_1));
+        }
+
+        virtual ~SceneTreeNodeItem()
+        {
+            delete transformations_;
+        }
+
+        QString name() const override
         {
             return QString::fromStdString(object_->id());
         }
 
+        SceneTreeNodeItemTransformations* transformations() override
+        {
+            return transformations_;
+        }
+
+    private slots:
+        void setTranslation(ISceneObjectTransformation::Vec3 value)
+        {
+            transformations_->setTranslation(value.x, value.y, value.z);
+        }
+
+        void setRotation(ISceneObjectTransformation::Vec3 value)
+        {
+            transformations_->setRotation(value.x, value.y, value.z);
+        }
+
+        void setScale(ISceneObjectTransformation::Vec3 value)
+        {
+            transformations_->setScaling(value.x, value.y, value.z);
+        }
+
+        void setShearing(ISceneObjectTransformation::Vec3 value)
+        {
+            transformations_->setShearing(value.x, value.y, value.z);
+        }
+
+        void translate(float x, float y , float z)
+        {
+            if(object_->isTransformable())
+                object_->transformation()->setTranslation(x, y, z);
+        }
+
+        void rotate(float x, float y , float z)
+        {
+            if(object_->isTransformable())
+                object_->transformation()->setRotation(x, y, z);
+        }
+
+        void scale(float x, float y , float z)
+        {
+            if(object_->isTransformable())
+                object_->transformation()->setScale(x, y, z);
+        }
+
+        void shear(float x, float y , float z)
+        {
+            if(object_->isTransformable())
+                object_->transformation()->setShearing(x, y, z);
+        }
+
     private:
+        Type type_;
+        ISceneObject* object_;
+        SceneTreeNodeItemTransformations* transformations_;
+
         std::map<Type, std::function<void()>> typeMap = {
             { Type::Camera, [this]() { setupAsCamera(); } },
             { Type::Light, [this]() { setupAsLight(); } },
@@ -72,26 +176,6 @@ namespace mr::qnage
             this->setIcon(0, modelIcon);
         }
     };
-
-    class RenderableSceneTreeNodeItem
-        : public SceneTreeNodeItem<nage::RenderableObject>
-    {
-    public:
-        RenderableSceneTreeNodeItem(nage::RenderableObject* _object, QTreeWidgetItem* _parent = nullptr)
-            : SceneTreeNodeItem(SceneTreeNodeItem::Type::Model, QString::fromStdString(_object->id()), _object, _parent)
-        {
-        }
-    };
-
-    class CameraSceneTreeNodeItem
-        : public SceneTreeNodeItem<nage::Camera>
-    {
-    public:
-        CameraSceneTreeNodeItem(nage::Camera* _object, QTreeWidgetItem* _parent = nullptr)
-            : SceneTreeNodeItem(SceneTreeNodeItem::Type::Camera, "Camera", _object, _parent)
-        {
-        }
-    };
 }
 
-#endif // QNAGE_SCENE_SCENETREEITEM_H_
+#endif // QNAGE_SCENE_SCENETREENODEITEM_H_

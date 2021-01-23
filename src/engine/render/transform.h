@@ -27,6 +27,8 @@ namespace mr::nage
         void setRotation(const Quaternion& _rotation);
         void setRotation(float _angle, const Vector3f& _axis);
         void setRotation(float _angle, float _ax, float _ay, float _az);
+        void setShearing(const Vector3f& _shearing);
+        void setShearing(float _dx, float _dy, float _dz);
 
         void translate(const Vector3f& _dt);
         void translate(float _dx, float _dy, float _dz);

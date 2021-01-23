@@ -129,10 +129,10 @@ set(CXX_SOURCES
     src/editor/QNAGE/window/framelesswindow.cpp
     src/editor/QNAGE/window/mainwindow.cpp
     src/editor/QNAGE/window/renderwindow.cpp
-    src/editor/QNAGE/main.cpp
     src/common/errormanager.cpp
     src/common/exception.cpp
     src/common/log.cpp
+    src/main.cpp
 )
 
 # TODO: move engine sources to another build file
@@ -264,6 +264,11 @@ set(CXX_HEADERS
     src/editor/QNAGE/window/framelesswindow.h
     src/editor/QNAGE/window/mainwindow.h
     src/editor/QNAGE/window/renderwindow.h
+    src/editor/QNAGE/wrapper/NAGE/nage_camera.h
+    src/editor/QNAGE/wrapper/NAGE/nage_scenemanager.h
+    src/editor/QNAGE/wrapper/NAGE/nage_scenenode.h
+    src/editor/QNAGE/wrapper/NAGE/nage_sceneobject.h
+    src/editor/QNAGE/wrapper/NAGE/nage_transformation.h
     src/common/errormanager.h
     src/common/exception.h
     src/common/log.h

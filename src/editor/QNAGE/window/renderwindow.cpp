@@ -1,3 +1,4 @@
+#include "wrapper/NAGE/nage_scenemanager.h"
 #include "renderwindow.h"
 #include "widget/glwidget.h"
 #include "widget/vkwidget.h"
@@ -69,7 +70,10 @@ namespace mr::qnage
 
         glWidget_->initialize(_game);
         connect(glWidget_, &GLWidget::ready, this, [this]() {
-            this->mainWindow_->mainWidget()->sceneWidget()->sceneTree()->setSceneHandler(glWidget_->game()->sceneManager());
+            this->mainWindow_->mainWidget()
+                ->sceneWidget()
+                ->sceneTree()
+                ->setSceneHandler(NAGESceneManager::from(glWidget_->game()->sceneManager()));
         }, Qt::ConnectionType::QueuedConnection);
     }
 

@@ -5,14 +5,36 @@ namespace mr::nage
     Camera::Camera()
         : forward_(Vector3f::forward),
           up_(Vector3f::up),
-          right_(Vector3f::right)
+          right_(Vector3f::right),
+          translationConsumer_(),
+          rotationConsumer_()
     {
 
+    }
+
+    std::string Camera::id() const
+    {
+        return TYPE;
+    }
+    
+    std::string Camera::type() const
+    {
+        return TYPE;
     }
 
     void Camera::translate(const Vector3f& _translation)
     {
         translation_ = _translation + translation_;
+        if(translationConsumer_)
+        {
+            Matrix4f matrix;
+            matrix.identity();
+            matrix.translate(translation_);
+            float x = matrix(0, 3);
+            float y = matrix(1, 3);
+            float z = matrix(2, 3);
+            translationConsumer_(Vector3f(x, y, z));
+        }
     }
 
     void Camera::translate(float _x, float _y, float _z)
@@ -23,6 +45,8 @@ namespace mr::nage
     void Camera::rotate(const Quaternion& _rotation)
     {
         rotation_ = _rotation * rotation_;
+        if(rotationConsumer_)
+            rotationConsumer_(_rotation.vector());
     }
 
     void Camera::rotate(float _angle, const Vector3f& _axis)

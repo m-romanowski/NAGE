@@ -50,11 +50,11 @@ namespace mr::nage
         */
 
         // Lamp
-        Sphere sphere("Red lamp");
+        // Sphere sphere("Red lamp");
 
-        lampTransform = std::make_shared<Transform>();
-        lampTransform->setTranslation(430.0f, 80.0f, 455.0f);
-        lampTransform->scale(2.0f);
+        // lampTransform = std::make_shared<Transform>();
+        // lampTransform->setTranslation(430.0f, 80.0f, 455.0f);
+        // lampTransform->scale(2.0f);
 
         lampShader = std::make_shared<Shader>();
         lampShader->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
@@ -62,22 +62,22 @@ namespace mr::nage
         lampShader->addShaderFromSourceFile(SHADER_TYPE::SHADER_FRAGMENT,
             "src/engine/shader/lamp.frag");
         lampShader->link();
-        lampShader->use();
-        lampShader->setFloat("expand", 0.25f);
-        lampShader->setVec2("center", lampTransform->translation().x(), lampTransform->translation().y());
-        lampShader->setFloat("radius", sphere.radius());
-        lampShader->setFloat("windowHeight", IWindow::currentWindowSize().y());
+        // lampShader->use();
+        // lampShader->setFloat("expand", 0.25f);
+        // lampShader->setVec2("center", lampTransform->translation().x(), lampTransform->translation().y());
+        // lampShader->setFloat("radius", sphere.radius());
+        // lampShader->setFloat("windowHeight", IWindow::currentWindowSize().y());
 
-        Mesh mesh("Sun mesh", sphere.vertices(), sphere.indices(), nullptr);
-        lamp = std::make_shared<PointLightObject>(sphere.id(), mesh.vertices(), mesh.indices());
-        lamp->setShader(lampShader.get());
+        // Mesh mesh("Sun mesh", sphere.vertices(), sphere.indices(), nullptr);
+        // lamp = std::make_shared<PointLightObject>(sphere.id(), mesh.vertices(), mesh.indices());
+        // lamp->setShader(lampShader.get());
 
-        lamp->setTransformation(lampTransform.get());
-        lamp->setId(0);
-        lamp->setColor(Color(255.0f, 0.0f, 0.0f));
-        lamp->setAttenuation(1.0f, 0.05f, 0.002f);
+        // lamp->setTransformation(lampTransform.get());
+        // lamp->setId(0);
+        // lamp->setColor(Color(255.0f, 0.0f, 0.0f));
+        // lamp->setAttenuation(1.0f, 0.05f, 0.002f);
 
-//        sceneManager()->sceneByKey("world")->addToScene(lamp.get());
+        // sceneManager()->sceneByKey("world")->addToScene(lamp.get());
 
         // Sun
         sun = std::make_shared<SunLight>();
@@ -94,7 +94,7 @@ namespace mr::nage
         waterHeightmap->flat(4096, 4096);
 
         Transform* waterTransform = new Transform;
-        waterTransform->setTranslation(0.0f, 40.0f, 0.0f);
+        waterTransform->setTranslation(0.0f, 200.0f, 0.0f);
 
         CDLODSettings waterLodSettings;
         waterLodSettings.gridResolution_ = 16;
@@ -144,7 +144,7 @@ namespace mr::nage
         terrainTexture3 = std::make_shared<Texture>("resources/texture/terrain/stone.jpg", TextureType::TEXTURE_2D);
         terrainTexture4 = std::make_shared<Texture>("resources/texture/terrain/snow.jpg", TextureType::TEXTURE_2D);
 
-        geoclipmapTerrain = std::make_shared<GeoClipMapTerrain>("Geoclipmap terrain", heightMap.get(), 150.0f, 5);
+        geoclipmapTerrain = std::make_shared<GeoClipMapTerrain>("Geoclipmap terrain", heightMap.get(), 500.0f, 10);
 
         geoclipmapTerrain->addTexture("material.blendmap", blendmap.get());
         geoclipmapTerrain->addTexture("material.dirt", terrainTexture1.get());

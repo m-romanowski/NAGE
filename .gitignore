@@ -2,7 +2,6 @@
 build/*
 test/*
 resources/*
-QNAGE
 
 # VS
 .vscode/*

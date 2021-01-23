@@ -1,11 +1,18 @@
+#include <cmath>
 #include "scenetreenodeitemtransformations.h"
 
 namespace mr::qnage
 {
-    SceneTreeNodeItemTransformations::SceneTreeNodeItemTransformations(QWidget* _parent)
-        : QWidget(_parent)
+    SceneTreeNodeItemTransformations::SceneTreeNodeItemTransformations(Type type, QWidget* _parent)
+        : QWidget(_parent),
+          widgetLabel_(nullptr),
+          translationWidget_(nullptr),
+          rotationWidget_(nullptr),
+          scalingWidget_(nullptr),
+          shearingWidget_(nullptr),
+          mainLayout_(nullptr)
     {
-        setupUi();
+        setupUi(type);
     }
 
     SceneTreeNodeItemTransformations::~SceneTreeNodeItemTransformations()
@@ -18,28 +25,76 @@ namespace mr::qnage
         delete mainLayout_;
     }
 
-    void SceneTreeNodeItemTransformations::setupUi()
+    void SceneTreeNodeItemTransformations::setupUi(Type type)
     {
+        if(type == Type::None)
+            return;
+
         this->mainLayout_ = new QVBoxLayout;
         this->mainLayout_->setMargin(0);
         this->setContentsMargins(0, 0, 0, 0);
 
         this->widgetLabel_ = new QLabel("Transformations", this);
+        this->widgetLabel_->setFixedHeight(35);
         this->widgetLabel_->setObjectName("scene-tree-node-item-transformations-label");
         this->mainLayout_->addWidget(this->widgetLabel_);
 
-        this->translationWidget_ = new SceneEditableTransformationWidget("Translation", this);
-        this->mainLayout_->addWidget(this->translationWidget_);
+        if((type & Type::Translation) == Type::Translation)
+        {
+            this->translationWidget_ = new SceneEditableTransformationWidget("Translation", this);
+            this->translationWidget_->setEnabled(false); // TODO: re-enable after editing fix
+            connect(this->translationWidget_, &SceneEditableTransformationWidget::onChange, this,
+                &SceneTreeNodeItemTransformations::onTranslation);
+            this->mainLayout_->addWidget(this->translationWidget_);
+        }
 
-        this->rotationWidget_ = new SceneEditableTransformationWidget("Rotation", this);
-        this->mainLayout_->addWidget(this->rotationWidget_);
+        if((type & Type::Rotation) == Type::Rotation)
+        {
+            this->rotationWidget_ = new SceneEditableTransformationWidget("Rotation", this);
+            this->rotationWidget_->setEnabled(false); // TODO: re-enable after editing fix
+            connect(this->rotationWidget_, &SceneEditableTransformationWidget::onChange, this,
+                &SceneTreeNodeItemTransformations::onRotation);
+            this->mainLayout_->addWidget(this->rotationWidget_);
+        }
 
-        this->scalingWidget_ = new SceneEditableTransformationWidget("Scaling", this);
-        this->mainLayout_->addWidget(this->scalingWidget_);
+        if((type & Type::Scaling) == Type::Scaling)
+        {
+            this->scalingWidget_ = new SceneEditableTransformationWidget("Scaling", this);
+            this->scalingWidget_->setEnabled(false); // TODO: re-enable after editing fix
+            connect(this->scalingWidget_, &SceneEditableTransformationWidget::onChange, this,
+                &SceneTreeNodeItemTransformations::onScaling);
+            this->mainLayout_->addWidget(this->scalingWidget_);
+        }
 
-        this->shearingWidget_ = new SceneEditableTransformationWidget("Shearing", this);
-        this->mainLayout_->addWidget(this->shearingWidget_);
+        if((type & Type::Shearing) == Type::Shearing)
+        {
+            this->shearingWidget_ = new SceneEditableTransformationWidget("Shearing", this);
+            this->shearingWidget_->setEnabled(false); // TODO: re-enable after editing fix
+            connect(this->shearingWidget_, &SceneEditableTransformationWidget::onChange, this,
+                &SceneTreeNodeItemTransformations::onShearing);
+            this->mainLayout_->addWidget(this->shearingWidget_);
+        }
 
         this->setLayout(this->mainLayout_);
+    }
+
+    void SceneTreeNodeItemTransformations::setTranslation(float x, float y, float z)
+    {
+        translationWidget_->setVec3(std::roundf(x), std::roundf(y), std::roundf(z));
+    }
+
+    void SceneTreeNodeItemTransformations::setRotation(float x, float y, float z)
+    {
+        rotationWidget_->setVec3(std::roundf(x), std::roundf(y), std::roundf(z));
+    }
+
+    void SceneTreeNodeItemTransformations::setScaling(float x, float y, float z)
+    {
+        scalingWidget_->setVec3(std::roundf(x), std::roundf(y), std::roundf(z));
+    }
+
+    void SceneTreeNodeItemTransformations::setShearing(float x, float y, float z)
+    {
+        shearingWidget_->setVec3(std::roundf(x), std::roundf(y), std::roundf(z));
     }
 }

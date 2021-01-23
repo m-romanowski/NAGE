@@ -1,6 +1,7 @@
 #ifndef NAGE_COMPONENTS_CAMERA_CAMERA_H_
 #define NAGE_COMPONENTS_CAMERA_CAMERA_H_
 
+#include "engine/core/iobject.h"
 #include "engine/render/projection.h"
 #include "engine/math/NAGEMath/nagemathvector.h"
 #include "engine/math/NAGEMath/nagemathmatrix.h"
@@ -9,7 +10,12 @@
 namespace mr::nage
 {
     class Camera
+        : public IObject
     {
+    private:
+        inline static constexpr const char TYPE[] = "Camera";
+        typedef std::function<void(Vector3f)> consumer_t;
+
     public:
         Camera();
 
@@ -30,6 +36,8 @@ namespace mr::nage
         void setRotation(float _angle, float _x, float _y, float _z);
 
 		// Getters
+        std::string id() const override;
+        std::string type() const override;
         Vector3f forward() const;
         Vector3f up() const;
         Vector3f right() const;
@@ -41,6 +49,17 @@ namespace mr::nage
 
         Matrix4f view() const;
 
+        // Event bus
+        void onTranslation(consumer_t _consumer)
+        {
+            this->translationConsumer_ = _consumer;
+        }
+
+        void onRotatation(consumer_t _consumer)
+        {
+            this->rotationConsumer_ = _consumer;
+        }
+
 	private:
         Vector3f forward_;
         Vector3f up_;
@@ -48,6 +67,9 @@ namespace mr::nage
 
         Vector3f translation_;
         Quaternion rotation_;
+
+        consumer_t translationConsumer_;
+        consumer_t rotationConsumer_;
 	};
 }
 
