@@ -12,6 +12,8 @@ namespace mr::nage
     public:
         SunLight();
 
+        inline float radius() { return sphere.radius(); }
+
     private:
         static inline const Sphere sphere = Sphere("sun-sphere");
     };

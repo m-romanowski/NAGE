@@ -31,10 +31,10 @@ namespace mr::nage
         // Setup primitve vertices and indices.
         void initialize();
         std::string id() const override;
-        void draw(Camera* _camera, const Vector4f _clipPlane) override;
-        void useMaterials() override {}
-        void bindTextures() override {}
-        void unbindTextures() override {}
+        virtual void draw(Camera* _camera, const Vector4f _clipPlane) override;
+        virtual void useMaterials() override {}
+        virtual void bindTextures() override {}
+        virtual void unbindTextures() override {}
 
     protected:
         virtual void setupPrimitive() = 0;

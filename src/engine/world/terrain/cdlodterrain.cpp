@@ -15,8 +15,8 @@ namespace mr::nage
 
         material_->setAmbient(Vector3f(0.2f, 0.2f, 0.2f));
         material_->setDiffuse(Vector3f(0.5f, 0.5f, 0.5f));
-        material_->setSpecular(Vector3f(0.05f, 0.05f, 0.05f));
-        material_->setShininess(32.0f);
+        material_->setSpecular(Vector3f(0.005f, 0.005f, 0.005f));
+        material_->setShininess(0.5f);
     }
 
     CDLODTerrain::~CDLODTerrain()

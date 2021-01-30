@@ -1,5 +1,5 @@
-#ifndef NAGE_GAME_GAME_H_
-#define NAGE_GAME_GAME_H_
+#ifndef GAME_GAME_H_
+#define GAME_GAME_H_
 
 #include "engine/world/terrain/geoclipmapterrain.h"
 #include "engine/world/skybox/sunlight.h"
@@ -33,7 +33,7 @@ namespace mr::nage
 
         // Skybox
         std::shared_ptr<Shader> skyboxShader;
-        std::shared_ptr<DayNightSkybox> skybox;
+        std::shared_ptr<DayNightSkydome> skybox;
 
         // Lamp
         std::shared_ptr<Shader> lampShader;
@@ -56,7 +56,8 @@ namespace mr::nage
         std::shared_ptr<HeightMap> waterHeightmap;
 
         int currHour, currMin;
+        int counterForSun;
     };
 }
 
-#endif // NAGE_GAME_GAME_H_
+#endif // GAME_GAME_H_
