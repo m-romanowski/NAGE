@@ -444,6 +444,20 @@ QPlainTextEdit#debugIO {
     color: white;
 }
 
+QLabel#header-bar {
+    background-color: #12191c;
+    color: #CFD8DC;
+    font-size: 12pt;
+    padding: 5px;
+    border: 0;
+}
+
+QLabel#texture-picker {
+    border: 1px;
+    border-style: outset;
+    border-color: #12191c;
+}
+
 /* Scene tree */
 QTreeWidget#scene-tree {
     background-color: #12191c;
@@ -477,12 +491,4 @@ QTreeWidget#scene-tree::item:selected:!active {
 QScrollArea#scene-widget {
     background-color: #192024;
     margin-left: 10px;
-}
-
-QLabel#scene-tree-node-item-transformations-label {
-    background-color: #263238;
-    color: #CFD8DC;
-    font-size: 12pt;
-    padding: 5px;
-    border: 0;
 }

@@ -10,7 +10,6 @@ namespace mr::qnage
 
     MainWidget::~MainWidget()
     {
-        delete sceneWidget_;
         delete toolsWidget_;
         delete logWidget_;
         delete renderWindow_;
@@ -32,14 +31,11 @@ namespace mr::qnage
         // Workspace layout
         this->workspaceLayout_ = new QVBoxLayout();
 
-        // Scene
-        this->sceneWidget_ = new SceneWidget(this);
-
         // Log output widget
         this->logWidget_ = new LogWidget(this);
 
         // Tools
-        this->toolsWidget_ = new WorkspaceWidget(this);
+        this->toolsWidget_ = new ToolsWidget(this);
 
         // Splitter
         this->verticalSplitter_ = new QSplitter(this);
@@ -48,7 +44,7 @@ namespace mr::qnage
         // Bind widgets and layouts to main layout.
         this->workspaceWidget_ = new QWidget(this);
         this->horizontalSplitter_->addWidget(this->renderWindow_);
-        this->horizontalSplitter_->addWidget(this->sceneWidget_);
+        this->horizontalSplitter_->addWidget(this->toolsWidget_);
         this->horizontalSplitter_->setSizes(QList<int>({600, 200}));
         this->workspaceLayout_->addWidget(this->horizontalSplitter_);
         this->workspaceWidget_->setLayout(this->workspaceLayout_);

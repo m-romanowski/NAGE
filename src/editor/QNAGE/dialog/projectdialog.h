@@ -14,7 +14,7 @@
 
 namespace mr::qnage
 {
-    class ProjectDialog : public FramelessWindow, public Dialog
+    class ProjectDialog : public Dialog
     {
         Q_OBJECT
 

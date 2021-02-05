@@ -2,12 +2,12 @@
 #define QNAGE_SCENE_SCENETREENODEITEMTRANSFORMATIONS_H_
 
 #include "ui/decimallineedit.h"
+#include "ui/headerbar.h"
 
 #include <type_traits>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QToolButton>
-#include <QLabel>
 #include <QLineEdit>
 #include <QSlider>
 #include <QRegExpValidator>
@@ -134,7 +134,7 @@ namespace mr::qnage
         QVBoxLayout* mainLayout_;
 
         // Widget label
-        QLabel* widgetLabel_;
+        HeaderBar* widgetLabel_;
 
         // Translation
         SceneEditableTransformationWidget* translationWidget_;

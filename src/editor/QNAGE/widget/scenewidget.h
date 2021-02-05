@@ -11,7 +11,7 @@
 namespace mr::qnage
 {
     class SceneWidget
-        : public QScrollArea
+        : public QWidget
     {
         Q_OBJECT
 

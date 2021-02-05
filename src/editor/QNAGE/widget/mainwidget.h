@@ -1,8 +1,7 @@
 #ifndef QNAGE_WIDGET_MAINWIDGET_H_
 #define QNAGE_WIDGET_MAINWIDGET_H_
 
-#include "workspacewidget.h"
-#include "scenewidget.h"
+#include "toolswidget.h"
 #include "log/logwidget.h"
 #include "window/renderwindow.h"
 
@@ -20,7 +19,7 @@ namespace mr::qnage
 
         // Getters
         inline RenderWindow* renderWindow() const { return renderWindow_; }
-        inline SceneWidget* sceneWidget() const { return sceneWidget_; }
+        inline ToolsWidget* toolsWidget() const { return toolsWidget_; }
         inline LogWidget* debugWindow() const { return logWidget_; }
 
         // Setters
@@ -36,9 +35,8 @@ namespace mr::qnage
 
         // Editor components
         RenderWindow* renderWindow_;
-        SceneWidget* sceneWidget_;
         LogWidget* logWidget_;
-        WorkspaceWidget* toolsWidget_;
+        ToolsWidget* toolsWidget_;
         QWidget* workspaceWidget_;
 
         // Ui

@@ -71,7 +71,7 @@ namespace mr::qnage
         glWidget_->initialize(_game);
         connect(glWidget_, &GLWidget::ready, this, [this]() {
             this->mainWindow_->mainWidget()
-                ->sceneWidget()
+                ->toolsWidget()
                 ->sceneTree()
                 ->setSceneHandler(NAGESceneManager::from(glWidget_->game()->sceneManager()));
         }, Qt::ConnectionType::QueuedConnection);

@@ -3,7 +3,7 @@
 namespace mr::qnage
 {
     ProjectDialog::ProjectDialog(QWidget* _parent)
-        : FramelessWindow(_parent, FRAMELESSWINDOW_EXIT_BUTTON)
+        : Dialog(_parent)
     {
         // Setup dialog window
         setupUi();

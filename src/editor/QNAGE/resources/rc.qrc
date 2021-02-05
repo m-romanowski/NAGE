@@ -4,6 +4,7 @@
         <file>icons/dock.png</file>
         <file>icons/maximize.png</file>
         <file>icons/minimize.png</file>
+        <file>icons/no-image.png</file>
         <file>icons/clear-terminal.png</file>
         <file>icons/scene.png</file>
         <file>icons/code-editor.png</file>

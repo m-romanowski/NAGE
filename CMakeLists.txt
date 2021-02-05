@@ -100,7 +100,6 @@ set(CXX_SOURCES
     src/engine/world/primitives/plane.cpp
     src/engine/world/primitives/cube.cpp
     src/engine/render/culling/frustumculling.cpp
-    src/editor/QNAGE/dialog/dialog.cpp
     src/editor/QNAGE/dialog/projectdialog.cpp
     src/editor/QNAGE/log/logwidget.cpp
     src/editor/QNAGE/log/messagehandler.cpp
@@ -114,18 +113,22 @@ set(CXX_SOURCES
     src/editor/QNAGE/settings/environmentsettings.cpp
     src/editor/QNAGE/settings/settingslayout.cpp
     src/editor/QNAGE/settings/settingsnavigation.cpp
+    src/editor/QNAGE/ui/clickablelabel.cpp
     src/editor/QNAGE/ui/custombutton.cpp
     src/editor/QNAGE/ui/decimallineedit.cpp
     src/editor/QNAGE/ui/maintool.cpp
     src/editor/QNAGE/ui/tabbar.cpp
     src/editor/QNAGE/ui/tabwidget.cpp
+    src/editor/QNAGE/widget/material/texture/texturepickerdialog.cpp
+    src/editor/QNAGE/widget/material/texture/texturepicker.cpp
+    src/editor/QNAGE/widget/material/materialwidget.cpp
     src/editor/QNAGE/widget/glwidget.cpp
     src/editor/QNAGE/widget/mainwidget.cpp
     src/editor/QNAGE/widget/scenewidget.cpp
     src/editor/QNAGE/widget/settingswidget.cpp
     src/editor/QNAGE/widget/vkwidget.cpp
     src/editor/QNAGE/widget/welcomewidget.cpp
-    src/editor/QNAGE/widget/workspacewidget.cpp
+    src/editor/QNAGE/widget/toolswidget.cpp
     src/editor/QNAGE/window/framelesswindow.cpp
     src/editor/QNAGE/window/mainwindow.cpp
     src/editor/QNAGE/window/renderwindow.cpp
@@ -234,7 +237,6 @@ set(CXX_HEADERS
     src/engine/render/culling/frustumculling.h
     src/engine/world/procedural/perlinnoise.h
     src/engine/world/procedural/simplexnoise.h
-    src/editor/QNAGE/dialog/dialog.h
     src/editor/QNAGE/dialog/projectdialog.h
     src/editor/QNAGE/log/logwidget.h
     src/editor/QNAGE/log/messagehandler.h
@@ -249,18 +251,23 @@ set(CXX_HEADERS
     src/editor/QNAGE/settings/environmentsettings.h
     src/editor/QNAGE/settings/settingslayout.h
     src/editor/QNAGE/settings/settingsnavigation.h
+    src/editor/QNAGE/ui/clickablelabel.h
     src/editor/QNAGE/ui/custombutton.h
     src/editor/QNAGE/ui/decimallineedit.h
+    src/editor/QNAGE/ui/headerbar.h
     src/editor/QNAGE/ui/maintool.h
     src/editor/QNAGE/ui/tabbar.h
     src/editor/QNAGE/ui/tabwidget.h
+    src/editor/QNAGE/widget/material/texture/texturepickerdialog.h
+    src/editor/QNAGE/widget/material/texture/texturepicker.h
+    src/editor/QNAGE/widget/material/materialwidget.h
     src/editor/QNAGE/widget/glwidget.h
     src/editor/QNAGE/widget/mainwidget.h
     src/editor/QNAGE/widget/scenewidget.h
     src/editor/QNAGE/widget/setingswidget.h
     src/editor/QNAGE/widget/vkwidget.h
     src/editor/QNAGE/widget/welcomewidget.h
-    src/editor/QNAGE/widget/workspacewidget.h
+    src/editor/QNAGE/widget/toolswidget.h
     src/editor/QNAGE/window/framelesswindow.h
     src/editor/QNAGE/window/mainwindow.h
     src/editor/QNAGE/window/renderwindow.h

@@ -4,9 +4,10 @@
 namespace mr::qnage
 {
     SceneWidget::SceneWidget(QWidget* _parent)
-        : QScrollArea(_parent)
+        : QWidget(_parent)
     {
         this->setObjectName("scene-widget");
+        this->setMinimumHeight(100);
 
         setupUi();
     }

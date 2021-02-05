@@ -90,22 +90,22 @@ namespace mr::nage
         sceneManager()->sceneByKey("world")->addToScene(skybox.get());
 
         // CDLOD water
-        waterHeightmap = std::make_shared<HeightMap>();
-        waterHeightmap->flat(4096, 4096);
+        // waterHeightmap = std::make_shared<HeightMap>();
+        // waterHeightmap->flat(4096, 4096);
 
-        Transform* waterTransform = new Transform;
-        waterTransform->setTranslation(0.0f, 200.0f, 0.0f);
+        // Transform* waterTransform = new Transform;
+        // waterTransform->setTranslation(0.0f, 200.0f, 0.0f);
 
-        CDLODSettings waterLodSettings;
-        waterLodSettings.gridResolution_ = 16;
+        // CDLODSettings waterLodSettings;
+        // waterLodSettings.gridResolution_ = 16;
 
-        cdlodWater = std::make_shared<CDLODWater>("CDLOD water", 11, waterHeightmap.get(), waterLodSettings);
-        cdlodWater->setWaveNoiseFactor(120.0f);
-        // cdlodWater->setupFlowMapEffect(256, 256);
-        cdlodWater->setWaveFrequency(0.1f);
-        cdlodWater->setHeightMapProperties(cdlodWater->shader());
-        cdlodWater->setTransformation(waterTransform);
-        sceneManager()->sceneByKey("world")->addToScene(cdlodWater.get());
+        // cdlodWater = std::make_shared<CDLODWater>("CDLOD water", 11, waterHeightmap.get(), waterLodSettings);
+        // cdlodWater->setWaveNoiseFactor(120.0f);
+        // // cdlodWater->setupFlowMapEffect(256, 256);
+        // cdlodWater->setWaveFrequency(0.1f);
+        // cdlodWater->setHeightMapProperties(cdlodWater->shader());
+        // cdlodWater->setTransformation(waterTransform);
+        // sceneManager()->sceneByKey("world")->addToScene(cdlodWater.get());
 
         // CDLOD terrain
         // CDLODSettings terrainLodSettings;
@@ -135,24 +135,24 @@ namespace mr::nage
         // sceneManager()->sceneByKey("world")->addToScene(cdlodTerrain.get());
 
         // Geoclipmapping terrain
-        heightMap = std::make_shared<HeightMap>();
-        heightMap->loadFromFile("resources/texture/terrain/heightmap1_2k.jpg");
+        // heightMap = std::make_shared<HeightMap>();
+        // heightMap->loadFromFile("resources/texture/terrain/heightmap1_2k.jpg");
 
-        blendmap = std::make_shared<Texture>("resources/texture/terrain/blendmap1_2k.jpg", TextureType::TEXTURE_2D);
-        terrainTexture1 = std::make_shared<Texture>("resources/texture/terrain/dirt.jpg", TextureType::TEXTURE_2D);
-        terrainTexture2 = std::make_shared<Texture>("resources/texture/terrain/grass.jpg", TextureType::TEXTURE_2D);
-        terrainTexture3 = std::make_shared<Texture>("resources/texture/terrain/stone.jpg", TextureType::TEXTURE_2D);
-        terrainTexture4 = std::make_shared<Texture>("resources/texture/terrain/snow.jpg", TextureType::TEXTURE_2D);
+        // blendmap = std::make_shared<Texture>("resources/texture/terrain/blendmap1_2k.jpg", TextureType::TEXTURE_2D);
+        // terrainTexture1 = std::make_shared<Texture>("resources/texture/terrain/dirt.jpg", TextureType::TEXTURE_2D);
+        // terrainTexture2 = std::make_shared<Texture>("resources/texture/terrain/grass.jpg", TextureType::TEXTURE_2D);
+        // terrainTexture3 = std::make_shared<Texture>("resources/texture/terrain/stone.jpg", TextureType::TEXTURE_2D);
+        // terrainTexture4 = std::make_shared<Texture>("resources/texture/terrain/snow.jpg", TextureType::TEXTURE_2D);
 
-        geoclipmapTerrain = std::make_shared<GeoClipMapTerrain>("Geoclipmap terrain", heightMap.get(), 500.0f, 10);
+        // geoclipmapTerrain = std::make_shared<GeoClipMapTerrain>("Geoclipmap terrain", heightMap.get(), 500.0f, 10);
 
-        geoclipmapTerrain->addTexture("material.blendmap", blendmap.get());
-        geoclipmapTerrain->addTexture("material.dirt", terrainTexture1.get());
-        geoclipmapTerrain->addTexture("material.grass", terrainTexture2.get());
-        geoclipmapTerrain->addTexture("material.stone", terrainTexture3.get());
-        geoclipmapTerrain->addTexture("material.snow", terrainTexture4.get());
+        // geoclipmapTerrain->addTexture("material.blendmap", blendmap.get());
+        // geoclipmapTerrain->addTexture("material.dirt", terrainTexture1.get());
+        // geoclipmapTerrain->addTexture("material.grass", terrainTexture2.get());
+        // geoclipmapTerrain->addTexture("material.stone", terrainTexture3.get());
+        // geoclipmapTerrain->addTexture("material.snow", terrainTexture4.get());
 
-        sceneManager()->sceneByKey("world")->addToScene(geoclipmapTerrain.get());
+        // sceneManager()->sceneByKey("world")->addToScene(geoclipmapTerrain.get());
     }
 
     void Game::ioEventsSupplier()

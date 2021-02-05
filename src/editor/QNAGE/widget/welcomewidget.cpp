@@ -53,7 +53,7 @@ namespace mr::qnage
         this->sessionLabel_->setFont(QFont("Arial", 14, QFont::Bold));
 
         this->sessionDir_ = new QLabel();
-        this->sessionDir_->setText(tr("~/home/projects/OpenGL/hypercube"));
+        this->sessionDir_->setText(tr("~/"));
         this->sessionDir_->setFont(QFont("Arial", 11));
 
         // Layout spacers.

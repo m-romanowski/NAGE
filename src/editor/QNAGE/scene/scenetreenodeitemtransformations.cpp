@@ -34,9 +34,7 @@ namespace mr::qnage
         this->mainLayout_->setMargin(0);
         this->setContentsMargins(0, 0, 0, 0);
 
-        this->widgetLabel_ = new QLabel("Transformations", this);
-        this->widgetLabel_->setFixedHeight(35);
-        this->widgetLabel_->setObjectName("scene-tree-node-item-transformations-label");
+        this->widgetLabel_ = new HeaderBar("Transformations", this);
         this->mainLayout_->addWidget(this->widgetLabel_);
 
         if((type & Type::Translation) == Type::Translation)
