@@ -8,7 +8,7 @@ namespace mr::qnage
         : public FramelessWindow
     {
     public:
-        explicit Dialog(QWidget* _parent) : FramelessWindow(_parent, FRAMELESSWINDOW_EXIT_BUTTON) {}
+        explicit Dialog(QWidget* _parent) : FramelessWindow(_parent, FRAMELESSWINDOW_WITHOUT_BUTTONS) {}
         virtual ~Dialog() {}
 
     protected:

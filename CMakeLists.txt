@@ -258,6 +258,8 @@ set(CXX_HEADERS
     src/editor/QNAGE/ui/maintool.h
     src/editor/QNAGE/ui/tabbar.h
     src/editor/QNAGE/ui/tabwidget.h
+    src/editor/QNAGE/widget/material/texture/texturepickerdialogbuttonsarea.h
+    src/editor/QNAGE/widget/material/texture/texturepickerdialogstepheader.h
     src/editor/QNAGE/widget/material/texture/texturepickerdialog.h
     src/editor/QNAGE/widget/material/texture/texturepicker.h
     src/editor/QNAGE/widget/material/materialwidget.h

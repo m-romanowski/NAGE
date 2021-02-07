@@ -13,11 +13,15 @@ namespace mr::qnage
 
     public:
         explicit TexturePicker(QWidget* _parent = nullptr, QSize _pickerAreaSize = DEFAULT_PICKER_AREA_SIZE);
+        ~TexturePicker();
 
     private slots:
         void onClicked();
+        void onImageSelected(QImage _image);
 
     private:
+        const QSize pickerAreaSize_;
+        QImage* texture_;
         std::unique_ptr<TexturePickerDialog> dialog_;
     };
 }

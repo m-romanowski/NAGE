@@ -458,6 +458,10 @@ QLabel#texture-picker {
     border-color: #12191c;
 }
 
+QLabel#texture-picker-dialog-step-header {
+    color: white;
+}
+
 /* Scene tree */
 QTreeWidget#scene-tree {
     background-color: #12191c;
