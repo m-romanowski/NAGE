@@ -21,7 +21,8 @@ namespace mr::qnage
         this->layout_->setContentsMargins(0, 0, 0, 0);
 
         // Init frameless window
-        this->setMainLayout(layout_);
+        // this->setMainLayout(layout_);
+        this->setLayout(layout_);
 
         // Window settings
         this->setMinimumSize(800, 400);

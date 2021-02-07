@@ -119,8 +119,12 @@ set(CXX_SOURCES
     src/editor/QNAGE/ui/maintool.cpp
     src/editor/QNAGE/ui/tabbar.cpp
     src/editor/QNAGE/ui/tabwidget.cpp
+    src/editor/QNAGE/widget/material/heapmap/heapmapcreator.cpp
+    src/editor/QNAGE/widget/material/heapmap/heapmapmaterial.cpp
+    src/editor/QNAGE/widget/material/heapmap/heapmaptexturepicker.cpp
     src/editor/QNAGE/widget/material/texture/texturepickerdialog.cpp
     src/editor/QNAGE/widget/material/texture/texturepicker.cpp
+    src/editor/QNAGE/widget/material/basetexturepicker.cpp
     src/editor/QNAGE/widget/material/materialwidget.cpp
     src/editor/QNAGE/widget/glwidget.cpp
     src/editor/QNAGE/widget/mainwidget.cpp
@@ -258,10 +262,14 @@ set(CXX_HEADERS
     src/editor/QNAGE/ui/maintool.h
     src/editor/QNAGE/ui/tabbar.h
     src/editor/QNAGE/ui/tabwidget.h
+    src/editor/QNAGE/widget/material/heapmap/heapmapcreator.h
+    src/editor/QNAGE/widget/material/heapmap/heapmapmaterial.h
+    src/editor/QNAGE/widget/material/heapmap/heapmaptexturepicker.h
     src/editor/QNAGE/widget/material/texture/texturepickerdialogbuttonsarea.h
     src/editor/QNAGE/widget/material/texture/texturepickerdialogstepheader.h
     src/editor/QNAGE/widget/material/texture/texturepickerdialog.h
     src/editor/QNAGE/widget/material/texture/texturepicker.h
+    src/editor/QNAGE/widget/material/basetexturepicker.h
     src/editor/QNAGE/widget/material/materialwidget.h
     src/editor/QNAGE/widget/glwidget.h
     src/editor/QNAGE/widget/mainwidget.h

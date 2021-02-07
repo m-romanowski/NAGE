@@ -1,8 +1,9 @@
-#ifndef QNAGE_WIDGET_MATERIALWIDGET_H_
-#define QNAGE_WIDGET_MATERIALWIDGET_H_
+#ifndef QNAGE_WIDGET_MATERIAL_MATERIALWIDGET_H_
+#define QNAGE_WIDGET_MATERIAL_MATERIALWIDGET_H_
 
 #include "editor/QNAGE/ui/headerbar.h"
 #include "texture/texturepicker.h"
+#include "heapmap/heapmapmaterial.h"
 
 #include <QVBoxLayout>
 
@@ -21,7 +22,10 @@ namespace mr::qnage
         QVBoxLayout* mainLayout_;
         HeaderBar* widgetHeaderBar_;
         TexturePicker* texturePicker_;
+        HeapmapMaterial* heapmapMaterial_;
+
+        QSpacerItem* spacerItem_;
     };
 }
 
-#endif // QNAGE_WIDGET_MATERIALWIDGET_H_
+#endif // QNAGE_WIDGET_MATERIAL_MATERIALWIDGET_H_

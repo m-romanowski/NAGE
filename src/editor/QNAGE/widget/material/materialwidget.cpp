@@ -12,6 +12,8 @@ namespace mr::qnage
     {
         delete widgetHeaderBar_;
         delete texturePicker_;
+        delete heapmapMaterial_;
+        delete spacerItem_;
         delete mainLayout_;
     }
 
@@ -25,5 +27,11 @@ namespace mr::qnage
 
         this->texturePicker_ = new TexturePicker(this);
         this->mainLayout_->addWidget(this->texturePicker_);
+
+        this->heapmapMaterial_ = new HeapmapMaterial(this);
+        this->mainLayout_->addWidget(this->heapmapMaterial_);
+
+        this->spacerItem_ = new QSpacerItem(1, 1, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
+        this->mainLayout_->addItem(this->spacerItem_);
     }
 }

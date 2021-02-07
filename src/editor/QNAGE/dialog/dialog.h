@@ -1,14 +1,17 @@
 #ifndef QNAGE_DIALOG_DIALOG_H_
 #define QNAGE_DIALOG_DIALOG_H_
 
-#include "window/framelesswindow.h"
+// #include "window/framelesswindow.h"
+
+#include <QWidget>
+
 namespace mr::qnage
 {
     class Dialog
-        : public FramelessWindow
+        : public QWidget
     {
     public:
-        explicit Dialog(QWidget* _parent) : FramelessWindow(_parent, FRAMELESSWINDOW_WITHOUT_BUTTONS) {}
+        explicit Dialog(QWidget* _parent) : QWidget(_parent) {}
         virtual ~Dialog() {}
 
     protected:

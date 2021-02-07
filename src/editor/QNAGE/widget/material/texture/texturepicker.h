@@ -1,29 +1,19 @@
-#ifndef QNAGE_UI_TEXTUREPICKER_H_
-#define QNAGE_UI_TEXTUREPICKER_H_
+#ifndef QNAGE_WIDGET_MATERIAL_TEXTURE_TEXTUREPICKER_H_
+#define QNAGE_WIDGET_MATERIAL_TEXTURE_TEXTUREPICKER_H_
 
-#include "editor/QNAGE/ui/clickablelabel.h"
+#include "editor/QNAGE/widget/material/basetexturepicker.h"
 #include "texturepickerdialog.h"
 
 namespace mr::qnage
 {
     class TexturePicker
-        : public ClickableLabel
+        : public BaseTexturePicker
     {
-        static constexpr const QSize DEFAULT_PICKER_AREA_SIZE = QSize(80, 80);
+        Q_OBJECT
 
     public:
         explicit TexturePicker(QWidget* _parent = nullptr, QSize _pickerAreaSize = DEFAULT_PICKER_AREA_SIZE);
-        ~TexturePicker();
-
-    private slots:
-        void onClicked();
-        void onImageSelected(QImage _image);
-
-    private:
-        const QSize pickerAreaSize_;
-        QImage* texture_;
-        std::unique_ptr<TexturePickerDialog> dialog_;
     };
 }
 
-#endif // QNAGE_UI_TEXTUREPICKER_H_
+#endif // QNAGE_WIDGET_MATERIAL_TEXTURE_TEXTUREPICKER_H_

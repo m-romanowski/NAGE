@@ -1,5 +1,5 @@
-#ifndef QNAGE_UI_TEXTUREPICKERDIALOG_H_
-#define QNAGE_UI_TEXTUREPICKERDIALOG_H_
+#ifndef QNAGE_WIDGET_MATERIAL_TEXTURE_TEXTUREPICKERDIALOG_H_
+#define QNAGE_WIDGET_MATERIAL_TEXTURE_TEXTUREPICKERDIALOG_H_
 
 #include "editor/QNAGE/dialog/dialog.h"
 #include "texturepickerdialogstepheader.h"
@@ -65,6 +65,7 @@ namespace mr::qnage
             this->layout_->addWidget(this->chosedFileName_);
 
             this->buttonsArea_ = new TexturePickerDialogButtonsArea("Cancel", "Next step", this);
+            this->buttonsArea_->disableSecond();
             this->layout_->addWidget(this->buttonsArea_);
             connect(this->buttonsArea_, &TexturePickerDialogButtonsArea::firstButtonClicked, this, &FirstStep::closeDialogClicked);
             connect(this->buttonsArea_, &TexturePickerDialogButtonsArea::secondButonClicked, this, &FirstStep::nextStepClicked);
@@ -190,7 +191,7 @@ namespace mr::qnage
             this->imagePreviewRightSpacerItem_ = new QSpacerItem(1, 1, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
             this->imagePreviewLayout_->addItem(this->imagePreviewRightSpacerItem_);
 
-            this->buttonsArea_ = new TexturePickerDialogButtonsArea("Previous step", "Choose", this);
+            this->buttonsArea_ = new TexturePickerDialogButtonsArea("Previous step", "Done", this);
             this->layout_->addWidget(this->buttonsArea_);
             connect(this->buttonsArea_, &TexturePickerDialogButtonsArea::firstButtonClicked, this, &SecondStep::previousStepClicked);
             connect(this->buttonsArea_, &TexturePickerDialogButtonsArea::secondButonClicked, [this] {
@@ -273,4 +274,4 @@ namespace mr::qnage
     };
 }
 
-#endif // QNAGE_UI_TEXTUREPICKERDIALOG_H_
+#endif // QNAGE_WIDGET_MATERIAL_TEXTURE_TEXTUREPICKERDIALOG_H_
