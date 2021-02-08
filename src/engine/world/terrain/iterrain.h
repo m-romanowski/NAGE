@@ -21,18 +21,19 @@ namespace mr::nage
 
         // Getters
         Material* material();
-        unsigned int texturesCount() const;
-        Texture* textureByKey(const std::string& _key);
-        std::map<std::string, Texture*> textures() const;
+        // unsigned int texturesCount() const;
+        // Texture* textureByKey(const std::string& _key);
+        // std::map<std::string, Texture*> textures() const;
         Shader* shader() override;
         Transform* transformation() override;
+        Resource* resource() override;
 
         // Setters
         void setShader(Shader* _shader);
         void setMaterial(Material* _material);
         void setTransformation(Transform* _transform);
         void addTexture(const std::string& _shaderUniformName, Texture* _texture);
-        void addTextures(const std::map<std::string, Texture*>& _textures);
+        // void addTextures(const std::map<std::string, Texture*>& _textures);
 
         std::string id() const override;
         virtual void useMaterials() override;
@@ -41,10 +42,9 @@ namespace mr::nage
 
     protected:
         std::string id_;
-        Shader* shader_;
         Material* material_;
         Transform* transform_;
-        std::map<std::string, Texture*> textures_;
+        Resource* resource_;
     };
 }
 

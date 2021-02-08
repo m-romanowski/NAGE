@@ -34,7 +34,9 @@ namespace mr::qnage
         supportedExtensions.append("*.bmp");
 
         FirstStep::Properties firstStepProperties = FirstStep::Properties();
-        firstStepProperties.rootPath = QStandardPaths::HomeLocation;
+        firstStepProperties.rootPath = "/home/inc/terrain";
+        firstStepProperties.defaultPath = "/home/inc/terrain";
+        // firstStepProperties.rootPath = QStandardPaths::HomeLocation;
         // firstStepProperties.defaultPath = QStandardPaths::HomeLocation; // TODO: fix to QApplication::applicationDirPath()
         firstStepProperties.fileFilters = supportedExtensions;
 

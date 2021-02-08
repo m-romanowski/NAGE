@@ -7,11 +7,12 @@ namespace mr::nage
         : ICDLODObject(_lodLevel, _heightmap, _settings),
           ITerrain(_id)
     {
-        shader_->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
+        Shader* shader = resource_->shader();
+        shader->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
             "src/engine/shader/cdlodterrain2.vert");
-        shader_->addShaderFromSourceFile(SHADER_TYPE::SHADER_FRAGMENT,
+        shader->addShaderFromSourceFile(SHADER_TYPE::SHADER_FRAGMENT,
             "src/engine/shader/cdlodterrain2.frag");
-        shader_->link();
+        shader->link();
 
         material_->setAmbient(Vector3f(0.2f, 0.2f, 0.2f));
         material_->setDiffuse(Vector3f(0.5f, 0.5f, 0.5f));
@@ -30,9 +31,10 @@ namespace mr::nage
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, heightMap_->textureId());
 
-        shader_->use();
-        shader_->setVec4("clipPlane", _clipPlane.x(), _clipPlane.y(), _clipPlane.z(), _clipPlane.w());
+        Shader* shader = resource_->shader();
+        shader->use();
+        shader->setVec4("clipPlane", _clipPlane.x(), _clipPlane.y(), _clipPlane.z(), _clipPlane.w());
 
-        renderCDLOD(_camera, shader_, transform_);
+        renderCDLOD(_camera, shader, transform_);
     }
 }

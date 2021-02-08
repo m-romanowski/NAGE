@@ -115,6 +115,11 @@ namespace mr::nage
         return transformation() != nullptr;
     }
 
+    bool RenderableObject::hasResources()
+    {
+        return resource() != nullptr;
+    }
+
     bool RenderableObject::isWaterSource() const
     {
         return false;

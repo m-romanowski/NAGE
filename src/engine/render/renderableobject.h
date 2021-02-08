@@ -1,10 +1,10 @@
-#ifndef NAGE_ENGINE_RENDER_IOBJECT_H_
-#define NAGE_ENGINE_RENDER_IOBJECT_H_
+#ifndef NAGE_ENGINE_RENDER_RENDERABLEOBJECT_H_
+#define NAGE_ENGINE_RENDER_RENDERABLEOBJECT_H_
 
 #include "vertex.h"
 #include "shader.h"
 #include "transform.h"
-#include "texture.h"
+#include "resource.h"
 #include "common/macro.h"
 #include "engine/core/iobject.h"
 #include "engine/components/camera/camera.h"
@@ -46,6 +46,7 @@ namespace mr::nage
         virtual void useMaterials() = 0;
         virtual void bindTextures() = 0;
         virtual void unbindTextures() = 0;
+        virtual Resource* resource() = 0;
 
         virtual void draw(Camera* _camera, const Vector4f _clipPlane);
         virtual bool isLightSource() const;
@@ -53,6 +54,7 @@ namespace mr::nage
         virtual int depth() const;
         virtual std::string type() const override;
         bool isTransformable();
+        bool hasResources();
 
     protected:
         void setupBuffer();
@@ -64,4 +66,4 @@ namespace mr::nage
     };
 }
 
-#endif // NAGE_ENGINE_RENDER_IOBJECT_H_
+#endif // NAGE_ENGINE_RENDER_RENDERABLEOBJECT_H_

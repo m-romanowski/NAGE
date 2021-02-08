@@ -19,6 +19,7 @@ namespace mr::nage
         std::vector<Mesh*> meshes() const;
         Shader* shader() override;
         Transform* transformation() override;
+        Resource* resource() override { return nullptr; } // TODO
 
         // Setters
         void addMesh(Mesh* _mesh);

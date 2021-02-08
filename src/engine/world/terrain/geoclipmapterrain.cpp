@@ -7,11 +7,12 @@ namespace mr::nage
         : GeoClipMapLOD(_levels, _heightMap, _maxHeight),
           ITerrain(_id)
     {
-        shader_->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
+        Shader* shader = resource_->shader();
+        shader->addShaderFromSourceFile(SHADER_TYPE::SHADER_VERTEX,
             "src/engine/shader/geoclipmap.vert");
-        shader_->addShaderFromSourceFile(SHADER_TYPE::SHADER_FRAGMENT,
+        shader->addShaderFromSourceFile(SHADER_TYPE::SHADER_FRAGMENT,
             "src/engine/shader/geoclipmap.frag");
-        shader_->link();
+        shader->link();
 
         material_->setAmbient(Vector3f(0.2f, 0.2f, 0.2f));
         material_->setDiffuse(Vector3f(0.5f, 0.5f, 0.5f));
@@ -26,15 +27,16 @@ namespace mr::nage
 
     void GeoClipMapTerrain::draw(Camera* _camera, const Vector4f _clipPlane)
     {
-        shader_->use();
-        shader_->setVec4("clipPlane", _clipPlane.x(), _clipPlane.y(), _clipPlane.z(), _clipPlane.w());
+        Shader* shader = resource_->shader();
+        shader->use();
+        shader->setVec4("clipPlane", _clipPlane.x(), _clipPlane.y(), _clipPlane.z(), _clipPlane.w());
 
         // We need transpose matrix for OpenGL (matrix column major).
-        shader_->use();
-        shader_->setMat4("projection", GLRenderEngine::projection().perspective().transpose());
-        shader_->setMat4("view", _camera->view().transpose());
-        shader_->setMat4("model", transform_->model().transpose());
+        shader->use();
+        shader->setMat4("projection", GLRenderEngine::projection().perspective().transpose());
+        shader->setMat4("view", _camera->view().transpose());
+        shader->setMat4("model", transform_->model().transpose());
 
-       renderLOD(_camera,shader_, transform_);
+       renderLOD(_camera, shader, transform_);
     }
 }

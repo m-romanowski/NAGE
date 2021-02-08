@@ -4,22 +4,19 @@ namespace mr::nage
 {
     ITerrain::ITerrain(const std::string& _id)
         : id_(_id),
-          shader_(new Shader),
+          resource_(new Resource(_id)),
           material_(new Material),
           transform_(new Transform)
 
     {
-
+        this->resource_->setShader(new Shader);
     }
 
     ITerrain::~ITerrain()
     {
-        for(auto& texture : textures_)
-            delete texture.second;
-
-        delete shader_;
         delete material_;
         delete transform_;
+        delete resource_;
     }
 
     std::string ITerrain::id() const
@@ -29,7 +26,7 @@ namespace mr::nage
 
     Shader* ITerrain::shader()
     {
-        return shader_;
+        return resource_->shader();
     }
 
     Material* ITerrain::material()
@@ -42,29 +39,34 @@ namespace mr::nage
         return transform_;
     }
 
-    unsigned int ITerrain::texturesCount() const
+    Resource* ITerrain::resource()
     {
-        return textures_.size();
+        return this->resource_;
     }
 
-    Texture* ITerrain::textureByKey(const std::string& _key)
-    {
-        auto it = textures_.find(_key);
+    // unsigned int ITerrain::texturesCount() const
+    // {
+    //     return textures_.size();
+    // }
 
-        if(it == textures_.end())
-            return nullptr;
+    // Texture* ITerrain::textureByKey(const std::string& _key)
+    // {
+    //     auto it = textures_.find(_key);
 
-        return it->second;
-    }
+    //     if(it == textures_.end())
+    //         return nullptr;
 
-    std::map<std::string, Texture*> ITerrain::textures() const
-    {
-        return textures_;
-    }
+    //     return it->second;
+    // }
+
+    // std::map<std::string, Texture*> ITerrain::textures() const
+    // {
+    //     return textures_;
+    // }
 
     void ITerrain::setShader(Shader* _shader)
     {
-        shader_ = _shader;
+        this->resource_->setShader(_shader);
     }
 
     void ITerrain::setMaterial(Material* _material)
@@ -79,35 +81,29 @@ namespace mr::nage
 
     void ITerrain::addTexture(const std::string& _shaderUniformName, Texture* _texture)
     {
-        if(!shader_)
-            return;
-
-        shader_->use();
-        shader_->setInt(_shaderUniformName, textures_.size());
-
-        textures_.insert(std::make_pair(_shaderUniformName, _texture));
+        this->resource_->mapTexture(_shaderUniformName, _texture);
     }
 
-    void ITerrain::addTextures(const std::map<std::string, Texture*>&_textures)
-    {
-        textures_ = _textures;
-    }
+    // void ITerrain::addTextures(const std::map<std::string, Texture*>&_textures)
+    // {
+    //     textures_ = _textures;
+    // }
 
     void ITerrain::useMaterials()
     {
         if(material_)
-            material_->use(shader_);
+            material_->use(this->resource_->shader());
     }
 
     void ITerrain::bindTextures()
     {
         GLuint idx = 0;
-        for(auto& texture : textures_)
+        for(auto& texture : this->resource_->textures())
         {
-            if(texture.second)
+            if(texture)
             {
                 glActiveTexture(GL_TEXTURE0 + idx);
-                glBindTexture(GL_TEXTURE_2D, texture.second->id());
+                glBindTexture(GL_TEXTURE_2D, texture->id());
                 idx++;
             }
         }

@@ -53,6 +53,7 @@ set(CXX_SOURCES
     src/engine/render/lod/geoclipmaps/geoclipmapringfixup.cpp
     src/engine/render/lod/geoclipmaps/geometryclipmap.cpp
     src/engine/render/renderableobject.cpp
+    src/engine/render/resource.cpp
     src/engine/world/light/directionallightobject.cpp
     src/engine/world/light/ilight.cpp
     src/engine/world/light/pointlightobject.cpp
@@ -174,6 +175,7 @@ set(CXX_HEADERS
     src/engine/render/lod/geoclipmaps/geoclipmapringfixup.h
     src/engine/render/lod/geoclipmaps/geometryclipmap.h
     src/engine/render/renderableobject.h
+    src/engine/render/resource.h
     src/engine/render/vertexhelper.h
     src/engine/util/size.h
     src/engine/util/threadpool.h

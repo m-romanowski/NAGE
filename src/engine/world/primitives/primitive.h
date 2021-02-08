@@ -23,6 +23,7 @@ namespace mr::nage
         unsigned long indicesCount() const;
         Shader* shader() override;
         Transform* transformation() override;
+        Resource* resource() override { return nullptr; } // TODO
 
         // Setters
         void setShader(Shader* _shader);

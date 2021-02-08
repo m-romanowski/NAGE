@@ -21,6 +21,7 @@ namespace mr::nage
         int size() const;
         Shader* shader() override { return nullptr; }
         Transform* transformation() override { return nullptr; }
+        Resource* resource() override { return nullptr; }
 
         void drawChunk(int _indicesCount, int _indicesIndexLocation);
         std::string id() const override { return ""; }

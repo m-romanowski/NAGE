@@ -16,6 +16,7 @@ namespace mr::nage
 
         Shader* shader() override { return nullptr; }
         Transform* transformation() override { return nullptr; }
+        Resource* resource() override { return nullptr; }
 
         void drawChunk(Shader* _shader, const Vector2f _levelPosition);
         std::string id() const override { return ""; }

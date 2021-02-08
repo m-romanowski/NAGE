@@ -24,6 +24,7 @@ namespace mr::nage
         bool isChild(Model* _model);
         Shader* shader() override { return nullptr; }
         Transform* transformation() override;
+        Resource* resource() override { return nullptr; } // TODO
 
         // Setters
         void setMaterial(Material* _material);

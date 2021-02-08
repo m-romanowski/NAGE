@@ -26,6 +26,7 @@ namespace mr::nage
         inline std::vector<float> vertices() const { return vertices_; }
         inline Shader* shader() override { return shader_; }
         inline Transform* transformation() override { return nullptr; }
+        Resource* resource() override { return nullptr; }
 
         // Setters
         inline void setShader(Shader* _shader) { shader_ = _shader; }

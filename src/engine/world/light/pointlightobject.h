@@ -19,6 +19,7 @@ namespace mr::nage
         Shader* shader() override;
         Transform* transformation() override;
         bool isLightSource() const override;
+        Resource* resource() override { return nullptr; } // TODO
 
         // Setters
         void setShader(Shader* _shader);

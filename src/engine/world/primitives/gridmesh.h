@@ -25,6 +25,7 @@ namespace mr::nage
         Size<int> size() const;
         Shader* shader() override { return nullptr; }
         Transform* transformation() override { return nullptr; }
+        Resource* resource() override { return nullptr; }
 
         // Setters
         void setWidth(int _width);
