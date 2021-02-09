@@ -33,7 +33,7 @@ namespace mr::nage
         void setupRingFixUp();
         void setupInteriorTrim();
         void setupDegenerateTriangle();
-        bool isInCentral(Vector2f _currPosition);
+        bool isInCentral(Vector2i _currPosition);
 
         std::vector<GeoClipMapBlock*> blocks_; // 12 blocks
         std::vector<GeoClipMapBlock*> centerBlocks_; // 4 center blocks;

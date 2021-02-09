@@ -21,8 +21,11 @@ namespace mr::qnage
 
         SceneTree* sceneTree();
 
+    signals:
+        void selectedItemResource(ISceneResource* _resource);
+
     private slots:
-        void showTransformationSection(SceneTreeNodeItemTransformations* transformations);
+        void showTransformationSection(SceneTreeNodeItemTransformations* _transformations);
 
     private:
         void setupUi();

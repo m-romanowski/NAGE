@@ -3,6 +3,7 @@
 
 #include <string>
 #include "isceneobjecttransformation.h"
+#include "isceneresource.h"
 
 namespace mr::qnage
 {
@@ -11,10 +12,16 @@ namespace mr::qnage
     public:
         virtual std::string id() const = 0;
         virtual ISceneObjectTransformation* transformation() = 0;
+        virtual ISceneResource* resource() = 0;
 
         bool isTransformable()
         {
             return transformation()->isAvailable();
+        }
+
+        bool hasResource()
+        {
+            return resource()->isNotEmpty();
         }
     };
 }

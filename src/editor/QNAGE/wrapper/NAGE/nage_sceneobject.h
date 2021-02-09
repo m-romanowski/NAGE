@@ -4,6 +4,7 @@
 #include "engine/render/renderableobject.h"
 #include "interface/isceneobject.h"
 #include "nage_transformation.h"
+#include "nage_resource.h"
 
 namespace mr::qnage
 {
@@ -16,9 +17,14 @@ namespace mr::qnage
             return object_->id();
         }
 
-        ISceneObjectTransformation* transformation()
+        ISceneObjectTransformation* transformation() override
         {
             return transformation_;
+        }
+
+        ISceneResource* resource() override
+        {
+            return resource_;
         }
 
         static NAGESceneObject* from(nage::RenderableObject* _object)
@@ -40,10 +46,13 @@ namespace mr::qnage
 
     private:
         NAGESceneObject(nage::RenderableObject* _object) :
-            object_(_object), transformation_(NAGESceneObjectTransformation::from(_object->transformation())) {}
+            object_(_object),
+            transformation_(NAGESceneObjectTransformation::from(_object->transformation())),
+            resource_(NAGEResource::from(_object->resource())) {}
 
         nage::RenderableObject* object_;
         ISceneObjectTransformation* transformation_;
+        ISceneResource* resource_;
     };
 }
 

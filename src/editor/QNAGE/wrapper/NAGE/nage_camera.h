@@ -21,6 +21,11 @@ namespace mr::qnage
             return this;
         }
 
+        ISceneResource* resource() override
+        {
+            return nullptr;
+        }
+
         Vec3 translation() const override
         {
             nage::Vector3f translation = camera_->translation();

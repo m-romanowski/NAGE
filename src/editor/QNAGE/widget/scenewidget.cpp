@@ -7,7 +7,7 @@ namespace mr::qnage
         : QWidget(_parent)
     {
         this->setObjectName("scene-widget");
-        this->setMinimumHeight(100);
+        this->setMinimumHeight(600);
 
         setupUi();
     }
@@ -32,7 +32,13 @@ namespace mr::qnage
 
         this->sceneTree_ = new SceneTree(this);
         this->scrollArea_->layout()->addWidget(this->sceneTree_);
-        connect(this->sceneTree_, &SceneTree::transformationsForNode, this, &SceneWidget::showTransformationSection);
+        connect(this->sceneTree_, &SceneTree::onSelectedItem, [this](ISceneTreeNodeItem* _sceneItem) {
+            if(_sceneItem)
+            {
+                showTransformationSection(_sceneItem->transformations());
+                emit selectedItemResource(_sceneItem->resource());
+            }
+        });
 
         this->setLayout(this->mainLayout_);
     }
@@ -42,8 +48,11 @@ namespace mr::qnage
         return sceneTree_;
     }
 
-    void SceneWidget::showTransformationSection(SceneTreeNodeItemTransformations* transformations)
+    void SceneWidget::showTransformationSection(SceneTreeNodeItemTransformations* _transformations)
     {
+        if(!_transformations)
+            return;
+
         int childCount = this->scrollArea_->layout()->count();
         if(childCount > 1)
         {
@@ -54,10 +63,10 @@ namespace mr::qnage
             }
         }
 
-        if(notFoundWidget(transformations))
-            this->scrollArea_->layout()->addWidget(transformations);
+        if(notFoundWidget(_transformations))
+            this->scrollArea_->layout()->addWidget(_transformations);
 
-        transformations->show();
+        _transformations->show();
     }
 
     bool SceneWidget::notFoundWidget(QWidget* _widget)

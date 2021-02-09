@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.1.0)
 project(QNAGE VERSION 0.0.1 LANGUAGES CXX)
 
+add_compile_definitions(${DEMO})
+
 add_subdirectory(lib/glad/)
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
@@ -284,6 +286,7 @@ set(CXX_HEADERS
     src/editor/QNAGE/window/mainwindow.h
     src/editor/QNAGE/window/renderwindow.h
     src/editor/QNAGE/wrapper/NAGE/nage_camera.h
+    src/editor/QNAGE/wrapper/NAGE/nage_resource.h
     src/editor/QNAGE/wrapper/NAGE/nage_scenemanager.h
     src/editor/QNAGE/wrapper/NAGE/nage_scenenode.h
     src/editor/QNAGE/wrapper/NAGE/nage_sceneobject.h

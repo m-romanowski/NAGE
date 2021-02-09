@@ -9,7 +9,7 @@
 namespace mr::qnage
 {
     class ToolsWidget
-        : public QWidget
+        : public QScrollArea
     {
         Q_OBJECT
 
@@ -23,6 +23,7 @@ namespace mr::qnage
         void setupUi();
         void setupSceneTree();
 
+        QWidget* childWidget_;
         QVBoxLayout* mainLayout_;
         SceneWidget* sceneWidget_;
         MaterialWidget* materialWidget_;

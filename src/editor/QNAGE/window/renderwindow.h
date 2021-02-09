@@ -6,6 +6,7 @@
 // Widgets
 #include "framelesswindow.h"
 #include "ui/custombutton.h"
+#include "widget/loadingindicator.h"
 
 #include <QApplication>
 #include <QDesktopWidget>
@@ -74,6 +75,7 @@ namespace mr::qnage
 
         QVBoxLayout* layout_;
         CustomButton* dockButton_;
+        LoadingIndicator* loadingIndicator_;
     };
 }
 

@@ -121,8 +121,9 @@ namespace mr::qnage
         this->tabWidget_->setIconSize(QSize(30, 30));
 
         QIcon settingsIcon;
-        settingsIcon.addPixmap(QPixmap(":/rc/icons/settings.png"), QIcon::Normal, QIcon::Off);
+        settingsIcon.addPixmap(QPixmap(":/rc/icons/settings-disabled.png"), QIcon::Normal, QIcon::Off);
         this->tabWidget_->addTab(this->settingsWidget_, QIcon(settingsIcon), tr(""));
+        this->tabWidget_->setTabEnabled(3, false);
         this->tabWidget_->setIconSize(QSize(30, 30));
 
         QWidget* emptyWidget = new QWidget();
@@ -269,8 +270,8 @@ namespace mr::qnage
 
         this->tabWidget_->setTabEnabled(1, true);
         this->tabWidget_->setTabIcon(1, sceneIcon);
-        this->tabWidget_->setTabEnabled(2, true);
-        this->tabWidget_->setTabIcon(2, codeEditorIcon);
+        // this->tabWidget_->setTabEnabled(2, true);
+        // this->tabWidget_->setTabIcon(2, codeEditorIcon);
 
         // Change current tab.
         this->tabWidget_->setCurrentIndex(1);

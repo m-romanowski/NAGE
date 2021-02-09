@@ -1,5 +1,7 @@
 #include "iterrain.h"
 
+#include <QDebug>
+
 namespace mr::nage
 {
     ITerrain::ITerrain(const std::string& _id)

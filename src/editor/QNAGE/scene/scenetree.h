@@ -23,7 +23,7 @@ namespace mr::qnage
         void removeScene();
 
     signals:
-        void transformationsForNode(SceneTreeNodeItemTransformations* transformations);
+        void onSelectedItem(ISceneTreeNodeItem* _sceneItem);
 
     private slots:
         void onClicked(QTreeWidgetItem* _item, int _column);

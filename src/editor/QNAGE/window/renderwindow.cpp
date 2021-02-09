@@ -15,7 +15,8 @@ namespace mr::qnage
           glWidget_(nullptr),
           vkWidget_(nullptr),
           isDocked_(true),
-          dockButton_(nullptr)
+          dockButton_(nullptr),
+          loadingIndicator_(nullptr)
     {
         setupUi();
     }
@@ -25,15 +26,22 @@ namespace mr::qnage
         delete vkWidget_;
         delete glWidget_;
         delete dockButton_;
+        delete loadingIndicator_;
     }
 
     void RenderWindow::reloadUi()
     {
+        if(this->loadingIndicator_ != nullptr)
+        {
+            this->layout_->addWidget(loadingIndicator_);
+        }
+
         // Add wigets to main layout.
         if(this->glWidget_ != nullptr)
         {
             // Dock engine window button
             this->dockButton_ = new CustomButton(this);
+            this->dockButton_->hide();
             this->dockButton_->setObjectName("dark-btn");
             this->dockButton_->setToolTip(tr("Dock / Undock engine window"));
             QIcon dockButtonIcon;
@@ -68,8 +76,17 @@ namespace mr::qnage
         if(glWidget_ == nullptr)
             glWidget_ = new GLWidget;
 
+        if(loadingIndicator_ == nullptr)
+            loadingIndicator_ = new LoadingIndicator(this);
+
+        loadingIndicator_->start();
+
+        glWidget_->hide();
         glWidget_->initialize(_game);
         connect(glWidget_, &GLWidget::ready, this, [this]() {
+            this->loadingIndicator_->stop();
+            this->dockButton_->show();
+            this->glWidget_->show();
             this->mainWindow_->mainWidget()
                 ->toolsWidget()
                 ->sceneTree()

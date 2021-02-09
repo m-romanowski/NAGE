@@ -19,6 +19,7 @@ namespace mr::qnage
             this->alphaMapper_->set(HeapMapColor::Alpha, result[HeapMapColor::Alpha]);
 
             setMappersVisibility(true);
+            emit done(result, QImage(*texture()));
         });
 
         this->mappersLayout_ = new QHBoxLayout;
@@ -64,5 +65,10 @@ namespace mr::qnage
             QWidget* child = this->mappersLayout_->itemAt(i)->widget();
             child->setVisible(_state);
         }
+    }
+
+    QImage* HeapmapMaterial::texture()
+    {
+        return picker_->image();
     }
 }

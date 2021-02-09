@@ -127,9 +127,10 @@ namespace mr::nage
         _shader->setInt("gmapping.oneOverWidth", ((gridSize_ - 1) / 2.0f) - (1.0f / transitionWith) - 1.0f);
 
         Vector3f cameraPos = _camera->translation();
-        Vector2f cameraPosWithoutHeight = Vector2f(cameraPos.x(), cameraPos.z());
+        Vector2i cameraPosWithoutHeight = Vector2i(cameraPos.x(), cameraPos.z());
 
-        Vector2f worldPosition = cameraPosWithoutHeight - minPosition_;
+        Vector2i roundedMinPosition = Vector2i(minPosition_.x(), minPosition_.y());
+        Vector2i worldPosition = cameraPosWithoutHeight - roundedMinPosition;
         worldPosition /= gridSpacing_;
 
         if(!isInCentral(worldPosition))
@@ -137,14 +138,16 @@ namespace mr::nage
             unsigned int blockSize = (gridSize_ + 1) / 4;
             unsigned int lowerLimit = (blockSize - 1) * 2;
 
-            Vector2f deltaPos = worldPosition - Vector2f(lowerLimit, lowerLimit);
+            Vector2i deltaPos = worldPosition - Vector2i(lowerLimit, lowerLimit);
             int xDelta = std::abs((int)deltaPos.x()) % 2;
             int yDelta = std::abs((int)deltaPos.y()) % 2;
-            minPosition_ += (deltaPos - Vector2f(xDelta, yDelta)) * gridSpacing_;
+            roundedMinPosition += (deltaPos - Vector2i(xDelta, yDelta)) * gridSpacing_;
 
-            worldPosition = cameraPosWithoutHeight - minPosition_;
+            worldPosition = cameraPosWithoutHeight - roundedMinPosition;
             worldPosition /= gridSpacing_;
         }
+
+        minPosition_ = Vector2f(roundedMinPosition.x(), roundedMinPosition.y());
 
         for(auto block : blocks_)
             block->drawChunk(_shader, minPosition_);
@@ -163,7 +166,7 @@ namespace mr::nage
         }
     }
 
-    bool GeoClipMapLevel::isInCentral(Vector2f _currPosition)
+    bool GeoClipMapLevel::isInCentral(Vector2i _currPosition)
     {
         int blockSize = (gridSize_ + 1) / 4;
         int lowerLimit = (blockSize - 1) * 2;

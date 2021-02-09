@@ -27,5 +27,6 @@
         <file>icons/scene/model.png</file>
         <file>icons/scene/light.png</file>
         <file>icons/scene/camera.png</file>
+        <file>icons/animated/spinningwheel.gif</file>
     </qresource>
 </RCC>

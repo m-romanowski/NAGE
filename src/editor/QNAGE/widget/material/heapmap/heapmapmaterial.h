@@ -58,6 +58,11 @@ namespace mr::qnage
         explicit HeapmapMaterial(QWidget* _parent = nullptr);
         ~HeapmapMaterial();
 
+        QImage* texture();
+
+    signals:
+        void done(QMap<HeapMapColor, QImage> _heapMapDefinition, QImage _heapmap);
+
     private:
         void setMappersVisibility(bool _state);
 

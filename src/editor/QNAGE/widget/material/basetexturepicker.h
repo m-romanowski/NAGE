@@ -20,7 +20,7 @@ namespace mr::qnage
         QImage* image() const;
 
     signals:
-        void done();
+        void done(QImage _image);
 
     protected slots:
         void onClicked();

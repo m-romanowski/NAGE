@@ -9,9 +9,9 @@ namespace mr::qnage
         connect(reinterpret_cast<TexturePickerDialog*>(this->dialog_.get()), &TexturePickerDialog::textureSelected, [this](QImage _image) {
             delete texture_;
             this->texture_ = new QImage(_image);
-            this->setPixmap(QPixmap::fromImage(*texture_).scaled(this->pickerAreaSize_));
+            this->setPixmap(QPixmap::fromImage(*this->texture_).scaled(this->pickerAreaSize_));
 
-            emit done();
+            emit done(QImage(*this->texture_));
             this->dialog_->close();
         });
     }

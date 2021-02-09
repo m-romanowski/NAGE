@@ -23,6 +23,7 @@ namespace mr::nage
 
         explicit Texture(TextureType _type = TextureType::TEXTURE_2D);
         explicit Texture(const std::string& _path, TextureType _type);
+        explicit Texture(int _width, int _height, unsigned char* _data, TextureType _type, TextureFormat _textureFormat = TextureFormat::RGBA);
         ~Texture();
 
         // Getters
@@ -43,6 +44,7 @@ namespace mr::nage
         // Setters
         void setTextureWrapping(const Vector3<GLint>& _type);
         void setTextureFiltering(const Vector2<GLint>& _type);
+        void setDataAt(int _x, int _y, unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a);
 
         void fromFile(const std::string& _path);
         void fromData(int _width, int _height, TextureFormat _format, unsigned char* _data);

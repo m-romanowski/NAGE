@@ -14,6 +14,7 @@ namespace mr::qnage
     {
     public:
         virtual QString name() const = 0;
+        virtual ISceneResource* resource() const = 0;
         virtual SceneTreeNodeItemTransformations* transformations() = 0;
     };
 
@@ -87,6 +88,14 @@ namespace mr::qnage
         QString name() const override
         {
             return QString::fromStdString(object_->id());
+        }
+
+        ISceneResource* resource() const override
+        {
+            if(!object_)
+                return nullptr;
+
+            return object_->resource();
         }
 
         SceneTreeNodeItemTransformations* transformations() override

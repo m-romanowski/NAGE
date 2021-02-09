@@ -19,6 +19,18 @@ namespace mr::nage
         fromFile(_path);
     }
 
+    Texture::Texture(int _width, int _height, unsigned char* _data, TextureType _type, TextureFormat _textureFormat)
+        : type_(_type),
+          width_(_width),
+          height_(_height),
+          data_(_data),
+          format_(_textureFormat),
+          textureWrapping_(Vector3<GLint>(GL_REPEAT, GL_REPEAT, GL_REPEAT)),
+          textureFiltering_(Vector2<GLint>(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR))
+    {
+
+    }
+
     Texture::~Texture()
     {
         // Clean up binding.
@@ -189,6 +201,16 @@ namespace mr::nage
     void Texture::setTextureFiltering(const Vector2<GLint>& _type)
     {
         textureFiltering_ = _type;
+    }
+
+    void Texture::setDataAt(int _x, int _y, unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a)
+    {
+        data_[format_ * (_y * width_ + _x) + 0] = _r;
+        data_[format_ * (_y * width_ + _x) + 1] = _g;
+        data_[format_ * (_y * width_ + _x) + 2] = _b;
+        format_ >= 4
+            ? data_[format_ * (_y * width_ + _x) + 3] = _a
+            : data_[format_ * (_y * width_ + _x) + 3] = 0xff;
     }
 
     void Texture::bindTexture()

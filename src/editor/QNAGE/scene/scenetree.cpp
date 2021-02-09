@@ -89,6 +89,6 @@ namespace mr::qnage
     void SceneTree::onClicked(QTreeWidgetItem* _item, int _column)
     {
         if(ISceneTreeNodeItem* castedItem = dynamic_cast<ISceneTreeNodeItem*>(_item))
-            emit transformationsForNode(castedItem->transformations());
+            emit onSelectedItem(castedItem);
     }
 }

@@ -19,7 +19,7 @@ mkdir -p "$BIN_DIR"
 
 # Build stage
 cd "$BUILD_DIR"
-$CMAKE "$ROOT_DIR"
+$CMAKE "$ROOT_DIR" "-DDEMO=$1"
 $MAKE "$MAKE_PARAMS"
 
 # Final stage
