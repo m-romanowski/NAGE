@@ -1,6 +1,15 @@
 # NAGE (Not Advanced Game Engine)
 OpenGL game engine with Qt based world editor.
 
+## Features
+- Base __OpenGL__ rendering pipeline
+- Low level X11 window management
+- LOD systems: [CDLOD](https://github.com/fstrugar/CDLOD/blob/master/cdlod_paper_latest.pdf), [Geometry climapping](https://hhoppe.com/geomclipmap.pdf)
+- Atmosphere scattering: [Nishita](http://nishitalab.org/user/nis/cdrom/sig93_nis.pdf) and proprietary solution
+- __QNAGE__ editor as an engine UI integration example and resources management solution
+
+For more details and benchmarks, see `docs` directory.
+
 ## Project components
 * __NAGE__: engine (C++) static library - `src/engine` module
 * __QNAGE__: world editor based on QT (C++) - `src/editor` module
