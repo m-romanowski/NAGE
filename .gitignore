@@ -1,8 +1,7 @@
-# Project cache / resources
+# Project cache
 bin/*
 build/*
 test/*
-resources/*
 
 # VS
 .vscode/*
