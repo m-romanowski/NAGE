@@ -1,4 +1,4 @@
-# NAGE (Not Advanced Game Engine)
+# NAGE (Non-Advanced Game Engine)
 OpenGL game engine with Qt based world editor.
 
 ## Features
