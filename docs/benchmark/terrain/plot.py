@@ -65,8 +65,8 @@ def plotting_mem_usage():
     rects1 = ax.bar(x - width / 2, [geo_lev5, geo_lev10], width, label='Geometry clipmaps')
     rects2 = ax.bar(x + width / 2, [cdlod_lev5, cdlod_lev10], width, label='CDLOD')
 
-    ax.set_ylabel('Megabajty (MB)')
-    ax.set_title('Średnie zużycie pamięci RAM')
+    ax.set_ylabel('Megabytes (MB)')
+    ax.set_title('Average RAM usage')
     ax.set_xticks(x)
     ax.set_xticklabels(labels)
     ax.legend(loc='lower right')
@@ -79,9 +79,9 @@ def plotting_mem_usage():
 
 def plotting_ms_per_frame():
     fig, ax = plt.subplots()
-    ax.set_xlabel('czas (sekundy)')
-    ax.set_ylabel('milisekundy (ms)')
-    ax.set_title('Czas potrzebny do narysowania pojedynczej klatki')
+    ax.set_xlabel('elapsed time (seconds)')
+    ax.set_ylabel('render time (milliseconds)')
+    ax.set_title('Time required to render a single frame')
 
     one_minute = np.arange(0, 60)
 
