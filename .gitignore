@@ -10,6 +10,10 @@ test/*
 *.pro
 *.pro.user
 
+# JetBrains CLion
+.idea
+cmake-build-*
+
 # CMAKE
 CMakeCache.txt
 CMakeFiles/*
