@@ -1,3 +1,4 @@
+#include "logcplus/src/logcplus.h"
 #include "editor/QNAGE/qnage.h"
 
 #include <QApplication>
@@ -10,6 +11,13 @@ using namespace mr;
 
 int main(int argc, char *argv[])
 {
+    auto logManager = dev::marcinromanowski::logcplus::LogManager::instance();
+    logManager->setLogLevel(dev::marcinromanowski::logcplus::Logger::LogLevel::Debug);
+    logManager->setLogMode(dev::marcinromanowski::logcplus::Logger::LogMode::Console);
+    logManager->disableDirectoryWatcher();
+    logManager->disableFileWatcher();
+    logManager->initialize();
+
     QApplication app(argc, argv);
 
     // Dark styles

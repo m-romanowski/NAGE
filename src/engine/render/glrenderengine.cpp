@@ -57,7 +57,7 @@ namespace mr::nage
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         }
 
-        Log::log("API: OpenGL " + apiVersion());
+        Log::debug("API: OpenGL " + apiVersion());
     }
 
     void GLRenderEngine::initializePreRenderEffects()

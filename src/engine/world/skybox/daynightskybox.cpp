@@ -122,7 +122,7 @@ namespace mr::nage
         if(!shader_)
         {
             std::error_code code = ERROR::SHADER_FAILED_TO_FIND_PROGRAM;
-            Log::critical(code.message());
+            Log::fatal(code.message());
 
             return;
         }

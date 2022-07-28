@@ -1,6 +1,7 @@
 #ifndef NAGE_COMMON_DEBUG_H_
 #define NAGE_COMMON_DEBUG_H_
 
+#include "logcplus/src/logcplus.h"
 #include "exception.h"
 
 #include <iostream>
@@ -14,28 +15,14 @@ namespace mr::nage
     class Log
     {
     public:
-        Log() {}
+        Log() = default;
 
-        // Debug log
-        static void log(const std::string& _message);
-        static std::string getCurrentTime();
-
-        template <typename T>
-        static void log(const std::string& _message, const std::vector<T>& _additionalMessages)
-        {
-            std::cout << "[LOG] " << _message << " ";
-
-            for(const auto& message : _additionalMessages)
-                std::cout << message << " ";
-
-            std::cout << std::endl;
-        }
-
-        // Debug error
+        static void debug(const std::string& _message);
         static void error(const std::string& _message);
+        static void fatal(const std::string& _message);
 
-        // Debug critical errror
-        static void critical(const std::string& _message);
+    private:
+        static dev::marcinromanowski::logcplus::Logger* logger();
     };
 }
 

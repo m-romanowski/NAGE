@@ -67,6 +67,7 @@ Go to `ROOT_DIR/src/game` directory if you need more informations about demos im
 * [stb](https://github.com/nothings/stb)
 * [Qt](https://www.qt.io)
 * [cmake](https://cmake.org)
+* [logcplus](https://github.com/m-romanowski/logcplus)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

@@ -97,7 +97,7 @@ namespace mr::nage
         if(!XInitThreads())
         {
             std::error_code code = ERROR::X11_FAILED_DISPLAY_INITIALIZATION;
-            Log::critical(code.message());
+            Log::fatal(code.message());
             return;
         }
 
@@ -105,7 +105,7 @@ namespace mr::nage
         if(!context_)
         {
             std::error_code code = ERROR::X11_FAILED_DISPLAY_INITIALIZATION;
-            Log::critical(code.message());
+            Log::fatal(code.message());
             return;
         }
     }

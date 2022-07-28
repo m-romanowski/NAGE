@@ -40,7 +40,7 @@ namespace mr::nage
         // Append to scene manager container.
         SceneNode* sceneNode = new SceneNode(key);
         children_.insert(std::make_pair(key, sceneNode));
-        Log::log(key + " (scene node) has been added to scene manager.");
+        Log::debug(key + " (scene node) has been added to scene manager.");
 
         return sceneNode;
     }
@@ -56,7 +56,7 @@ namespace mr::nage
 
         auto sceneNode = new SceneNode(_key);
         children_.insert(std::make_pair(_key, sceneNode));
-        Log::log(_key + " (scene node) has been added to scene manager.");
+        Log::debug(_key + " (scene node) has been added to scene manager.");
 
         return sceneNode;
     }
@@ -72,6 +72,6 @@ namespace mr::nage
         }
 
         children_.erase(_key);
-        Log::log(_key + " (scene node) has been removed from scene manager");
+        Log::debug(_key + " (scene node) has been removed from scene manager");
     }
 }

@@ -40,16 +40,16 @@ namespace mr::nage
         switch(status_)
         {
             case -1:
-                Log::log("[STATUS] Engine not initialized");
+                Log::debug("[STATUS] Engine not initialized");
                 break;
             case 0:
-                Log::log("[STATUS] Engine stopped");
+                Log::debug("[STATUS] Engine stopped");
                 break;
             case 1:
-                Log::log("[STATUS] Engine initialized");
+                Log::debug("[STATUS] Engine initialized");
                 break;
             case 2:
-                Log::log("[STATUS] Engine is running");
+                Log::debug("[STATUS] Engine is running");
                 break;
         }
 
@@ -81,15 +81,15 @@ namespace mr::nage
 
     void CoreEngine::initialize(IRenderEngine* _renderEngine, IGame* _game)
     {
-        Log::log("Engine initialization...");
+        Log::debug("Engine initialization...");
 
         renderEngine_ = _renderEngine;
         game_ = _game;
 
         if(fpsLimit_ == FpsLimit::FPS_Unlimited)
-            Log::log("FPS lock: disabled");
+            Log::debug("FPS lock: disabled");
         else
-            Log::log("FPS lock: " + std::to_string(fpsLimit_) + " fps (~" + std::to_string(frameLockMS().count()) + " ms)");
+            Log::debug("FPS lock: " + std::to_string(fpsLimit_) + " fps (~" + std::to_string(frameLockMS().count()) + " ms)");
 
         status_.store(StatusCode::Initialized);
     }
@@ -104,7 +104,7 @@ namespace mr::nage
             renderEngine_->initializePreRenderEffects();
             game_->initializeScene();
 
-            Log::log("Waiting for events...");
+            Log::debug("Waiting for events...");
 
             status_.store(StatusCode::Running);
             render();

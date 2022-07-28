@@ -40,7 +40,7 @@ namespace mr::nage
         if(!display_)
         {
             std::error_code code = ERROR::X11_FAILED_DISPLAY_INITIALIZATION;
-            Log::critical(code.message());
+            Log::fatal(code.message());
             return;
         }
 
@@ -58,7 +58,7 @@ namespace mr::nage
         if(!window_)
         {
             std::error_code code = ERROR::X11_FAILED_DISPLAY_INITIALIZATION;
-            Log::critical(code.message());
+            Log::fatal(code.message());
             return;
         }
 
@@ -78,7 +78,7 @@ namespace mr::nage
         if(!gladLoadGLX(display_, screenId_))
         {
             std::error_code code = ERROR::X11_FAILED_DISPLAY_INITIALIZATION;
-            Log::critical(code.message());
+            Log::fatal(code.message());
         }
     }
 

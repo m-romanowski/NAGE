@@ -342,6 +342,6 @@ namespace mr::nage
 
     void Game::printWorldHourLog()
     {
-        Log::log("Current world hour: " + addTrailingZeroIfNeeded(currHour) + ":" + addTrailingZeroIfNeeded(currMin));
+        Log::debug("Current world hour: " + addTrailingZeroIfNeeded(currHour) + ":" + addTrailingZeroIfNeeded(currMin));
     }
 }

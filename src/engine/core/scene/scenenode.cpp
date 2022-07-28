@@ -61,7 +61,7 @@ namespace mr::nage
 
         // Add a new ligth to dictionary.
         sceneComponents_.insert(std::make_pair(SceneNode::ObjectIdentity::of(objectId), _object));
-        Log::log(objectId + " has been added to the scene.");
+        Log::debug(objectId + " has been added to the scene.");
     }
 
     void SceneNode::removeFromScene(const std::string& _name)
@@ -70,7 +70,7 @@ namespace mr::nage
         if(auto identity = objectIdentityByName(_name); identity)
         {
             sceneComponents_.erase(identity.value());
-            Log::log(_name + " has been removed from the scene node.");
+            Log::debug(_name + " has been removed from the scene node.");
             return;
         }
 
